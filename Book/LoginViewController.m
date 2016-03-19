@@ -25,6 +25,8 @@ MBProgressHUD *mbprogress;
 - (id)init{
     if(self = [super init]){
         self.view.backgroundColor = [UIColor whiteColor];
+        mbprogress = [[MBProgressHUD alloc]initWithView:self.view];
+        mbprogress.delegate = self;
     }
     return self;
 }
@@ -34,7 +36,7 @@ MBProgressHUD *mbprogress;
     
     [self addLoginForm];
 }
-
+#pragma mark 加载登录界面UI
 - (void)addLoginForm {
     // 添加登陆头像
     UIImageView *userImage = [[UIImageView alloc]init];
@@ -71,28 +73,30 @@ MBProgressHUD *mbprogress;
     loginButton.frame = CGRectMake(SCREEN_BOUNDS.size.width/4, SCREEN_BOUNDS.size.height/3+110, (SCREEN_BOUNDS.size.width/4)*2, 50);
     [loginButton addTarget:self action:@selector(login) forControlEvents:UIControlEventTouchUpInside];
     [loginButton setTitle:@"登陆" forState:UIControlStateNormal];
-    loginButton.titleLabel.font = [UIFont systemFontOfSize:25];
+    loginButton.titleLabel.font = [UIFont systemFontOfSize:20];
     [self.view addSubview:loginButton];
     
     
     
 }
-
+#pragma mark 登陆验证操作
 - (void)login {
     if ([userNameTextField.text isEqualToString:@""] || [userPassWordTextField.text isEqualToString:@""]) {
-        NSLog(@"请输入用户名或密码");
+        mbprogress.mode = MBProgressHUDModeText;
+        mbprogress.label.text = NSLocalizedString(@"请输入用户名或密码", @"HUD message title");
+        [self.view addSubview:mbprogress];
+        [self.view bringSubviewToFront:mbprogress];
+        [mbprogress showAnimated:YES];
+        [mbprogress hideAnimated:YES afterDelay:2.];
     }else if([userNameTextField.text isEqualToString:@"Martin"] && [userPassWordTextField.text isEqualToString:@"123456"]) {
             [self showProgressWithTitle:@"正在登陆..."];
             [self getWeatherInfoFromNet];
-        
-    }else{
-        
+    }else {
+        [self showLoginFailedDialg];
     }
 }
-
+#pragma mark 显示toast
 - (void)showProgressWithTitle:(NSString *) title{
-    mbprogress = [[MBProgressHUD alloc]initWithView:self.view];
-    mbprogress.delegate = self;
     mbprogress.mode = MBProgressHUDModeIndeterminate;
     mbprogress.label.text = NSLocalizedString(title, @"HUD cleanining up title");
     [self.view addSubview:mbprogress];
@@ -121,20 +125,21 @@ MBProgressHUD *mbprogress;
 
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error{
     dispatch_async(dispatch_get_main_queue(), ^{
-        UIImage *image = [[UIImage imageNamed:@"Checkmark"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-        UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
-        mbprogress.customView = imageView;
-        mbprogress.mode = MBProgressHUDModeCustomView;
-        mbprogress.label.text = NSLocalizedString(@"登陆失败", @"HUD completed title");
-        [mbprogress hideAnimated:YES afterDelay:3.f];
+        [mbprogress hideAnimated:YES];
+        [self showLoginFailedDialg];
     });
 }
 
-// 弹窗
-- (void) showDialg {
-    uia
+#pragma mark 登陆失败弹窗
+- (void)showLoginFailedDialg {
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"登陆失败" message:@"账号或密码错误，请重新输入" preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
+        
+    }];
+    [alert addAction:okAction];
+    [self presentViewController:alert animated:YES completion:nil];
 }
-
+#pragma mark 重置键盘return按钮事件
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     [self login];
     [userPassWordTextField resignFirstResponder];
