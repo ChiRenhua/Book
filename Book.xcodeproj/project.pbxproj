@@ -7,15 +7,19 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4B5F13D01C9D0D4A00188CB6 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B5F13CF1C9D0D4A00188CB6 /* LoginViewController.m */; };
+		4B5F13D41C9D1A8A00188CB6 /* touxiang.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B5F13D31C9D1A8A00188CB6 /* touxiang.png */; };
+		4B5F13D81C9D3EEE00188CB6 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B5F13D71C9D3EEE00188CB6 /* MBProgressHUD.m */; };
 		4B75BF961C9BE76D00212268 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B75BF951C9BE76D00212268 /* main.m */; };
 		4B75BF991C9BE76D00212268 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B75BF981C9BE76D00212268 /* AppDelegate.m */; };
 		4B75BF9C1C9BE76D00212268 /* FirstViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B75BF9B1C9BE76D00212268 /* FirstViewController.m */; };
 		4B75BF9F1C9BE76D00212268 /* SecondViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B75BF9E1C9BE76D00212268 /* SecondViewController.m */; };
-		4B75BFA21C9BE76D00212268 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4B75BFA01C9BE76D00212268 /* Main.storyboard */; };
 		4B75BFA41C9BE76D00212268 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4B75BFA31C9BE76D00212268 /* Assets.xcassets */; };
 		4B75BFA71C9BE76D00212268 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4B75BFA51C9BE76D00212268 /* LaunchScreen.storyboard */; };
 		4B75BFB21C9BE76E00212268 /* BookTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B75BFB11C9BE76E00212268 /* BookTests.m */; };
 		4B75BFBD1C9BE76E00212268 /* BookUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B75BFBC1C9BE76E00212268 /* BookUITests.m */; };
+		4B75BFCD1C9BF97900212268 /* ThirdViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B75BFCC1C9BF97900212268 /* ThirdViewController.m */; };
+		4B75BFD01C9C3AB200212268 /* FourthViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B75BFCF1C9C3AB200212268 /* FourthViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,6 +40,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4B5F13CE1C9D0D4A00188CB6 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
+		4B5F13CF1C9D0D4A00188CB6 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
+		4B5F13D31C9D1A8A00188CB6 /* touxiang.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = touxiang.png; sourceTree = "<group>"; };
+		4B5F13D61C9D3EEE00188CB6 /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
+		4B5F13D71C9D3EEE00188CB6 /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
 		4B75BF911C9BE76D00212268 /* Book.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Book.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4B75BF951C9BE76D00212268 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		4B75BF971C9BE76D00212268 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -44,7 +53,6 @@
 		4B75BF9B1C9BE76D00212268 /* FirstViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FirstViewController.m; sourceTree = "<group>"; };
 		4B75BF9D1C9BE76D00212268 /* SecondViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SecondViewController.h; sourceTree = "<group>"; };
 		4B75BF9E1C9BE76D00212268 /* SecondViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SecondViewController.m; sourceTree = "<group>"; };
-		4B75BFA11C9BE76D00212268 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		4B75BFA31C9BE76D00212268 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4B75BFA61C9BE76D00212268 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4B75BFA81C9BE76D00212268 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -54,6 +62,10 @@
 		4B75BFB81C9BE76E00212268 /* BookUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BookUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4B75BFBC1C9BE76E00212268 /* BookUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BookUITests.m; sourceTree = "<group>"; };
 		4B75BFBE1C9BE76E00212268 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4B75BFCB1C9BF97900212268 /* ThirdViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThirdViewController.h; sourceTree = "<group>"; };
+		4B75BFCC1C9BF97900212268 /* ThirdViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThirdViewController.m; sourceTree = "<group>"; };
+		4B75BFCE1C9C3AB200212268 /* FourthViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FourthViewController.h; sourceTree = "<group>"; };
+		4B75BFCF1C9C3AB200212268 /* FourthViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FourthViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,6 +93,41 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4B5F13D11C9D1A0C00188CB6 /* ImageSource */ = {
+			isa = PBXGroup;
+			children = (
+				4B5F13D31C9D1A8A00188CB6 /* touxiang.png */,
+			);
+			name = ImageSource;
+			path = ..;
+			sourceTree = "<group>";
+		};
+		4B5F13D21C9D1A5C00188CB6 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				4B5F13CE1C9D0D4A00188CB6 /* LoginViewController.h */,
+				4B5F13CF1C9D0D4A00188CB6 /* LoginViewController.m */,
+				4B75BF9A1C9BE76D00212268 /* FirstViewController.h */,
+				4B75BF9B1C9BE76D00212268 /* FirstViewController.m */,
+				4B75BF9D1C9BE76D00212268 /* SecondViewController.h */,
+				4B75BF9E1C9BE76D00212268 /* SecondViewController.m */,
+				4B75BFCB1C9BF97900212268 /* ThirdViewController.h */,
+				4B75BFCC1C9BF97900212268 /* ThirdViewController.m */,
+				4B75BFCE1C9C3AB200212268 /* FourthViewController.h */,
+				4B75BFCF1C9C3AB200212268 /* FourthViewController.m */,
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
+		4B5F13D51C9D3ED900188CB6 /* MBProgressHUD */ = {
+			isa = PBXGroup;
+			children = (
+				4B5F13D61C9D3EEE00188CB6 /* MBProgressHUD.h */,
+				4B5F13D71C9D3EEE00188CB6 /* MBProgressHUD.m */,
+			);
+			name = MBProgressHUD;
+			sourceTree = "<group>";
+		};
 		4B75BF881C9BE76D00212268 = {
 			isa = PBXGroup;
 			children = (
@@ -104,16 +151,9 @@
 		4B75BF931C9BE76D00212268 /* Book */ = {
 			isa = PBXGroup;
 			children = (
-				4B75BF971C9BE76D00212268 /* AppDelegate.h */,
-				4B75BF981C9BE76D00212268 /* AppDelegate.m */,
-				4B75BF9A1C9BE76D00212268 /* FirstViewController.h */,
-				4B75BF9B1C9BE76D00212268 /* FirstViewController.m */,
-				4B75BF9D1C9BE76D00212268 /* SecondViewController.h */,
-				4B75BF9E1C9BE76D00212268 /* SecondViewController.m */,
-				4B75BFA01C9BE76D00212268 /* Main.storyboard */,
-				4B75BFA31C9BE76D00212268 /* Assets.xcassets */,
-				4B75BFA51C9BE76D00212268 /* LaunchScreen.storyboard */,
-				4B75BFA81C9BE76D00212268 /* Info.plist */,
+				4B5F13D51C9D3ED900188CB6 /* MBProgressHUD */,
+				4B5F13D21C9D1A5C00188CB6 /* Controller */,
+				4B5F13D11C9D1A0C00188CB6 /* ImageSource */,
 				4B75BF941C9BE76D00212268 /* Supporting Files */,
 			);
 			path = Book;
@@ -122,6 +162,11 @@
 		4B75BF941C9BE76D00212268 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				4B75BF971C9BE76D00212268 /* AppDelegate.h */,
+				4B75BF981C9BE76D00212268 /* AppDelegate.m */,
+				4B75BFA51C9BE76D00212268 /* LaunchScreen.storyboard */,
+				4B75BFA31C9BE76D00212268 /* Assets.xcassets */,
+				4B75BFA81C9BE76D00212268 /* Info.plist */,
 				4B75BF951C9BE76D00212268 /* main.m */,
 			);
 			name = "Supporting Files";
@@ -252,8 +297,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				4B75BFA71C9BE76D00212268 /* LaunchScreen.storyboard in Resources */,
+				4B5F13D41C9D1A8A00188CB6 /* touxiang.png in Resources */,
 				4B75BFA41C9BE76D00212268 /* Assets.xcassets in Resources */,
-				4B75BFA21C9BE76D00212268 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -280,8 +325,12 @@
 			files = (
 				4B75BF9F1C9BE76D00212268 /* SecondViewController.m in Sources */,
 				4B75BF991C9BE76D00212268 /* AppDelegate.m in Sources */,
+				4B5F13D01C9D0D4A00188CB6 /* LoginViewController.m in Sources */,
+				4B75BFD01C9C3AB200212268 /* FourthViewController.m in Sources */,
+				4B75BFCD1C9BF97900212268 /* ThirdViewController.m in Sources */,
 				4B75BF9C1C9BE76D00212268 /* FirstViewController.m in Sources */,
 				4B75BF961C9BE76D00212268 /* main.m in Sources */,
+				4B5F13D81C9D3EEE00188CB6 /* MBProgressHUD.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -317,14 +366,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		4B75BFA01C9BE76D00212268 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				4B75BFA11C9BE76D00212268 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		4B75BFA51C9BE76D00212268 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -423,6 +464,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = Book/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = Martin.Book;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -434,6 +476,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = Book/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = Martin.Book;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -505,6 +548,7 @@
 				4B75BFC31C9BE76E00212268 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		4B75BFC41C9BE76E00212268 /* Build configuration list for PBXNativeTarget "BookTests" */ = {
 			isa = XCConfigurationList;
@@ -513,6 +557,7 @@
 				4B75BFC61C9BE76E00212268 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		4B75BFC71C9BE76E00212268 /* Build configuration list for PBXNativeTarget "BookUITests" */ = {
 			isa = XCConfigurationList;
@@ -521,6 +566,7 @@
 				4B75BFC91C9BE76E00212268 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

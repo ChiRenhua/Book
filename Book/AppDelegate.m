@@ -7,16 +7,24 @@
 //
 
 #import "AppDelegate.h"
+#import "LoginViewController.h"
+#import "MBProgressHUD.h"
 
 @interface AppDelegate ()
 
 @end
+LoginViewController *loginVC;
+MBProgressHUD *mbProgress;
 
 @implementation AppDelegate
 
-
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    self.window = [[UIWindow alloc]initWithFrame:[[UIScreen mainScreen] bounds]];
+    loginVC = [[LoginViewController alloc]init];
+    self.window.rootViewController = loginVC;
+    [self.window makeKeyAndVisible];
+    
     return YES;
 }
 
