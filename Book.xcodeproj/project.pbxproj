@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		050371381C9E1BB9002D63EF /* TabBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 050371371C9E1BB9002D63EF /* TabBarViewController.m */; };
 		4B5F13D01C9D0D4A00188CB6 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B5F13CF1C9D0D4A00188CB6 /* LoginViewController.m */; };
 		4B5F13D41C9D1A8A00188CB6 /* touxiang.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B5F13D31C9D1A8A00188CB6 /* touxiang.png */; };
 		4B5F13D81C9D3EEE00188CB6 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B5F13D71C9D3EEE00188CB6 /* MBProgressHUD.m */; };
@@ -40,6 +41,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		050371361C9E1BB9002D63EF /* TabBarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TabBarViewController.h; sourceTree = "<group>"; };
+		050371371C9E1BB9002D63EF /* TabBarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TabBarViewController.m; sourceTree = "<group>"; };
 		4B5F13CE1C9D0D4A00188CB6 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		4B5F13CF1C9D0D4A00188CB6 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		4B5F13D31C9D1A8A00188CB6 /* touxiang.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = touxiang.png; sourceTree = "<group>"; };
@@ -115,6 +118,8 @@
 				4B75BFCC1C9BF97900212268 /* ThirdViewController.m */,
 				4B75BFCE1C9C3AB200212268 /* FourthViewController.h */,
 				4B75BFCF1C9C3AB200212268 /* FourthViewController.m */,
+				050371361C9E1BB9002D63EF /* TabBarViewController.h */,
+				050371371C9E1BB9002D63EF /* TabBarViewController.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -325,6 +330,7 @@
 			files = (
 				4B75BF9F1C9BE76D00212268 /* SecondViewController.m in Sources */,
 				4B75BF991C9BE76D00212268 /* AppDelegate.m in Sources */,
+				050371381C9E1BB9002D63EF /* TabBarViewController.m in Sources */,
 				4B5F13D01C9D0D4A00188CB6 /* LoginViewController.m in Sources */,
 				4B75BFD01C9C3AB200212268 /* FourthViewController.m in Sources */,
 				4B75BFCD1C9BF97900212268 /* ThirdViewController.m in Sources */,

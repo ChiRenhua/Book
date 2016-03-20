@@ -8,21 +8,55 @@
 
 #import "AppDelegate.h"
 #import "LoginViewController.h"
-#import "MBProgressHUD.h"
+#import "TabBarViewController.h"
+#import "FirstViewController.h"
+#import "SecondViewController.h"
+#import "ThirdViewController.h"
+#import "FourthViewController.h"
 
 @interface AppDelegate ()
 
 @end
 LoginViewController *loginVC;
-MBProgressHUD *mbProgress;
+TabBarViewController *tabVC;
+FirstViewController *firstVC;
+SecondViewController *secondVC;
+ThirdViewController *thirdVC;
+FourthViewController *fourthVC;
 
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    tabVC = [[TabBarViewController alloc]init];
+    firstVC = [[FirstViewController alloc]init];
+    secondVC = [[SecondViewController alloc]init];
+    thirdVC = [[ThirdViewController alloc]init];
+    fourthVC = [[FourthViewController alloc]init];
+    
+    UINavigationController *firstTab = [[UINavigationController alloc]initWithRootViewController:firstVC];
+    UINavigationController *secondTab = [[UINavigationController alloc]initWithRootViewController:secondVC];
+    UINavigationController *thirdTab = [[UINavigationController alloc]initWithRootViewController:thirdVC];
+    UINavigationController *fourthTab = [[UINavigationController alloc]initWithRootViewController:fourthVC];
+    
+    NSArray *controllers = [NSArray arrayWithObjects:firstTab,secondTab,thirdTab,fourthTab,nil];
+    
+    tabVC.viewControllers = controllers;
+    
+    firstTab.title = @"页面一";
+    secondTab.title = @"页面二";
+    thirdTab.title = @"页面三";
+    fourthTab.title = @"页面四";
+    
+    firstTab.tabBarItem.image = [UIImage imageNamed:@"first"];
+    secondTab.tabBarItem.image = [UIImage imageNamed:@"first"];
+    thirdTab.tabBarItem.image = [UIImage imageNamed:@"first"];
+    fourthTab.tabBarItem.image = [UIImage imageNamed:@"first"];
+
+    
     self.window = [[UIWindow alloc]initWithFrame:[[UIScreen mainScreen] bounds]];
-    loginVC = [[LoginViewController alloc]init];
-    self.window.rootViewController = loginVC;
+   // loginVC = [[LoginViewController alloc]init];
+    self.window.rootViewController = tabVC;
     [self.window makeKeyAndVisible];
     
     return YES;

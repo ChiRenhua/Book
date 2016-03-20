@@ -8,6 +8,8 @@
 
 #import "FourthViewController.h"
 
+#define SCREEN_BOUNDS [UIScreen mainScreen].bounds.size
+
 @interface FourthViewController ()
 
 @end
@@ -17,8 +19,14 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
-    UILabel *lable = [[UILabel alloc]initWithFrame:CGRectMake(50, 50, 500, 50)];
-    [lable setText:@"我是第四个页面！"];
+    [self.view setBackgroundColor:[UIColor whiteColor]];
+    
+    self.navigationItem.title = @"页面四";
+    
+    UILabel *lable = [[UILabel alloc]initWithFrame:CGRectMake(SCREEN_BOUNDS.width/2-100, SCREEN_BOUNDS.height/2-25, 200, 50)];
+    [lable setText:@"Fourth Page"];
+    lable.font = [UIFont systemFontOfSize:20];
+    lable.textAlignment = NSTextAlignmentCenter;
     [lable setTextColor:[UIColor blackColor]];
     [self.view addSubview:lable];
 }

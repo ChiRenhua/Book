@@ -9,7 +9,7 @@
 #import "LoginViewController.h"
 #import "MBProgressHUD.h"
 
-#define SCREEN_BOUNDS [UIScreen mainScreen].bounds
+#define SCREEN_BOUNDS [UIScreen mainScreen].bounds.size
 
 @interface LoginViewController ()<UITextFieldDelegate,MBProgressHUDDelegate,NSURLConnectionDataDelegate>
 
@@ -24,17 +24,16 @@ MBProgressHUD *mbprogress;
 
 - (id)init{
     if(self = [super init]){
-        self.view.backgroundColor = [UIColor whiteColor];
-        mbprogress = [[MBProgressHUD alloc]initWithView:self.view];
-        mbprogress.delegate = self;
+        self.view.backgroundColor = [UIColor whiteColor];                                           // 设置背景颜色为白色
+        mbprogress = [[MBProgressHUD alloc]initWithView:self.view];                                 // 初始化toast
+        mbprogress.delegate = self;                                                                 // 设置toast代理为当前类
     }
     return self;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    [self addLoginForm];
+    [self addLoginForm];                                                                            // 加载登录界面UI
 }
 #pragma mark 加载登录界面UI
 - (void)addLoginForm {
@@ -42,11 +41,11 @@ MBProgressHUD *mbprogress;
     UIImageView *userImage = [[UIImageView alloc]init];
     userImage.bounds = CGRectMake(0, 0, 150, 150);                                                  // 设置头像图片大小
     userImage.contentMode = UIViewContentModeScaleAspectFit;                                        // 设置图片属性为合适填充
-    userImage.center = CGPointMake(SCREEN_BOUNDS.size.width/2, SCREEN_BOUNDS.size.height/5);        // 设置图片位置
+    userImage.center = CGPointMake(SCREEN_BOUNDS.width/2, SCREEN_BOUNDS.height/5);                  // 设置图片位置
     [userImage setImage:[UIImage imageNamed:@"touxiang.png"]];
     [self.view addSubview:userImage];
     // 添加登陆表格
-    userNameTextField = [[UITextField alloc]initWithFrame:CGRectMake(0, SCREEN_BOUNDS.size.height/3, SCREEN_BOUNDS.size.width, 50)];
+    userNameTextField = [[UITextField alloc]initWithFrame:CGRectMake(0, SCREEN_BOUNDS.height/3, SCREEN_BOUNDS.width, 50)];
     userNameTextField.backgroundColor = [UIColor whiteColor];
     userNameTextField.font = [UIFont systemFontOfSize:20];                                          // 设置文字大小
     userNameTextField.clearButtonMode = UITextFieldViewModeWhileEditing;                            // 设置删除按钮出现时间
@@ -55,7 +54,7 @@ MBProgressHUD *mbprogress;
     userNameTextField.returnKeyType = UIReturnKeyNext;                                              // return键样式更改
     [self.view addSubview:userNameTextField];
     
-    userPassWordTextField = [[UITextField alloc]initWithFrame:CGRectMake(0, SCREEN_BOUNDS.size.height/3 + 50, SCREEN_BOUNDS.size.width, 50)];
+    userPassWordTextField = [[UITextField alloc]initWithFrame:CGRectMake(0, SCREEN_BOUNDS.height/3 + 50, SCREEN_BOUNDS.width, 50)];
     userPassWordTextField.backgroundColor = [UIColor whiteColor];
     userPassWordTextField.font = [UIFont systemFontOfSize:20];                                       // 设置文字大小
     userPassWordTextField.clearButtonMode = UITextFieldViewModeWhileEditing;                         // 设置删除按钮出现时间
@@ -70,8 +69,8 @@ MBProgressHUD *mbprogress;
     
     // 添加登陆按钮
     UIButton *loginButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    loginButton.frame = CGRectMake(SCREEN_BOUNDS.size.width/4, SCREEN_BOUNDS.size.height/3+110, (SCREEN_BOUNDS.size.width/4)*2, 50);
-    [loginButton addTarget:self action:@selector(login) forControlEvents:UIControlEventTouchUpInside];
+    loginButton.frame = CGRectMake(SCREEN_BOUNDS.width/4, SCREEN_BOUNDS.height/3+110, (SCREEN_BOUNDS.width/4)*2, 50);
+    [loginButton addTarget:self action:@selector(login) forControlEvents:UIControlEventTouchUpInside];// 为登录按钮添加点击事件
     [loginButton setTitle:@"登陆" forState:UIControlStateNormal];
     loginButton.titleLabel.font = [UIFont systemFontOfSize:20];
     [self.view addSubview:loginButton];
@@ -82,7 +81,8 @@ MBProgressHUD *mbprogress;
 #pragma mark 登陆验证操作
 - (void)login {
     if ([userNameTextField.text isEqualToString:@""] || [userPassWordTextField.text isEqualToString:@""]) {
-        mbprogress.mode = MBProgressHUDModeText;
+        // 对于没有输入用户名或密码的情况作处理
+        mbprogress.mode = MBProgressHUDModeText;                                                      // 设置toast的样式为文字
         mbprogress.label.text = NSLocalizedString(@"请输入用户名或密码", @"HUD message title");
         [self.view addSubview:mbprogress];
         [self.view bringSubviewToFront:mbprogress];
@@ -120,6 +120,7 @@ MBProgressHUD *mbprogress;
         mbprogress.mode = MBProgressHUDModeCustomView;
         mbprogress.label.text = NSLocalizedString(@"登陆成功", @"HUD completed title");
         [mbprogress hideAnimated:YES afterDelay:3.f];
+        [self dismissViewControllerAnimated:YES completion:nil];                                          // 登录成功后撤下登录界面
     });
 }
 
@@ -137,7 +138,6 @@ MBProgressHUD *mbprogress;
         
     }];
     [alert addAction:okAction];
-    [self presentViewController:alert animated:YES completion:nil];
 }
 #pragma mark 重置键盘return按钮事件
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
@@ -145,6 +145,7 @@ MBProgressHUD *mbprogress;
     [userPassWordTextField resignFirstResponder];
     return YES;
 }
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
