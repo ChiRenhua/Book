@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "LoginViewController.h"
 
 @interface FourthViewController : UIViewController
-
+@property (retain,strong) UILabel *nameLable;
 
 @end

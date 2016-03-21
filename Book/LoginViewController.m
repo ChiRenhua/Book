@@ -8,25 +8,25 @@
 
 #import "LoginViewController.h"
 #import "MBProgressHUD.h"
+#import "AppDelegate.h"
 
 #define SCREEN_BOUNDS [UIScreen mainScreen].bounds.size
 
 @interface LoginViewController ()<UITextFieldDelegate,MBProgressHUDDelegate,NSURLConnectionDataDelegate>
-
-
+@property(strong,retain) UITextField *userNameTextField;
+@property(strong,retain)  UITextField *userPassWordTextField;
+@property(strong,retain)  MBProgressHUD *mbprogress;
 @end
 
-UITextField *userNameTextField;
-UITextField *userPassWordTextField;
-MBProgressHUD *mbprogress;
+
 
 @implementation LoginViewController
 
 - (id)init{
     if(self = [super init]){
         self.view.backgroundColor = [UIColor whiteColor];                                           // 设置背景颜色为白色
-        mbprogress = [[MBProgressHUD alloc]initWithView:self.view];                                 // 初始化toast
-        mbprogress.delegate = self;                                                                 // 设置toast代理为当前类
+        _mbprogress = [[MBProgressHUD alloc]initWithView:self.view];                                // 初始化toast
+        _mbprogress.delegate = self;                                                                // 设置toast代理为当前类
     }
     return self;
 }
@@ -45,27 +45,27 @@ MBProgressHUD *mbprogress;
     [userImage setImage:[UIImage imageNamed:@"touxiang.png"]];
     [self.view addSubview:userImage];
     // 添加登陆表格
-    userNameTextField = [[UITextField alloc]initWithFrame:CGRectMake(0, SCREEN_BOUNDS.height/3, SCREEN_BOUNDS.width, 50)];
-    userNameTextField.backgroundColor = [UIColor whiteColor];
-    userNameTextField.font = [UIFont systemFontOfSize:20];                                          // 设置文字大小
-    userNameTextField.clearButtonMode = UITextFieldViewModeWhileEditing;                            // 设置删除按钮出现时间
-    userNameTextField.borderStyle = UITextBorderStyleRoundedRect;                                   // 设置边框样式
-    userNameTextField.placeholder = @"用户名";                                                       // 添加默认文字，点击消失
-    userNameTextField.returnKeyType = UIReturnKeyNext;                                              // return键样式更改
-    [self.view addSubview:userNameTextField];
+    _userNameTextField = [[UITextField alloc]initWithFrame:CGRectMake(0, SCREEN_BOUNDS.height/3, SCREEN_BOUNDS.width, 50)];
+    _userNameTextField.backgroundColor = [UIColor whiteColor];
+    _userNameTextField.font = [UIFont systemFontOfSize:20];                                          // 设置文字大小
+    _userNameTextField.clearButtonMode = UITextFieldViewModeWhileEditing;                            // 设置删除按钮出现时间
+    _userNameTextField.borderStyle = UITextBorderStyleRoundedRect;                                   // 设置边框样式
+    _userNameTextField.placeholder = @"用户名";                                                       // 添加默认文字，点击消失
+    _userNameTextField.returnKeyType = UIReturnKeyNext;                                              // return键样式更改
+    [self.view addSubview:_userNameTextField];
     
-    userPassWordTextField = [[UITextField alloc]initWithFrame:CGRectMake(0, SCREEN_BOUNDS.height/3 + 50, SCREEN_BOUNDS.width, 50)];
-    userPassWordTextField.backgroundColor = [UIColor whiteColor];
-    userPassWordTextField.font = [UIFont systemFontOfSize:20];                                       // 设置文字大小
-    userPassWordTextField.clearButtonMode = UITextFieldViewModeWhileEditing;                         // 设置删除按钮出现时间
-    userPassWordTextField.borderStyle = UITextBorderStyleRoundedRect;                                // 设置边框样式
-    userPassWordTextField.placeholder = @"密码";                                                      // 添加默认文字，点击消失
-    userPassWordTextField.keyboardType = UIKeyboardTypeDefault;                                      // 设置键盘样式
-    userPassWordTextField.secureTextEntry = YES;                                                     // 密文输入
-    userPassWordTextField.clearsOnBeginEditing = YES;                                                // 再次编辑清空
-    userPassWordTextField.returnKeyType = UIReturnKeyJoin;                                           // return键样式更改
-    userPassWordTextField.delegate = self;
-    [self.view addSubview:userPassWordTextField];
+    _userPassWordTextField = [[UITextField alloc]initWithFrame:CGRectMake(0, SCREEN_BOUNDS.height/3 + 50, SCREEN_BOUNDS.width, 50)];
+    _userPassWordTextField.backgroundColor = [UIColor whiteColor];
+    _userPassWordTextField.font = [UIFont systemFontOfSize:20];                                       // 设置文字大小
+    _userPassWordTextField.clearButtonMode = UITextFieldViewModeWhileEditing;                         // 设置删除按钮出现时间
+    _userPassWordTextField.borderStyle = UITextBorderStyleRoundedRect;                                // 设置边框样式
+    _userPassWordTextField.placeholder = @"密码";                                                      // 添加默认文字，点击消失
+    _userPassWordTextField.keyboardType = UIKeyboardTypeDefault;                                      // 设置键盘样式
+    _userPassWordTextField.secureTextEntry = YES;                                                     // 密文输入
+    _userPassWordTextField.clearsOnBeginEditing = YES;                                                // 再次编辑清空
+    _userPassWordTextField.returnKeyType = UIReturnKeyJoin;                                           // return键样式更改
+    _userPassWordTextField.delegate = self;
+    [self.view addSubview:_userPassWordTextField];
     
     // 添加登陆按钮
     UIButton *loginButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
@@ -80,28 +80,28 @@ MBProgressHUD *mbprogress;
 }
 #pragma mark 登陆验证操作
 - (void)login {
-    if ([userNameTextField.text isEqualToString:@""] || [userPassWordTextField.text isEqualToString:@""]) {
+    if ([_userNameTextField.text isEqualToString:@""] || [_userPassWordTextField.text isEqualToString:@""]) {
         // 对于没有输入用户名或密码的情况作处理
-        mbprogress.mode = MBProgressHUDModeText;                                                      // 设置toast的样式为文字
-        mbprogress.label.text = NSLocalizedString(@"请输入用户名或密码", @"HUD message title");
-        [self.view addSubview:mbprogress];
-        [self.view bringSubviewToFront:mbprogress];
-        [mbprogress showAnimated:YES];
-        [mbprogress hideAnimated:YES afterDelay:2.];
-    }else if([userNameTextField.text isEqualToString:@"Martin"] && [userPassWordTextField.text isEqualToString:@"123456"]) {
-            [self showProgressWithTitle:@"正在登陆..."];
-            [self getWeatherInfoFromNet];
+        _mbprogress.mode = MBProgressHUDModeText;                                                      // 设置toast的样式为文字
+        _mbprogress.label.text = NSLocalizedString(@"请输入用户名或密码", @"HUD message title");
+        [self.view addSubview:_mbprogress];
+        [self.view bringSubviewToFront:_mbprogress];
+        [_mbprogress showAnimated:YES];
+        [_mbprogress hideAnimated:YES afterDelay:2.];
+    }else if([_userNameTextField.text isEqualToString:@"Martin"] && [_userPassWordTextField.text isEqualToString:@"123456"]) {
+        [self showProgressWithTitle:@"正在登陆..."];
+        [self getWeatherInfoFromNet];
     }else {
         [self showLoginFailedDialg];
     }
 }
 #pragma mark 显示toast
 - (void)showProgressWithTitle:(NSString *) title{
-    mbprogress.mode = MBProgressHUDModeIndeterminate;
-    mbprogress.label.text = NSLocalizedString(title, @"HUD cleanining up title");
-    [self.view addSubview:mbprogress];
-    [self.view bringSubviewToFront:mbprogress];
-    [mbprogress showAnimated:YES];
+    _mbprogress.mode = MBProgressHUDModeIndeterminate;
+    _mbprogress.label.text = NSLocalizedString(title, @"HUD cleanining up title");
+    [self.view addSubview:_mbprogress];
+    [self.view bringSubviewToFront:_mbprogress];
+    [_mbprogress showAnimated:YES];
 }
 
 - (void)getWeatherInfoFromNet{
@@ -116,17 +116,21 @@ MBProgressHUD *mbprogress;
     dispatch_async(dispatch_get_main_queue(), ^{
         UIImage *image = [[UIImage imageNamed:@"Checkmark"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
         UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
-        mbprogress.customView = imageView;
-        mbprogress.mode = MBProgressHUDModeCustomView;
-        mbprogress.label.text = NSLocalizedString(@"登陆成功", @"HUD completed title");
-        [mbprogress hideAnimated:YES afterDelay:3.f];
+        _mbprogress.customView = imageView;
+        _mbprogress.mode = MBProgressHUDModeCustomView;
+        _mbprogress.label.text = NSLocalizedString(@"登陆成功", @"HUD completed title");
+        [_mbprogress hideAnimated:YES afterDelay:3.f];
+        // 加载个人页面数据
+        AppDelegate *appdelegate = [[UIApplication sharedApplication]delegate];
+        appdelegate.fourthVC.nameLable.text = [[NSString alloc]initWithFormat:@"欢迎用户：%@",_userNameTextField.text];
+        [self saveUserInfo];
         [self dismissViewControllerAnimated:YES completion:nil];                                          // 登录成功后撤下登录界面
     });
 }
 
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error{
     dispatch_async(dispatch_get_main_queue(), ^{
-        [mbprogress hideAnimated:YES];
+        [_mbprogress hideAnimated:YES];
         [self showLoginFailedDialg];
     });
 }
@@ -142,8 +146,24 @@ MBProgressHUD *mbprogress;
 #pragma mark 重置键盘return按钮事件
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     [self login];
-    [userPassWordTextField resignFirstResponder];
+    [_userPassWordTextField resignFirstResponder];
     return YES;
+}
+#pragma mark 将用户信息存储到plist文件中
+- (void)saveUserInfo {
+    NSMutableDictionary *userDataDictionary = [[NSMutableDictionary alloc]init];
+    [userDataDictionary setValue:_userNameTextField.text forKey:@"userName"];
+    [userDataDictionary setValue:_userPassWordTextField.text forKey:@"userPassword"];
+    
+    
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSArray *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *filePath = [path objectAtIndex:0];
+    NSString *plistPath = [filePath stringByAppendingPathComponent:@"userInfo.plist"];
+    [fileManager createFileAtPath:plistPath contents:nil attributes:nil];
+    
+    [userDataDictionary writeToFile:plistPath atomically:YES];
+    NSLog(@"Martin----------------%@",userDataDictionary);
 }
 
 

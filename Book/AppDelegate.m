@@ -7,42 +7,37 @@
 //
 
 #import "AppDelegate.h"
-#import "LoginViewController.h"
-#import "TabBarViewController.h"
-#import "FirstViewController.h"
-#import "SecondViewController.h"
-#import "ThirdViewController.h"
-#import "FourthViewController.h"
+
 
 @interface AppDelegate ()
 
 @end
-LoginViewController *loginVC;
-TabBarViewController *tabVC;
-FirstViewController *firstVC;
-SecondViewController *secondVC;
-ThirdViewController *thirdVC;
-FourthViewController *fourthVC;
+
 
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
-    tabVC = [[TabBarViewController alloc]init];
-    firstVC = [[FirstViewController alloc]init];
-    secondVC = [[SecondViewController alloc]init];
-    thirdVC = [[ThirdViewController alloc]init];
-    fourthVC = [[FourthViewController alloc]init];
+    // 初始化TabBarViewController以及四个视图控制器
+    _tabVC = [[TabBarViewController alloc]init];
+    _firstVC = [[FirstViewController alloc]init];
+    _secondVC = [[SecondViewController alloc]init];
+    _thirdVC = [[ThirdViewController alloc]init];
+    _fourthVC = [[FourthViewController alloc]init];
     
-    UINavigationController *firstTab = [[UINavigationController alloc]initWithRootViewController:firstVC];
-    UINavigationController *secondTab = [[UINavigationController alloc]initWithRootViewController:secondVC];
-    UINavigationController *thirdTab = [[UINavigationController alloc]initWithRootViewController:thirdVC];
-    UINavigationController *fourthTab = [[UINavigationController alloc]initWithRootViewController:fourthVC];
+    //为四个视图控制器添加导航栏控制器
+    UINavigationController *firstTab = [[UINavigationController alloc]initWithRootViewController:_firstVC];
+    UINavigationController *secondTab = [[UINavigationController alloc]initWithRootViewController:_secondVC];
+    UINavigationController *thirdTab = [[UINavigationController alloc]initWithRootViewController:_thirdVC];
+    UINavigationController *fourthTab = [[UINavigationController alloc]initWithRootViewController:_fourthVC];
     
+    // 创建一个包含四个导航栏的数组
     NSArray *controllers = [NSArray arrayWithObjects:firstTab,secondTab,thirdTab,fourthTab,nil];
     
-    tabVC.viewControllers = controllers;
+    // 将数组传递给TabBarViewController
+    _tabVC.viewControllers = controllers;
     
+    // 设置每个视图控制器的标题和图片
     firstTab.title = @"页面一";
     secondTab.title = @"页面二";
     thirdTab.title = @"页面三";
@@ -55,8 +50,7 @@ FourthViewController *fourthVC;
 
     
     self.window = [[UIWindow alloc]initWithFrame:[[UIScreen mainScreen] bounds]];
-   // loginVC = [[LoginViewController alloc]init];
-    self.window.rootViewController = tabVC;
+    self.window.rootViewController = _tabVC;
     [self.window makeKeyAndVisible];
     
     return YES;
@@ -82,6 +76,10 @@ FourthViewController *fourthVC;
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+}
+#pragma mark 禁止屏幕旋转
+- (UIInterfaceOrientationMask)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window {
+    return UIInterfaceOrientationMaskPortrait;
 }
 
 @end

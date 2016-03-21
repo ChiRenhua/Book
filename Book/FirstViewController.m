@@ -8,6 +8,7 @@
 
 #import "FirstViewController.h"
 #import "LoginViewController.h"
+#import "AppDelegate.h"
 
 #define SCREEN_BOUNDS [UIScreen mainScreen].bounds.size
 
@@ -30,15 +31,27 @@
     lable.textAlignment = NSTextAlignmentCenter;
     [lable setTextColor:[UIColor blackColor]];
     [self.view addSubview:lable];
-    
-    [self islogin];
 }
 
-- (void)islogin {
-    if (YES) {
-        LoginViewController *loginVC = [[LoginViewController alloc]init];
-        [self presentViewController:loginVC animated:YES completion:nil];
+- (void)viewWillAppear:(BOOL)animated {
+    [self verificationLogin];
+}
+
+#pragma mark 验证登陆
+- (void)verificationLogin {
+    NSArray *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *filePath = [path objectAtIndex:0];
+    NSString *plistPath = [filePath stringByAppendingPathComponent:@"userInfo.plist"];
+    NSMutableDictionary *userInfo = [[NSMutableDictionary alloc]initWithContentsOfFile:plistPath];
+    NSString *userName = [userInfo objectForKey:@"userName"];
+    NSString *userPassword = [userInfo objectForKey:@"userPassword"];
+    if([userName isEqualToString:@"Martin"] && [userPassword isEqualToString:@"123456"]) {
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }else{
+        AppDelegate *appdelegate = [[UIApplication sharedApplication] delegate];
+        [self presentViewController:appdelegate.loginVC animated:YES completion:nil];
     }
+    
 }
 
 - (void)didReceiveMemoryWarning {
