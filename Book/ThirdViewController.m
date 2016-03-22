@@ -21,7 +21,7 @@
     // Do any additional setup after loading the view, typically from a nib.
     [self.view setBackgroundColor:[UIColor whiteColor]];
     
-    self.navigationItem.title = @"页面三";
+    self.navigationItem.title = @"已审核";
     
     UILabel *lable = [[UILabel alloc]initWithFrame:CGRectMake(SCREEN_BOUNDS.width/2-100, SCREEN_BOUNDS.height/2-25, 200, 50)];
     [lable setText:@"Third Page"];

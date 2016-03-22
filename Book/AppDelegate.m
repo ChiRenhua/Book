@@ -38,10 +38,10 @@
     _tabVC.viewControllers = controllers;
     
     // 设置每个视图控制器的标题和图片
-    firstTab.title = @"页面一";
-    secondTab.title = @"页面二";
-    thirdTab.title = @"页面三";
-    fourthTab.title = @"页面四";
+    firstTab.title = @"待审核";
+    secondTab.title = @"审核中";
+    thirdTab.title = @"已审核";
+    fourthTab.title = @"我";
     
     firstTab.tabBarItem.image = [UIImage imageNamed:@"first"];
     secondTab.tabBarItem.image = [UIImage imageNamed:@"first"];

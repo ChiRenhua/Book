@@ -82,12 +82,12 @@
 - (void)login {
     if ([_userNameTextField.text isEqualToString:@""] || [_userPassWordTextField.text isEqualToString:@""]) {
         // 对于没有输入用户名或密码的情况作处理
-        _mbprogress.mode = MBProgressHUDModeText;                                                      // 设置toast的样式为文字
-        _mbprogress.label.text = NSLocalizedString(@"请输入用户名或密码", @"HUD message title");
-        [self.view addSubview:_mbprogress];
-        [self.view bringSubviewToFront:_mbprogress];
-        [_mbprogress showAnimated:YES];
-        [_mbprogress hideAnimated:YES afterDelay:2.];
+        _mbprogress.mode = MBProgressHUDModeText;                                                       // 设置toast的样式为文字
+        _mbprogress.label.text = NSLocalizedString(@"请输入用户名或密码", @"HUD message title");           // 设置toast上的文字
+        [self.view addSubview:_mbprogress];                                                             // 将toast添加到view中
+        [self.view bringSubviewToFront:_mbprogress];                                                    // 让toast显示在view的最前端
+        [_mbprogress showAnimated:YES];                                                                 // 显示toast
+        [_mbprogress hideAnimated:YES afterDelay:2.];                                                   // 2秒后销毁toast
     }else if([_userNameTextField.text isEqualToString:@"Martin"] && [_userPassWordTextField.text isEqualToString:@"123456"]) {
         [self showProgressWithTitle:@"正在登陆..."];
         [self getWeatherInfoFromNet];
@@ -127,7 +127,7 @@
         [self dismissViewControllerAnimated:YES completion:nil];                                          // 登录成功后撤下登录界面
     });
 }
-
+#pragma mark 登陆验证失败调用此函数
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error{
     dispatch_async(dispatch_get_main_queue(), ^{
         [_mbprogress hideAnimated:YES];
@@ -163,7 +163,6 @@
     [fileManager createFileAtPath:plistPath contents:nil attributes:nil];
     
     [userDataDictionary writeToFile:plistPath atomically:YES];
-    NSLog(@"Martin----------------%@",userDataDictionary);
 }
 
 

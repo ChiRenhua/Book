@@ -19,7 +19,7 @@
 - (id)init {
     if (self = [super init]) {
         [self.view setBackgroundColor:[UIColor whiteColor]];
-        self.navigationItem.title = @"页面四";
+        self.navigationItem.title = @"我";
     }
     return  self;
 }
