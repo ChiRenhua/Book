@@ -68,7 +68,7 @@
 }
 #pragma mark 设置每组标题名称
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-    return @"书籍信息：";
+    return @"书籍信息";
 }
 #pragma mark 设置分组数
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -96,6 +96,10 @@
     Book *books = _bookArray[indexPath.row];
     [cell setBookInfo:books];
     return cell;
+}
+#pragma mark 添加行点击事件
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSLog(@"我点击的第：%ld个",(long)indexPath.row);
 }
 #pragma mark 设置行高
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {

@@ -38,7 +38,7 @@ UILabel *bookStateLable;
     // 书名
     bookNameLable = [[UILabel alloc]init];
     bookNameLable.textColor = [UIColor blackColor];
-    bookNameLable.font = [UIFont systemFontOfSize:20];
+    bookNameLable.font = [UIFont systemFontOfSize:18];
     bookNameLable.frame = CGRectMake(90, 10, SCREEN_BOUNDS.width - 60, 25);
     [self.contentView addSubview:bookNameLable];
     // 作者
@@ -55,8 +55,8 @@ UILabel *bookStateLable;
     [self.contentView addSubview:bookTimeLable];
     // 状态
     bookStateLable = [[UILabel alloc]init];
-    bookStateLable.textColor = [UIColor blackColor];
-    bookStateLable.font = [UIFont systemFontOfSize:15];
+    bookStateLable.textColor = [UIColor grayColor];
+    bookStateLable.font = [UIFont systemFontOfSize:14];
     bookStateLable.frame = CGRectMake(SCREEN_BOUNDS.width - 50, 45, 50, 10);
     [self.contentView addSubview:bookStateLable];
     

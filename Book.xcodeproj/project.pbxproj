@@ -199,8 +199,8 @@
 				4BA0AD2F1CA1147D003EBE65 /* View */,
 				4BA0AD2E1CA11462003EBE65 /* Model */,
 				4B5F13D21C9D1A5C00188CB6 /* Controller */,
-				4B5F13D11C9D1A0C00188CB6 /* ImageSource */,
 				4B75BF941C9BE76D00212268 /* Supporting Files */,
+				4B5F13D11C9D1A0C00188CB6 /* ImageSource */,
 			);
 			path = Book;
 			sourceTree = "<group>";
@@ -546,7 +546,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = Book/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = Martin.Book;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -561,7 +561,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = Book/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = Martin.Book;
 				PRODUCT_NAME = "$(TARGET_NAME)";
