@@ -45,7 +45,7 @@ UILabel *bookStateLable;
     bookWriterLable = [[UILabel alloc]init];
     bookWriterLable.textColor = [UIColor grayColor];
     bookWriterLable.font = [UIFont systemFontOfSize:15];
-    bookWriterLable.frame = CGRectMake(90, 45, SCREEN_BOUNDS.width - 60, 15);
+    bookWriterLable.frame = CGRectMake(90, 45, SCREEN_BOUNDS.width - 60, 16);
     [self.contentView addSubview:bookWriterLable];
     // 提交时间
     bookTimeLable = [[UILabel alloc]init];

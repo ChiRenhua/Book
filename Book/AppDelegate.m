@@ -7,7 +7,7 @@
 //
 
 #import "AppDelegate.h"
-
+#import "GetBookInfo.h"
 
 @interface AppDelegate ()
 
@@ -52,6 +52,11 @@
     self.window = [[UIWindow alloc]initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.rootViewController = _tabVC;
     [self.window makeKeyAndVisible];
+    
+    // 书籍假数据
+    GetBookInfo *bookInfo = [[GetBookInfo alloc]init];
+    _bookArray = [[NSMutableArray alloc]init];
+    _bookArray = [bookInfo getPendingBooks];
     
     return YES;
 }

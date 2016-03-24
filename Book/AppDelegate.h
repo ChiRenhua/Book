@@ -24,5 +24,7 @@
 @property (strong, nonatomic) ThirdViewController *thirdVC;
 @property (strong, nonatomic) FourthViewController *fourthVC;
 
+@property (nonatomic,strong) NSMutableArray *bookArray;
+
 @end
 

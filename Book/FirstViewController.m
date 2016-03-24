@@ -9,15 +9,18 @@
 #import "FirstViewController.h"
 #import "LoginViewController.h"
 #import "AppDelegate.h"
-#import "GetBookInfo.h"
 #import "ListTableViewCell.h"
+#import "BookDetialViewController.h"
 
 #define SCREEN_BOUNDS [UIScreen mainScreen].bounds.size
 
 @interface FirstViewController ()<UITableViewDataSource,UITableViewDelegate>
 @property (nonatomic,strong) UITableView *tableView;
-@property (nonatomic,strong) NSMutableArray *bookArray;
 @end
+
+BookDetialViewController *bookDetialVC;
+ListTableViewCell *cell;
+AppDelegate *appdelegate;
 
 @implementation FirstViewController
 
@@ -35,10 +38,9 @@
     _tableView.dataSource = self;                                                                                   // 设置tableview的数据代理
     _tableView.delegate = self;                                                                                     // 设置tableview代理
     [self.view addSubview:_tableView];                                                                              // 将tableview添加到屏幕上
-    // 书籍假数据
-    GetBookInfo *bookInfo = [[GetBookInfo alloc]init];
-    _bookArray = [[NSMutableArray alloc]init];
-    _bookArray = [bookInfo getPendingBooks];
+    appdelegate = [[UIApplication sharedApplication]delegate];
+    
+    bookDetialVC = [[BookDetialViewController alloc]init];
     
 }
 
@@ -81,11 +83,11 @@
 
 #pragma mark 设置行数
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [_bookArray count];
+    return [appdelegate.bookArray count];
 }
 #pragma mark 设置单元格样式和内容
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    ListTableViewCell *cell;
+    
     cell = [tableView dequeueReusableCellWithIdentifier:@"UIListTableViewCell"];                                                        // 从缓存池中取出cell
     if (!cell) {                                                                                                                        // 判断是否能取出cell
         cell = [[ListTableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"UIListTableViewCell"];            // 如果cell为空则创建一个新的cell并放入缓存池中
@@ -93,13 +95,14 @@
         [cell removeCellView];                                                                                                          // 将之前cell界面上的view全部remove掉
         [cell initCellView];                                                                                                            // 重新初始化cell上的view
     }
-    Book *books = _bookArray[indexPath.row];
+    Book *books = appdelegate.bookArray[indexPath.row];
     [cell setBookInfo:books];
     return cell;
 }
 #pragma mark 添加行点击事件
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSLog(@"我点击的第：%ld个",(long)indexPath.row);
+    [self.navigationController pushViewController:bookDetialVC animated:YES];
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];                                                                          // 取消选中的状态
 }
 #pragma mark 设置行高
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {

@@ -10,6 +10,7 @@
 		050371381C9E1BB9002D63EF /* TabBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 050371371C9E1BB9002D63EF /* TabBarViewController.m */; };
 		4B5F13D01C9D0D4A00188CB6 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B5F13CF1C9D0D4A00188CB6 /* LoginViewController.m */; };
 		4B5F13D81C9D3EEE00188CB6 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B5F13D71C9D3EEE00188CB6 /* MBProgressHUD.m */; };
+		4B603F8A1CA3B95800B0F6BC /* TableScrollViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B603F891CA3B95800B0F6BC /* TableScrollViewCell.m */; };
 		4B75BF961C9BE76D00212268 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B75BF951C9BE76D00212268 /* main.m */; };
 		4B75BF991C9BE76D00212268 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B75BF981C9BE76D00212268 /* AppDelegate.m */; };
 		4B75BF9C1C9BE76D00212268 /* FirstViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B75BF9B1C9BE76D00212268 /* FirstViewController.m */; };
@@ -20,6 +21,7 @@
 		4B75BFBD1C9BE76E00212268 /* BookUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B75BFBC1C9BE76E00212268 /* BookUITests.m */; };
 		4B75BFCD1C9BF97900212268 /* ThirdViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B75BFCC1C9BF97900212268 /* ThirdViewController.m */; };
 		4B75BFD01C9C3AB200212268 /* FourthViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B75BFCF1C9C3AB200212268 /* FourthViewController.m */; };
+		4B96DD501CA2642F0070725C /* BookDetialViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B96DD4F1CA2642F0070725C /* BookDetialViewController.m */; };
 		4BA0AD2D1CA11178003EBE65 /* ListTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BA0AD2C1CA11178003EBE65 /* ListTableViewCell.m */; };
 		4BA0AD321CA114C6003EBE65 /* Book.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BA0AD311CA114C6003EBE65 /* Book.m */; };
 		4BA0AD371CA1206A003EBE65 /* GetBookInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BA0AD361CA1206A003EBE65 /* GetBookInfo.m */; };
@@ -60,6 +62,8 @@
 		4B5F13CF1C9D0D4A00188CB6 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		4B5F13D61C9D3EEE00188CB6 /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
 		4B5F13D71C9D3EEE00188CB6 /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
+		4B603F881CA3B95800B0F6BC /* TableScrollViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TableScrollViewCell.h; sourceTree = "<group>"; };
+		4B603F891CA3B95800B0F6BC /* TableScrollViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TableScrollViewCell.m; sourceTree = "<group>"; };
 		4B75BF911C9BE76D00212268 /* Book.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Book.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4B75BF951C9BE76D00212268 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		4B75BF971C9BE76D00212268 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -81,6 +85,8 @@
 		4B75BFCC1C9BF97900212268 /* ThirdViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThirdViewController.m; sourceTree = "<group>"; };
 		4B75BFCE1C9C3AB200212268 /* FourthViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FourthViewController.h; sourceTree = "<group>"; };
 		4B75BFCF1C9C3AB200212268 /* FourthViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FourthViewController.m; sourceTree = "<group>"; };
+		4B96DD4E1CA2642F0070725C /* BookDetialViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BookDetialViewController.h; sourceTree = "<group>"; };
+		4B96DD4F1CA2642F0070725C /* BookDetialViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BookDetialViewController.m; sourceTree = "<group>"; };
 		4BA0AD2B1CA11178003EBE65 /* ListTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ListTableViewCell.h; sourceTree = "<group>"; };
 		4BA0AD2C1CA11178003EBE65 /* ListTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ListTableViewCell.m; sourceTree = "<group>"; };
 		4BA0AD301CA114C6003EBE65 /* Book.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Book.h; sourceTree = "<group>"; };
@@ -159,6 +165,8 @@
 				4B75BFCF1C9C3AB200212268 /* FourthViewController.m */,
 				050371361C9E1BB9002D63EF /* TabBarViewController.h */,
 				050371371C9E1BB9002D63EF /* TabBarViewController.m */,
+				4B96DD4E1CA2642F0070725C /* BookDetialViewController.h */,
+				4B96DD4F1CA2642F0070725C /* BookDetialViewController.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -252,6 +260,8 @@
 			children = (
 				4BA0AD2B1CA11178003EBE65 /* ListTableViewCell.h */,
 				4BA0AD2C1CA11178003EBE65 /* ListTableViewCell.m */,
+				4B603F881CA3B95800B0F6BC /* TableScrollViewCell.h */,
+				4B603F891CA3B95800B0F6BC /* TableScrollViewCell.m */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -402,10 +412,12 @@
 				4B75BF9F1C9BE76D00212268 /* SecondViewController.m in Sources */,
 				4B75BF991C9BE76D00212268 /* AppDelegate.m in Sources */,
 				050371381C9E1BB9002D63EF /* TabBarViewController.m in Sources */,
+				4B603F8A1CA3B95800B0F6BC /* TableScrollViewCell.m in Sources */,
 				4BA0AD371CA1206A003EBE65 /* GetBookInfo.m in Sources */,
 				4B5F13D01C9D0D4A00188CB6 /* LoginViewController.m in Sources */,
 				4B75BFD01C9C3AB200212268 /* FourthViewController.m in Sources */,
 				4BA0AD2D1CA11178003EBE65 /* ListTableViewCell.m in Sources */,
+				4B96DD501CA2642F0070725C /* BookDetialViewController.m in Sources */,
 				4B75BFCD1C9BF97900212268 /* ThirdViewController.m in Sources */,
 				4BA0AD321CA114C6003EBE65 /* Book.m in Sources */,
 				4B75BF9C1C9BE76D00212268 /* FirstViewController.m in Sources */,
