@@ -10,7 +10,7 @@
 #import "LoginViewController.h"
 #import "AppDelegate.h"
 #import "ListTableViewCell.h"
-#import "BookDetialViewController.h"
+#import "GetBookInfo.h"
 
 #define SCREEN_BOUNDS [UIScreen mainScreen].bounds.size
 
@@ -18,9 +18,9 @@
 @property (nonatomic,strong) UITableView *tableView;
 @end
 
-BookDetialViewController *bookDetialVC;
 ListTableViewCell *cell;
-AppDelegate *appdelegate;
+AppDelegate *firstViewappdelegate;
+GetBookInfo *firstViewbookinfo;
 
 @implementation FirstViewController
 
@@ -38,9 +38,9 @@ AppDelegate *appdelegate;
     _tableView.dataSource = self;                                                                                   // 设置tableview的数据代理
     _tableView.delegate = self;                                                                                     // 设置tableview代理
     [self.view addSubview:_tableView];                                                                              // 将tableview添加到屏幕上
-    appdelegate = [[UIApplication sharedApplication]delegate];
+    firstViewappdelegate = [[UIApplication sharedApplication]delegate];
     
-    bookDetialVC = [[BookDetialViewController alloc]init];
+    firstViewbookinfo = [[GetBookInfo alloc]init];
     
 }
 
@@ -58,13 +58,8 @@ AppDelegate *appdelegate;
     NSString *userName = [userInfo objectForKey:@"userName"];
     NSString *userPassword = [userInfo objectForKey:@"userPassword"];
     // 如果用户信息核对错误，则弹出登陆界面
-    if (userName == nil || userPassword == nil) {
-        AppDelegate *appdelegate = [[UIApplication sharedApplication] delegate];
-        [self presentViewController:appdelegate.loginVC animated:YES completion:nil];
-    }
     if(![userName isEqualToString:@"Martin"] && ![userPassword isEqualToString:@"123456"]) {
-        AppDelegate *appdelegate = [[UIApplication sharedApplication] delegate];
-        [self presentViewController:appdelegate.loginVC animated:YES completion:nil];
+        [self presentViewController:firstViewappdelegate.loginVC animated:YES completion:nil];
     }
     
 }
@@ -83,7 +78,7 @@ AppDelegate *appdelegate;
 
 #pragma mark 设置行数
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [appdelegate.bookArray count];
+    return [firstViewbookinfo.getPendingBooks count];
 }
 #pragma mark 设置单元格样式和内容
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -95,13 +90,13 @@ AppDelegate *appdelegate;
         [cell removeCellView];                                                                                                          // 将之前cell界面上的view全部remove掉
         [cell initCellView];                                                                                                            // 重新初始化cell上的view
     }
-    Book *books = appdelegate.bookArray[indexPath.row];
+    Book *books = firstViewbookinfo.getPendingBooks[indexPath.row];
     [cell setBookInfo:books];
     return cell;
 }
 #pragma mark 添加行点击事件
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    [self.navigationController pushViewController:bookDetialVC animated:YES];
+    [self.navigationController pushViewController:firstViewappdelegate.bookDetialVC animated:YES];
     [tableView deselectRowAtIndexPath:indexPath animated:YES];                                                                          // 取消选中的状态
 }
 #pragma mark 设置行高

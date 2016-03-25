@@ -7,7 +7,6 @@
 //
 
 #import "AppDelegate.h"
-#import "GetBookInfo.h"
 
 @interface AppDelegate ()
 
@@ -24,6 +23,8 @@
     _secondVC = [[SecondViewController alloc]init];
     _thirdVC = [[ThirdViewController alloc]init];
     _fourthVC = [[FourthViewController alloc]init];
+    _loginVC = [[LoginViewController alloc]init];
+    _bookDetialVC = [[BookDetialViewController alloc]init];
     
     //为四个视图控制器添加导航栏控制器
     UINavigationController *firstTab = [[UINavigationController alloc]initWithRootViewController:_firstVC];
@@ -52,11 +53,6 @@
     self.window = [[UIWindow alloc]initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.rootViewController = _tabVC;
     [self.window makeKeyAndVisible];
-    
-    // 书籍假数据
-    GetBookInfo *bookInfo = [[GetBookInfo alloc]init];
-    _bookArray = [[NSMutableArray alloc]init];
-    _bookArray = [bookInfo getPendingBooks];
     
     return YES;
 }

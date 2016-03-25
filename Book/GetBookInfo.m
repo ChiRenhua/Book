@@ -11,7 +11,7 @@
 @implementation GetBookInfo
 
 #pragma mark 书籍假数据
-- (NSMutableArray *)getPassBooks {
+- (NSMutableArray *)getBookswithState:(NSString *)state {
     NSMutableArray *array = [[NSMutableArray alloc]init];
     
     NSMutableDictionary  *dic1 = [[NSMutableDictionary alloc]init];
@@ -23,7 +23,7 @@
     [dic1 setObject:@"100页" forKey:@"bookPages"];
     [dic1 setObject:@"小说" forKey:@"bookCategory"];
     [dic1 setObject:@"book_01.jpg" forKey:@"bookPicture"];
-    [dic1 setObject:@"待审核" forKey:@"bookState"];
+    [dic1 setObject:state forKey:@"bookState"];
     
     NSMutableDictionary  *dic2 = [[NSMutableDictionary alloc]init];
     [dic2 setObject:@"The Animal Part" forKey:@"bookName"];
@@ -34,7 +34,7 @@
     [dic2 setObject:@"120页" forKey:@"bookPages"];
     [dic2 setObject:@"小说" forKey:@"bookCategory"];
     [dic2 setObject:@"book_02.jpg" forKey:@"bookPicture"];
-    [dic2 setObject:@"待审核" forKey:@"bookState"];
+    [dic2 setObject:state forKey:@"bookState"];
     
     NSMutableDictionary  *dic3 = [[NSMutableDictionary alloc]init];
     [dic3 setObject:@"An Ethics Of Intrrogation" forKey:@"bookName"];
@@ -45,7 +45,7 @@
     [dic3 setObject:@"233页" forKey:@"bookPages"];
     [dic3 setObject:@"小说" forKey:@"bookCategory"];
     [dic3 setObject:@"book_03.jpg" forKey:@"bookPicture"];
-    [dic3 setObject:@"待审核" forKey:@"bookState"];
+    [dic3 setObject:state forKey:@"bookState"];
     
     NSMutableDictionary  *dic4 = [[NSMutableDictionary alloc]init];
     [dic4 setObject:@"Dangerous" forKey:@"bookName"];
@@ -56,7 +56,7 @@
     [dic4 setObject:@"100页" forKey:@"bookPages"];
     [dic4 setObject:@"小说" forKey:@"bookCategory"];
     [dic4 setObject:@"book_04.jpg" forKey:@"bookPicture"];
-    [dic4 setObject:@"待审核" forKey:@"bookState"];
+    [dic4 setObject:state forKey:@"bookState"];
     
     NSMutableDictionary  *dic5 = [[NSMutableDictionary alloc]init];
     [dic5 setObject:@"The Unconsoled" forKey:@"bookName"];
@@ -67,7 +67,7 @@
     [dic5 setObject:@"100页" forKey:@"bookPages"];
     [dic5 setObject:@"小说" forKey:@"bookCategory"];
     [dic5 setObject:@"book_05.jpg" forKey:@"bookPicture"];
-    [dic5 setObject:@"待审核" forKey:@"bookState"];
+    [dic5 setObject:state forKey:@"bookState"];
     
     NSMutableDictionary  *dic6 = [[NSMutableDictionary alloc]init];
     [dic6 setObject:@"Charllotte" forKey:@"bookName"];
@@ -78,7 +78,7 @@
     [dic6 setObject:@"100页" forKey:@"bookPages"];
     [dic6 setObject:@"小说" forKey:@"bookCategory"];
     [dic6 setObject:@"book_06.jpg" forKey:@"bookPicture"];
-    [dic6 setObject:@"待审核" forKey:@"bookState"];
+    [dic6 setObject:state forKey:@"bookState"];
     
     NSMutableDictionary  *dic7 = [[NSMutableDictionary alloc]init];
     [dic7 setObject:@"70" forKey:@"bookName"];
@@ -89,7 +89,7 @@
     [dic7 setObject:@"100页" forKey:@"bookPages"];
     [dic7 setObject:@"小说" forKey:@"bookCategory"];
     [dic7 setObject:@"book_07.jpg" forKey:@"bookPicture"];
-    [dic7 setObject:@"待审核" forKey:@"bookState"];
+    [dic7 setObject:state forKey:@"bookState"];
     
     NSMutableDictionary  *dic8 = [[NSMutableDictionary alloc]init];
     [dic8 setObject:@"Flying LEAP" forKey:@"bookName"];
@@ -100,7 +100,7 @@
     [dic8 setObject:@"100页" forKey:@"bookPages"];
     [dic8 setObject:@"小说" forKey:@"bookCategory"];
     [dic8 setObject:@"book_08.jpg" forKey:@"bookPicture"];
-    [dic8 setObject:@"待审核" forKey:@"bookState"];
+    [dic8 setObject:state forKey:@"bookState"];
     
     NSMutableDictionary  *dic9 = [[NSMutableDictionary alloc]init];
     [dic9 setObject:@"LVE" forKey:@"bookName"];
@@ -111,7 +111,7 @@
     [dic9 setObject:@"100页" forKey:@"bookPages"];
     [dic9 setObject:@"小说" forKey:@"bookCategory"];
     [dic9 setObject:@"book_09.jpg" forKey:@"bookPicture"];
-    [dic9 setObject:@"待审核" forKey:@"bookState"];
+    [dic9 setObject:state forKey:@"bookState"];
     
     NSMutableDictionary  *dic10 = [[NSMutableDictionary alloc]init];
     [dic10 setObject:@"1984" forKey:@"bookName"];
@@ -122,7 +122,7 @@
     [dic10 setObject:@"100页" forKey:@"bookPages"];
     [dic10 setObject:@"小说" forKey:@"bookCategory"];
     [dic10 setObject:@"book_10.jpg" forKey:@"bookPicture"];
-    [dic10 setObject:@"待审核" forKey:@"bookState"];
+    [dic10 setObject:state forKey:@"bookState"];
     
     
     Book *b1 = [Book staticInitWithDictionary:dic1];
@@ -148,17 +148,20 @@
     
     return array;
 }
+- (NSMutableArray *)getPassBooks {
+    return [self getBookswithState:@"通过"];
+}
 - (NSMutableArray *)getUnpassBooks {
-    return [self getPassBooks];
+    return [self getBookswithState:@"未通过"];
 }
 - (NSMutableArray *)getPendingBooks {
-    return [self getPassBooks];
+    return [self getBookswithState:@"待审核"];
 }
 - (NSMutableArray *)getFirstReviewBooks {
-    return [self getPassBooks];
+    return [self getBookswithState:@"一审"];
 }
 - (NSMutableArray *)getSecondReviewBooks {
-    return [self getPassBooks];
+    return [self getBookswithState:@"二审"];
 }
 
 @end

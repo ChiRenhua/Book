@@ -13,6 +13,7 @@
 #import "SecondViewController.h"
 #import "ThirdViewController.h"
 #import "FourthViewController.h"
+#import "BookDetialViewController.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
@@ -23,8 +24,7 @@
 @property (strong, nonatomic) SecondViewController *secondVC;
 @property (strong, nonatomic) ThirdViewController *thirdVC;
 @property (strong, nonatomic) FourthViewController *fourthVC;
-
-@property (nonatomic,strong) NSMutableArray *bookArray;
+@property (strong, nonatomic) BookDetialViewController *bookDetialVC;
 
 @end
 

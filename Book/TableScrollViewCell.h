@@ -9,12 +9,15 @@
 #import <UIKit/UIKit.h>
 #import "Book.h"
 
+#pragma mark 定义block用来回调View中的方法来实现界面跳转
+typedef void (^scrollerViewPushBookDetialView)(NSMutableArray *bookinfo,NSInteger index);
+typedef void (^scollerViewPushAllBookView)(NSMutableArray *bookinfo);
+
 @interface TableScrollViewCell : UITableViewCell
-#pragma mark 为cell上的view布局添加文字或图片信息
-- (void)setBookInfo:(Book *)book;
-#pragma mark 初始化cell上的view布局
-- (void)initCellView;
-#pragma mark remove掉当前cell上的所有view布局
-- (void)removeCellView;
+#pragma mark 定义初始化函数
+- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier bookinfo:(NSMutableArray *) bookinfo;
+#pragma mark 定义block变量
+@property (nonatomic,copy) scrollerViewPushBookDetialView scrollerBlockToDetial;
+@property (nonatomic,copy) scollerViewPushAllBookView scrollerBlockToAllBook;
 
 @end
