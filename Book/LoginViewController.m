@@ -142,6 +142,7 @@
         
     }];
     [alert addAction:okAction];
+    [self presentViewController:alert animated:YES completion:nil];
 }
 #pragma mark 重置键盘return按钮事件
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
