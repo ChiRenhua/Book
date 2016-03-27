@@ -15,9 +15,12 @@ typedef void (^scollerViewPushAllBookView)(NSMutableArray *bookinfo);
 
 @interface TableScrollViewCell : UITableViewCell
 #pragma mark 定义初始化函数
-- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier bookinfo:(NSMutableArray *) bookinfo;
+- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier booksResult:(NSString *)result;
 #pragma mark 定义block变量
 @property (nonatomic,copy) scrollerViewPushBookDetialView scrollerBlockToDetial;
 @property (nonatomic,copy) scollerViewPushAllBookView scrollerBlockToAllBook;
+
+- (void)initScrollCellView;
+- (void)removeAllViewOnTableScrollView;
 
 @end

@@ -11,7 +11,7 @@
 @implementation GetBookInfo
 
 #pragma mark 书籍假数据
-- (NSMutableArray *)getBookswithState:(NSString *)state {
+- (NSMutableArray *)getBookswithState:(NSString *)state style:(NSInteger) style{
     NSMutableArray *array = [[NSMutableArray alloc]init];
     
     NSMutableDictionary  *dic1 = [[NSMutableDictionary alloc]init];
@@ -124,44 +124,71 @@
     [dic10 setObject:@"book_10.jpg" forKey:@"bookPicture"];
     [dic10 setObject:state forKey:@"bookState"];
     
+    if (style == 0) {
+        Book *b1 = [Book staticInitWithDictionary:dic1];
+        [array addObject:b1];
+        Book *b2 = [Book staticInitWithDictionary:dic2];
+        [array addObject:b2];
+        Book *b3 = [Book staticInitWithDictionary:dic3];
+        [array addObject:b3];
+        Book *b4 = [Book staticInitWithDictionary:dic4];
+        [array addObject:b4];
+        Book *b5 = [Book staticInitWithDictionary:dic5];
+        [array addObject:b5];
+        Book *b6 = [Book staticInitWithDictionary:dic6];
+        [array addObject:b6];
+        Book *b7 = [Book staticInitWithDictionary:dic7];
+        [array addObject:b7];
+        Book *b8 = [Book staticInitWithDictionary:dic8];
+        [array addObject:b8];
+        Book *b9 = [Book staticInitWithDictionary:dic9];
+        [array addObject:b9];
+        Book *b10 = [Book staticInitWithDictionary:dic10];
+        [array addObject:b10];
+    }else {
+        Book *b1 = [Book staticInitWithDictionary:dic1];
+        Book *b2 = [Book staticInitWithDictionary:dic2];
+        Book *b3 = [Book staticInitWithDictionary:dic3];
+        Book *b4 = [Book staticInitWithDictionary:dic4];
+        Book *b5 = [Book staticInitWithDictionary:dic5];
+        Book *b6 = [Book staticInitWithDictionary:dic6];
+        Book *b7 = [Book staticInitWithDictionary:dic7];
+        Book *b8 = [Book staticInitWithDictionary:dic8];
+        Book *b9 = [Book staticInitWithDictionary:dic9];
+        Book *b10 = [Book staticInitWithDictionary:dic10];
+        [array addObject:b10];
+        [array addObject:b9];
+        [array addObject:b8];
+        [array addObject:b7];
+        [array addObject:b6];
+        [array addObject:b5];
+        [array addObject:b4];
+        [array addObject:b3];
+        [array addObject:b2];
+        [array addObject:b1];
+        
+    }
     
-    Book *b1 = [Book staticInitWithDictionary:dic1];
-    [array addObject:b1];
-    Book *b2 = [Book staticInitWithDictionary:dic2];
-    [array addObject:b2];
-    Book *b3 = [Book staticInitWithDictionary:dic3];
-    [array addObject:b3];
-    Book *b4 = [Book staticInitWithDictionary:dic4];
-    [array addObject:b4];
-    Book *b5 = [Book staticInitWithDictionary:dic5];
-    [array addObject:b5];
-    Book *b6 = [Book staticInitWithDictionary:dic6];
-    [array addObject:b6];
-    Book *b7 = [Book staticInitWithDictionary:dic7];
-    [array addObject:b7];
-    Book *b8 = [Book staticInitWithDictionary:dic8];
-    [array addObject:b8];
-    Book *b9 = [Book staticInitWithDictionary:dic9];
-    [array addObject:b9];
-    Book *b10 = [Book staticInitWithDictionary:dic10];
-    [array addObject:b10];
     
     return array;
 }
 - (NSMutableArray *)getPassBooks {
-    return [self getBookswithState:@"通过"];
+    return [self getBookswithState:@"通过"style:0];
 }
 - (NSMutableArray *)getUnpassBooks {
-    return [self getBookswithState:@"未通过"];
+    return [self getBookswithState:@"未通过"style:1];
 }
 - (NSMutableArray *)getPendingBooks {
-    return [self getBookswithState:@"待审核"];
+    return [self getBookswithState:@"待审核"style:0];
 }
 - (NSMutableArray *)getFirstReviewBooks {
-    return [self getBookswithState:@"一审"];
+    return [self getBookswithState:@"一审"style:0];
 }
 - (NSMutableArray *)getSecondReviewBooks {
-    return [self getBookswithState:@"二审"];
+    return [self getBookswithState:@"二审"style:0];
+}
+- (NSMutableArray *)getReviewBooks {
+    return [self getBookswithState:@"审核中"style:1];
 }
 
 @end

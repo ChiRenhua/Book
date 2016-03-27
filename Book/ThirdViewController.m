@@ -49,11 +49,11 @@ GetBookInfo *bookinfo;
     bookinfo = [[GetBookInfo alloc]init];
     // 第一组显示已通过的图书列表
     if (indexPath.section == 0) {
-        scrollViewCell = [[TableScrollViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:nil bookinfo:bookinfo.getPassBooks];
+        scrollViewCell = [[TableScrollViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:nil booksResult:@"已通过"];
     }
     // 第二组显示未通过的图书列表
     if (indexPath.section == 1){
-        scrollViewCell = [[TableScrollViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:nil bookinfo:bookinfo.getUnpassBooks];
+        scrollViewCell = [[TableScrollViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:nil booksResult:@"未通过"];
     }
     // 点击图书页面跳转的回调函数
     scrollViewCell.scrollerBlockToDetial = ^(NSMutableArray *bookinfo,NSInteger index){

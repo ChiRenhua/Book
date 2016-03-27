@@ -15,33 +15,25 @@
 #define SCREEN_BOUNDS [UIScreen mainScreen].bounds.size
 
 @interface FirstViewController ()<UITableViewDataSource,UITableViewDelegate>
-@property (nonatomic,strong) UITableView *tableView;
+@property (nonatomic,strong) UITableView *firstViewtableView;
 @end
 
-ListTableViewCell *cell;
+ListTableViewCell *firstViewcell;
 AppDelegate *firstViewappdelegate;
 GetBookInfo *firstViewbookinfo;
 
 @implementation FirstViewController
 
-- (id)init {
-    if (self = [super init]) {
-        [self.view setBackgroundColor:[UIColor whiteColor]];
-        self.navigationItem.title = @"待审核";
-    }
-    return self;
-}
-
 - (void)viewDidLoad {
     [super viewDidLoad];
-    _tableView = [[UITableView alloc]initWithFrame:self.view.bounds style:UITableViewStyleGrouped];                 // 初始化tableview填充整个屏幕
-    _tableView.dataSource = self;                                                                                   // 设置tableview的数据代理
-    _tableView.delegate = self;                                                                                     // 设置tableview代理
-    [self.view addSubview:_tableView];                                                                              // 将tableview添加到屏幕上
+    [self.view setBackgroundColor:[UIColor whiteColor]];
+    self.navigationItem.title = @"待审核";
+    _firstViewtableView = [[UITableView alloc]initWithFrame:self.view.bounds style:UITableViewStyleGrouped];                 // 初始化tableview填充整个屏幕
+    _firstViewtableView.dataSource = self;                                                                                   // 设置tableview的数据代理
+    _firstViewtableView.delegate = self;                                                                                     // 设置tableview代理
+    [self.view addSubview:_firstViewtableView];                                                                              // 将tableview添加到屏幕上
     firstViewappdelegate = [[UIApplication sharedApplication]delegate];
-    
     firstViewbookinfo = [[GetBookInfo alloc]init];
-    
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -83,16 +75,16 @@ GetBookInfo *firstViewbookinfo;
 #pragma mark 设置单元格样式和内容
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    cell = [tableView dequeueReusableCellWithIdentifier:@"UIListTableViewCell"];                                                        // 从缓存池中取出cell
-    if (!cell) {                                                                                                                        // 判断是否能取出cell
-        cell = [[ListTableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"UIListTableViewCell"];            // 如果cell为空则创建一个新的cell并放入缓存池中
-    }else{                                                                                                                              // 如果cell不为空（注意：以下操作很重要，不然会造成cell数据错乱）
-        [cell removeCellView];                                                                                                          // 将之前cell界面上的view全部remove掉
-        [cell initCellView];                                                                                                            // 重新初始化cell上的view
+    firstViewcell = [tableView dequeueReusableCellWithIdentifier:@"UIListTableViewCell"];                                                        // 从缓存池中取出cell
+    if (!firstViewcell) {                                                                                                                        // 判断是否能取出cell
+        firstViewcell = [[ListTableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"UIListTableViewCell"];            // 如果cell为空则创建一个新的cell并放入缓存池中
+    }else{                                                                                                                                       // 如果cell不为空（注意：以下操作很重要，不然会造成cell数据错乱）
+        [firstViewcell removeCellView];                                                                                                          // 将之前cell界面上的view全部remove掉
+        [firstViewcell initCellView];                                                                                                            // 重新初始化cell上的view
     }
     Book *books = firstViewbookinfo.getPendingBooks[indexPath.row];
-    [cell setBookInfo:books];
-    return cell;
+    [firstViewcell setBookInfo:books];
+    return firstViewcell;
 }
 #pragma mark 添加行点击事件
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {

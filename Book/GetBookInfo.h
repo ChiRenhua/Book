@@ -13,6 +13,7 @@
 #pragma mark 获取不同审核状态的书籍
 - (NSMutableArray *)getPendingBooks;
 - (NSMutableArray *)getFirstReviewBooks;
+- (NSMutableArray *)getReviewBooks;
 - (NSMutableArray *)getSecondReviewBooks;
 - (NSMutableArray *)getPassBooks;
 - (NSMutableArray *)getUnpassBooks;
