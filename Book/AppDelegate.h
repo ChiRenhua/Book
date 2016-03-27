@@ -24,7 +24,6 @@
 @property (strong, nonatomic) SecondViewController *secondVC;
 @property (strong, nonatomic) ThirdViewController *thirdVC;
 @property (strong, nonatomic) FourthViewController *fourthVC;
-@property (strong, nonatomic) BookDetialViewController *bookDetialVC;
 
 @end
 

@@ -7,10 +7,10 @@
 //
 
 #import "SecondViewController.h"
-#import "LoginViewController.h"
 #import "AppDelegate.h"
 #import "ListTableViewCell.h"
 #import "GetBookInfo.h"
+#import "BookDetialViewController.h"
 
 #define SCREEN_BOUNDS [UIScreen mainScreen].bounds.size
 
@@ -71,7 +71,11 @@ GetBookInfo *secondViewbookinfo;
 }
 #pragma mark 添加行点击事件
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    [self.navigationController pushViewController:secondViewappdelegate.bookDetialVC animated:YES];
+    Book *book;
+    NSMutableArray *bookArray = [secondViewbookinfo getReviewBooks];
+    book = bookArray[indexPath.row];
+    BookDetialViewController *bookDetialVC = [[BookDetialViewController alloc]init:book];
+    [self.navigationController pushViewController:bookDetialVC animated:YES];
     [tableView deselectRowAtIndexPath:indexPath animated:YES];                                                                          // 取消选中的状态
 }
 #pragma mark 设置行高

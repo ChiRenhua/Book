@@ -7,7 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Book.h"
 
 @interface BookDetialViewController : UIViewController
+- (id)init:(Book *) book;
 
 @end

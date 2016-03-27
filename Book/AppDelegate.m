@@ -24,7 +24,6 @@
     _thirdVC = [[ThirdViewController alloc]init];
     _fourthVC = [[FourthViewController alloc]init];
     _loginVC = [[LoginViewController alloc]init];
-    _bookDetialVC = [[BookDetialViewController alloc]init];
     
     //为四个视图控制器添加导航栏控制器
     UINavigationController *firstTab = [[UINavigationController alloc]initWithRootViewController:_firstVC];

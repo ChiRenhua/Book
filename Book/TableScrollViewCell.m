@@ -50,8 +50,7 @@ NSString *booksResult;                                                          
     checkAll.text = @"显示全部>";
     checkAll.font = [UIFont systemFontOfSize:12];
     checkAll.userInteractionEnabled = YES;
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(showAll)];
-    [checkAll addGestureRecognizer:tap];
+    checkAll.userInteractionEnabled = NO;                                                                           // 屏蔽掉Lable的点击事件
     [self.contentView addSubview:checkAll];
     // 在cell上添加tableView布局
     UITableView *scrollTableView = [[UITableView alloc]initWithFrame:CGRectZero style:UITableViewStylePlain];
@@ -81,8 +80,8 @@ NSString *booksResult;                                                          
     UITableViewCell *cell=[tableView dequeueReusableCellWithIdentifier:@"scrollCell"];
     if (!cell) {
         cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"scrollCell"];
-        cell.transform = CGAffineTransformMakeRotation(M_PI_2);                                                                         // 将cell上的内容翻转
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;                                                                        // 取消选中状态
+        cell.transform = CGAffineTransformMakeRotation(M_PI_2);                                                                                 // 将cell上的内容翻转
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;                                                                                // 取消选中状态
     }
     // 根据不同的tag来加载不用的数据
     if (tableView.tag == 0) {
@@ -91,7 +90,7 @@ NSString *booksResult;                                                          
         bookinfoArray = [bookInfo getUnpassBooks];
     }
     Book *book = bookinfoArray[indexPath.row];
-    [cell.contentView.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];                                              // 每次初始化之前移除view上的所有布局
+    [cell.contentView.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];                                                      // 每次初始化之前移除view上的所有布局
     
     // 在cell上添加imageView
     UIImageView *bookPicture = [[UIImageView alloc]initWithFrame:CGRectMake(10, 10, 90, 135)];
@@ -100,7 +99,7 @@ NSString *booksResult;                                                          
     [cell.contentView addSubview:bookPicture];
     
     // 在cell上添加图书名称
-    UILabel *bookNameLable = [[UILabel alloc]initWithFrame:CGRectMake(10, 140, 90, 50)];
+    UILabel *bookNameLable = [[UILabel alloc]initWithFrame:CGRectMake(10, 140, 130, 60)];
     bookNameLable.lineBreakMode = NSLineBreakByWordWrapping;
     bookNameLable.numberOfLines = 0;
     bookNameLable.tag = 1;
@@ -122,20 +121,12 @@ NSString *booksResult;                                                          
 
 #pragma mark 添加行点击事件
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    _scrollerBlockToDetial(bookinfoArray,indexPath.row);                                                                                        // 执行block，让父View来执行界面跳转
+    _scrollerBlockToDetial(tableView.tag,indexPath.row);                                                                                        // 执行block，让父View来执行界面跳转
     [tableView deselectRowAtIndexPath:indexPath animated:YES];                                                                                  // 取消选中的状态
 }
 #pragma mark 设置行高
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return 120;
-}
-#pragma mark 显示所有书籍
-- (void)showAll {
-    _scrollerBlockToAllBook(bookinfoArray);
-}
-
-- (void)removeAllViewOnTableScrollView {
-     [self.contentView.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
 }
 
 

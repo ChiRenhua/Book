@@ -10,9 +10,11 @@
 
 #define SCREEN_BOUNDS [UIScreen mainScreen].bounds.size
 
-@interface FourthViewController ()
+@interface FourthViewController ()<UITableViewDataSource,UITableViewDelegate>
 
 @end
+
+UITableView *fourthVCTableView;
 
 @implementation FourthViewController
 
@@ -26,7 +28,31 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    // 添加右侧注销按钮
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"注销" style:UIBarButtonItemStyleDone target:self action:@selector(logout)];
+    fourthVCTableView = [[UITableView alloc]initWithFrame:self.view.bounds style:UITableViewStyleGrouped];
+    fourthVCTableView.delegate = self;
+    fourthVCTableView.dataSource = self;
+    [self.view addSubview:fourthVCTableView];
+}
+
+#pragma mark 设置分组数
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return 1;
+}
+#pragma mark 设置分组标题内容高度
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    return 30;
+}
+
+#pragma mark 设置行数
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return 1;
+}
+#pragma mark 设置单元格样式和内容
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    UITableViewCell *fourthViewCell;
+    fourthViewCell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:nil];
     // 获取用户名
     NSArray *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *filePath = [path objectAtIndex:0];
@@ -35,21 +61,35 @@
     NSString *userName = [userInfo objectForKey:@"userName"];
     
     // 添加用户头像
-    UIImageView *userImage = [[UIImageView alloc]init];
-    userImage.bounds = CGRectMake(0, 0, 150, 150);                                                  // 设置头像图片大小
-    userImage.contentMode = UIViewContentModeScaleAspectFit;                                        // 设置图片属性为合适填充
-    userImage.center = CGPointMake(SCREEN_BOUNDS.width/2, SCREEN_BOUNDS.height/5);                  // 设置图片位置
+    UIImageView *userImage = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 100, 100)];                                                                     // 设置头像图片大小
+    userImage.contentMode = UIViewContentModeScaleAspectFit;                                                                                                    // 设置图片属性为合适填充
     [userImage setImage:[UIImage imageNamed:@"touxiang.png"]];
-    [self.view addSubview:userImage];
+    [fourthViewCell.contentView addSubview:userImage];
     // 添加用户名
-    _nameLable = [[UILabel alloc]initWithFrame:CGRectMake(0, SCREEN_BOUNDS.height/5 + 90, SCREEN_BOUNDS.width, 20)];
-    _nameLable.text = [[NSString alloc]initWithFormat:@"欢迎用户：%@",userName];
-    _nameLable.textAlignment = NSTextAlignmentCenter;
+    _nameLable = [[UILabel alloc]initWithFrame:CGRectMake(110, 20, SCREEN_BOUNDS.width - 110, 20)];
+    _nameLable.text = [[NSString alloc]initWithFormat:@"用户：%@",userName];
     _nameLable.font = [UIFont systemFontOfSize:20];
-    [self.view addSubview:_nameLable];
-    
-    // 添加右侧注销按钮
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"注销" style:UIBarButtonItemStyleDone target:self action:@selector(logout)];
+    [fourthViewCell.contentView addSubview:_nameLable];
+    // 添加职位信息
+    UILabel * professionLable = [[UILabel alloc]initWithFrame:CGRectMake(110, 60, SCREEN_BOUNDS.width - 110, 20)];
+    professionLable.text = @"图书审核员";
+    professionLable.font = [UIFont systemFontOfSize:15];
+    professionLable.textColor = [UIColor grayColor];
+    [fourthViewCell.contentView addSubview:professionLable];
+    return fourthViewCell;
+}
+#pragma mark 设置行高
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return 100;
+}
+#pragma mark 设置每组标题名称
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+    return @"";
+}
+#pragma mark 添加行点击事件
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [self logout];
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];                                                                                  // 取消选中的状态
 }
 #pragma mark 登出
 - (void)logout {

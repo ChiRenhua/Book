@@ -10,6 +10,8 @@
 #import "TableScrollViewCell.h"
 #import "AppDelegate.h"
 #import "GetBookInfo.h"
+#import "BookInfoViewController.h"
+#import "BookDetialViewController.h"
 
 #define SCREEN_BOUNDS [UIScreen mainScreen].bounds.size
 
@@ -27,8 +29,8 @@ GetBookInfo *bookinfo;
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
-    [self.view setBackgroundColor:[UIColor whiteColor]];
-    self.navigationItem.title = @"已审核";                                                                                                                     // 添加navigation的title
+    [self.view setBackgroundColor:[UIColor whiteColor]];                                                                                                                   // 添加navigation的title
+    self.navigationItem.title = @"已审核";
     thirdTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_BOUNDS.width, SCREEN_BOUNDS.height-25) style:UITableViewStyleGrouped];
     thirdTableView.delegate = self;
     thirdTableView.dataSource = self;
@@ -56,14 +58,20 @@ GetBookInfo *bookinfo;
         scrollViewCell = [[TableScrollViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:nil booksResult:@"未通过"];
     }
     // 点击图书页面跳转的回调函数
-    scrollViewCell.scrollerBlockToDetial = ^(NSMutableArray *bookinfo,NSInteger index){
-        [self.navigationController pushViewController:thirdAppdelegate.bookDetialVC animated:YES];
+    scrollViewCell.scrollerBlockToDetial = ^(NSInteger bookstate,NSInteger index){
+        // 判断用户点击的第几个图片
+        NSMutableArray *bookInfo = [[NSMutableArray alloc]init];
+        Book *book = [[Book alloc]init];
+        if (bookstate == 0) {
+            bookInfo = [bookinfo getPassBooks];
+        }else if (bookstate == 1) {
+            bookInfo = [bookinfo getUnpassBooks];
+        }
+        book = bookInfo[index];
+        BookDetialViewController *bookDetialVC = [[BookDetialViewController alloc]init:book];
+        [self.navigationController pushViewController:bookDetialVC animated:YES];
     };
-    // 点击“显示全部”页面跳转的回调函数
-    scrollViewCell.scrollerBlockToAllBook = ^(NSMutableArray *bookinfo) {
-        //[self.navigationController pushViewController:thirdAppdelegate.bookDetialVC animated:YES];
-    };
-    // 取消分割线
+    // 取消选中状态
     scrollViewCell.selectionStyle = UITableViewCellSelectionStyleNone;
     return scrollViewCell;
 }
@@ -83,6 +91,18 @@ GetBookInfo *bookinfo;
 #pragma mark 设置行高
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return 240;
+}
+#pragma mark 行点击事件
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSMutableArray *bookInfo = [[NSMutableArray alloc]init];
+    // 判断点击的是第几个分组
+    if (indexPath.section == 0) {
+        bookInfo = [bookinfo getPassBooks];
+    }else if (indexPath.section == 1) {
+        bookInfo = [bookinfo getUnpassBooks];
+    }
+    BookInfoViewController *bookInfoVC = [[BookInfoViewController alloc]init:bookInfo];
+    [self.navigationController pushViewController:bookInfoVC animated:YES];
 }
 
 - (void)didReceiveMemoryWarning {
