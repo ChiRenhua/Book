@@ -31,7 +31,7 @@ Book *detialBook;
     // Do any additional setup after loading the view, typically from a nib.
     [self.view setBackgroundColor:[UIColor whiteColor]];
     
-    UILabel *lable = [[UILabel alloc]initWithFrame:CGRectMake(100, 100, 100, 20)];
+    UILabel *lable = [[UILabel alloc]initWithFrame:CGRectMake(100, 100, 300, 20)];
     lable.text = detialBook.bookName;
     [self.view addSubview:lable];
     

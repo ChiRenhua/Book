@@ -14,13 +14,16 @@
 
 #define SCREEN_BOUNDS [UIScreen mainScreen].bounds.size
 
-@interface BookInfoViewController ()<UITableViewDataSource,UITableViewDelegate>
+@interface BookInfoViewController ()<UITableViewDataSource,UITableViewDelegate,UISearchDisplayDelegate,UISearchBarDelegate>
 @property (nonatomic,strong) UITableView *bookInfoTableView;
 @end
 
 ListTableViewCell *bookInfoViewcell;
 AppDelegate *bookInfoAppdelegate;
 NSMutableArray *bookInfoArray;
+UISearchBar *bookInfoViewSearchBar;                                                                                            // 搜索框
+UISearchDisplayController *bookInfoViewSearchDC;                                                                               // 搜索框界面控制器
+NSMutableArray *bookInfoViewSearchResult;                                                                                      // 搜索结果
 
 @implementation BookInfoViewController
 
@@ -43,11 +46,16 @@ NSMutableArray *bookInfoArray;
     _bookInfoTableView.delegate = self;                                                                                     // 设置tableview代理
     [self.view addSubview:_bookInfoTableView];                                                                              // 将tableview添加到屏幕上
     bookInfoAppdelegate = [[UIApplication sharedApplication]delegate];
+    [self addSearchBar];                                                                                                    // 添加搜索框
     
 }
 
 #pragma mark 设置每组标题名称
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+    // 判断是否是搜索结果的tableView
+    if (tableView == bookInfoViewSearchDC.searchResultsTableView) {
+        return @"搜索结果";
+    }
     return @"书籍信息";
 }
 #pragma mark 设置分组数
@@ -61,11 +69,15 @@ NSMutableArray *bookInfoArray;
 
 #pragma mark 设置行数
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    // 判断是否是搜索结果的tableView
+    if (tableView==bookInfoViewSearchDC.searchResultsTableView) {
+        return bookInfoViewSearchResult.count;
+    }
     return [bookInfoArray count];
 }
 #pragma mark 设置单元格样式和内容
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
+    Book *books;
     bookInfoViewcell = [tableView dequeueReusableCellWithIdentifier:@"UIListTableViewCell"];                                                        // 从缓存池中取出cell
     if (!bookInfoViewcell) {                                                                                                                        // 判断是否能取出cell
         bookInfoViewcell = [[ListTableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"UIListTableViewCell"];            // 如果cell为空则创建一个新的cell并放入缓存池中
@@ -73,7 +85,12 @@ NSMutableArray *bookInfoArray;
         [bookInfoViewcell removeCellView];                                                                                                          // 将之前cell界面上的view全部remove掉
         [bookInfoViewcell initCellView];                                                                                                            // 重新初始化cell上的view
     }
-    Book *books = bookInfoArray[indexPath.row];
+    // 判断是否是搜索结果的tableView
+    if (tableView == bookInfoViewSearchDC.searchResultsTableView) {
+        books = bookInfoViewSearchResult[indexPath.row];
+    }else {
+         books = bookInfoArray[indexPath.row];
+    }
     [bookInfoViewcell setBookInfo:books];
     return bookInfoViewcell;
 }
@@ -87,6 +104,54 @@ NSMutableArray *bookInfoArray;
 #pragma mark 设置行高
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return 100;
+}
+
+#pragma mark 选中之前
+- (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [bookInfoViewSearchBar resignFirstResponder];                                                                                                  // 退出键盘
+    return indexPath;
+}
+#pragma mark - UISearchDisplayController代理方法
+-(BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString{
+    [self searchDataWithKeyWord:searchString];
+    return YES;
+}
+
+#pragma mark 重写状态样式方法
+-(UIStatusBarStyle)preferredStatusBarStyle{
+    return UIStatusBarStyleLightContent;
+}
+
+#pragma mark 搜索形成新数据
+-(void)searchDataWithKeyWord:(NSString *)keyWord{
+    bookInfoViewSearchResult = [[NSMutableArray alloc]init];
+    [bookInfoArray enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        Book *book = obj;
+        if ([book.bookName.uppercaseString containsString:keyWord.uppercaseString] || [book.bookWriter.uppercaseString containsString:keyWord.uppercaseString]) {
+            [bookInfoViewSearchResult addObject:book];
+        }
+    }];
+    
+}
+
+
+
+#pragma mark 添加搜索栏
+- (void)addSearchBar {
+    bookInfoViewSearchBar = [[UISearchBar alloc]init];
+    [bookInfoViewSearchBar sizeToFit];                                                                                                             // 大小自适应
+    bookInfoViewSearchBar.placeholder = @"搜索";
+    bookInfoViewSearchBar.autocapitalizationType = UITextAutocapitalizationTypeNone;
+    // 添加搜索框到页眉位置
+    bookInfoViewSearchBar.delegate = self;
+    _bookInfoTableView.tableHeaderView = bookInfoViewSearchBar;
+    
+    bookInfoViewSearchDC = [[UISearchDisplayController alloc]initWithSearchBar:bookInfoViewSearchBar contentsController:self];
+    bookInfoViewSearchDC.delegate = self;
+    bookInfoViewSearchDC.searchResultsDataSource=self;
+    bookInfoViewSearchDC.searchResultsDelegate=self;
+    
+    
 }
 
 
