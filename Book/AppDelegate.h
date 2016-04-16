@@ -14,6 +14,7 @@
 #import "ThirdViewController.h"
 #import "FourthViewController.h"
 #import "BookDetialViewController.h"
+#import "UserInfo.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
@@ -24,6 +25,7 @@
 @property (strong, nonatomic) SecondViewController *secondVC;
 @property (strong, nonatomic) ThirdViewController *thirdVC;
 @property (strong, nonatomic) FourthViewController *fourthVC;
+@property (strong, nonatomic) UserInfo *userInfo;
 
 @end
 

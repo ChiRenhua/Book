@@ -17,6 +17,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    
     // 初始化TabBarViewController以及四个视图控制器
     _tabVC = [[TabBarViewController alloc]init];
     _firstVC = [[FirstViewController alloc]init];
@@ -24,6 +25,9 @@
     _thirdVC = [[ThirdViewController alloc]init];
     _fourthVC = [[FourthViewController alloc]init];
     _loginVC = [[LoginViewController alloc]init];
+    
+    // 初始化用户信息类
+    _userInfo = [[UserInfo alloc]init];
     
     //为四个视图控制器添加导航栏控制器
     UINavigationController *firstTab = [[UINavigationController alloc]initWithRootViewController:_firstVC];

@@ -120,10 +120,10 @@
         _mbprogress.mode = MBProgressHUDModeCustomView;
         _mbprogress.label.text = NSLocalizedString(@"登陆成功", @"HUD completed title");
         [_mbprogress hideAnimated:YES afterDelay:3.f];
+        _userInfoBlock(@"0",_userNameTextField.text,_userPassWordTextField.text);
         // 加载个人页面数据
         AppDelegate *appdelegate = [[UIApplication sharedApplication]delegate];
         appdelegate.fourthVC.nameLable.text = [[NSString alloc]initWithFormat:@"欢迎用户：%@",_userNameTextField.text];
-        [self saveUserInfo];
         [self dismissViewControllerAnimated:YES completion:nil];                                          // 登录成功后撤下登录界面
     });
 }
@@ -149,21 +149,6 @@
     [self login];
     [_userPassWordTextField resignFirstResponder];
     return YES;
-}
-#pragma mark 将用户信息存储到plist文件中
-- (void)saveUserInfo {
-    NSMutableDictionary *userDataDictionary = [[NSMutableDictionary alloc]init];
-    [userDataDictionary setValue:_userNameTextField.text forKey:@"userName"];
-    [userDataDictionary setValue:_userPassWordTextField.text forKey:@"userPassword"];
-    
-    
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-    NSArray *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *filePath = [path objectAtIndex:0];
-    NSString *plistPath = [filePath stringByAppendingPathComponent:@"userInfo.plist"];
-    [fileManager createFileAtPath:plistPath contents:nil attributes:nil];
-    
-    [userDataDictionary writeToFile:plistPath atomically:YES];
 }
 
 

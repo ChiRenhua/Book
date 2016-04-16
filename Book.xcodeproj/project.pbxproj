@@ -37,6 +37,7 @@
 		4BA0AD4B1CA15F70003EBE65 /* book_01.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 4BA0AD401CA15F70003EBE65 /* book_01.jpg */; };
 		4BA0AD4C1CA15F70003EBE65 /* book_02.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 4BA0AD411CA15F70003EBE65 /* book_02.jpg */; };
 		4BA0AD4D1CA15F70003EBE65 /* touxiang.png in Resources */ = {isa = PBXBuildFile; fileRef = 4BA0AD421CA15F70003EBE65 /* touxiang.png */; };
+		4BAE6F1E1CC0BEB300868E61 /* UserInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BAE6F1D1CC0BEB300868E61 /* UserInfo.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -107,6 +108,8 @@
 		4BA0AD401CA15F70003EBE65 /* book_01.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = book_01.jpg; path = ImageSource/book_01.jpg; sourceTree = "<group>"; };
 		4BA0AD411CA15F70003EBE65 /* book_02.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = book_02.jpg; path = ImageSource/book_02.jpg; sourceTree = "<group>"; };
 		4BA0AD421CA15F70003EBE65 /* touxiang.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = touxiang.png; path = ImageSource/touxiang.png; sourceTree = "<group>"; };
+		4BAE6F1C1CC0BEB300868E61 /* UserInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserInfo.h; sourceTree = "<group>"; };
+		4BAE6F1D1CC0BEB300868E61 /* UserInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserInfo.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -256,6 +259,8 @@
 				4BA0AD311CA114C6003EBE65 /* Book.m */,
 				4BA0AD351CA1206A003EBE65 /* GetBookInfo.h */,
 				4BA0AD361CA1206A003EBE65 /* GetBookInfo.m */,
+				4BAE6F1C1CC0BEB300868E61 /* UserInfo.h */,
+				4BAE6F1D1CC0BEB300868E61 /* UserInfo.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -426,6 +431,7 @@
 				4B96DD501CA2642F0070725C /* BookDetialViewController.m in Sources */,
 				4B75BFCD1C9BF97900212268 /* ThirdViewController.m in Sources */,
 				4BA0AD321CA114C6003EBE65 /* Book.m in Sources */,
+				4BAE6F1E1CC0BEB300868E61 /* UserInfo.m in Sources */,
 				4B75BF9C1C9BE76D00212268 /* FirstViewController.m in Sources */,
 				4B75BF961C9BE76D00212268 /* main.m in Sources */,
 				4B5F13D81C9D3EEE00188CB6 /* MBProgressHUD.m in Sources */,

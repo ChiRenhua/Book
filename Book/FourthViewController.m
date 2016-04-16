@@ -7,6 +7,7 @@
 //
 
 #import "FourthViewController.h"
+#import "AppDelegate.h"
 
 #define SCREEN_BOUNDS [UIScreen mainScreen].bounds.size
 
@@ -15,6 +16,7 @@
 @end
 
 UITableView *fourthVCTableView;
+AppDelegate *fourthVCdelegate;
 
 @implementation FourthViewController
 
@@ -22,6 +24,7 @@ UITableView *fourthVCTableView;
     if (self = [super init]) {
         [self.view setBackgroundColor:[UIColor whiteColor]];
         self.navigationItem.title = @"我";
+        fourthVCdelegate = [[UIApplication sharedApplication]delegate];
     }
     return  self;
 }
@@ -96,8 +99,7 @@ UITableView *fourthVCTableView;
     // 添加注销确认提示框
     UIAlertController *logoutAlert = [UIAlertController alertControllerWithTitle:@"警告" message:@"注销会删除当前用户的本地信息" preferredStyle:UIAlertControllerStyleActionSheet];
     UIAlertAction *lougoutAction = [UIAlertAction actionWithTitle:@"注销" style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action){
-        LoginViewController *loginVC = [[LoginViewController alloc]init];
-        [self presentViewController:loginVC animated:YES completion:nil];
+        [self presentViewController:fourthVCdelegate.loginVC animated:YES completion:nil];
         // 删除已登录用户信息
         NSFileManager *fileManager = [NSFileManager defaultManager];
         NSArray *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);

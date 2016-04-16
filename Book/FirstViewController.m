@@ -46,13 +46,8 @@ NSMutableArray *firstViewSearchResult;                                          
 
 #pragma mark 验证登陆
 - (void)verificationLogin {
-    // 从plist文件中读取用户数据
-    NSArray *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *filePath = [path objectAtIndex:0];
-    NSString *plistPath = [filePath stringByAppendingPathComponent:@"userInfo.plist"];
-    NSMutableDictionary *userInfo = [[NSMutableDictionary alloc]initWithContentsOfFile:plistPath];
-    NSString *userName = [userInfo objectForKey:@"userName"];
-    NSString *userPassword = [userInfo objectForKey:@"userPassword"];
+    NSString *userName = firstViewappdelegate.userInfo.getUserName;
+    NSString *userPassword = firstViewappdelegate.userInfo.getUserPassword;
     // 如果用户信息核对错误，则弹出登陆界面
     if(![userName isEqualToString:@"Martin"] && ![userPassword isEqualToString:@"123456"]) {
         [self presentViewController:firstViewappdelegate.loginVC animated:YES completion:nil];
