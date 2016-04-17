@@ -13,7 +13,7 @@
 #define SCREEN_BOUNDS self.contentView.frame.size
 
 @interface TableScrollViewCell()<UITableViewDataSource,UITableViewDelegate>
-
+@property (assign ,nonatomic) BOOL isFirstReview;
 @end
 UILabel *title;                                                                                                     // 显示图书审核状态
 UILabel *checkAll;                                                                                                  // 显示全部按钮
@@ -24,9 +24,10 @@ NSString *booksResult;                                                          
 
 @implementation TableScrollViewCell
 
-- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier booksResult:(NSString *)result{
+- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier booksResult:(NSString *)result isFirstReview:(BOOL)isfirstreview{
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
+        _isFirstReview = isfirstreview;
         bookinfoArray = [[NSMutableArray alloc]init];
         scrollerViewAppdelegate = [[UIApplication sharedApplication] delegate];                                     // 获取全局变量
         bookInfo = [[GetBookInfo alloc]init];
@@ -85,9 +86,17 @@ NSString *booksResult;                                                          
     }
     // 根据不同的tag来加载不用的数据
     if (tableView.tag == 0) {
-        bookinfoArray = [bookInfo getPassBooks];
+        if (_isFirstReview) {
+            bookinfoArray = [bookInfo getPassBooks];
+        }else {
+            bookinfoArray = [bookInfo getRePassBooks];
+        }
     }else if(tableView.tag == 1){
-        bookinfoArray = [bookInfo getUnpassBooks];
+        if (_isFirstReview) {
+            bookinfoArray = [bookInfo getUnpassBooks];
+        }else {
+            bookinfoArray = [bookInfo getReUnpassBooks];
+        }
     }
     Book *book = bookinfoArray[indexPath.row];
     [cell.contentView.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];                                                      // 每次初始化之前移除view上的所有布局

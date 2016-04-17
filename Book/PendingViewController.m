@@ -11,11 +11,13 @@
 #import "AppDelegate.h"
 #import "ListTableViewCell.h"
 #import "GetBookInfo.h"
+#import "BookDetialViewController.h"
 
 #define SCREEN_BOUNDS [UIScreen mainScreen].bounds.size
 
 @interface PendingViewController ()<UITableViewDataSource,UITableViewDelegate,UISearchDisplayDelegate,UISearchBarDelegate>
 @property (nonatomic,strong) UITableView *PendingViewtableView;
+@property (assign,atomic) BOOL isFirstreview;
 @end
 
 ListTableViewCell *PendingViewcell;
@@ -26,6 +28,13 @@ UISearchDisplayController *PendingViewSearchDC;                                 
 NSMutableArray *PendingViewSearchResult;                                                                                      // 搜索结果
 
 @implementation PendingViewController
+
+- (id)init:(BOOL)isFirstReview {
+    if (self = [super init]) {
+        _isFirstreview = isFirstReview;
+    }
+    return self;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -40,20 +49,6 @@ NSMutableArray *PendingViewSearchResult;                                        
     [self addSearchBar];                                                                                                     // 添加搜索框
 }
 
-- (void)viewWillAppear:(BOOL)animated {
-    [self verificationLogin];                                                                                                // 进行登录验证
-}
-
-#pragma mark 验证登陆
-- (void)verificationLogin {
-    NSString *userName = PendingViewappdelegate.userInfo.getUserName;
-    NSString *userPassword = PendingViewappdelegate.userInfo.getUserPassword;
-    // 如果用户信息核对错误，则弹出登陆界面
-    if(![userName isEqualToString:@"Martin"] && ![userPassword isEqualToString:@"123456"]) {
-        [self presentViewController:PendingViewappdelegate.loginVC animated:YES completion:nil];
-    }
-    
-}
 #pragma mark 设置每组标题名称
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     // 判断是否是搜索结果的tableView
@@ -93,7 +88,11 @@ NSMutableArray *PendingViewSearchResult;                                        
     if (tableView == PendingViewSearchDC.searchResultsTableView) {
         books = PendingViewSearchResult[indexPath.row];
     }else {
-        books = PendingViewbookinfo.getPendingBooks[indexPath.row];
+        if (_isFirstreview) {
+            books = PendingViewbookinfo.getPendingBooks[indexPath.row];
+        }else {
+            books = PendingViewbookinfo.getRePendingBooks[indexPath.row];
+        }
     }
     
     [PendingViewcell setBookInfo:books];

@@ -12,7 +12,6 @@
 #define SCREEN_BOUNDS [UIScreen mainScreen].bounds.size
 
 @interface UserViewController ()<UITableViewDataSource,UITableViewDelegate>
-
 @end
 
 UITableView *UserVCTableView;

@@ -120,7 +120,8 @@
         _mbprogress.mode = MBProgressHUDModeCustomView;
         _mbprogress.label.text = NSLocalizedString(@"登陆成功", @"HUD completed title");
         [_mbprogress hideAnimated:YES afterDelay:3.f];
-        _userInfoBlock(@"0",_userNameTextField.text,_userPassWordTextField.text);
+        _userInfoBlock(@"0",_userNameTextField.text,_userPassWordTextField.text);                                                           //通知用户数据类保存用户数据
+        _showHomeViewBlock();
         // 加载个人页面数据
         AppDelegate *appdelegate = [[UIApplication sharedApplication]delegate];
         appdelegate.UserVC.nameLable.text = [[NSString alloc]initWithFormat:@"欢迎用户：%@",_userNameTextField.text];

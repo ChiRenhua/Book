@@ -181,14 +181,22 @@
 - (NSMutableArray *)getPendingBooks {
     return [self getBookswithState:@"待审核"style:0];
 }
-- (NSMutableArray *)getFirstReviewBooks {
-    return [self getBookswithState:@"一审"style:0];
-}
-- (NSMutableArray *)getSecondReviewBooks {
-    return [self getBookswithState:@"二审"style:0];
-}
 - (NSMutableArray *)getReviewBooks {
     return [self getBookswithState:@"审核中"style:1];
+}
+
+
+- (NSMutableArray *)getRePassBooks {
+    return [self getBookswithState:@"通过"style:1];
+}
+- (NSMutableArray *)getReUnpassBooks {
+    return [self getBookswithState:@"未通过"style:0];
+}
+- (NSMutableArray *)getRePendingBooks {
+    return [self getBookswithState:@"待审核"style:1];
+}
+- (NSMutableArray *)getReReviewBooks {
+    return [self getBookswithState:@"审核中"style:0];
 }
 
 @end

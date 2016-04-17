@@ -10,12 +10,15 @@
 #import "Book.h"
 
 @interface GetBookInfo : NSObject
-#pragma mark 获取不同审核状态的书籍
+#pragma mark 获取初审中不同审核状态的书籍
 - (NSMutableArray *)getPendingBooks;
-- (NSMutableArray *)getFirstReviewBooks;
 - (NSMutableArray *)getReviewBooks;
-- (NSMutableArray *)getSecondReviewBooks;
 - (NSMutableArray *)getPassBooks;
 - (NSMutableArray *)getUnpassBooks;
+#pragma mark 获取复审中不同审核状态的书籍
+- (NSMutableArray *)getRePendingBooks;
+- (NSMutableArray *)getReReviewBooks;
+- (NSMutableArray *)getRePassBooks;
+- (NSMutableArray *)getReUnpassBooks;
 
 @end

@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface AuditedViewController : UIViewController
-
+#pragma msrk 判断是初审还是复审页面
+- (id)init:(BOOL)isFirstReview;
 
 @end

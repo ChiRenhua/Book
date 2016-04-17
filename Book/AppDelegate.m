@@ -20,36 +20,32 @@
     
     // 初始化TabBarViewController以及四个视图控制器
     _tabVC = [[TabBarViewController alloc]init];
-    _PendingVC = [[PendingViewController alloc]init];
-    _ReviewVC = [[ReviewViewController alloc]init];
-    _AuditedVC = [[AuditedViewController alloc]init];
     _UserVC = [[UserViewController alloc]init];
     _loginVC = [[LoginViewController alloc]init];
+    _homeVC = [[HomeViewController alloc]init];
+    _searchVC = [[SearchViewController alloc]init];
     
     // 初始化用户信息类
     _userInfo = [[UserInfo alloc]init];
     
-    //为四个视图控制器添加导航栏控制器
-    UINavigationController *PendingTab = [[UINavigationController alloc]initWithRootViewController:_PendingVC];
-    UINavigationController *ReviewTab = [[UINavigationController alloc]initWithRootViewController:_ReviewVC];
-    UINavigationController *AuditedTab = [[UINavigationController alloc]initWithRootViewController:_AuditedVC];
+    //为三个视图控制器添加导航栏控制器
+    UINavigationController *HomeTab = [[UINavigationController alloc]initWithRootViewController:_homeVC];
+    UINavigationController *SearchTab = [[UINavigationController alloc]initWithRootViewController:_searchVC];
     UINavigationController *UserTab = [[UINavigationController alloc]initWithRootViewController:_UserVC];
     
     // 创建一个包含四个导航栏的数组
-    NSArray *controllers = [NSArray arrayWithObjects:PendingTab,ReviewTab,AuditedTab,UserTab,nil];
+    NSArray *controllers = [NSArray arrayWithObjects:HomeTab,SearchTab,UserTab,nil];
     
     // 将数组传递给TabBarViewController
     _tabVC.viewControllers = controllers;
     
     // 设置每个视图控制器的标题和图片
-    PendingTab.title = @"待审核";
-    ReviewTab.title = @"审核中";
-    AuditedTab.title = @"已审核";
+    HomeTab.title = @"主页";
+    SearchTab.title = @"搜索";
     UserTab.title = @"我";
     
-    PendingTab.tabBarItem.image = [UIImage imageNamed:@"first"];
-    ReviewTab.tabBarItem.image = [UIImage imageNamed:@"first"];
-    AuditedTab.tabBarItem.image = [UIImage imageNamed:@"first"];
+    HomeTab.tabBarItem.image = [UIImage imageNamed:@"first"];
+    SearchTab.tabBarItem.image = [UIImage imageNamed:@"first"];
     UserTab.tabBarItem.image = [UIImage imageNamed:@"first"];
 
     

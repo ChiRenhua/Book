@@ -16,15 +16,21 @@
 #define SCREEN_BOUNDS [UIScreen mainScreen].bounds.size
 
 @interface AuditedViewController ()<UITableViewDataSource,UITableViewDelegate>
-
+@property (assign,atomic) BOOL isFirstreview;
 @end
 
 UITableView *AuditedTableView;
 TableScrollViewCell *scrollViewCell;
 AppDelegate *AuditedAppdelegate;
 GetBookInfo *bookinfo;
-
 @implementation AuditedViewController
+
+- (id)init:(BOOL)isFirstReview {
+    if (self = [super init]) {
+        _isFirstreview = isFirstReview;
+    }
+    return self;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -51,21 +57,29 @@ GetBookInfo *bookinfo;
     bookinfo = [[GetBookInfo alloc]init];
     // 第一组显示已通过的图书列表
     if (indexPath.section == 0) {
-        scrollViewCell = [[TableScrollViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:nil booksResult:@"已通过"];
+        scrollViewCell = [[TableScrollViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:nil booksResult:@"已通过" isFirstReview:_isFirstreview];
     }
     // 第二组显示未通过的图书列表
     if (indexPath.section == 1){
-        scrollViewCell = [[TableScrollViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:nil booksResult:@"未通过"];
+        scrollViewCell = [[TableScrollViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:nil booksResult:@"未通过" isFirstReview:_isFirstreview];
     }
     // 点击图书页面跳转的回调函数
     scrollViewCell.scrollerBlockToDetial = ^(NSInteger bookstate,NSInteger index){
         // 判断用户点击的第几个图片
         NSMutableArray *bookInfo = [[NSMutableArray alloc]init];
         Book *book = [[Book alloc]init];
-        if (bookstate == 0) {
-            bookInfo = [bookinfo getPassBooks];
-        }else if (bookstate == 1) {
-            bookInfo = [bookinfo getUnpassBooks];
+        if (_isFirstreview) {
+            if (bookstate == 0) {
+                bookInfo = [bookinfo getPassBooks];
+            }else if (bookstate == 1) {
+                bookInfo = [bookinfo getUnpassBooks];
+            }
+        }else {
+            if (bookstate == 0) {
+                bookInfo = [bookinfo getRePassBooks];
+            }else if (bookstate == 1) {
+                bookInfo = [bookinfo getReUnpassBooks];
+            }
         }
         book = bookInfo[index];
         BookDetialViewController *bookDetialVC = [[BookDetialViewController alloc]init:book];
@@ -97,9 +111,18 @@ GetBookInfo *bookinfo;
     NSMutableArray *bookInfo = [[NSMutableArray alloc]init];
     // 判断点击的是第几个分组
     if (indexPath.section == 0) {
-        bookInfo = [bookinfo getPassBooks];
+        if (_isFirstreview) {
+            bookInfo = [bookinfo getPassBooks];
+        }else {
+            bookInfo = [bookinfo getRePassBooks];
+        }
+        
     }else if (indexPath.section == 1) {
-        bookInfo = [bookinfo getUnpassBooks];
+        if (_isFirstreview) {
+            bookInfo = [bookinfo getUnpassBooks];
+        }else {
+            bookInfo = [bookinfo getReUnpassBooks];
+        }
     }
     BookInfoViewController *bookInfoVC = [[BookInfoViewController alloc]init:bookInfo];
     [self.navigationController pushViewController:bookInfoVC animated:YES];

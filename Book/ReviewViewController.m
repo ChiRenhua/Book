@@ -16,6 +16,7 @@
 
 @interface ReviewViewController ()<UITableViewDataSource,UITableViewDelegate,UISearchDisplayDelegate,UISearchBarDelegate>
 @property (nonatomic,strong) UITableView *ReviewViewtableView;
+@property (assign,atomic) BOOL isFirstreview;
 @end
 
 ListTableViewCell *ReviewViewcell;
@@ -24,8 +25,14 @@ GetBookInfo *ReviewViewbookinfo;
 UISearchBar *ReviewViewSearchBar;                                                                                            // 搜索框
 UISearchDisplayController *ReviewViewSearchDC;                                                                               // 搜索框界面控制器
 NSMutableArray *ReviewViewSearchResult;                                                                                      // 搜索结果
-
 @implementation ReviewViewController
+
+- (id)init:(BOOL)isFirstReview {
+    if (self = [super init]) {
+        _isFirstreview = isFirstReview;
+    }
+    return self;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -82,7 +89,11 @@ NSMutableArray *ReviewViewSearchResult;                                         
     if (tableView == ReviewViewSearchDC.searchResultsTableView) {
         books = ReviewViewSearchResult[indexPath.row];
     }else {
-        books = ReviewViewbookinfo.getReviewBooks[indexPath.row];
+        if (_isFirstreview) {
+            books = ReviewViewbookinfo.getReviewBooks[indexPath.row];
+        }else {
+            books = ReviewViewbookinfo.getReReviewBooks[indexPath.row];
+        }
     }
     [ReviewViewcell setBookInfo:books];
     return ReviewViewcell;
