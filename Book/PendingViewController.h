@@ -1,5 +1,5 @@
 //
-//  FirstViewController.h
+//  PendingViewController.h
 //  Book
 //
 //  Created by Dreamylife on 16/3/18.
@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface FirstViewController : UIViewController
+@interface PendingViewController : UIViewController
 
 
 @end

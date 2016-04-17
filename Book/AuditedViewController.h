@@ -1,5 +1,5 @@
 //
-//  ThirdViewController.h
+//  AuditedViewController.h
 //  Book
 //
 //  Created by Dreamylife on 16/3/18.
@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ThirdViewController : UIViewController
+@interface AuditedViewController : UIViewController
 
 
 @end

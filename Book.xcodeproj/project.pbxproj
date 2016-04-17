@@ -8,19 +8,21 @@
 
 /* Begin PBXBuildFile section */
 		050371381C9E1BB9002D63EF /* TabBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 050371371C9E1BB9002D63EF /* TabBarViewController.m */; };
+		4B2E96A01CC3C10B00E64E94 /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B2E969F1CC3C10B00E64E94 /* HomeViewController.m */; };
+		4B2E96A31CC3C22600E64E94 /* SearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B2E96A21CC3C22600E64E94 /* SearchViewController.m */; };
 		4B5F13D01C9D0D4A00188CB6 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B5F13CF1C9D0D4A00188CB6 /* LoginViewController.m */; };
 		4B5F13D81C9D3EEE00188CB6 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B5F13D71C9D3EEE00188CB6 /* MBProgressHUD.m */; };
 		4B603F8A1CA3B95800B0F6BC /* TableScrollViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B603F891CA3B95800B0F6BC /* TableScrollViewCell.m */; };
 		4B75BF961C9BE76D00212268 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B75BF951C9BE76D00212268 /* main.m */; };
 		4B75BF991C9BE76D00212268 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B75BF981C9BE76D00212268 /* AppDelegate.m */; };
-		4B75BF9C1C9BE76D00212268 /* FirstViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B75BF9B1C9BE76D00212268 /* FirstViewController.m */; };
-		4B75BF9F1C9BE76D00212268 /* SecondViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B75BF9E1C9BE76D00212268 /* SecondViewController.m */; };
+		4B75BF9C1C9BE76D00212268 /* PendingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B75BF9B1C9BE76D00212268 /* PendingViewController.m */; };
+		4B75BF9F1C9BE76D00212268 /* ReviewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B75BF9E1C9BE76D00212268 /* ReviewViewController.m */; };
 		4B75BFA41C9BE76D00212268 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4B75BFA31C9BE76D00212268 /* Assets.xcassets */; };
 		4B75BFA71C9BE76D00212268 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4B75BFA51C9BE76D00212268 /* LaunchScreen.storyboard */; };
 		4B75BFB21C9BE76E00212268 /* BookTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B75BFB11C9BE76E00212268 /* BookTests.m */; };
 		4B75BFBD1C9BE76E00212268 /* BookUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B75BFBC1C9BE76E00212268 /* BookUITests.m */; };
-		4B75BFCD1C9BF97900212268 /* ThirdViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B75BFCC1C9BF97900212268 /* ThirdViewController.m */; };
-		4B75BFD01C9C3AB200212268 /* FourthViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B75BFCF1C9C3AB200212268 /* FourthViewController.m */; };
+		4B75BFCD1C9BF97900212268 /* AuditedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B75BFCC1C9BF97900212268 /* AuditedViewController.m */; };
+		4B75BFD01C9C3AB200212268 /* UserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B75BFCF1C9C3AB200212268 /* UserViewController.m */; };
 		4B9083F41CA7DBE800123C48 /* BookInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B9083F31CA7DBE800123C48 /* BookInfoViewController.m */; };
 		4B96DD501CA2642F0070725C /* BookDetialViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B96DD4F1CA2642F0070725C /* BookDetialViewController.m */; };
 		4BA0AD2D1CA11178003EBE65 /* ListTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BA0AD2C1CA11178003EBE65 /* ListTableViewCell.m */; };
@@ -60,6 +62,10 @@
 /* Begin PBXFileReference section */
 		050371361C9E1BB9002D63EF /* TabBarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TabBarViewController.h; sourceTree = "<group>"; };
 		050371371C9E1BB9002D63EF /* TabBarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TabBarViewController.m; sourceTree = "<group>"; };
+		4B2E969E1CC3C10B00E64E94 /* HomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeViewController.h; sourceTree = "<group>"; };
+		4B2E969F1CC3C10B00E64E94 /* HomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeViewController.m; sourceTree = "<group>"; };
+		4B2E96A11CC3C22600E64E94 /* SearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchViewController.h; sourceTree = "<group>"; };
+		4B2E96A21CC3C22600E64E94 /* SearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchViewController.m; sourceTree = "<group>"; };
 		4B5F13CE1C9D0D4A00188CB6 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		4B5F13CF1C9D0D4A00188CB6 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		4B5F13D61C9D3EEE00188CB6 /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
@@ -70,10 +76,10 @@
 		4B75BF951C9BE76D00212268 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		4B75BF971C9BE76D00212268 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		4B75BF981C9BE76D00212268 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		4B75BF9A1C9BE76D00212268 /* FirstViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FirstViewController.h; sourceTree = "<group>"; };
-		4B75BF9B1C9BE76D00212268 /* FirstViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FirstViewController.m; sourceTree = "<group>"; };
-		4B75BF9D1C9BE76D00212268 /* SecondViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SecondViewController.h; sourceTree = "<group>"; };
-		4B75BF9E1C9BE76D00212268 /* SecondViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SecondViewController.m; sourceTree = "<group>"; };
+		4B75BF9A1C9BE76D00212268 /* PendingViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PendingViewController.h; sourceTree = "<group>"; };
+		4B75BF9B1C9BE76D00212268 /* PendingViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PendingViewController.m; sourceTree = "<group>"; };
+		4B75BF9D1C9BE76D00212268 /* ReviewViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ReviewViewController.h; sourceTree = "<group>"; };
+		4B75BF9E1C9BE76D00212268 /* ReviewViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ReviewViewController.m; sourceTree = "<group>"; };
 		4B75BFA31C9BE76D00212268 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4B75BFA61C9BE76D00212268 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4B75BFA81C9BE76D00212268 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -83,10 +89,10 @@
 		4B75BFB81C9BE76E00212268 /* BookUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BookUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4B75BFBC1C9BE76E00212268 /* BookUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BookUITests.m; sourceTree = "<group>"; };
 		4B75BFBE1C9BE76E00212268 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		4B75BFCB1C9BF97900212268 /* ThirdViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThirdViewController.h; sourceTree = "<group>"; };
-		4B75BFCC1C9BF97900212268 /* ThirdViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThirdViewController.m; sourceTree = "<group>"; };
-		4B75BFCE1C9C3AB200212268 /* FourthViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FourthViewController.h; sourceTree = "<group>"; };
-		4B75BFCF1C9C3AB200212268 /* FourthViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FourthViewController.m; sourceTree = "<group>"; };
+		4B75BFCB1C9BF97900212268 /* AuditedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AuditedViewController.h; sourceTree = "<group>"; };
+		4B75BFCC1C9BF97900212268 /* AuditedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AuditedViewController.m; sourceTree = "<group>"; };
+		4B75BFCE1C9C3AB200212268 /* UserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserViewController.h; sourceTree = "<group>"; };
+		4B75BFCF1C9C3AB200212268 /* UserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserViewController.m; sourceTree = "<group>"; };
 		4B9083F21CA7DBE800123C48 /* BookInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BookInfoViewController.h; sourceTree = "<group>"; };
 		4B9083F31CA7DBE800123C48 /* BookInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BookInfoViewController.m; sourceTree = "<group>"; };
 		4B96DD4E1CA2642F0070725C /* BookDetialViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BookDetialViewController.h; sourceTree = "<group>"; };
@@ -137,6 +143,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4B2E969D1CC3BFF100E64E94 /* MainViewController */ = {
+			isa = PBXGroup;
+			children = (
+				4B5F13CE1C9D0D4A00188CB6 /* LoginViewController.h */,
+				4B5F13CF1C9D0D4A00188CB6 /* LoginViewController.m */,
+				4B75BFCE1C9C3AB200212268 /* UserViewController.h */,
+				4B75BFCF1C9C3AB200212268 /* UserViewController.m */,
+				050371361C9E1BB9002D63EF /* TabBarViewController.h */,
+				050371371C9E1BB9002D63EF /* TabBarViewController.m */,
+				4B2E969E1CC3C10B00E64E94 /* HomeViewController.h */,
+				4B2E969F1CC3C10B00E64E94 /* HomeViewController.m */,
+				4B2E96A11CC3C22600E64E94 /* SearchViewController.h */,
+				4B2E96A21CC3C22600E64E94 /* SearchViewController.m */,
+			);
+			name = MainViewController;
+			sourceTree = "<group>";
+		};
 		4B5F13D11C9D1A0C00188CB6 /* ImageSource */ = {
 			isa = PBXGroup;
 			children = (
@@ -159,18 +182,13 @@
 		4B5F13D21C9D1A5C00188CB6 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				4B5F13CE1C9D0D4A00188CB6 /* LoginViewController.h */,
-				4B5F13CF1C9D0D4A00188CB6 /* LoginViewController.m */,
-				4B75BF9A1C9BE76D00212268 /* FirstViewController.h */,
-				4B75BF9B1C9BE76D00212268 /* FirstViewController.m */,
-				4B75BF9D1C9BE76D00212268 /* SecondViewController.h */,
-				4B75BF9E1C9BE76D00212268 /* SecondViewController.m */,
-				4B75BFCB1C9BF97900212268 /* ThirdViewController.h */,
-				4B75BFCC1C9BF97900212268 /* ThirdViewController.m */,
-				4B75BFCE1C9C3AB200212268 /* FourthViewController.h */,
-				4B75BFCF1C9C3AB200212268 /* FourthViewController.m */,
-				050371361C9E1BB9002D63EF /* TabBarViewController.h */,
-				050371371C9E1BB9002D63EF /* TabBarViewController.m */,
+				4B2E969D1CC3BFF100E64E94 /* MainViewController */,
+				4B75BF9A1C9BE76D00212268 /* PendingViewController.h */,
+				4B75BF9B1C9BE76D00212268 /* PendingViewController.m */,
+				4B75BF9D1C9BE76D00212268 /* ReviewViewController.h */,
+				4B75BF9E1C9BE76D00212268 /* ReviewViewController.m */,
+				4B75BFCB1C9BF97900212268 /* AuditedViewController.h */,
+				4B75BFCC1C9BF97900212268 /* AuditedViewController.m */,
 				4B96DD4E1CA2642F0070725C /* BookDetialViewController.h */,
 				4B96DD4F1CA2642F0070725C /* BookDetialViewController.m */,
 				4B9083F21CA7DBE800123C48 /* BookInfoViewController.h */,
@@ -419,20 +437,22 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4B75BF9F1C9BE76D00212268 /* SecondViewController.m in Sources */,
+				4B75BF9F1C9BE76D00212268 /* ReviewViewController.m in Sources */,
 				4B75BF991C9BE76D00212268 /* AppDelegate.m in Sources */,
 				050371381C9E1BB9002D63EF /* TabBarViewController.m in Sources */,
 				4B603F8A1CA3B95800B0F6BC /* TableScrollViewCell.m in Sources */,
 				4BA0AD371CA1206A003EBE65 /* GetBookInfo.m in Sources */,
 				4B5F13D01C9D0D4A00188CB6 /* LoginViewController.m in Sources */,
-				4B75BFD01C9C3AB200212268 /* FourthViewController.m in Sources */,
+				4B75BFD01C9C3AB200212268 /* UserViewController.m in Sources */,
 				4BA0AD2D1CA11178003EBE65 /* ListTableViewCell.m in Sources */,
+				4B2E96A01CC3C10B00E64E94 /* HomeViewController.m in Sources */,
 				4B9083F41CA7DBE800123C48 /* BookInfoViewController.m in Sources */,
 				4B96DD501CA2642F0070725C /* BookDetialViewController.m in Sources */,
-				4B75BFCD1C9BF97900212268 /* ThirdViewController.m in Sources */,
+				4B75BFCD1C9BF97900212268 /* AuditedViewController.m in Sources */,
 				4BA0AD321CA114C6003EBE65 /* Book.m in Sources */,
+				4B2E96A31CC3C22600E64E94 /* SearchViewController.m in Sources */,
 				4BAE6F1E1CC0BEB300868E61 /* UserInfo.m in Sources */,
-				4B75BF9C1C9BE76D00212268 /* FirstViewController.m in Sources */,
+				4B75BF9C1C9BE76D00212268 /* PendingViewController.m in Sources */,
 				4B75BF961C9BE76D00212268 /* main.m in Sources */,
 				4B5F13D81C9D3EEE00188CB6 /* MBProgressHUD.m in Sources */,
 			);

@@ -1,12 +1,12 @@
 //
-//  ThirdViewController.m
+//  AuditedViewController.m
 //  Book
 //
 //  Created by Dreamylife on 16/3/18.
 //  Copyright © 2016年 software. All rights reserved.
 //
 
-#import "ThirdViewController.h"
+#import "AuditedViewController.h"
 #import "TableScrollViewCell.h"
 #import "AppDelegate.h"
 #import "GetBookInfo.h"
@@ -15,28 +15,28 @@
 
 #define SCREEN_BOUNDS [UIScreen mainScreen].bounds.size
 
-@interface ThirdViewController ()<UITableViewDataSource,UITableViewDelegate>
+@interface AuditedViewController ()<UITableViewDataSource,UITableViewDelegate>
 
 @end
 
-UITableView *thirdTableView;
+UITableView *AuditedTableView;
 TableScrollViewCell *scrollViewCell;
-AppDelegate *thirdAppdelegate;
+AppDelegate *AuditedAppdelegate;
 GetBookInfo *bookinfo;
 
-@implementation ThirdViewController
+@implementation AuditedViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     [self.view setBackgroundColor:[UIColor whiteColor]];                                                                                                                   // 添加navigation的title
     self.navigationItem.title = @"已审核";
-    thirdTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_BOUNDS.width, SCREEN_BOUNDS.height-25) style:UITableViewStyleGrouped];
-    thirdTableView.delegate = self;
-    thirdTableView.dataSource = self;
-    [self.view addSubview:thirdTableView];
+    AuditedTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_BOUNDS.width, SCREEN_BOUNDS.height-25) style:UITableViewStyleGrouped];
+    AuditedTableView.delegate = self;
+    AuditedTableView.dataSource = self;
+    [self.view addSubview:AuditedTableView];
     
-    thirdAppdelegate = [[UIApplication sharedApplication]delegate];
+    AuditedAppdelegate = [[UIApplication sharedApplication]delegate];
 }
 #pragma mark 设置分组数
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {

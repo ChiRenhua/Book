@@ -1,5 +1,5 @@
 //
-//  SecondViewController.h
+//  ReviewViewController.h
 //  Book
 //
 //  Created by Dreamylife on 16/3/18.
@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface SecondViewController : UIViewController
+@interface ReviewViewController : UIViewController
 
 
 @end

@@ -1,5 +1,5 @@
 //
-//  FourthViewController.h
+//  UserViewController.h
 //  Book
 //
 //  Created by Dreamylife on 16/3/18.
@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "LoginViewController.h"
 
-@interface FourthViewController : UIViewController
+@interface UserViewController : UIViewController
 @property (retain,strong) UILabel *nameLable;
 
 @end

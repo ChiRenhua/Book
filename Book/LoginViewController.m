@@ -123,7 +123,7 @@
         _userInfoBlock(@"0",_userNameTextField.text,_userPassWordTextField.text);
         // 加载个人页面数据
         AppDelegate *appdelegate = [[UIApplication sharedApplication]delegate];
-        appdelegate.fourthVC.nameLable.text = [[NSString alloc]initWithFormat:@"欢迎用户：%@",_userNameTextField.text];
+        appdelegate.UserVC.nameLable.text = [[NSString alloc]initWithFormat:@"欢迎用户：%@",_userNameTextField.text];
         [self dismissViewControllerAnimated:YES completion:nil];                                          // 登录成功后撤下登录界面
     });
 }
