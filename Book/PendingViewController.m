@@ -12,12 +12,16 @@
 #import "ListTableViewCell.h"
 #import "GetBookInfo.h"
 #import "BookDetialViewController.h"
+#import "FCXRefreshFooterView.h"
+#import "FCXRefreshHeaderView.h"
+#import "UIScrollView+FCXRefresh.h"
 
 #define SCREEN_BOUNDS [UIScreen mainScreen].bounds.size
 
 @interface PendingViewController ()<UITableViewDataSource,UITableViewDelegate,UISearchDisplayDelegate,UISearchBarDelegate>
 @property (nonatomic,strong) UITableView *PendingViewtableView;
 @property (assign,atomic) BOOL isFirstreview;
+@property (nonatomic, strong) FCXRefreshHeaderView *headerView;
 @end
 
 ListTableViewCell *PendingViewcell;
@@ -40,15 +44,39 @@ NSMutableArray *PendingViewSearchResult;                                        
     [super viewDidLoad];
     [self.view setBackgroundColor:[UIColor whiteColor]];
     self.navigationItem.title = @"待审核";
-    _PendingViewtableView = [[UITableView alloc]initWithFrame:self.view.bounds style:UITableViewStyleGrouped];                 // 初始化tableview填充整个屏幕
+    // 添加此方法后，页面布局不会自动适应，而是需要手动调节
+    //    if ([self respondsToSelector:@selector(automaticallyAdjustsScrollViewInsets)])
+    //    {
+    //        self.automaticallyAdjustsScrollViewInsets = NO;
+    //    }
+    _PendingViewtableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 64, self.view.frame.size.width, [UIScreen mainScreen].bounds.size.height - 70) style:UITableViewStyleGrouped];                                                                                          // 初始化tableview填充整个屏幕
     _PendingViewtableView.dataSource = self;                                                                                   // 设置tableview的数据代理
     _PendingViewtableView.delegate = self;                                                                                     // 设置tableview代理
     [self.view addSubview:_PendingViewtableView];                                                                              // 将tableview添加到屏幕上
     PendingViewappdelegate = [[UIApplication sharedApplication]delegate];
     PendingViewbookinfo = [[GetBookInfo alloc]init];
-    [self addSearchBar];                                                                                                     // 添加搜索框
+    [self addSearchBar];                                                                                                       // 添加搜索框
+    [self addRefreshView];                                                                                                     // 添加下拉刷新View
+    [_headerView startRefresh];
 }
-
+#pragma mark 添加下拉刷新View
+- (void)addRefreshView {
+    __weak __typeof(self)weakSelf = self;
+    //下拉刷新
+    _headerView = [_PendingViewtableView addHeaderWithRefreshHandler:^(FCXRefreshBaseView *refreshView) {
+        [weakSelf refreshAction];
+    }];
+}
+#pragma mark 添加下拉刷新动作
+- (void)refreshAction {
+    __weak UITableView *weakTableView = _PendingViewtableView;
+    __weak FCXRefreshHeaderView *weakHeaderView = _headerView;
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [weakTableView reloadData];
+        [weakHeaderView endRefresh];
+    });
+}
 #pragma mark 设置每组标题名称
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     // 判断是否是搜索结果的tableView

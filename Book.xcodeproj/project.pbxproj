@@ -13,6 +13,12 @@
 		4B5F13D01C9D0D4A00188CB6 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B5F13CF1C9D0D4A00188CB6 /* LoginViewController.m */; };
 		4B5F13D81C9D3EEE00188CB6 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B5F13D71C9D3EEE00188CB6 /* MBProgressHUD.m */; };
 		4B603F8A1CA3B95800B0F6BC /* TableScrollViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B603F891CA3B95800B0F6BC /* TableScrollViewCell.m */; };
+		4B67D3821CC4997D001FF3EA /* FCXRefreshBaseView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B67D37B1CC4997D001FF3EA /* FCXRefreshBaseView.m */; };
+		4B67D3831CC4997D001FF3EA /* FCXRefreshFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B67D37D1CC4997D001FF3EA /* FCXRefreshFooterView.m */; };
+		4B67D3841CC4997D001FF3EA /* FCXRefreshHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B67D37F1CC4997D001FF3EA /* FCXRefreshHeaderView.m */; };
+		4B67D3851CC4997D001FF3EA /* UIScrollView+FCXRefresh.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B67D3811CC4997D001FF3EA /* UIScrollView+FCXRefresh.m */; };
+		4B67D3881CC4999B001FF3EA /* blueArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B67D3861CC4999B001FF3EA /* blueArrow.png */; };
+		4B67D3891CC4999B001FF3EA /* blueArrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B67D3871CC4999B001FF3EA /* blueArrow@2x.png */; };
 		4B75BF961C9BE76D00212268 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B75BF951C9BE76D00212268 /* main.m */; };
 		4B75BF991C9BE76D00212268 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B75BF981C9BE76D00212268 /* AppDelegate.m */; };
 		4B75BF9C1C9BE76D00212268 /* PendingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B75BF9B1C9BE76D00212268 /* PendingViewController.m */; };
@@ -72,6 +78,16 @@
 		4B5F13D71C9D3EEE00188CB6 /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
 		4B603F881CA3B95800B0F6BC /* TableScrollViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TableScrollViewCell.h; sourceTree = "<group>"; };
 		4B603F891CA3B95800B0F6BC /* TableScrollViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TableScrollViewCell.m; sourceTree = "<group>"; };
+		4B67D37A1CC4997D001FF3EA /* FCXRefreshBaseView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FCXRefreshBaseView.h; path = FCXRefreshView/FCXRefreshBaseView.h; sourceTree = "<group>"; };
+		4B67D37B1CC4997D001FF3EA /* FCXRefreshBaseView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FCXRefreshBaseView.m; path = FCXRefreshView/FCXRefreshBaseView.m; sourceTree = "<group>"; };
+		4B67D37C1CC4997D001FF3EA /* FCXRefreshFooterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FCXRefreshFooterView.h; path = FCXRefreshView/FCXRefreshFooterView.h; sourceTree = "<group>"; };
+		4B67D37D1CC4997D001FF3EA /* FCXRefreshFooterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FCXRefreshFooterView.m; path = FCXRefreshView/FCXRefreshFooterView.m; sourceTree = "<group>"; };
+		4B67D37E1CC4997D001FF3EA /* FCXRefreshHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FCXRefreshHeaderView.h; path = FCXRefreshView/FCXRefreshHeaderView.h; sourceTree = "<group>"; };
+		4B67D37F1CC4997D001FF3EA /* FCXRefreshHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FCXRefreshHeaderView.m; path = FCXRefreshView/FCXRefreshHeaderView.m; sourceTree = "<group>"; };
+		4B67D3801CC4997D001FF3EA /* UIScrollView+FCXRefresh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIScrollView+FCXRefresh.h"; path = "FCXRefreshView/UIScrollView+FCXRefresh.h"; sourceTree = "<group>"; };
+		4B67D3811CC4997D001FF3EA /* UIScrollView+FCXRefresh.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIScrollView+FCXRefresh.m"; path = "FCXRefreshView/UIScrollView+FCXRefresh.m"; sourceTree = "<group>"; };
+		4B67D3861CC4999B001FF3EA /* blueArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = blueArrow.png; path = Book/FCXRefreshView/blueArrow.png; sourceTree = "<group>"; };
+		4B67D3871CC4999B001FF3EA /* blueArrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "blueArrow@2x.png"; path = "Book/FCXRefreshView/blueArrow@2x.png"; sourceTree = "<group>"; };
 		4B75BF911C9BE76D00212268 /* Book.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Book.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4B75BF951C9BE76D00212268 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		4B75BF971C9BE76D00212268 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -163,6 +179,8 @@
 		4B5F13D11C9D1A0C00188CB6 /* ImageSource */ = {
 			isa = PBXGroup;
 			children = (
+				4B67D3861CC4999B001FF3EA /* blueArrow.png */,
+				4B67D3871CC4999B001FF3EA /* blueArrow@2x.png */,
 				4BA0AD381CA15F70003EBE65 /* book_10.jpg */,
 				4BA0AD391CA15F70003EBE65 /* book_09.jpg */,
 				4BA0AD3A1CA15F70003EBE65 /* book_08.jpg */,
@@ -206,6 +224,21 @@
 			name = MBProgressHUD;
 			sourceTree = "<group>";
 		};
+		4B67D3791CC49964001FF3EA /* FCXRefreshView */ = {
+			isa = PBXGroup;
+			children = (
+				4B67D37A1CC4997D001FF3EA /* FCXRefreshBaseView.h */,
+				4B67D37B1CC4997D001FF3EA /* FCXRefreshBaseView.m */,
+				4B67D37C1CC4997D001FF3EA /* FCXRefreshFooterView.h */,
+				4B67D37D1CC4997D001FF3EA /* FCXRefreshFooterView.m */,
+				4B67D37E1CC4997D001FF3EA /* FCXRefreshHeaderView.h */,
+				4B67D37F1CC4997D001FF3EA /* FCXRefreshHeaderView.m */,
+				4B67D3801CC4997D001FF3EA /* UIScrollView+FCXRefresh.h */,
+				4B67D3811CC4997D001FF3EA /* UIScrollView+FCXRefresh.m */,
+			);
+			name = FCXRefreshView;
+			sourceTree = "<group>";
+		};
 		4B75BF881C9BE76D00212268 = {
 			isa = PBXGroup;
 			children = (
@@ -229,6 +262,7 @@
 		4B75BF931C9BE76D00212268 /* Book */ = {
 			isa = PBXGroup;
 			children = (
+				4B67D3791CC49964001FF3EA /* FCXRefreshView */,
 				4B5F13D51C9D3ED900188CB6 /* MBProgressHUD */,
 				4BA0AD2F1CA1147D003EBE65 /* View */,
 				4BA0AD2E1CA11462003EBE65 /* Model */,
@@ -411,6 +445,8 @@
 				4BA0AD431CA15F70003EBE65 /* book_10.jpg in Resources */,
 				4BA0AD4A1CA15F70003EBE65 /* book_03.jpg in Resources */,
 				4BA0AD491CA15F70003EBE65 /* book_04.jpg in Resources */,
+				4B67D3881CC4999B001FF3EA /* blueArrow.png in Resources */,
+				4B67D3891CC4999B001FF3EA /* blueArrow@2x.png in Resources */,
 				4BA0AD4C1CA15F70003EBE65 /* book_02.jpg in Resources */,
 				4B75BFA41C9BE76D00212268 /* Assets.xcassets in Resources */,
 			);
@@ -437,13 +473,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4B67D3821CC4997D001FF3EA /* FCXRefreshBaseView.m in Sources */,
 				4B75BF9F1C9BE76D00212268 /* ReviewViewController.m in Sources */,
 				4B75BF991C9BE76D00212268 /* AppDelegate.m in Sources */,
+				4B67D3831CC4997D001FF3EA /* FCXRefreshFooterView.m in Sources */,
 				050371381C9E1BB9002D63EF /* TabBarViewController.m in Sources */,
 				4B603F8A1CA3B95800B0F6BC /* TableScrollViewCell.m in Sources */,
 				4BA0AD371CA1206A003EBE65 /* GetBookInfo.m in Sources */,
 				4B5F13D01C9D0D4A00188CB6 /* LoginViewController.m in Sources */,
 				4B75BFD01C9C3AB200212268 /* UserViewController.m in Sources */,
+				4B67D3841CC4997D001FF3EA /* FCXRefreshHeaderView.m in Sources */,
 				4BA0AD2D1CA11178003EBE65 /* ListTableViewCell.m in Sources */,
 				4B2E96A01CC3C10B00E64E94 /* HomeViewController.m in Sources */,
 				4B9083F41CA7DBE800123C48 /* BookInfoViewController.m in Sources */,
@@ -451,6 +490,7 @@
 				4B75BFCD1C9BF97900212268 /* AuditedViewController.m in Sources */,
 				4BA0AD321CA114C6003EBE65 /* Book.m in Sources */,
 				4B2E96A31CC3C22600E64E94 /* SearchViewController.m in Sources */,
+				4B67D3851CC4997D001FF3EA /* UIScrollView+FCXRefresh.m in Sources */,
 				4BAE6F1E1CC0BEB300868E61 /* UserInfo.m in Sources */,
 				4B75BF9C1C9BE76D00212268 /* PendingViewController.m in Sources */,
 				4B75BF961C9BE76D00212268 /* main.m in Sources */,
