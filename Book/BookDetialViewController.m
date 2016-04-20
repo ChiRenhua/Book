@@ -66,7 +66,7 @@
             // 图书名字
             UILabel *bookName = [[UILabel alloc]initWithFrame:CGRectMake(110, 0, self.view.bounds.size.width - 90, 45)];
             bookName.text = _detialBook.bookName;
-            bookName.font = [UIFont systemFontOfSize:20];
+            bookName.font = [UIFont systemFontOfSize:19];
             bookName.textColor = [UIColor blackColor];
             bookName.lineBreakMode = NSLineBreakByWordWrapping;                                                                                         // 文字过长时显示全部
             bookName.numberOfLines = 0;                                                                                                                 // 可以换行
@@ -74,13 +74,13 @@
             // 作者名字
             UILabel *writerName = [[UILabel alloc]initWithFrame:CGRectMake(110, 60, self.view.bounds.size.width - 90, 20)];
             writerName.text = _detialBook.bookWriter;
-            writerName.font = [UIFont systemFontOfSize:15];
+            writerName.font = [UIFont systemFontOfSize:14];
             writerName.textColor = [UIColor grayColor];
             [bookDetialViewCell.contentView addSubview:writerName];
             // 书籍完成时间
             UILabel *bookTime = [[UILabel alloc]initWithFrame:CGRectMake(110, 115, self.view.bounds.size.width - 90, 20)];
             bookTime.text = _detialBook.bookTime;
-            bookTime.font = [UIFont systemFontOfSize:15];
+            bookTime.font = [UIFont systemFontOfSize:14];
             bookTime.textColor = [UIColor grayColor];
             [bookDetialViewCell.contentView addSubview:bookTime];
             // 书籍状态
@@ -105,7 +105,7 @@
             // 书籍简介标题
             UILabel *bookIntroduceTitle = [[UILabel alloc]initWithFrame:CGRectMake(15, 15, self.view.bounds.size.width - 10, 20)];
             bookIntroduceTitle.text = @"书籍简介";
-            bookIntroduceTitle.font = [UIFont systemFontOfSize:18];
+            bookIntroduceTitle.font = [UIFont systemFontOfSize:17];
             bookIntroduceTitle.textColor = [UIColor blackColor];
             [bookDetialViewCell.contentView addSubview:bookIntroduceTitle];
             // 书籍简介内容
@@ -125,7 +125,7 @@
             // 审核信息标题
             UILabel *bookReviewInfoTitle = [[UILabel alloc]initWithFrame:CGRectMake(15, 15, self.view.bounds.size.width - 10, 20)];
             bookReviewInfoTitle.text = @"审核信息";
-            bookReviewInfoTitle.font = [UIFont systemFontOfSize:18];
+            bookReviewInfoTitle.font = [UIFont systemFontOfSize:17];
             bookReviewInfoTitle.textColor = [UIColor blackColor];
             [bookDetialViewCell.contentView addSubview:bookReviewInfoTitle];
             // 审核信息内容
@@ -145,7 +145,7 @@
             // 书籍简介标题
             UILabel *bookIntroduceTitle = [[UILabel alloc]initWithFrame:CGRectMake(15, 15, self.view.bounds.size.width - 10, 20)];
             bookIntroduceTitle.text = @"书籍信息";
-            bookIntroduceTitle.font = [UIFont systemFontOfSize:18];
+            bookIntroduceTitle.font = [UIFont systemFontOfSize:17];
             bookIntroduceTitle.textColor = [UIColor blackColor];
             [bookDetialViewCell.contentView addSubview:bookIntroduceTitle];
             // 出版商标题
