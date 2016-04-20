@@ -16,6 +16,7 @@
 @property (nonatomic,strong) UITableView *HomeViewtableView;
 @end
 NSMutableArray *pendingArray;
+NSMutableArray *imageArray;
 AppDelegate *homeViewDelegate;
 
 @implementation HomeViewController
@@ -23,6 +24,7 @@ AppDelegate *homeViewDelegate;
 - (id)init{
     if (self = [super init]) {
         pendingArray = [[NSMutableArray alloc]initWithObjects:@"待审核",@"审核中",@"已审核", nil];
+        imageArray = [[NSMutableArray alloc]initWithObjects:@"touxiang.png",@"touxiang.png",@"touxiang.png", nil];
         homeViewDelegate = [[UIApplication sharedApplication]delegate];
     }
     return self;
@@ -92,7 +94,12 @@ AppDelegate *homeViewDelegate;
 }
 #pragma mark 设置分组标题内容高度
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return 30;
+    if (section == 0) {
+        return 30;
+    }else if (section == 1) {
+        return 15;
+    }
+    return 0;
 }
 
 #pragma mark 设置行数
@@ -103,6 +110,8 @@ AppDelegate *homeViewDelegate;
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *HomeViewcell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
     HomeViewcell.textLabel.text = pendingArray[indexPath.row];
+    HomeViewcell.imageView.contentMode = UIViewContentModeScaleAspectFit;                                                                       // 设置图片属性为合适填充
+    [HomeViewcell.imageView setImage:[UIImage imageNamed:imageArray[indexPath.row]]];
     return HomeViewcell;
 }
 #pragma mark 添加行点击事件
@@ -134,7 +143,7 @@ AppDelegate *homeViewDelegate;
 }
 #pragma mark 设置行高
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 50;
+    return 70;
 }
 
 

@@ -44,11 +44,11 @@ NSMutableArray *PendingViewSearchResult;                                        
     [super viewDidLoad];
     [self.view setBackgroundColor:[UIColor whiteColor]];
     self.navigationItem.title = @"待审核";
-    // 添加此方法后，页面布局不会自动适应，而是需要手动调节
-    //    if ([self respondsToSelector:@selector(automaticallyAdjustsScrollViewInsets)])
-    //    {
-    //        self.automaticallyAdjustsScrollViewInsets = NO;
-    //    }
+     //添加此方法后，页面布局不会自动适应，而是需要手动调节
+        if ([self respondsToSelector:@selector(automaticallyAdjustsScrollViewInsets)])
+        {
+            self.automaticallyAdjustsScrollViewInsets = NO;
+        }
     _PendingViewtableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 64, self.view.frame.size.width, [UIScreen mainScreen].bounds.size.height - 70) style:UITableViewStyleGrouped];                                                                                          // 初始化tableview填充整个屏幕
     _PendingViewtableView.dataSource = self;                                                                                   // 设置tableview的数据代理
     _PendingViewtableView.delegate = self;                                                                                     // 设置tableview代理

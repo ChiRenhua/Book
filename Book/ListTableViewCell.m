@@ -67,6 +67,14 @@ UILabel *bookStateLable;
     bookNameLable.text = book.bookName;
     bookWriterLable.text = book.bookWriter;
     bookTimeLable.text = book.bookTime;
+    // 判断图书的审核状态，如果通过文字颜色为绿色，如果没通过则为红色，待审核为蓝色
+    if ([book.bookState isEqualToString:@"通过"]) {
+        bookStateLable.textColor = [UIColor greenColor];
+    }else if ([book.bookState isEqualToString:@"未通过"]) {
+        bookStateLable.textColor = [UIColor redColor];
+    }else if ([book.bookState isEqualToString:@"审核中"]) {
+        bookStateLable.textColor = [UIColor blueColor];
+    }
     bookStateLable.text = book.bookState;
 }
 #pragma mark remove掉当前cell上的所有view布局

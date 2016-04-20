@@ -17,5 +17,4 @@
 // 获取用户权限
 - (NSString *)getUserPermission;
 
-
 @end

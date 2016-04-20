@@ -40,11 +40,16 @@ AppDelegate *UserVCdelegate;
 
 #pragma mark 设置分组数
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 1;
+    return 2;
 }
 #pragma mark 设置分组标题内容高度
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return 30;
+    if (section == 0) {
+        return 30;
+    }else if (section == 1) {
+        return 0;
+    }
+    return 0;
 }
 
 #pragma mark 设置行数
@@ -53,36 +58,48 @@ AppDelegate *UserVCdelegate;
 }
 #pragma mark 设置单元格样式和内容
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *UserViewCell;
-    UserViewCell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:nil];
-    // 获取用户名
-    NSArray *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *filePath = [path objectAtIndex:0];
-    NSString *plistPath = [filePath stringByAppendingPathComponent:@"userInfo.plist"];
-    NSMutableDictionary *userInfo = [[NSMutableDictionary alloc]initWithContentsOfFile:plistPath];
-    NSString *userName = [userInfo objectForKey:@"userName"];
-    
-    // 添加用户头像
-    UIImageView *userImage = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 100, 100)];                                                                     // 设置头像图片大小
-    userImage.contentMode = UIViewContentModeScaleAspectFit;                                                                                                    // 设置图片属性为合适填充
-    [userImage setImage:[UIImage imageNamed:@"touxiang.png"]];
-    [UserViewCell.contentView addSubview:userImage];
-    // 添加用户名
-    _nameLable = [[UILabel alloc]initWithFrame:CGRectMake(110, 20, SCREEN_BOUNDS.width - 110, 20)];
-    _nameLable.text = [[NSString alloc]initWithFormat:@"用户：%@",userName];
-    _nameLable.font = [UIFont systemFontOfSize:20];
-    [UserViewCell.contentView addSubview:_nameLable];
-    // 添加职位信息
-    UILabel * professionLable = [[UILabel alloc]initWithFrame:CGRectMake(110, 60, SCREEN_BOUNDS.width - 110, 20)];
-    professionLable.text = @"图书审核员";
-    professionLable.font = [UIFont systemFontOfSize:15];
-    professionLable.textColor = [UIColor grayColor];
-    [UserViewCell.contentView addSubview:professionLable];
-    return UserViewCell;
+    if (indexPath.section == 0) {
+        UITableViewCell *UserViewCell;
+        UserViewCell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:nil];
+        // 获取用户名
+        NSArray *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+        NSString *filePath = [path objectAtIndex:0];
+        NSString *plistPath = [filePath stringByAppendingPathComponent:@"userInfo.plist"];
+        NSMutableDictionary *userInfo = [[NSMutableDictionary alloc]initWithContentsOfFile:plistPath];
+        NSString *userName = [userInfo objectForKey:@"userName"];
+        
+        // 添加用户头像
+        UIImageView *userImage = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 100, 100)];                                                                     // 设置头像图片大小
+        userImage.contentMode = UIViewContentModeScaleAspectFit;                                                                                                    // 设置图片属性为合适填充
+        [userImage setImage:[UIImage imageNamed:@"touxiang.png"]];
+        [UserViewCell.contentView addSubview:userImage];
+        // 添加用户名
+        _nameLable = [[UILabel alloc]initWithFrame:CGRectMake(110, 20, SCREEN_BOUNDS.width - 110, 20)];
+        _nameLable.text = [[NSString alloc]initWithFormat:@"用户：%@",userName];
+        _nameLable.font = [UIFont systemFontOfSize:20];
+        [UserViewCell.contentView addSubview:_nameLable];
+        // 添加职位信息
+        UILabel * professionLable = [[UILabel alloc]initWithFrame:CGRectMake(110, 60, SCREEN_BOUNDS.width - 110, 20)];
+        professionLable.text = @"图书审核员";
+        professionLable.font = [UIFont systemFontOfSize:15];
+        professionLable.textColor = [UIColor grayColor];
+        [UserViewCell.contentView addSubview:professionLable];
+        return UserViewCell;
+    }else if (indexPath.section == 1) {
+        UITableViewCell *UserViewCell;
+        UserViewCell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:nil];
+        UserViewCell.textLabel.text = @"权限";
+        return UserViewCell;
+
+    }
+    return nil;
 }
 #pragma mark 设置行高
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 100;
+    if (indexPath.section == 0) {
+        return 100;
+    }
+    return 50;
 }
 #pragma mark 设置每组标题名称
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
@@ -90,8 +107,13 @@ AppDelegate *UserVCdelegate;
 }
 #pragma mark 添加行点击事件
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    [self logout];
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];                                                                                  // 取消选中的状态
+    if (indexPath.section == 0) {
+        [self logout];
+        [tableView deselectRowAtIndexPath:indexPath animated:YES];                                                                                  // 取消选中的状态
+    }else if (indexPath.section == 1) {
+        [tableView deselectRowAtIndexPath:indexPath animated:YES];                                                                                  // 取消选中的状态
+    }
+    
 }
 #pragma mark 登出
 - (void)logout {

@@ -43,11 +43,11 @@ NSMutableArray *ReviewViewSearchResult;                                         
     // Do any additional setup after loading the view, typically from a nib.
     self.view.backgroundColor = [UIColor whiteColor];
     self.navigationItem.title = @"审核中";
-// 添加此方法后，页面布局不会自动适应，而是需要手动调节
-//    if ([self respondsToSelector:@selector(automaticallyAdjustsScrollViewInsets)])
-//    {
-//        self.automaticallyAdjustsScrollViewInsets = NO;
-//    }
+    //添加此方法后，页面布局不会自动适应，而是需要手动调节
+    if ([self respondsToSelector:@selector(automaticallyAdjustsScrollViewInsets)])
+    {
+        self.automaticallyAdjustsScrollViewInsets = NO;
+    }
     _ReviewViewtableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 64, self.view.frame.size.width, [UIScreen mainScreen].bounds.size.height - 70) style:UITableViewStyleGrouped];                                                                                       // 初始化tableview填充整个屏幕
     _ReviewViewtableView.dataSource = self;                                                                                   // 设置tableview的数据代理
     _ReviewViewtableView.delegate = self;                                                                                     // 设置tableview代理

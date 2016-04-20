@@ -137,7 +137,4 @@ NSString *booksResult;                                                          
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return 120;
 }
-
-
-
 @end
