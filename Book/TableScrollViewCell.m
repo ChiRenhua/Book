@@ -108,9 +108,8 @@ NSString *booksResult;                                                          
     [cell.contentView addSubview:bookPicture];
     
     // 在cell上添加图书名称
-    UILabel *bookNameLable = [[UILabel alloc]initWithFrame:CGRectMake(10, 140, 130, 60)];
-    bookNameLable.lineBreakMode = NSLineBreakByWordWrapping;
-    bookNameLable.numberOfLines = 0;
+    UILabel *bookNameLable = [[UILabel alloc]initWithFrame:CGRectMake(10, 140, 95, 60)];
+    bookNameLable.lineBreakMode = NSLineBreakByTruncatingTail;                                                                                    // 文字过长时显示全部
     bookNameLable.tag = 1;
     bookNameLable.font = [UIFont systemFontOfSize:15];
     bookNameLable.textColor = [UIColor blackColor];

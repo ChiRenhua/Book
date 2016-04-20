@@ -61,13 +61,6 @@ AppDelegate *UserVCdelegate;
     if (indexPath.section == 0) {
         UITableViewCell *UserViewCell;
         UserViewCell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:nil];
-        // 获取用户名
-        NSArray *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-        NSString *filePath = [path objectAtIndex:0];
-        NSString *plistPath = [filePath stringByAppendingPathComponent:@"userInfo.plist"];
-        NSMutableDictionary *userInfo = [[NSMutableDictionary alloc]initWithContentsOfFile:plistPath];
-        NSString *userName = [userInfo objectForKey:@"userName"];
-        
         // 添加用户头像
         UIImageView *userImage = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 100, 100)];                                                                     // 设置头像图片大小
         userImage.contentMode = UIViewContentModeScaleAspectFit;                                                                                                    // 设置图片属性为合适填充
@@ -75,15 +68,24 @@ AppDelegate *UserVCdelegate;
         [UserViewCell.contentView addSubview:userImage];
         // 添加用户名
         _nameLable = [[UILabel alloc]initWithFrame:CGRectMake(110, 20, SCREEN_BOUNDS.width - 110, 20)];
+         NSString *userName = [UserVCdelegate.userInfo getUserName];
         _nameLable.text = [[NSString alloc]initWithFormat:@"用户：%@",userName];
         _nameLable.font = [UIFont systemFontOfSize:20];
         [UserViewCell.contentView addSubview:_nameLable];
         // 添加职位信息
-        UILabel * professionLable = [[UILabel alloc]initWithFrame:CGRectMake(110, 60, SCREEN_BOUNDS.width - 110, 20)];
-        professionLable.text = @"图书审核员";
-        professionLable.font = [UIFont systemFontOfSize:15];
-        professionLable.textColor = [UIColor grayColor];
-        [UserViewCell.contentView addSubview:professionLable];
+        _professionLable = [[UILabel alloc]initWithFrame:CGRectMake(110, 60, SCREEN_BOUNDS.width - 110, 20)];
+        NSString *professiontext = [UserVCdelegate.userInfo getUserPermission];
+        if ([professiontext isEqualToString:@"0"]) {
+            _professionLable.text = @"图书管理员";
+        }else if ([professiontext isEqualToString:@"1"]) {
+            _professionLable.text = @"图书复审审核员";
+        }else if ([professiontext isEqualToString:@"2"]) {
+            _professionLable.text = @"图书初审审核员";
+        }
+        
+        _professionLable.font = [UIFont systemFontOfSize:15];
+        _professionLable.textColor = [UIColor grayColor];
+        [UserViewCell.contentView addSubview:_professionLable];
         return UserViewCell;
     }else if (indexPath.section == 1) {
         UITableViewCell *UserViewCell;

@@ -48,7 +48,7 @@ NSMutableArray *ReviewViewSearchResult;                                         
     {
         self.automaticallyAdjustsScrollViewInsets = NO;
     }
-    _ReviewViewtableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 64, self.view.frame.size.width, [UIScreen mainScreen].bounds.size.height - 70) style:UITableViewStyleGrouped];                                                                                       // 初始化tableview填充整个屏幕
+    _ReviewViewtableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 64, self.view.frame.size.width, [UIScreen mainScreen].bounds.size.height - 75) style:UITableViewStyleGrouped];                                                                                       // 初始化tableview填充整个屏幕
     _ReviewViewtableView.dataSource = self;                                                                                   // 设置tableview的数据代理
     _ReviewViewtableView.delegate = self;                                                                                     // 设置tableview代理
     [self.view addSubview:_ReviewViewtableView];                                                                              // 将tableview添加到屏幕上

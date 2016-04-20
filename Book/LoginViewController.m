@@ -120,12 +120,20 @@
         _mbprogress.mode = MBProgressHUDModeCustomView;
         _mbprogress.label.text = NSLocalizedString(@"登陆成功", @"HUD completed title");
         [_mbprogress hideAnimated:YES afterDelay:3.f];
-        _userInfoBlock(@"0",_userNameTextField.text,_userPassWordTextField.text);                                                           //通知用户数据类保存用户数据
+        NSString *userPermission = @"0";
+        _userInfoBlock(userPermission,_userNameTextField.text,_userPassWordTextField.text);                                                           //通知用户数据类保存用户数据
         _showHomeViewBlock();
         // 加载个人页面数据
         AppDelegate *appdelegate = [[UIApplication sharedApplication]delegate];
         appdelegate.UserVC.nameLable.text = [[NSString alloc]initWithFormat:@"欢迎用户：%@",_userNameTextField.text];
-        [self dismissViewControllerAnimated:YES completion:nil];                                          // 登录成功后撤下登录界面
+        if ([userPermission isEqualToString:@"0"]) {
+            appdelegate.UserVC.professionLable.text = @"图书管理员";
+        }else if ([userPermission isEqualToString:@"1"]) {
+            appdelegate.UserVC.professionLable.text = @"图书复审审核员";
+        }else if ([userPermission isEqualToString:@"2"]) {
+            appdelegate.UserVC.professionLable.text = @"图书初审审核员";
+        }
+        [self dismissViewControllerAnimated:YES completion:nil];                                                                            // 登录成功后撤下登录界面
     });
 }
 #pragma mark 登陆验证失败调用此函数

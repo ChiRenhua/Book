@@ -23,6 +23,9 @@
     [dic1 setObject:@"100页" forKey:@"bookPages"];
     [dic1 setObject:@"小说" forKey:@"bookCategory"];
     [dic1 setObject:@"book_01.jpg" forKey:@"bookPicture"];
+    [dic1 setObject:@"黑土文学" forKey:@"bookPublishers"];
+    [dic1 setObject:@"英文" forKey:@"bookLanguage"];
+    [dic1 setObject:@"这是审核的相关信息，审核的结果在这里显示，如果没有通过审核的话这里也会显示未通过的原因，同时对审核通过，或者正在审核的图书，还会显示审核人员对图书的相关意见。" forKey:@"bookReviewInfo"];
     [dic1 setObject:state forKey:@"bookState"];
     
     NSMutableDictionary  *dic2 = [[NSMutableDictionary alloc]init];
@@ -34,6 +37,9 @@
     [dic2 setObject:@"120页" forKey:@"bookPages"];
     [dic2 setObject:@"小说" forKey:@"bookCategory"];
     [dic2 setObject:@"book_02.jpg" forKey:@"bookPicture"];
+    [dic2 setObject:@"大地文学" forKey:@"bookPublishers"];
+    [dic2 setObject:@"英文" forKey:@"bookLanguage"];
+    [dic2 setObject:@"这是审核的相关信息，审核的结果在这里显示，如果没有通过审核的话这里也会显示未通过的原因，同时对审核通过，或者正在审核的图书，还会显示审核人员对图书的相关意见。" forKey:@"bookReviewInfo"];
     [dic2 setObject:state forKey:@"bookState"];
     
     NSMutableDictionary  *dic3 = [[NSMutableDictionary alloc]init];
@@ -45,6 +51,9 @@
     [dic3 setObject:@"233页" forKey:@"bookPages"];
     [dic3 setObject:@"小说" forKey:@"bookCategory"];
     [dic3 setObject:@"book_03.jpg" forKey:@"bookPicture"];
+    [dic3 setObject:@"白云文学" forKey:@"bookPublishers"];
+    [dic3 setObject:@"英文" forKey:@"bookLanguage"];
+    [dic3 setObject:@"这是审核的相关信息，审核的结果在这里显示，如果没有通过审核的话这里也会显示未通过的原因，同时对审核通过，或者正在审核的图书，还会显示审核人员对图书的相关意见。" forKey:@"bookReviewInfo"];
     [dic3 setObject:state forKey:@"bookState"];
     
     NSMutableDictionary  *dic4 = [[NSMutableDictionary alloc]init];
@@ -56,6 +65,9 @@
     [dic4 setObject:@"100页" forKey:@"bookPages"];
     [dic4 setObject:@"小说" forKey:@"bookCategory"];
     [dic4 setObject:@"book_04.jpg" forKey:@"bookPicture"];
+    [dic4 setObject:@"东方出版社" forKey:@"bookPublishers"];
+    [dic4 setObject:@"英文" forKey:@"bookLanguage"];
+    [dic4 setObject:@"这是审核的相关信息，审核的结果在这里显示，如果没有通过审核的话这里也会显示未通过的原因，同时对审核通过，或者正在审核的图书，还会显示审核人员对图书的相关意见。" forKey:@"bookReviewInfo"];
     [dic4 setObject:state forKey:@"bookState"];
     
     NSMutableDictionary  *dic5 = [[NSMutableDictionary alloc]init];
@@ -67,6 +79,9 @@
     [dic5 setObject:@"100页" forKey:@"bookPages"];
     [dic5 setObject:@"小说" forKey:@"bookCategory"];
     [dic5 setObject:@"book_05.jpg" forKey:@"bookPicture"];
+    [dic5 setObject:@"西方出版社" forKey:@"bookPublishers"];
+    [dic5 setObject:@"英文" forKey:@"bookLanguage"];
+    [dic5 setObject:@"这是审核的相关信息，审核的结果在这里显示，如果没有通过审核的话这里也会显示未通过的原因，同时对审核通过，或者正在审核的图书，还会显示审核人员对图书的相关意见。" forKey:@"bookReviewInfo"];
     [dic5 setObject:state forKey:@"bookState"];
     
     NSMutableDictionary  *dic6 = [[NSMutableDictionary alloc]init];
@@ -78,6 +93,9 @@
     [dic6 setObject:@"100页" forKey:@"bookPages"];
     [dic6 setObject:@"小说" forKey:@"bookCategory"];
     [dic6 setObject:@"book_06.jpg" forKey:@"bookPicture"];
+    [dic6 setObject:@"黑土文学" forKey:@"bookPublishers"];
+    [dic6 setObject:@"英文" forKey:@"bookLanguage"];
+    [dic6 setObject:@"这是审核的相关信息，审核的结果在这里显示，如果没有通过审核的话这里也会显示未通过的原因，同时对审核通过，或者正在审核的图书，还会显示审核人员对图书的相关意见。" forKey:@"bookReviewInfo"];
     [dic6 setObject:state forKey:@"bookState"];
     
     NSMutableDictionary  *dic7 = [[NSMutableDictionary alloc]init];
@@ -89,6 +107,9 @@
     [dic7 setObject:@"100页" forKey:@"bookPages"];
     [dic7 setObject:@"小说" forKey:@"bookCategory"];
     [dic7 setObject:@"book_07.jpg" forKey:@"bookPicture"];
+    [dic7 setObject:@"黑土文学" forKey:@"bookPublishers"];
+    [dic7 setObject:@"英文" forKey:@"bookLanguage"];
+    [dic7 setObject:@"这是审核的相关信息，审核的结果在这里显示，如果没有通过审核的话这里也会显示未通过的原因，同时对审核通过，或者正在审核的图书，还会显示审核人员对图书的相关意见。" forKey:@"bookReviewInfo"];
     [dic7 setObject:state forKey:@"bookState"];
     
     NSMutableDictionary  *dic8 = [[NSMutableDictionary alloc]init];
@@ -100,6 +121,9 @@
     [dic8 setObject:@"100页" forKey:@"bookPages"];
     [dic8 setObject:@"小说" forKey:@"bookCategory"];
     [dic8 setObject:@"book_08.jpg" forKey:@"bookPicture"];
+    [dic8 setObject:@"黑土文学" forKey:@"bookPublishers"];
+    [dic8 setObject:@"英文" forKey:@"bookLanguage"];
+    [dic8 setObject:@"这是审核的相关信息，审核的结果在这里显示，如果没有通过审核的话这里也会显示未通过的原因，同时对审核通过，或者正在审核的图书，还会显示审核人员对图书的相关意见。" forKey:@"bookReviewInfo"];
     [dic8 setObject:state forKey:@"bookState"];
     
     NSMutableDictionary  *dic9 = [[NSMutableDictionary alloc]init];
@@ -111,6 +135,9 @@
     [dic9 setObject:@"100页" forKey:@"bookPages"];
     [dic9 setObject:@"小说" forKey:@"bookCategory"];
     [dic9 setObject:@"book_09.jpg" forKey:@"bookPicture"];
+    [dic9 setObject:@"黑土文学" forKey:@"bookPublishers"];
+    [dic9 setObject:@"英文" forKey:@"bookLanguage"];
+    [dic9 setObject:@"这是审核的相关信息，审核的结果在这里显示，如果没有通过审核的话这里也会显示未通过的原因，同时对审核通过，或者正在审核的图书，还会显示审核人员对图书的相关意见。" forKey:@"bookReviewInfo"];
     [dic9 setObject:state forKey:@"bookState"];
     
     NSMutableDictionary  *dic10 = [[NSMutableDictionary alloc]init];
@@ -122,6 +149,9 @@
     [dic10 setObject:@"100页" forKey:@"bookPages"];
     [dic10 setObject:@"小说" forKey:@"bookCategory"];
     [dic10 setObject:@"book_10.jpg" forKey:@"bookPicture"];
+    [dic10 setObject:@"黑土文学" forKey:@"bookPublishers"];
+    [dic10 setObject:@"英文" forKey:@"bookLanguage"];
+    [dic10 setObject:@"这是审核的相关信息，审核的结果在这里显示，如果没有通过审核的话这里也会显示未通过的原因，同时对审核通过，或者正在审核的图书，还会显示审核人员对图书的相关意见。" forKey:@"bookReviewInfo"];
     [dic10 setObject:state forKey:@"bookState"];
     
     if (style == 0) {

@@ -11,5 +11,6 @@
 
 @interface UserViewController : UIViewController
 @property (retain,strong) UILabel *nameLable;
+@property (retain,strong) UILabel *professionLable;
 
 @end

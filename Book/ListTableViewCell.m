@@ -55,7 +55,6 @@ UILabel *bookStateLable;
     [self.contentView addSubview:bookTimeLable];
     // 状态
     bookStateLable = [[UILabel alloc]init];
-    bookStateLable.textColor = [UIColor grayColor];
     bookStateLable.font = [UIFont systemFontOfSize:14];
     bookStateLable.frame = CGRectMake(SCREEN_BOUNDS.width - 50, 45, 50, 10);
     [self.contentView addSubview:bookStateLable];
@@ -74,6 +73,8 @@ UILabel *bookStateLable;
         bookStateLable.textColor = [UIColor redColor];
     }else if ([book.bookState isEqualToString:@"审核中"]) {
         bookStateLable.textColor = [UIColor blueColor];
+    }else if ([book.bookState isEqualToString:@"待审核"]) {
+        bookStateLable.textColor = [UIColor grayColor];
     }
     bookStateLable.text = book.bookState;
 }

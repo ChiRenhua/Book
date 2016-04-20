@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		050371381C9E1BB9002D63EF /* TabBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 050371371C9E1BB9002D63EF /* TabBarViewController.m */; };
+		4B01ACA01CC7A3B500AE23D7 /* BookReviewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B01AC9F1CC7A3B500AE23D7 /* BookReviewViewController.m */; };
+		4B01ACAC1CC7B86100AE23D7 /* pending.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B01ACAB1CC7B86100AE23D7 /* pending.png */; };
+		4B01ACB01CC7B88200AE23D7 /* review.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B01ACAF1CC7B88200AE23D7 /* review.png */; };
+		4B01ACB21CC7B90E00AE23D7 /* audited.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B01ACB11CC7B90E00AE23D7 /* audited.png */; };
 		4B2E96A01CC3C10B00E64E94 /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B2E969F1CC3C10B00E64E94 /* HomeViewController.m */; };
 		4B2E96A31CC3C22600E64E94 /* SearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B2E96A21CC3C22600E64E94 /* SearchViewController.m */; };
 		4B5F13D01C9D0D4A00188CB6 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B5F13CF1C9D0D4A00188CB6 /* LoginViewController.m */; };
@@ -68,6 +72,11 @@
 /* Begin PBXFileReference section */
 		050371361C9E1BB9002D63EF /* TabBarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TabBarViewController.h; sourceTree = "<group>"; };
 		050371371C9E1BB9002D63EF /* TabBarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TabBarViewController.m; sourceTree = "<group>"; };
+		4B01AC9E1CC7A3B500AE23D7 /* BookReviewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BookReviewViewController.h; sourceTree = "<group>"; };
+		4B01AC9F1CC7A3B500AE23D7 /* BookReviewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BookReviewViewController.m; sourceTree = "<group>"; };
+		4B01ACAB1CC7B86100AE23D7 /* pending.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pending.png; sourceTree = "<group>"; };
+		4B01ACAF1CC7B88200AE23D7 /* review.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = review.png; sourceTree = "<group>"; };
+		4B01ACB11CC7B90E00AE23D7 /* audited.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = audited.png; sourceTree = "<group>"; };
 		4B2E969E1CC3C10B00E64E94 /* HomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeViewController.h; sourceTree = "<group>"; };
 		4B2E969F1CC3C10B00E64E94 /* HomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeViewController.m; sourceTree = "<group>"; };
 		4B2E96A11CC3C22600E64E94 /* SearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchViewController.h; sourceTree = "<group>"; };
@@ -179,6 +188,9 @@
 		4B5F13D11C9D1A0C00188CB6 /* ImageSource */ = {
 			isa = PBXGroup;
 			children = (
+				4B01ACB11CC7B90E00AE23D7 /* audited.png */,
+				4B01ACAF1CC7B88200AE23D7 /* review.png */,
+				4B01ACAB1CC7B86100AE23D7 /* pending.png */,
 				4B67D3861CC4999B001FF3EA /* blueArrow.png */,
 				4B67D3871CC4999B001FF3EA /* blueArrow@2x.png */,
 				4BA0AD381CA15F70003EBE65 /* book_10.jpg */,
@@ -211,6 +223,8 @@
 				4B96DD4F1CA2642F0070725C /* BookDetialViewController.m */,
 				4B9083F21CA7DBE800123C48 /* BookInfoViewController.h */,
 				4B9083F31CA7DBE800123C48 /* BookInfoViewController.m */,
+				4B01AC9E1CC7A3B500AE23D7 /* BookReviewViewController.h */,
+				4B01AC9F1CC7A3B500AE23D7 /* BookReviewViewController.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -443,11 +457,14 @@
 				4BA0AD471CA15F70003EBE65 /* book_06.jpg in Resources */,
 				4BA0AD451CA15F70003EBE65 /* book_08.jpg in Resources */,
 				4BA0AD431CA15F70003EBE65 /* book_10.jpg in Resources */,
+				4B01ACB01CC7B88200AE23D7 /* review.png in Resources */,
 				4BA0AD4A1CA15F70003EBE65 /* book_03.jpg in Resources */,
 				4BA0AD491CA15F70003EBE65 /* book_04.jpg in Resources */,
+				4B01ACAC1CC7B86100AE23D7 /* pending.png in Resources */,
 				4B67D3881CC4999B001FF3EA /* blueArrow.png in Resources */,
 				4B67D3891CC4999B001FF3EA /* blueArrow@2x.png in Resources */,
 				4BA0AD4C1CA15F70003EBE65 /* book_02.jpg in Resources */,
+				4B01ACB21CC7B90E00AE23D7 /* audited.png in Resources */,
 				4B75BFA41C9BE76D00212268 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -481,6 +498,7 @@
 				4B603F8A1CA3B95800B0F6BC /* TableScrollViewCell.m in Sources */,
 				4BA0AD371CA1206A003EBE65 /* GetBookInfo.m in Sources */,
 				4B5F13D01C9D0D4A00188CB6 /* LoginViewController.m in Sources */,
+				4B01ACA01CC7A3B500AE23D7 /* BookReviewViewController.m in Sources */,
 				4B75BFD01C9C3AB200212268 /* UserViewController.m in Sources */,
 				4B67D3841CC4997D001FF3EA /* FCXRefreshHeaderView.m in Sources */,
 				4BA0AD2D1CA11178003EBE65 /* ListTableViewCell.m in Sources */,

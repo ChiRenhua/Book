@@ -19,7 +19,7 @@
 #define SCREEN_BOUNDS [UIScreen mainScreen].bounds.size
 
 @interface PendingViewController ()<UITableViewDataSource,UITableViewDelegate,UISearchDisplayDelegate,UISearchBarDelegate>
-@property (nonatomic,strong) UITableView *PendingViewtableView;
+@property (retain,strong) UITableView *PendingViewtableView;
 @property (assign,atomic) BOOL isFirstreview;
 @property (nonatomic, strong) FCXRefreshHeaderView *headerView;
 @end
@@ -49,7 +49,7 @@ NSMutableArray *PendingViewSearchResult;                                        
         {
             self.automaticallyAdjustsScrollViewInsets = NO;
         }
-    _PendingViewtableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 64, self.view.frame.size.width, [UIScreen mainScreen].bounds.size.height - 70) style:UITableViewStyleGrouped];                                                                                          // 初始化tableview填充整个屏幕
+    _PendingViewtableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 64, self.view.frame.size.width, [UIScreen mainScreen].bounds.size.height - 75) style:UITableViewStyleGrouped];                                                                                          // 初始化tableview填充整个屏幕
     _PendingViewtableView.dataSource = self;                                                                                   // 设置tableview的数据代理
     _PendingViewtableView.delegate = self;                                                                                     // 设置tableview代理
     [self.view addSubview:_PendingViewtableView];                                                                              // 将tableview添加到屏幕上

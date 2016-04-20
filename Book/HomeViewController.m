@@ -24,7 +24,7 @@ AppDelegate *homeViewDelegate;
 - (id)init{
     if (self = [super init]) {
         pendingArray = [[NSMutableArray alloc]initWithObjects:@"待审核",@"审核中",@"已审核", nil];
-        imageArray = [[NSMutableArray alloc]initWithObjects:@"touxiang.png",@"touxiang.png",@"touxiang.png", nil];
+        imageArray = [[NSMutableArray alloc]initWithObjects:@"pending.png",@"review.png",@"audited.png", nil];
         homeViewDelegate = [[UIApplication sharedApplication]delegate];
     }
     return self;
@@ -36,8 +36,6 @@ AppDelegate *homeViewDelegate;
     [self.view setBackgroundColor:[UIColor whiteColor]];
     self.navigationItem.title = @"主页";
     homeViewDelegate.loginVC.showHomeViewBlock = ^(){
-        // 进行登录验证
-        [self verificationLogin];
         // 判断仅当tableview为空时，才会重新创建tableview
         if (_HomeViewtableView == nil) {
             _HomeViewtableView = [[UITableView alloc]initWithFrame:self.view.bounds style:UITableViewStyleGrouped];
@@ -49,6 +47,8 @@ AppDelegate *homeViewDelegate;
             [_HomeViewtableView reloadData];
         }
     };
+    // 进行登录验证
+    [self verificationLogin];
     if ([homeViewDelegate.userInfo getUserName].length && [homeViewDelegate.userInfo getUserPassword].length && [homeViewDelegate.userInfo getUserPermission].length) {
         _HomeViewtableView = [[UITableView alloc]initWithFrame:self.view.bounds style:UITableViewStyleGrouped];
         _HomeViewtableView.delegate = self;
@@ -78,9 +78,9 @@ AppDelegate *homeViewDelegate;
             return @"复审";
         }
     }else if ([[homeViewDelegate.userInfo getUserPermission] isEqualToString:@"1"]) {
-        return @"初审";
-    }else if ([[homeViewDelegate.userInfo getUserPermission] isEqualToString:@"2"]) {
         return @"复审";
+    }else if ([[homeViewDelegate.userInfo getUserPermission] isEqualToString:@"2"]) {
+        return @"初审";
     }
     return nil;
 }
