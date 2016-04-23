@@ -13,6 +13,7 @@
 #import "UserInfo.h"
 #import "HomeViewController.h"
 #import "SearchViewController.h"
+#import "BookReviewViewController.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
@@ -23,6 +24,7 @@
 @property (strong, nonatomic) UserInfo *userInfo;
 @property (strong, nonatomic) HomeViewController *homeVC;
 @property (strong, nonatomic) SearchViewController *searchVC;
+@property (strong, nonatomic) BookReviewViewController *bookReviewVC;
 
 @end
 

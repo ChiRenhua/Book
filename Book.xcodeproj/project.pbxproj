@@ -50,6 +50,7 @@
 		4BA0AD4C1CA15F70003EBE65 /* book_02.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 4BA0AD411CA15F70003EBE65 /* book_02.jpg */; };
 		4BA0AD4D1CA15F70003EBE65 /* touxiang.png in Resources */ = {isa = PBXBuildFile; fileRef = 4BA0AD421CA15F70003EBE65 /* touxiang.png */; };
 		4BAE6F1E1CC0BEB300868E61 /* UserInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BAE6F1D1CC0BEB300868E61 /* UserInfo.m */; };
+		4BCCE2181CC9E543000F689D /* RDRStickyKeyboardView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BCCE2171CC9E543000F689D /* RDRStickyKeyboardView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -141,6 +142,8 @@
 		4BA0AD421CA15F70003EBE65 /* touxiang.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = touxiang.png; path = ImageSource/touxiang.png; sourceTree = "<group>"; };
 		4BAE6F1C1CC0BEB300868E61 /* UserInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserInfo.h; sourceTree = "<group>"; };
 		4BAE6F1D1CC0BEB300868E61 /* UserInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserInfo.m; sourceTree = "<group>"; };
+		4BCCE2161CC9E543000F689D /* RDRStickyKeyboardView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RDRStickyKeyboardView.h; path = RDRStickyKeyboardView/RDRStickyKeyboardView.h; sourceTree = "<group>"; };
+		4BCCE2171CC9E543000F689D /* RDRStickyKeyboardView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RDRStickyKeyboardView.m; path = RDRStickyKeyboardView/RDRStickyKeyboardView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -276,6 +279,7 @@
 		4B75BF931C9BE76D00212268 /* Book */ = {
 			isa = PBXGroup;
 			children = (
+				4BCCE2151CC9E50A000F689D /* KeyboardView */,
 				4B67D3791CC49964001FF3EA /* FCXRefreshView */,
 				4B5F13D51C9D3ED900188CB6 /* MBProgressHUD */,
 				4BA0AD2F1CA1147D003EBE65 /* View */,
@@ -340,6 +344,15 @@
 				4B603F891CA3B95800B0F6BC /* TableScrollViewCell.m */,
 			);
 			name = View;
+			sourceTree = "<group>";
+		};
+		4BCCE2151CC9E50A000F689D /* KeyboardView */ = {
+			isa = PBXGroup;
+			children = (
+				4BCCE2161CC9E543000F689D /* RDRStickyKeyboardView.h */,
+				4BCCE2171CC9E543000F689D /* RDRStickyKeyboardView.m */,
+			);
+			name = KeyboardView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -511,6 +524,7 @@
 				4B67D3851CC4997D001FF3EA /* UIScrollView+FCXRefresh.m in Sources */,
 				4BAE6F1E1CC0BEB300868E61 /* UserInfo.m in Sources */,
 				4B75BF9C1C9BE76D00212268 /* PendingViewController.m in Sources */,
+				4BCCE2181CC9E543000F689D /* RDRStickyKeyboardView.m in Sources */,
 				4B75BF961C9BE76D00212268 /* main.m in Sources */,
 				4B5F13D81C9D3EEE00188CB6 /* MBProgressHUD.m in Sources */,
 			);

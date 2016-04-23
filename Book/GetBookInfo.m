@@ -229,4 +229,9 @@
     return [self getBookswithState:@"审核中"style:0];
 }
 
+- (NSMutableArray *)getReviewInfoList {
+    NSMutableArray *reviewInfoList = [[NSMutableArray alloc]initWithObjects:@"图片有问题",@"作者有问题",@"书名有问题",@"出版商有问题",@"大小有问题",@"页数有问题",@"语言有问题",@"类别有问题",@"日期有问题",@"内容有问题",@"简介有问题",@"封皮有问题", nil];
+    return reviewInfoList;
+}
+
 @end

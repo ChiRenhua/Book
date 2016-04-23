@@ -68,11 +68,19 @@ UILabel *bookStateLable;
     bookTimeLable.text = book.bookTime;
     // 判断图书的审核状态，如果通过文字颜色为绿色，如果没通过则为红色，待审核为蓝色
     if ([book.bookState isEqualToString:@"通过"]) {
-        bookStateLable.textColor = [UIColor greenColor];
+        //设置文字颜色为绿色
+        bookStateLable.textColor = [UIColor colorWithRed:0.0f/255.0f
+                                                   green:200.0f/255.0f
+                                                    blue:0.0f/255.0f
+                                                   alpha:1.0f];
     }else if ([book.bookState isEqualToString:@"未通过"]) {
         bookStateLable.textColor = [UIColor redColor];
     }else if ([book.bookState isEqualToString:@"审核中"]) {
-        bookStateLable.textColor = [UIColor blueColor];
+        // 设置文字颜色为蓝色
+        bookStateLable.textColor = [UIColor colorWithRed:28.0f/255.0f
+                                                                 green:134.0f/255.0f
+                                                                  blue:238.0f/255.0f
+                                                                 alpha:1.0f];
     }else if ([book.bookState isEqualToString:@"待审核"]) {
         bookStateLable.textColor = [UIColor grayColor];
     }

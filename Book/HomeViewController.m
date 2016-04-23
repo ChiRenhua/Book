@@ -109,9 +109,18 @@ AppDelegate *homeViewDelegate;
 #pragma mark 设置单元格样式和内容
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *HomeViewcell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
-    HomeViewcell.textLabel.text = pendingArray[indexPath.row];
-    HomeViewcell.imageView.contentMode = UIViewContentModeScaleAspectFit;                                                                       // 设置图片属性为合适填充
-    [HomeViewcell.imageView setImage:[UIImage imageNamed:imageArray[indexPath.row]]];
+    
+    UIImageView *homeImageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:imageArray[indexPath.row]]];
+    homeImageView.frame = CGRectMake(15, 10, 50, 50);
+    homeImageView.contentMode = UIViewContentModeScaleAspectFit;
+    [HomeViewcell.contentView addSubview:homeImageView];
+    // 图书名字
+    UILabel *homeName = [[UILabel alloc]initWithFrame:CGRectMake(80, 26, self.view.bounds.size.width - 90, 20)];
+    homeName.text = pendingArray[indexPath.row];
+    homeName.font = [UIFont systemFontOfSize:17];
+    homeName.textColor = [UIColor blackColor];
+    [HomeViewcell.contentView addSubview:homeName];
+
     return HomeViewcell;
 }
 #pragma mark 添加行点击事件

@@ -21,4 +21,6 @@
 - (NSMutableArray *)getRePassBooks;
 - (NSMutableArray *)getReUnpassBooks;
 
+- (NSMutableArray *)getReviewInfoList;
+
 @end

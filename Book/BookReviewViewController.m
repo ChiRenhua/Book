@@ -7,9 +7,15 @@
 //
 
 #import "BookReviewViewController.h"
+#import "RDRStickyKeyboardView.h"
+#import "GetBookInfo.h"
 #define SCREEN_BOUNDS [UIScreen mainScreen].bounds.size
-@interface BookReviewViewController ()
+@interface BookReviewViewController ()<UITableViewDelegate,UITableViewDataSource>
 @property (retain,nonatomic) Book *detialBook;
+@property (retain,strong) UITableView *tableView;
+@property (nonatomic, strong) RDRStickyKeyboardView *Keyboard;
+@property (nonatomic, strong) GetBookInfo *bookInfo;
+@property (nonatomic, strong) NSMutableArray *reviewInfoList;
 @end
 
 @implementation BookReviewViewController
@@ -17,7 +23,10 @@
 - (id)init:(Book *) book{
     if (self = [super init]) {
         _detialBook = [[Book alloc]init];
+        _bookInfo = [[GetBookInfo alloc]init];
+        _reviewInfoList = [[NSMutableArray alloc]init];
         _detialBook = book;
+        _reviewInfoList = _bookInfo.getReviewInfoList;
     }
     return self;
 }
@@ -27,33 +36,50 @@
     // Do any additional setup after loading the view, typically from a nib.
     [self.view setBackgroundColor:[UIColor whiteColor]];
     // 添加NavigationBar
-    [self setNavigationBar];
+    _tableView = [[UITableView alloc]initWithFrame:CGRectNull style:UITableViewStyleGrouped];
+    _tableView.delegate = self;
+    _tableView.dataSource = self;
+    [self setupKeyboard];
     
 }
-
-- (void)setNavigationBar {
-    UINavigationBar *navigationBar = [[UINavigationBar alloc] initWithFrame:CGRectMake(0, 0, SCREEN_BOUNDS.width, 65)];
-    navigationBar.backgroundColor = [UIColor whiteColor];
-    //创建UINavigationItem
-    UINavigationItem * navigationBarTitle = [[UINavigationItem alloc] initWithTitle:@"审核"];
-    [self.view addSubview: navigationBar];
-    //创建UIBarButton 可根据需要选择适合自己的样式
-    UIBarButtonItem *leftBarItem = [[UIBarButtonItem alloc]initWithTitle:@"取消" style:UIBarButtonItemStylePlain target:self action:@selector(cancle)];
-    UIBarButtonItem *rightBarItem = [[UIBarButtonItem alloc]initWithTitle:@"提交" style:UIBarButtonItemStyleDone target:self action:@selector(commit)];
-    //设置barbutton
-    navigationBarTitle.leftBarButtonItem = leftBarItem;
-    navigationBarTitle.rightBarButtonItem = rightBarItem;
-    [navigationBar setItems:[NSArray arrayWithObject: navigationBarTitle]];
+- (void)setupKeyboard {
+    _Keyboard = [[RDRStickyKeyboardView alloc] initWithScrollView:self.tableView];
+    __weak __typeof(self)weakSelf = self;
+    _Keyboard.cancleBlock = ^(){
+        [weakSelf dismissViewControllerAnimated:YES completion:nil];                                                                            // 点击取消撤下界面
+    };
+    _Keyboard.showAlertViewBlock = ^(UIAlertController *alert) {
+        [weakSelf presentViewController:alert animated:YES completion:nil];
+    };
+    _Keyboard.frame = self.view.bounds;
+    _Keyboard.autoresizingMask = UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth;
+    [self.view addSubview:_Keyboard];
 }
-#pragma mark 取消按钮实现
-- (void)cancle {
-    [self dismissViewControllerAnimated:YES completion:nil];                                                                            // 点击取消撤下界面
+#pragma mark 设置每组标题名称
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+    return @"审核意见";
 }
-#pragma mark 提交按钮实现
-- (void)commit {
-    [self dismissViewControllerAnimated:YES completion:nil];                                                                            // 点击提交撤下界面
+#pragma mark 设置分组标题内容高度
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    return 30;
 }
-
+#pragma mark 设置行数
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return _reviewInfoList.count;
+}
+#pragma mark 设置单元格样式和内容
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    UITableViewCell *cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
+    cell.textLabel.text = _reviewInfoList[indexPath.row];
+    return cell;
+}
+#pragma mark 添加行点击事件
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+}
+#pragma mark 设置行高
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return 50;
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

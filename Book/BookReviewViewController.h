@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 #import "Book.h"
-
 @interface BookReviewViewController : UIViewController
 - (id)init:(Book *) book;
 @end

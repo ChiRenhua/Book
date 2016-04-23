@@ -9,10 +9,13 @@
 #import "BookDetialViewController.h"
 #import "BookReviewViewController.h"
 #import "Book.h"
+#import "AppDelegate.h"
 
 @interface BookDetialViewController ()<UITableViewDelegate,UITableViewDataSource>
 @property (retain,nonatomic) UITableView *bookDetialTableView;
 @property (retain,nonatomic) Book *detialBook;
+@property (retain,nonatomic) AppDelegate *appdelegate;
+
 @end
 
 @implementation BookDetialViewController
@@ -21,6 +24,7 @@
     if (self = [super init]) {
         _detialBook = [[Book alloc]init];
         _detialBook = book;
+        _appdelegate = [[UIApplication sharedApplication]delegate];
     }
     return self;
 }
@@ -29,7 +33,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     [self.view setBackgroundColor:[UIColor whiteColor]];
-    _bookDetialTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, -35, self.view.bounds.size.width, [UIScreen mainScreen].bounds.size.height + 40) style:UITableViewStyleGrouped];
+    _bookDetialTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, -35, self.view.bounds.size.width, [UIScreen mainScreen].bounds.size.height + 73) style:UITableViewStyleGrouped];
     _bookDetialTableView.delegate = self;
     _bookDetialTableView.dataSource = self;
     _bookDetialTableView.backgroundColor = [UIColor whiteColor];
@@ -233,9 +237,19 @@
             // 审核按钮
             if ([_detialBook.bookState isEqualToString:@"待审核"]) {
                 bookDetialViewCell.textLabel.text = @"开始审核";
+                // 设置文字颜色为蓝色
+                bookDetialViewCell.textLabel.textColor = [UIColor colorWithRed:28.0f/255.0f
+                                                                         green:134.0f/255.0f
+                                                                          blue:238.0f/255.0f
+                                                                         alpha:1.0f];
                 bookDetialViewCell.textLabel.textAlignment = NSTextAlignmentCenter;
             }else if ([_detialBook.bookState isEqualToString:@"审核中"]) {
                 bookDetialViewCell.textLabel.text = @"继续审核";
+                // 设置文字颜色为蓝色
+                bookDetialViewCell.textLabel.textColor = [UIColor colorWithRed:28.0f/255.0f
+                                                                         green:134.0f/255.0f
+                                                                          blue:238.0f/255.0f
+                                                                         alpha:1.0f];
                 bookDetialViewCell.textLabel.textAlignment = NSTextAlignmentCenter;
             }
             break;
@@ -250,7 +264,10 @@
 #pragma mark 添加行点击事件
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.row == 4) {
-        BookReviewViewController *bookReviewViewController = [[BookReviewViewController alloc]init:_detialBook];
+        BookReviewViewController *bookReviewViewController;
+            bookReviewViewController = [[BookReviewViewController alloc]init:_detialBook];
+            _appdelegate.bookReviewVC = bookReviewViewController;
+        
         [self presentViewController:bookReviewViewController animated:YES completion:nil];
     }
     [tableView deselectRowAtIndexPath:indexPath animated:YES];                                                                                  // 取消选中的状态
