@@ -33,6 +33,7 @@
 		4B75BFBD1C9BE76E00212268 /* BookUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B75BFBC1C9BE76E00212268 /* BookUITests.m */; };
 		4B75BFCD1C9BF97900212268 /* AuditedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B75BFCC1C9BF97900212268 /* AuditedViewController.m */; };
 		4B75BFD01C9C3AB200212268 /* UserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B75BFCF1C9C3AB200212268 /* UserViewController.m */; };
+		4B80066D1CCE0F1500BE354F /* CustomIOSAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B80066C1CCE0F1500BE354F /* CustomIOSAlertView.m */; };
 		4B9083F41CA7DBE800123C48 /* BookInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B9083F31CA7DBE800123C48 /* BookInfoViewController.m */; };
 		4B96DD501CA2642F0070725C /* BookDetialViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B96DD4F1CA2642F0070725C /* BookDetialViewController.m */; };
 		4BA0AD2D1CA11178003EBE65 /* ListTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BA0AD2C1CA11178003EBE65 /* ListTableViewCell.m */; };
@@ -50,7 +51,7 @@
 		4BA0AD4C1CA15F70003EBE65 /* book_02.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 4BA0AD411CA15F70003EBE65 /* book_02.jpg */; };
 		4BA0AD4D1CA15F70003EBE65 /* touxiang.png in Resources */ = {isa = PBXBuildFile; fileRef = 4BA0AD421CA15F70003EBE65 /* touxiang.png */; };
 		4BAE6F1E1CC0BEB300868E61 /* UserInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BAE6F1D1CC0BEB300868E61 /* UserInfo.m */; };
-		4BCCE2181CC9E543000F689D /* RDRStickyKeyboardView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BCCE2171CC9E543000F689D /* RDRStickyKeyboardView.m */; };
+		4BC377041CCF89FF00AA4592 /* RDRGrowingTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BC377031CCF89FF00AA4592 /* RDRGrowingTextView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -119,6 +120,8 @@
 		4B75BFCC1C9BF97900212268 /* AuditedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AuditedViewController.m; sourceTree = "<group>"; };
 		4B75BFCE1C9C3AB200212268 /* UserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserViewController.h; sourceTree = "<group>"; };
 		4B75BFCF1C9C3AB200212268 /* UserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserViewController.m; sourceTree = "<group>"; };
+		4B80066B1CCE0F1500BE354F /* CustomIOSAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CustomIOSAlertView.h; path = CustomIOSAlertView/CustomIOSAlertView.h; sourceTree = "<group>"; };
+		4B80066C1CCE0F1500BE354F /* CustomIOSAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CustomIOSAlertView.m; path = CustomIOSAlertView/CustomIOSAlertView.m; sourceTree = "<group>"; };
 		4B9083F21CA7DBE800123C48 /* BookInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BookInfoViewController.h; sourceTree = "<group>"; };
 		4B9083F31CA7DBE800123C48 /* BookInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BookInfoViewController.m; sourceTree = "<group>"; };
 		4B96DD4E1CA2642F0070725C /* BookDetialViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BookDetialViewController.h; sourceTree = "<group>"; };
@@ -142,8 +145,8 @@
 		4BA0AD421CA15F70003EBE65 /* touxiang.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = touxiang.png; path = ImageSource/touxiang.png; sourceTree = "<group>"; };
 		4BAE6F1C1CC0BEB300868E61 /* UserInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserInfo.h; sourceTree = "<group>"; };
 		4BAE6F1D1CC0BEB300868E61 /* UserInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserInfo.m; sourceTree = "<group>"; };
-		4BCCE2161CC9E543000F689D /* RDRStickyKeyboardView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RDRStickyKeyboardView.h; path = RDRStickyKeyboardView/RDRStickyKeyboardView.h; sourceTree = "<group>"; };
-		4BCCE2171CC9E543000F689D /* RDRStickyKeyboardView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RDRStickyKeyboardView.m; path = RDRStickyKeyboardView/RDRStickyKeyboardView.m; sourceTree = "<group>"; };
+		4BC377021CCF89FF00AA4592 /* RDRGrowingTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RDRGrowingTextView.h; path = KeyboardView/RDRGrowingTextView.h; sourceTree = "<group>"; };
+		4BC377031CCF89FF00AA4592 /* RDRGrowingTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RDRGrowingTextView.m; path = KeyboardView/RDRGrowingTextView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -279,6 +282,7 @@
 		4B75BF931C9BE76D00212268 /* Book */ = {
 			isa = PBXGroup;
 			children = (
+				4B80066A1CCE0ED900BE354F /* CustomIOSAlertView */,
 				4BCCE2151CC9E50A000F689D /* KeyboardView */,
 				4B67D3791CC49964001FF3EA /* FCXRefreshView */,
 				4B5F13D51C9D3ED900188CB6 /* MBProgressHUD */,
@@ -322,6 +326,15 @@
 			path = BookUITests;
 			sourceTree = "<group>";
 		};
+		4B80066A1CCE0ED900BE354F /* CustomIOSAlertView */ = {
+			isa = PBXGroup;
+			children = (
+				4B80066B1CCE0F1500BE354F /* CustomIOSAlertView.h */,
+				4B80066C1CCE0F1500BE354F /* CustomIOSAlertView.m */,
+			);
+			name = CustomIOSAlertView;
+			sourceTree = "<group>";
+		};
 		4BA0AD2E1CA11462003EBE65 /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -349,8 +362,8 @@
 		4BCCE2151CC9E50A000F689D /* KeyboardView */ = {
 			isa = PBXGroup;
 			children = (
-				4BCCE2161CC9E543000F689D /* RDRStickyKeyboardView.h */,
-				4BCCE2171CC9E543000F689D /* RDRStickyKeyboardView.m */,
+				4BC377021CCF89FF00AA4592 /* RDRGrowingTextView.h */,
+				4BC377031CCF89FF00AA4592 /* RDRGrowingTextView.m */,
 			);
 			name = KeyboardView;
 			sourceTree = "<group>";
@@ -509,6 +522,7 @@
 				4B67D3831CC4997D001FF3EA /* FCXRefreshFooterView.m in Sources */,
 				050371381C9E1BB9002D63EF /* TabBarViewController.m in Sources */,
 				4B603F8A1CA3B95800B0F6BC /* TableScrollViewCell.m in Sources */,
+				4BC377041CCF89FF00AA4592 /* RDRGrowingTextView.m in Sources */,
 				4BA0AD371CA1206A003EBE65 /* GetBookInfo.m in Sources */,
 				4B5F13D01C9D0D4A00188CB6 /* LoginViewController.m in Sources */,
 				4B01ACA01CC7A3B500AE23D7 /* BookReviewViewController.m in Sources */,
@@ -522,9 +536,9 @@
 				4BA0AD321CA114C6003EBE65 /* Book.m in Sources */,
 				4B2E96A31CC3C22600E64E94 /* SearchViewController.m in Sources */,
 				4B67D3851CC4997D001FF3EA /* UIScrollView+FCXRefresh.m in Sources */,
+				4B80066D1CCE0F1500BE354F /* CustomIOSAlertView.m in Sources */,
 				4BAE6F1E1CC0BEB300868E61 /* UserInfo.m in Sources */,
 				4B75BF9C1C9BE76D00212268 /* PendingViewController.m in Sources */,
-				4BCCE2181CC9E543000F689D /* RDRStickyKeyboardView.m in Sources */,
 				4B75BF961C9BE76D00212268 /* main.m in Sources */,
 				4B5F13D81C9D3EEE00188CB6 /* MBProgressHUD.m in Sources */,
 			);

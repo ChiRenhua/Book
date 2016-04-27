@@ -133,7 +133,7 @@
         }else if ([userPermission isEqualToString:@"2"]) {
             appdelegate.UserVC.professionLable.text = @"图书初审审核员";
         }
-        [self dismissViewControllerAnimated:YES completion:nil];                                                                            // 登录成功后撤下登录界面
+        [self dismissViewControllerAnimated:YES completion:nil];                                                                                        // 登录成功后撤下登录界面
     });
 }
 #pragma mark 登陆验证失败调用此函数

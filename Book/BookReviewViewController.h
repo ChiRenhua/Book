@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 #import "Book.h"
+#import "CustomIOSAlertView.h"
+
 @interface BookReviewViewController : UIViewController
+
 - (id)init:(Book *) book;
+
 @end

@@ -21,7 +21,8 @@
 @property (nonatomic,copy) NSString *bookState;                                     // 图书状态
 @property (nonatomic,copy) NSString *bookPublishers;                                // 图书出版商
 @property (nonatomic,copy) NSString *bookLanguage;                                  // 图书语言
-@property (nonatomic,copy) NSString *bookReviewInfo;                                // 图书审核信息
+@property (nonatomic,copy) NSMutableDictionary *bookReviewInfo;                     // 图书审核信息
+@property (nonatomic,copy) NSString *bookReviewInfoShow;                            // 图书审核信息展示
 
 #pragma mark 初始化函数
 - (Book *)initWithDictionary:(NSMutableDictionary *)dic;

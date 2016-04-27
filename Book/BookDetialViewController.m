@@ -134,12 +134,12 @@
             [bookDetialViewCell.contentView addSubview:bookReviewInfoTitle];
             // 审核信息内容
             UILabel *bookReviewInfo = [[UILabel alloc]init];
-            bookReviewInfo.text = _detialBook.bookReviewInfo;
+            bookReviewInfo.text = _detialBook.bookReviewInfoShow;
             bookReviewInfo.lineBreakMode = NSLineBreakByWordWrapping;                                                                                         // 文字过长时显示全部
             bookReviewInfo.numberOfLines = 0;                                                                                                                 // 取消行数限制
             bookReviewInfo.font = [UIFont systemFontOfSize:13];
             // 计算文本高度
-            CGSize bookIntroduceSize = [_detialBook.bookReviewInfo sizeWithFont:[UIFont systemFontOfSize:13] constrainedToSize:CGSizeMake(300.0f,CGFLOAT_MAX) lineBreakMode:UILineBreakModeWordWrap];
+            CGSize bookIntroduceSize = [_detialBook.bookReviewInfoShow sizeWithFont:[UIFont systemFontOfSize:13] constrainedToSize:CGSizeMake(300.0f,CGFLOAT_MAX) lineBreakMode:UILineBreakModeWordWrap];
             bookReviewInfo.frame = CGRectMake(15, 40, self.view.bounds.size.width - 20, bookIntroduceSize.height);
             bookReviewInfo.textColor = [UIColor grayColor];
             [bookDetialViewCell.contentView addSubview:bookReviewInfo];
@@ -286,7 +286,7 @@
         }
         case 2: {
             // 获得文字的高度
-            CGSize bookIntroduceSize = [_detialBook.bookReviewInfo sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:CGSizeMake(300.0f,CGFLOAT_MAX) lineBreakMode:UILineBreakModeWordWrap];
+            CGSize bookIntroduceSize = [_detialBook.bookReviewInfoShow sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:CGSizeMake(300.0f,CGFLOAT_MAX) lineBreakMode:UILineBreakModeWordWrap];
             return bookIntroduceSize.height + 55;
             break;
         }

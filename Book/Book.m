@@ -24,6 +24,7 @@
         _bookPublishers = [dic objectForKey:@"bookPublishers"];             // 出版商
         _bookLanguage = [dic objectForKey:@"bookLanguage"];                 // 图书语言
         _bookReviewInfo = [dic objectForKey:@"bookReviewInfo"];             // 图书审核信息
+        _bookReviewInfoShow = [dic objectForKey:@"bookReviewInfoShow"];
         
     }
     return self;
