@@ -92,7 +92,7 @@ NSMutableArray *ReviewViewSearchResult;                                         
 }
 #pragma mark 设置分组标题内容高度
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return 30;
+    return SCREEN_BOUNDS.height / 20;
 }
 
 #pragma mark 设置行数
@@ -133,7 +133,7 @@ NSMutableArray *ReviewViewSearchResult;                                         
     book = bookArray[indexPath.row];
     BookDetialViewController *bookDetialVC = [[BookDetialViewController alloc]init:book];
     [self.navigationController pushViewController:bookDetialVC animated:YES];
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];                                                                          // 取消选中的状态
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];                                                                                  // 取消选中的状态
 }
 #pragma mark 设置行高
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {

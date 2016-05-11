@@ -91,7 +91,7 @@ NSMutableArray *PendingViewSearchResult;                                        
 }
 #pragma mark 设置分组标题内容高度
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return 30;
+    return SCREEN_BOUNDS.height / 20;
 }
 
 #pragma mark 设置行数

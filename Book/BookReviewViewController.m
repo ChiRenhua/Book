@@ -181,7 +181,7 @@ static NSString * const CellIdentifier = @"cell";
 }
 #pragma mark 设置分组标题内容高度
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return 30;
+    return SCREEN_BOUNDS.height / 20;
 }
 #pragma mark 设置行数
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -191,17 +191,17 @@ static NSString * const CellIdentifier = @"cell";
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
     if (indexPath.row == 0) {
-        UILabel *bookPictureTitle = [[UILabel alloc]initWithFrame:CGRectMake(15, 15, 100, 20)];
+        UILabel *bookPictureTitle = [[UILabel alloc]initWithFrame:CGRectMake(SCREEN_BOUNDS.width / 20, 15, 100, 20)];
         bookPictureTitle.text = @"封    皮：";
         bookPictureTitle.font = [UIFont systemFontOfSize:17];
         [cell.contentView addSubview:bookPictureTitle];
         
-        UIImageView *bookPictureImage = [[UIImageView alloc]initWithFrame:CGRectMake(85, 5, 27, 40)];
+        UIImageView *bookPictureImage = [[UIImageView alloc]initWithFrame:CGRectMake(SCREEN_BOUNDS.width / 4 - 5 , 5, 27, 40)];
         bookPictureImage.image = [UIImage imageNamed:_reviewInfoList[indexPath.row]];
         bookPictureImage.contentMode = UIViewContentModeScaleAspectFit;
         [cell.contentView addSubview:bookPictureImage];
     }else {
-        UILabel *bookPictureTitle = [[UILabel alloc]initWithFrame:CGRectMake(15, 15, tableView.bounds.size.width - 100, 20)];
+        UILabel *bookPictureTitle = [[UILabel alloc]initWithFrame:CGRectMake(SCREEN_BOUNDS.width / 20, 15, tableView.bounds.size.width - 100, 20)];
         bookPictureTitle.text = _reviewInfoList[indexPath.row];
         bookPictureTitle.font = [UIFont systemFontOfSize:17];
         [cell.contentView addSubview:bookPictureTitle];

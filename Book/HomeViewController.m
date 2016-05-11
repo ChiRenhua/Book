@@ -12,6 +12,9 @@
 #import "ReviewViewController.h"
 #import "AuditedViewController.h"
 
+#define SCREEN_BOUNDS [UIScreen mainScreen].bounds.size
+#define ROW_HIGHT SCREEN_BOUNDS.height / 9
+
 @interface HomeViewController ()<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic,strong) UITableView *HomeViewtableView;
 @end
@@ -94,10 +97,9 @@ AppDelegate *homeViewDelegate;
 }
 #pragma mark 设置分组标题内容高度
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    CGFloat headerHight = SCREEN_BOUNDS.height/20;
     if (section == 0) {
-        return 30;
-    }else if (section == 1) {
-        return 15;
+        return headerHight;
     }
     return 0;
 }
@@ -111,11 +113,16 @@ AppDelegate *homeViewDelegate;
     UITableViewCell *HomeViewcell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
     
     UIImageView *homeImageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:imageArray[indexPath.row]]];
-    homeImageView.frame = CGRectMake(15, 10, 50, 50);
+    homeImageView.frame = CGRectMake(15, 10, ROW_HIGHT - 20, ROW_HIGHT - 20);
     homeImageView.contentMode = UIViewContentModeScaleAspectFit;
     [HomeViewcell.contentView addSubview:homeImageView];
+    
+    UIImageView *rightImageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"right_black.png"]];
+    rightImageView.frame = CGRectMake(SCREEN_BOUNDS.width / 8 * 7, 20, ROW_HIGHT - 40, ROW_HIGHT - 40);
+    rightImageView.contentMode = UIViewContentModeScaleAspectFit;
+    [HomeViewcell.contentView addSubview:rightImageView];
     // 图书名字
-    UILabel *homeName = [[UILabel alloc]initWithFrame:CGRectMake(80, 26, self.view.bounds.size.width - 90, 20)];
+    UILabel *homeName = [[UILabel alloc]initWithFrame:CGRectMake(SCREEN_BOUNDS.width / 5, ROW_HIGHT / 2 - 8.5, SCREEN_BOUNDS.width - 90, 20)];
     homeName.text = pendingArray[indexPath.row];
     homeName.font = [UIFont systemFontOfSize:17];
     homeName.textColor = [UIColor blackColor];
@@ -152,7 +159,7 @@ AppDelegate *homeViewDelegate;
 }
 #pragma mark 设置行高
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 70;
+    return ROW_HIGHT;
 }
 
 

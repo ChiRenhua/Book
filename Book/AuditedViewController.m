@@ -96,7 +96,10 @@ GetBookInfo *bookinfo;
 }
 #pragma mark 设置分组标题内容高度
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return 30;
+    if (section == 0) {
+    return  SCREEN_BOUNDS.height / 20;
+    }
+    return 0;
 }
 #pragma mark 设置分组标尾内容高度
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {

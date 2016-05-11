@@ -46,11 +46,10 @@ NSString *booksResult;                                                          
     title.text = booksResult;
     [self.contentView addSubview:title];
     // 添加“查看全部”按钮
-    checkAll = [[UILabel alloc]initWithFrame:CGRectMake(SCREEN_BOUNDS.width - 10, 10, 60, 20)];
+    checkAll = [[UILabel alloc]initWithFrame:CGRectMake([UIScreen mainScreen].bounds.size.width - 60, 10, 60, 20)];
     checkAll.textColor = [UIColor grayColor];
     checkAll.text = @"显示全部>";
     checkAll.font = [UIFont systemFontOfSize:12];
-    checkAll.userInteractionEnabled = YES;
     checkAll.userInteractionEnabled = NO;                                                                           // 屏蔽掉Lable的点击事件
     [self.contentView addSubview:checkAll];
     // 在cell上添加tableView布局
