@@ -118,7 +118,7 @@ AppDelegate *homeViewDelegate;
     [HomeViewcell.contentView addSubview:homeImageView];
     
     UIImageView *rightImageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"right_black.png"]];
-    rightImageView.frame = CGRectMake(SCREEN_BOUNDS.width / 8 * 7, 20, ROW_HIGHT - 40, ROW_HIGHT - 40);
+    rightImageView.frame = CGRectMake(SCREEN_BOUNDS.width / 10 * 9, 23, ROW_HIGHT - 46, ROW_HIGHT - 46);
     rightImageView.contentMode = UIViewContentModeScaleAspectFit;
     [HomeViewcell.contentView addSubview:rightImageView];
     // 图书名字
