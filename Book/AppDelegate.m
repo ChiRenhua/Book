@@ -44,9 +44,9 @@
     SearchTab.title = @"搜索";
     UserTab.title = @"我";
     
-    HomeTab.tabBarItem.image = [UIImage imageNamed:@"first"];
-    SearchTab.tabBarItem.image = [UIImage imageNamed:@"first"];
-    UserTab.tabBarItem.image = [UIImage imageNamed:@"first"];
+    HomeTab.tabBarItem.image = [UIImage imageNamed:@"n_home"];
+    SearchTab.tabBarItem.image = [UIImage imageNamed:@"n_search"];
+    UserTab.tabBarItem.image = [UIImage imageNamed:@"n_userinfo"];
 
     
     self.window = [[UIWindow alloc]initWithFrame:[[UIScreen mainScreen] bounds]];

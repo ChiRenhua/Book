@@ -122,7 +122,7 @@ AppDelegate *homeViewDelegate;
     rightImageView.contentMode = UIViewContentModeScaleAspectFit;
     [HomeViewcell.contentView addSubview:rightImageView];
     // 图书名字
-    UILabel *homeName = [[UILabel alloc]initWithFrame:CGRectMake(SCREEN_BOUNDS.width / 5, ROW_HIGHT / 2 - 8.5, SCREEN_BOUNDS.width - 90, 20)];
+    UILabel *homeName = [[UILabel alloc]initWithFrame:CGRectMake(SCREEN_BOUNDS.width / 4, ROW_HIGHT / 2 - 8.5, SCREEN_BOUNDS.width - 90, 20)];
     homeName.text = pendingArray[indexPath.row];
     homeName.font = [UIFont systemFontOfSize:17];
     homeName.textColor = [UIColor blackColor];

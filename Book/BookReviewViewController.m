@@ -148,7 +148,13 @@ static NSString * const CellIdentifier = @"cell";
 - (void)commitButtonAction {
     // 键盘收回判断
     _isKeyboardShow = NO;
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"审核信息" message:_textView.text preferredStyle:UIAlertControllerStyleAlert];
+    NSString *pendingResultText = [[NSString alloc]init];
+    if ([_textView.text isEqualToString:@""]) {
+        pendingResultText = @"审核通过！";
+    }else {
+        pendingResultText = _textView.text;
+    }
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"审核信息" message:pendingResultText preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
         
     }];
@@ -207,7 +213,7 @@ static NSString * const CellIdentifier = @"cell";
         [cell.contentView addSubview:bookPictureTitle];
     }
     // 是否合格
-    UIImageView *isPassImage = [[UIImageView alloc]initWithFrame:CGRectMake(tableView.bounds.size.width - 45, 5, 40, 40)];
+    UIImageView *isPassImage = [[UIImageView alloc]initWithFrame:CGRectMake(tableView.bounds.size.width - 40, 10, 30, 30)];
     isPassImage.contentMode = UIViewContentModeScaleAspectFit;
     [cell.contentView addSubview:isPassImage];
     
@@ -261,9 +267,9 @@ static NSString * const CellIdentifier = @"cell";
             break;
     }
     if ([bookDetialisPass isEqualToString:@"1"]) {
-        isPassImage.image = [UIImage imageNamed:@"touxiang.png"];
+        isPassImage.image = [UIImage imageNamed:@"pass"];
     }else if ([bookDetialisPass isEqualToString:@"0"]) {
-        isPassImage.image = [UIImage imageNamed:@"review.png"];
+        isPassImage.image = [UIImage imageNamed:@"unpass"];
     }
     return cell;
 }

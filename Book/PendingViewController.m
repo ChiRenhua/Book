@@ -28,7 +28,7 @@ ListTableViewCell *PendingViewcell;
 AppDelegate *PendingViewappdelegate;
 GetBookInfo *PendingViewbookinfo;
 UISearchBar *PendingViewSearchBar;                                                                                            // 搜索框
-UISearchDisplayController *PendingViewSearchDC;                                                                               // 搜索框界面控制器
+UISearchDisplayController *PendingViewSearchDC;                                                        // 搜索框界面控制器
 NSMutableArray *PendingViewSearchResult;                                                                                      // 搜索结果
 
 @implementation PendingViewController
