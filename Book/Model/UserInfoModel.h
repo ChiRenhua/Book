@@ -20,6 +20,8 @@ typedef void (^LoginResult)(NSInteger code);
 
 - (void)getUserDataWithName:(NSString *)name andPassword:(NSString *)password;
 
+- (BOOL)getUserLoginStateWithName:(NSString *)name andPassword:(NSString *)password;
+
 - (NSString *)getUserName;
 - (NSString *)getUserPassword;
 - (NSString *)getUserID;

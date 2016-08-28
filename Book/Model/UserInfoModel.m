@@ -76,8 +76,34 @@
              _loginResult(LOGIN_FAILED);
          }
      } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+         NSLog(@"error:%@",error);
          _loginResult(LOGIN_NETWRONG);
      }];
+}
+
+- (BOOL)getUserLoginStateWithName:(NSString *)name andPassword:(NSString *)password {
+    __block BOOL result;
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    //manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
+    NSString *str = [NSString stringWithFormat:@"UserAction.serv?username=%@&password=%@",name,password];
+    NSString *url = [BASEURL stringByAppendingString:str];
+    [manager POST:url parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
+        
+    } progress:^(NSProgress * _Nonnull uploadProgress) {
+        
+    } success:^(NSURLSessionDataTask * _Nonnull task, id responseObject) {
+        NSLog(@"success%@",responseObject);
+        int status = [responseObject[@"status"] intValue];
+        if (status == 1000) {
+            result = YES;
+        }else if(status == 1001) {
+            result = NO;
+        }
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        NSLog(@"error:%@",error);
+    }];
+    return result;
 }
 
 

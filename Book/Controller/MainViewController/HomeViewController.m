@@ -8,8 +8,7 @@
 
 #import "HomeViewController.h"
 #import "AppDelegate.h"
-#import "PendingViewController.h"
-#import "ReviewViewController.h"
+#import "CheckBookViewController.h"
 #import "AuditedViewController.h"
 #import "UserInfoModel.h"
 
@@ -19,7 +18,7 @@
 @interface HomeViewController ()<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic,strong) UITableView *HomeViewtableView;
 @end
-NSMutableArray *pendingArray;
+NSMutableArray *CheckBookArray;
 NSMutableArray *imageArray;
 AppDelegate *homeViewDelegate;
 
@@ -27,8 +26,8 @@ AppDelegate *homeViewDelegate;
 
 - (id)init{
     if (self = [super init]) {
-        pendingArray = [[NSMutableArray alloc]initWithObjects:@"待审核",@"审核中",@"已审核", nil];
-        imageArray = [[NSMutableArray alloc]initWithObjects:@"pending.png",@"review.png",@"audited.png", nil];
+        CheckBookArray = [[NSMutableArray alloc]initWithObjects:@"待审核",@"审核中",@"已审核", nil];
+        imageArray = [[NSMutableArray alloc]initWithObjects:@"CheckBook.png",@"review.png",@"audited.png", nil];
         homeViewDelegate = [[UIApplication sharedApplication]delegate];
     }
     return self;
@@ -67,7 +66,7 @@ AppDelegate *homeViewDelegate;
     NSString *userName = [[UserInfoModel sharedInstance]getUserName];
     NSString *userPassword = [[UserInfoModel sharedInstance]getUserPassword];
     // 如果用户信息核对错误，则弹出登陆界面
-    if(![userName isEqualToString:@"Martin"] && ![userPassword isEqualToString:@"123456"]) {
+    if(![[UserInfoModel sharedInstance]getUserLoginStateWithName:userName andPassword:userPassword]) {
         [self presentViewController:homeViewDelegate.loginVC animated:YES completion:nil];
     }
     
@@ -109,7 +108,7 @@ AppDelegate *homeViewDelegate;
 
 #pragma mark 设置行数
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [pendingArray count];
+    return [CheckBookArray count];
 }
 #pragma mark 设置单元格样式和内容
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -126,7 +125,7 @@ AppDelegate *homeViewDelegate;
     [HomeViewcell.contentView addSubview:rightImageView];
     // 图书名字
     UILabel *homeName = [[UILabel alloc]initWithFrame:CGRectMake(SCREEN_BOUNDS.width / 4, ROW_HIGHT / 2 - 8.5, SCREEN_BOUNDS.width - 90, 20)];
-    homeName.text = pendingArray[indexPath.row];
+    homeName.text = CheckBookArray[indexPath.row];
     homeName.font = [UIFont systemFontOfSize:17];
     homeName.textColor = [UIColor blackColor];
     [HomeViewcell.contentView addSubview:homeName];
@@ -137,22 +136,22 @@ AppDelegate *homeViewDelegate;
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0) {
         if (indexPath.row == 0) {
-            PendingViewController *pendingVC = [[PendingViewController alloc]init:YES];
-            [self.navigationController pushViewController:pendingVC animated:YES];
+            CheckBookViewController *CheckBookVC = [[CheckBookViewController alloc]init:firstUncheckedBook];
+            [self.navigationController pushViewController:CheckBookVC animated:YES];
         }else if (indexPath.row == 1) {
-            ReviewViewController *reviewVC = [[ReviewViewController alloc]init:YES];
-            [self.navigationController pushViewController:reviewVC animated:YES];
+            CheckBookViewController *CheckBookVC = [[CheckBookViewController alloc]init:firstCheckingBook];
+            [self.navigationController pushViewController:CheckBookVC animated:YES];
         }else if (indexPath.row == 2) {
             AuditedViewController *auditedVC = [[AuditedViewController alloc]init:YES];
             [self.navigationController pushViewController:auditedVC animated:YES];
         }
     }else if (indexPath.section == 1) {
         if (indexPath.row == 0) {
-            PendingViewController *pendingVC = [[PendingViewController alloc]init:NO];
-            [self.navigationController pushViewController:pendingVC animated:YES];
+            CheckBookViewController *CheckBookVC = [[CheckBookViewController alloc]init:reviewUncheckedBook];
+            [self.navigationController pushViewController:CheckBookVC animated:YES];
         }else if (indexPath.row == 1) {
-            ReviewViewController *reviewVC = [[ReviewViewController alloc]init:NO];
-            [self.navigationController pushViewController:reviewVC animated:YES];
+            CheckBookViewController *CheckBookVC = [[CheckBookViewController alloc]init:reviewCheckingBook];
+            [self.navigationController pushViewController:CheckBookVC animated:YES];
         }else if (indexPath.row == 2) {
             AuditedViewController *auditedVC = [[AuditedViewController alloc]init:NO];
             [self.navigationController pushViewController:auditedVC animated:YES];

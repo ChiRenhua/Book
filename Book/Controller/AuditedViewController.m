@@ -10,8 +10,8 @@
 #import "TableScrollViewCell.h"
 #import "AppDelegate.h"
 #import "GetBookInfo.h"
-#import "BookInfoViewController.h"
 #import "BookDetialViewController.h"
+#import "CheckBookViewController.h"
 
 #define SCREEN_BOUNDS [UIScreen mainScreen].bounds.size
 
@@ -111,24 +111,23 @@ GetBookInfo *bookinfo;
 }
 #pragma mark 行点击事件
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSMutableArray *bookInfo = [[NSMutableArray alloc]init];
+    CheckBookViewController *checkBookVC;
     // 判断点击的是第几个分组
     if (indexPath.section == 0) {
         if (_isFirstreview) {
-            bookInfo = [bookinfo getPassBooks];
+            checkBookVC = [[CheckBookViewController alloc]init:firstCheckedPassBook];
         }else {
-            bookInfo = [bookinfo getRePassBooks];
+            checkBookVC = [[CheckBookViewController alloc]init:reviewCheckedPassBook];
         }
         
     }else if (indexPath.section == 1) {
         if (_isFirstreview) {
-            bookInfo = [bookinfo getUnpassBooks];
+            checkBookVC = [[CheckBookViewController alloc]init:firstCheckedUnpassBook];
         }else {
-            bookInfo = [bookinfo getReUnpassBooks];
+            checkBookVC = [[CheckBookViewController alloc]init:reviewCheckedUnpassBook];
         }
     }
-    BookInfoViewController *bookInfoVC = [[BookInfoViewController alloc]init:bookInfo];
-    [self.navigationController pushViewController:bookInfoVC animated:YES];
+    [self.navigationController pushViewController:checkBookVC animated:YES];
 }
 
 - (void)didReceiveMemoryWarning {
