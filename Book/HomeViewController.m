@@ -11,6 +11,7 @@
 #import "PendingViewController.h"
 #import "ReviewViewController.h"
 #import "AuditedViewController.h"
+#import "UserInfoModel.h"
 
 #define SCREEN_BOUNDS [UIScreen mainScreen].bounds.size
 #define ROW_HIGHT SCREEN_BOUNDS.height / 9
@@ -52,7 +53,7 @@ AppDelegate *homeViewDelegate;
     };
     // 进行登录验证
     [self verificationLogin];
-    if ([homeViewDelegate.userInfo getUserName].length && [homeViewDelegate.userInfo getUserPassword].length && [homeViewDelegate.userInfo getUserPermission].length) {
+    if ([[UserInfoModel sharedInstance]getUserName].length && [[UserInfoModel sharedInstance]getUserPassword].length && [[UserInfoModel sharedInstance]getUserCompetence].length) {
         _HomeViewtableView = [[UITableView alloc]initWithFrame:self.view.bounds style:UITableViewStyleGrouped];
         _HomeViewtableView.delegate = self;
         _HomeViewtableView.dataSource = self;
@@ -63,8 +64,8 @@ AppDelegate *homeViewDelegate;
 
 #pragma mark 验证登陆
 - (void)verificationLogin {
-    NSString *userName = homeViewDelegate.userInfo.getUserName;
-    NSString *userPassword = homeViewDelegate.userInfo.getUserPassword;
+    NSString *userName = [[UserInfoModel sharedInstance]getUserName];
+    NSString *userPassword = [[UserInfoModel sharedInstance]getUserPassword];
     // 如果用户信息核对错误，则弹出登陆界面
     if(![userName isEqualToString:@"Martin"] && ![userPassword isEqualToString:@"123456"]) {
         [self presentViewController:homeViewDelegate.loginVC animated:YES completion:nil];
@@ -74,22 +75,24 @@ AppDelegate *homeViewDelegate;
 
 #pragma mark 设置每组标题名称
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-    if ([[homeViewDelegate.userInfo getUserPermission] isEqualToString:@"0"]) {
+    int competence = [[[UserInfoModel sharedInstance]getUserCompetence]intValue];
+    if (competence == 0) {
         if (section == 0) {
             return @"初审";
         }else if (section == 1) {
             return @"复审";
         }
-    }else if ([[homeViewDelegate.userInfo getUserPermission] isEqualToString:@"1"]) {
+    }else if (competence == 2) {
         return @"复审";
-    }else if ([[homeViewDelegate.userInfo getUserPermission] isEqualToString:@"2"]) {
+    }else if (competence == 1) {
         return @"初审";
     }
     return nil;
 }
 #pragma mark 设置分组数
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    if ([[homeViewDelegate.userInfo getUserPermission] isEqualToString:@"0"]) {
+    int competence = [[[UserInfoModel sharedInstance]getUserCompetence]intValue];
+    if (competence == 0) {
         return 2;
     }else {
         return 1;

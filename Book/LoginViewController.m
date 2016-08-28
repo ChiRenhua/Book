@@ -9,10 +9,11 @@
 #import "LoginViewController.h"
 #import "MBProgressHUD.h"
 #import "AppDelegate.h"
+#import "UserInfoModel.h"
 
 #define SCREEN_BOUNDS [UIScreen mainScreen].bounds.size
 
-@interface LoginViewController ()<UITextFieldDelegate,MBProgressHUDDelegate,NSURLConnectionDataDelegate>
+@interface LoginViewController ()<UITextFieldDelegate,MBProgressHUDDelegate>
 @property(strong,retain) UITextField *userNameTextField;
 @property(strong,retain)  UITextField *userPassWordTextField;
 @property(strong,retain)  MBProgressHUD *mbprogress;
@@ -87,61 +88,71 @@
         [self.view addSubview:_mbprogress];                                                             // 将toast添加到view中
         [self.view bringSubviewToFront:_mbprogress];                                                    // 让toast显示在view的最前端
         [_mbprogress showAnimated:YES];                                                                 // 显示toast
-        [_mbprogress hideAnimated:YES afterDelay:2.];                                                   // 2秒后销毁toast
-    }else if([_userNameTextField.text isEqualToString:@"Martin"] && [_userPassWordTextField.text isEqualToString:@"123456"]) {
-        [self showProgressWithTitle:@"正在登陆..."];
-        [self getWeatherInfoFromNet];
+        [_mbprogress hideAnimated:YES afterDelay:1.5];                                                  // 1.5秒后销毁toast
     }else {
-        [self showLoginFailedDialg];
+        [_mbprogress hideAnimated:YES];
+        [self showProgressWithTitle:@"正在登陆..."andMode:MBProgressHUDModeIndeterminate];
+        [[UserInfoModel sharedInstance]getUserDataWithName:_userNameTextField.text andPassword:_userPassWordTextField.text];
+        [UserInfoModel sharedInstance].loginResult = ^(NSInteger code){
+            switch (code) {
+                case 0:
+                    [_mbprogress hideAnimated:YES];
+                    [self showLoginFailedDialg];
+                    break;
+                case 1:
+                    [_mbprogress hideAnimated:YES];
+                    [self showSuccessProgress];
+                    break;
+                case 2:
+                    [_mbprogress hideAnimated:YES];
+                    [self showProgressWithTitle:@"网络错误"andMode:MBProgressHUDModeText];
+                    break;
+                default:
+                    break;
+            }
+        };
     }
 }
 #pragma mark 显示toast
-- (void)showProgressWithTitle:(NSString *) title{
-    _mbprogress.mode = MBProgressHUDModeIndeterminate;
+- (void)showProgressWithTitle:(NSString *) title andMode:(NSInteger )mode{
+    _mbprogress.mode = mode;
     _mbprogress.label.text = NSLocalizedString(title, @"HUD cleanining up title");
     [self.view addSubview:_mbprogress];
     [self.view bringSubviewToFront:_mbprogress];
     [_mbprogress showAnimated:YES];
 }
 
-- (void)getWeatherInfoFromNet{
-    NSString *URLString = @"http://wthrcdn.etouch.cn/WeatherApi?citykey=101051002";
-    NSURL * URL = [NSURL URLWithString:[URLString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
-    NSURLRequest * request = [[NSURLRequest alloc]initWithURL:URL];
-    NSURLConnection *connection = [[NSURLConnection alloc]initWithRequest:request delegate:self];
+- (void)showUserView {
+    // 加载个人页面数据
+    AppDelegate *appdelegate = [[UIApplication sharedApplication]delegate];
+    NSString *userName = [[UserInfoModel sharedInstance]getUserName];
+    appdelegate.UserVC.nameLable.text = [[NSString alloc]initWithFormat:@"欢迎用户：%@",userName];
+    int userCompetence = [[[UserInfoModel sharedInstance]getUserCompetence]intValue];
+    if (userCompetence == 0) {
+        appdelegate.UserVC.professionLable.text = @"图书管理员";
+    }else if (userCompetence == 2) {
+        appdelegate.UserVC.professionLable.text = @"图书复审审核员";
+    }else if (userCompetence == 1) {
+        appdelegate.UserVC.professionLable.text = @"图书初审审核员";
+    }
 }
 
-// 数据全部获取完成后回调，有点延迟
-- (void)connectionDidFinishLoading:(NSURLConnection *)connection{
-    dispatch_async(dispatch_get_main_queue(), ^{
-        UIImage *image = [[UIImage imageNamed:@"Checkmark"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-        UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
-        _mbprogress.customView = imageView;
-        _mbprogress.mode = MBProgressHUDModeCustomView;
-        _mbprogress.label.text = NSLocalizedString(@"登陆成功", @"HUD completed title");
-        [_mbprogress hideAnimated:YES afterDelay:3.f];
-        NSString *userPermission = @"0";
-        _userInfoBlock(userPermission,_userNameTextField.text,_userPassWordTextField.text);                                                           //通知用户数据类保存用户数据
-        _showHomeViewBlock();
-        // 加载个人页面数据
-        AppDelegate *appdelegate = [[UIApplication sharedApplication]delegate];
-        appdelegate.UserVC.nameLable.text = [[NSString alloc]initWithFormat:@"欢迎用户：%@",_userNameTextField.text];
-        if ([userPermission isEqualToString:@"0"]) {
-            appdelegate.UserVC.professionLable.text = @"图书管理员";
-        }else if ([userPermission isEqualToString:@"1"]) {
-            appdelegate.UserVC.professionLable.text = @"图书复审审核员";
-        }else if ([userPermission isEqualToString:@"2"]) {
-            appdelegate.UserVC.professionLable.text = @"图书初审审核员";
-        }
-        [self dismissViewControllerAnimated:YES completion:nil];                                                                                        // 登录成功后撤下登录界面
-    });
+- (void)showSuccessProgress {
+    UIImage *image = [[UIImage imageNamed:@"Checkmark"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
+    _mbprogress.customView = imageView;
+    _mbprogress.mode = MBProgressHUDModeCustomView;
+    _mbprogress.label.text = NSLocalizedString(@"登陆成功", @"HUD completed title");
+    [self.view bringSubviewToFront:_mbprogress];                                                    // 让toast显示在view的最前端
+    [_mbprogress showAnimated:YES];                                                                 // 显示toast
+    [self performSelector:@selector(showMainView) withObject:nil afterDelay:1.5f];
+    _showHomeViewBlock();
+    [self showUserView];
 }
-#pragma mark 登陆验证失败调用此函数
-- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error{
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [_mbprogress hideAnimated:YES];
-        [self showLoginFailedDialg];
-    });
+// 显示主界面
+- (void)showMainView {
+    [_mbprogress hideAnimated:YES];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark 登陆失败弹窗

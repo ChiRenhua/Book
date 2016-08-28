@@ -8,6 +8,7 @@
 
 #import "UserViewController.h"
 #import "AppDelegate.h"
+#import "UserInfoModel.h"
 
 #define SCREEN_BOUNDS [UIScreen mainScreen].bounds.size
 
@@ -68,13 +69,13 @@ AppDelegate *UserVCdelegate;
         [UserViewCell.contentView addSubview:userImage];
         // 添加用户名
         _nameLable = [[UILabel alloc]initWithFrame:CGRectMake(110, 20, SCREEN_BOUNDS.width - 110, 20)];
-         NSString *userName = [UserVCdelegate.userInfo getUserName];
+         NSString *userName = [[UserInfoModel sharedInstance] getUserName];
         _nameLable.text = [[NSString alloc]initWithFormat:@"用户：%@",userName];
         _nameLable.font = [UIFont systemFontOfSize:20];
         [UserViewCell.contentView addSubview:_nameLable];
         // 添加职位信息
         _professionLable = [[UILabel alloc]initWithFrame:CGRectMake(110, 60, SCREEN_BOUNDS.width - 110, 20)];
-        NSString *professiontext = [UserVCdelegate.userInfo getUserPermission];
+        NSString *professiontext = [[UserInfoModel sharedInstance]getUserCompetence];
         if ([professiontext isEqualToString:@"0"]) {
             _professionLable.text = @"图书管理员";
         }else if ([professiontext isEqualToString:@"1"]) {

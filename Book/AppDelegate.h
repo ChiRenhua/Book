@@ -10,7 +10,6 @@
 #import "LoginViewController.h"
 #import "TabBarViewController.h"
 #import "UserViewController.h"
-#import "UserInfo.h"
 #import "HomeViewController.h"
 #import "SearchViewController.h"
 #import "BookReviewViewController.h"
@@ -21,7 +20,6 @@
 @property (strong, nonatomic) LoginViewController *loginVC;
 @property (strong, nonatomic) TabBarViewController *tabVC;
 @property (strong, nonatomic) UserViewController *UserVC;
-@property (strong, nonatomic) UserInfo *userInfo;
 @property (strong, nonatomic) HomeViewController *homeVC;
 @property (strong, nonatomic) SearchViewController *searchVC;
 @property (strong, nonatomic) BookReviewViewController *bookReviewVC;

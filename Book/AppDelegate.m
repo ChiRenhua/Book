@@ -25,9 +25,6 @@
     _homeVC = [[HomeViewController alloc]init];
     _searchVC = [[SearchViewController alloc]init];
     
-    // 初始化用户信息类
-    _userInfo = [[UserInfo alloc]init];
-    
     //为三个视图控制器添加导航栏控制器
     UINavigationController *HomeTab = [[UINavigationController alloc]initWithRootViewController:_homeVC];
     UINavigationController *SearchTab = [[UINavigationController alloc]initWithRootViewController:_searchVC];
