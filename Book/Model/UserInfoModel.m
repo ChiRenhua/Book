@@ -56,7 +56,6 @@
 }
 
 - (void)getUserDataWithName:(NSString *)name andPassword:(NSString *)password {
-    
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     //manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];

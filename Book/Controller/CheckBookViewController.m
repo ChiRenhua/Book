@@ -9,32 +9,37 @@
 #import "CheckBookViewController.h"
 #import "AppDelegate.h"
 #import "ListTableViewCell.h"
-#import "GetBookInfo.h"
 #import "BookDetialViewController.h"
-#import "FCXRefreshFooterView.h"
-#import "FCXRefreshHeaderView.h"
-#import "UIScrollView+FCXRefresh.h"
+#import "BookInfoModel.h"
+#import "UserInfoModel.h"
+#import "MJRefreshStateHeader.h"
 
 #define SCREEN_BOUNDS [UIScreen mainScreen].bounds.size
 
 @interface CheckBookViewController ()<UITableViewDataSource,UITableViewDelegate,UISearchDisplayDelegate,UISearchBarDelegate>
 @property (retain,strong) UITableView *CheckBookViewtableView;
-@property (nonatomic, strong) FCXRefreshHeaderView *headerView;
 @end
 
 ListTableViewCell *CheckBookViewcell;
 AppDelegate *CheckBookViewappdelegate;
-GetBookInfo *CheckBookViewbookinfo;
 UISearchBar *CheckBookViewSearchBar;                                                                                            // 搜索框
 UISearchDisplayController *CheckBookViewSearchDC;                                                                               // 搜索框界面控制器
 NSMutableArray *CheckBookViewSearchResult;                                                                                      // 搜索结果
 int viewcode;
+NSString *step;
+NSString *bookState;
+NSMutableArray *bookArray;
 
 @implementation CheckBookViewController
 
 - (id)init:(int)viewCode {
     if (self = [super init]) {
         viewcode = viewCode;
+        [BookInfoModel sharedInstance].updateTV = ^(){
+            bookArray = [[BookInfoModel sharedInstance]getBookArray];
+            [self.CheckBookViewtableView reloadData];
+            [_CheckBookViewtableView.mj_header endRefreshing];
+        };
     }
     return self;
 }
@@ -44,12 +49,16 @@ int viewcode;
     [self.view setBackgroundColor:[UIColor whiteColor]];
     if (viewcode == firstUncheckedBook || viewcode == reviewUncheckedBook) {
         self.navigationItem.title = @"待审核";
+        bookState = @"待审核";
     }else if(viewcode == firstCheckingBook || viewcode == reviewCheckingBook) {
         self.navigationItem.title = @"审核中";
+        bookState = @"审核中";
     }else if(viewcode == firstCheckedPassBook || viewcode == reviewCheckedPassBook) {
         self.navigationItem.title = @"已通过";
+        bookState = @"已通过";
     }else if(viewcode == firstCheckedUnpassBook || viewcode == reviewCheckedUnpassBook) {
         self.navigationItem.title = @"未通过";
+        bookState = @"未通过";
     }
     
      //添加此方法后，页面布局不会自动适应，而是需要手动调节
@@ -62,28 +71,21 @@ int viewcode;
     _CheckBookViewtableView.delegate = self;                                                                                     // 设置tableview代理
     [self.view addSubview:_CheckBookViewtableView];                                                                              // 将tableview添加到屏幕上
     CheckBookViewappdelegate = [[UIApplication sharedApplication]delegate];
-    CheckBookViewbookinfo = [[GetBookInfo alloc]init];
     [self addSearchBar];                                                                                                       // 添加搜索框
-    [self addRefreshView];                                                                                                     // 添加下拉刷新View
-    [_headerView startRefresh];
-}
-#pragma mark 添加下拉刷新View
-- (void)addRefreshView {
-    __weak __typeof(self)weakSelf = self;
-    //下拉刷新
-    _headerView = [_CheckBookViewtableView addHeaderWithRefreshHandler:^(FCXRefreshBaseView *refreshView) {
-        [weakSelf refreshAction];
-    }];
-}
-#pragma mark 添加下拉刷新动作
-- (void)refreshAction {
-    __weak UITableView *weakTableView = _CheckBookViewtableView;
-    __weak FCXRefreshHeaderView *weakHeaderView = _headerView;
     
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [weakTableView reloadData];
-        [weakHeaderView endRefresh];
-    });
+    if (viewcode == firstUncheckedBook) {
+        step = @"0";
+    }else if(viewcode == reviewUncheckedBook) {
+        step = @"1";
+    }
+    MJRefreshStateHeader *refreshHeader = [MJRefreshStateHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadData)];
+    // 设置自动切换透明度(在导航栏下面自动隐藏)
+    refreshHeader.automaticallyChangeAlpha = YES;
+    _CheckBookViewtableView.mj_header = refreshHeader;
+    [[BookInfoModel sharedInstance]getBookDataWithUsername:[[UserInfoModel sharedInstance]getUserName] Sessionid:[[UserInfoModel sharedInstance]getUserSessionid] step:step bookState:bookState];
+}
+- (void)loadData {
+    [[BookInfoModel sharedInstance]getBookDataWithUsername:[[UserInfoModel sharedInstance]getUserName] Sessionid:[[UserInfoModel sharedInstance]getUserSessionid] step:step bookState:bookState];
 }
 #pragma mark 设置每组标题名称
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
@@ -108,7 +110,7 @@ int viewcode;
     if (tableView==CheckBookViewSearchDC.searchResultsTableView) {
         return CheckBookViewSearchResult.count;
     }
-    return [CheckBookViewbookinfo.getPendingBooks count];
+    return [bookArray count];
 }
 #pragma mark 设置单元格样式和内容
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -116,7 +118,7 @@ int viewcode;
     CheckBookViewcell = [tableView dequeueReusableCellWithIdentifier:@"UIListTableViewCell"];                                                        // 从缓存池中取出cell
     if (!CheckBookViewcell) {                                                                                                                        // 判断是否能取出cell
         CheckBookViewcell = [[ListTableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"UIListTableViewCell"];            // 如果cell为空则创建一个新的cell并放入缓存池中
-    }else{                                                                                                                                       // 如果cell不为空（注意：以下操作很重要，不然会造成cell数据错乱）
+    }else{                                                                                                                                           // 如果cell不为空（注意：以下操作很重要，不然会造成cell数据错乱）
         [CheckBookViewcell removeCellView];                                                                                                          // 将之前cell界面上的view全部remove掉
         [CheckBookViewcell initCellView];                                                                                                            // 重新初始化cell上的view
     }
@@ -125,9 +127,9 @@ int viewcode;
         books = CheckBookViewSearchResult[indexPath.row];
     }else {
         if (viewcode) {
-            books = CheckBookViewbookinfo.getPendingBooks[indexPath.row];
+            books = bookArray[indexPath.row];
         }else {
-            books = CheckBookViewbookinfo.getRePendingBooks[indexPath.row];
+            books = bookArray[indexPath.row];
         }
     }
     
@@ -137,7 +139,6 @@ int viewcode;
 #pragma mark 添加行点击事件
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     Book *book;
-    NSMutableArray *bookArray = [CheckBookViewbookinfo getPendingBooks];
     book = bookArray[indexPath.row];
     BookDetialViewController *bookDetialVC = [[BookDetialViewController alloc]init:book];
     [self.navigationController pushViewController:bookDetialVC animated:YES];
@@ -166,9 +167,9 @@ int viewcode;
 #pragma mark 搜索形成新数据
 -(void)searchDataWithKeyWord:(NSString *)keyWord{
     CheckBookViewSearchResult = [[NSMutableArray alloc]init];
-    [CheckBookViewbookinfo.getPendingBooks enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+    [bookArray enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         Book *book = obj;
-        if ([book.bookName.uppercaseString containsString:keyWord.uppercaseString] || [book.bookWriter.uppercaseString containsString:keyWord.uppercaseString]) {
+        if ([book.bookName.uppercaseString containsString:keyWord.uppercaseString] || [book.authorName.uppercaseString containsString:keyWord.uppercaseString]) {
             [CheckBookViewSearchResult addObject:book];
         }
     }];

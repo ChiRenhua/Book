@@ -8,24 +8,17 @@
 
 #import "Book.h"
 
+#define BOOK_IMAGEBASEURL @"http://121.42.174.184:8080/bookmgyun/"
+
 @implementation Book
 #pragma mark 初始化函数
 - (Book *)initWithDictionary:(NSMutableDictionary *)dic {
     if (self = [super init]) {
-        _bookName = [dic objectForKey:@"bookName"];                         // 图书名称
-        _bookWriter = [dic objectForKey:@"bookWriter"];                     // 图书作者
-        _bookTime = [dic objectForKey:@"bookTime"];                         // 图书完成时间
-        _bookSummary = [dic objectForKey:@"bookSummary"];                   // 图书简介
-        _bookSize = [dic objectForKey:@"bookSize"];                         // 图书大小
-        _bookPages = [dic objectForKey:@"bookPages"];                       // 图书页数
-        _bookCategory = [dic objectForKey:@"bookCategory"];                 // 图书种类
-        _bookPicture = [dic objectForKey:@"bookPicture"];                   // 图书封皮
-        _bookState = [dic objectForKey:@"bookState"];                       // 审核状态
-        _bookPublishers = [dic objectForKey:@"bookPublishers"];             // 出版商
-        _bookLanguage = [dic objectForKey:@"bookLanguage"];                 // 图书语言
-        _bookReviewInfo = [dic objectForKey:@"bookReviewInfo"];             // 图书审核信息
-        _bookReviewInfoShow = [dic objectForKey:@"bookReviewInfoShow"];
-        
+        _authorName = [dic objectForKey:@"authorName"];
+        _bookName = [dic objectForKey:@"bookName"];
+        _coverPath = [BOOK_IMAGEBASEURL stringByAppendingString:[dic objectForKey:@"coverPath"]];
+        _bookID = [dic objectForKey:@"id"];
+        _isbn = [dic objectForKey:@"isbn"];
     }
     return self;
 }

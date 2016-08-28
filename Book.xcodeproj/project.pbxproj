@@ -10,18 +10,11 @@
 		4B75BFB21C9BE76E00212268 /* BookTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B75BFB11C9BE76E00212268 /* BookTests.m */; };
 		4B75BFBD1C9BE76E00212268 /* BookUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B75BFBC1C9BE76E00212268 /* BookUITests.m */; };
 		C1E2431F0ADD6D82ACE6C66B /* libPods-Book.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E49FFA91ECAC28015993FFF8 /* libPods-Book.a */; };
-		D7DBDE8C1D72EB3900CFAE5E /* blueArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = D7DBDE7F1D72EB3900CFAE5E /* blueArrow.png */; };
-		D7DBDE8D1D72EB3900CFAE5E /* blueArrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D7DBDE801D72EB3900CFAE5E /* blueArrow@2x.png */; };
-		D7DBDE8E1D72EB3900CFAE5E /* FCXRefreshBaseView.m in Sources */ = {isa = PBXBuildFile; fileRef = D7DBDE821D72EB3900CFAE5E /* FCXRefreshBaseView.m */; };
-		D7DBDE8F1D72EB3900CFAE5E /* FCXRefreshFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = D7DBDE841D72EB3900CFAE5E /* FCXRefreshFooterView.m */; };
-		D7DBDE901D72EB3900CFAE5E /* FCXRefreshHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = D7DBDE861D72EB3900CFAE5E /* FCXRefreshHeaderView.m */; };
-		D7DBDE911D72EB3900CFAE5E /* UIScrollView+FCXRefresh.m in Sources */ = {isa = PBXBuildFile; fileRef = D7DBDE881D72EB3900CFAE5E /* UIScrollView+FCXRefresh.m */; };
 		D7DBDE921D72EB3900CFAE5E /* RDRGrowingTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = D7DBDE8B1D72EB3900CFAE5E /* RDRGrowingTextView.m */; };
 		D7DBDE9D1D72EB6B00CFAE5E /* ListTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D7DBDE9A1D72EB6B00CFAE5E /* ListTableViewCell.m */; };
 		D7DBDE9E1D72EB6B00CFAE5E /* TableScrollViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D7DBDE9C1D72EB6B00CFAE5E /* TableScrollViewCell.m */; };
 		D7DBDEAE1D72ECA600CFAE5E /* Book.m in Sources */ = {isa = PBXBuildFile; fileRef = D7DBDEA71D72ECA600CFAE5E /* Book.m */; };
 		D7DBDEAF1D72ECA600CFAE5E /* BookInfoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = D7DBDEA91D72ECA600CFAE5E /* BookInfoModel.m */; };
-		D7DBDEB01D72ECA600CFAE5E /* GetBookInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = D7DBDEAB1D72ECA600CFAE5E /* GetBookInfo.m */; };
 		D7DBDEB11D72ECA600CFAE5E /* UserInfoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = D7DBDEAD1D72ECA600CFAE5E /* UserInfoModel.m */; };
 		D7DBDEC61D72ED3400CFAE5E /* AuditedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D7DBDEB41D72ED3400CFAE5E /* AuditedViewController.m */; };
 		D7DBDEC71D72ED3400CFAE5E /* BookDetialViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D7DBDEB61D72ED3400CFAE5E /* BookDetialViewController.m */; };
@@ -38,8 +31,6 @@
 		D7DBDEDB1D72ED9B00CFAE5E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D7DBDED61D72ED9B00CFAE5E /* main.m */; };
 		D7DBDEDD1D72EDD800CFAE5E /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D7DBDEDC1D72EDD800CFAE5E /* Info.plist */; };
 		D7DBDEF41D72EE4C00CFAE5E /* audited.png in Resources */ = {isa = PBXBuildFile; fileRef = D7DBDEE31D72EE4C00CFAE5E /* audited.png */; };
-		D7DBDEF51D72EE4C00CFAE5E /* blueArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = D7DBDEE41D72EE4C00CFAE5E /* blueArrow.png */; };
-		D7DBDEF61D72EE4C00CFAE5E /* blueArrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D7DBDEE51D72EE4C00CFAE5E /* blueArrow@2x.png */; };
 		D7DBDEF71D72EE4C00CFAE5E /* book_01.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D7DBDEE61D72EE4C00CFAE5E /* book_01.jpg */; };
 		D7DBDEF81D72EE4C00CFAE5E /* book_02.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D7DBDEE71D72EE4C00CFAE5E /* book_02.jpg */; };
 		D7DBDEF91D72EE4C00CFAE5E /* book_03.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D7DBDEE81D72EE4C00CFAE5E /* book_03.jpg */; };
@@ -83,16 +74,6 @@
 		4B75BFBC1C9BE76E00212268 /* BookUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BookUITests.m; sourceTree = "<group>"; };
 		4B75BFBE1C9BE76E00212268 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		950D2E529ECF91C3F69B99B3 /* Pods-Book.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Book.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Book/Pods-Book.debug.xcconfig"; sourceTree = "<group>"; };
-		D7DBDE7F1D72EB3900CFAE5E /* blueArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blueArrow.png; sourceTree = "<group>"; };
-		D7DBDE801D72EB3900CFAE5E /* blueArrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "blueArrow@2x.png"; sourceTree = "<group>"; };
-		D7DBDE811D72EB3900CFAE5E /* FCXRefreshBaseView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FCXRefreshBaseView.h; sourceTree = "<group>"; };
-		D7DBDE821D72EB3900CFAE5E /* FCXRefreshBaseView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FCXRefreshBaseView.m; sourceTree = "<group>"; };
-		D7DBDE831D72EB3900CFAE5E /* FCXRefreshFooterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FCXRefreshFooterView.h; sourceTree = "<group>"; };
-		D7DBDE841D72EB3900CFAE5E /* FCXRefreshFooterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FCXRefreshFooterView.m; sourceTree = "<group>"; };
-		D7DBDE851D72EB3900CFAE5E /* FCXRefreshHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FCXRefreshHeaderView.h; sourceTree = "<group>"; };
-		D7DBDE861D72EB3900CFAE5E /* FCXRefreshHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FCXRefreshHeaderView.m; sourceTree = "<group>"; };
-		D7DBDE871D72EB3900CFAE5E /* UIScrollView+FCXRefresh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+FCXRefresh.h"; sourceTree = "<group>"; };
-		D7DBDE881D72EB3900CFAE5E /* UIScrollView+FCXRefresh.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+FCXRefresh.m"; sourceTree = "<group>"; };
 		D7DBDE8A1D72EB3900CFAE5E /* RDRGrowingTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RDRGrowingTextView.h; sourceTree = "<group>"; };
 		D7DBDE8B1D72EB3900CFAE5E /* RDRGrowingTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RDRGrowingTextView.m; sourceTree = "<group>"; };
 		D7DBDE991D72EB6B00CFAE5E /* ListTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ListTableViewCell.h; path = View/ListTableViewCell.h; sourceTree = "<group>"; };
@@ -103,8 +84,6 @@
 		D7DBDEA71D72ECA600CFAE5E /* Book.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Book.m; sourceTree = "<group>"; };
 		D7DBDEA81D72ECA600CFAE5E /* BookInfoModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BookInfoModel.h; sourceTree = "<group>"; };
 		D7DBDEA91D72ECA600CFAE5E /* BookInfoModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BookInfoModel.m; sourceTree = "<group>"; };
-		D7DBDEAA1D72ECA600CFAE5E /* GetBookInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GetBookInfo.h; sourceTree = "<group>"; };
-		D7DBDEAB1D72ECA600CFAE5E /* GetBookInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GetBookInfo.m; sourceTree = "<group>"; };
 		D7DBDEAC1D72ECA600CFAE5E /* UserInfoModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserInfoModel.h; sourceTree = "<group>"; };
 		D7DBDEAD1D72ECA600CFAE5E /* UserInfoModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserInfoModel.m; sourceTree = "<group>"; };
 		D7DBDEB31D72ED3400CFAE5E /* AuditedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AuditedViewController.h; sourceTree = "<group>"; };
@@ -132,8 +111,6 @@
 		D7DBDED61D72ED9B00CFAE5E /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		D7DBDEDC1D72EDD800CFAE5E /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = ../Info.plist; sourceTree = "<group>"; };
 		D7DBDEE31D72EE4C00CFAE5E /* audited.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = audited.png; sourceTree = "<group>"; };
-		D7DBDEE41D72EE4C00CFAE5E /* blueArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blueArrow.png; sourceTree = "<group>"; };
-		D7DBDEE51D72EE4C00CFAE5E /* blueArrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "blueArrow@2x.png"; sourceTree = "<group>"; };
 		D7DBDEE61D72EE4C00CFAE5E /* book_01.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = book_01.jpg; sourceTree = "<group>"; };
 		D7DBDEE71D72EE4C00CFAE5E /* book_02.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = book_02.jpg; sourceTree = "<group>"; };
 		D7DBDEE81D72EE4C00CFAE5E /* book_03.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = book_03.jpg; sourceTree = "<group>"; };
@@ -232,7 +209,6 @@
 		4BA0AD2F1CA1147D003EBE65 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				D7DBDE7E1D72EB3900CFAE5E /* FCXRefreshView */,
 				D7DBDE891D72EB3900CFAE5E /* KeyboardView */,
 				D7DBDE991D72EB6B00CFAE5E /* ListTableViewCell.h */,
 				D7DBDE9A1D72EB6B00CFAE5E /* ListTableViewCell.m */,
@@ -259,24 +235,6 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
-		D7DBDE7E1D72EB3900CFAE5E /* FCXRefreshView */ = {
-			isa = PBXGroup;
-			children = (
-				D7DBDE7F1D72EB3900CFAE5E /* blueArrow.png */,
-				D7DBDE801D72EB3900CFAE5E /* blueArrow@2x.png */,
-				D7DBDE811D72EB3900CFAE5E /* FCXRefreshBaseView.h */,
-				D7DBDE821D72EB3900CFAE5E /* FCXRefreshBaseView.m */,
-				D7DBDE831D72EB3900CFAE5E /* FCXRefreshFooterView.h */,
-				D7DBDE841D72EB3900CFAE5E /* FCXRefreshFooterView.m */,
-				D7DBDE851D72EB3900CFAE5E /* FCXRefreshHeaderView.h */,
-				D7DBDE861D72EB3900CFAE5E /* FCXRefreshHeaderView.m */,
-				D7DBDE871D72EB3900CFAE5E /* UIScrollView+FCXRefresh.h */,
-				D7DBDE881D72EB3900CFAE5E /* UIScrollView+FCXRefresh.m */,
-			);
-			name = FCXRefreshView;
-			path = View/FCXRefreshView;
-			sourceTree = "<group>";
-		};
 		D7DBDE891D72EB3900CFAE5E /* KeyboardView */ = {
 			isa = PBXGroup;
 			children = (
@@ -294,8 +252,6 @@
 				D7DBDEA71D72ECA600CFAE5E /* Book.m */,
 				D7DBDEA81D72ECA600CFAE5E /* BookInfoModel.h */,
 				D7DBDEA91D72ECA600CFAE5E /* BookInfoModel.m */,
-				D7DBDEAA1D72ECA600CFAE5E /* GetBookInfo.h */,
-				D7DBDEAB1D72ECA600CFAE5E /* GetBookInfo.m */,
 				D7DBDEAC1D72ECA600CFAE5E /* UserInfoModel.h */,
 				D7DBDEAD1D72ECA600CFAE5E /* UserInfoModel.m */,
 			);
@@ -352,8 +308,6 @@
 			isa = PBXGroup;
 			children = (
 				D7DBDEE31D72EE4C00CFAE5E /* audited.png */,
-				D7DBDEE41D72EE4C00CFAE5E /* blueArrow.png */,
-				D7DBDEE51D72EE4C00CFAE5E /* blueArrow@2x.png */,
 				D7DBDEE61D72EE4C00CFAE5E /* book_01.jpg */,
 				D7DBDEE71D72EE4C00CFAE5E /* book_02.jpg */,
 				D7DBDEE81D72EE4C00CFAE5E /* book_03.jpg */,
@@ -481,16 +435,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D7DBDEF61D72EE4C00CFAE5E /* blueArrow@2x.png in Resources */,
-				D7DBDE8D1D72EB3900CFAE5E /* blueArrow@2x.png in Resources */,
 				D7DBDF011D72EE4C00CFAE5E /* CheckBook.png in Resources */,
 				D7DBDEDD1D72EDD800CFAE5E /* Info.plist in Resources */,
-				D7DBDE8C1D72EB3900CFAE5E /* blueArrow.png in Resources */,
 				D7DBDEFB1D72EE4C00CFAE5E /* book_05.jpg in Resources */,
 				D7DBDF041D72EE4C00CFAE5E /* touxiang.png in Resources */,
 				D7DBDEFA1D72EE4C00CFAE5E /* book_04.jpg in Resources */,
 				D7DBDED81D72ED9B00CFAE5E /* Assets.xcassets in Resources */,
-				D7DBDEF51D72EE4C00CFAE5E /* blueArrow.png in Resources */,
 				D7DBDEF41D72EE4C00CFAE5E /* audited.png in Resources */,
 				D7DBDEF91D72EE4C00CFAE5E /* book_03.jpg in Resources */,
 				D7DBDEFC1D72EE4C00CFAE5E /* book_06.jpg in Resources */,
@@ -577,14 +527,10 @@
 			files = (
 				D7DBDEC81D72ED3400CFAE5E /* BookReviewViewController.m in Sources */,
 				D7DBDECC1D72ED3400CFAE5E /* SearchViewController.m in Sources */,
-				D7DBDE901D72EB3900CFAE5E /* FCXRefreshHeaderView.m in Sources */,
 				D7DBDE9E1D72EB6B00CFAE5E /* TableScrollViewCell.m in Sources */,
 				D7DBDEB11D72ECA600CFAE5E /* UserInfoModel.m in Sources */,
 				D7DBDECA1D72ED3400CFAE5E /* HomeViewController.m in Sources */,
 				D7DBDECE1D72ED3400CFAE5E /* UserViewController.m in Sources */,
-				D7DBDE8F1D72EB3900CFAE5E /* FCXRefreshFooterView.m in Sources */,
-				D7DBDE8E1D72EB3900CFAE5E /* FCXRefreshBaseView.m in Sources */,
-				D7DBDEB01D72ECA600CFAE5E /* GetBookInfo.m in Sources */,
 				D7DBDEAE1D72ECA600CFAE5E /* Book.m in Sources */,
 				D7DBDE921D72EB3900CFAE5E /* RDRGrowingTextView.m in Sources */,
 				D7DBDE9D1D72EB6B00CFAE5E /* ListTableViewCell.m in Sources */,
@@ -592,7 +538,6 @@
 				D7DBDEAF1D72ECA600CFAE5E /* BookInfoModel.m in Sources */,
 				D7DBDECD1D72ED3400CFAE5E /* TabBarViewController.m in Sources */,
 				D7DBDECB1D72ED3400CFAE5E /* LoginViewController.m in Sources */,
-				D7DBDE911D72EB3900CFAE5E /* UIScrollView+FCXRefresh.m in Sources */,
 				D7DBDEC61D72ED3400CFAE5E /* AuditedViewController.m in Sources */,
 				D7DBDEC91D72ED3400CFAE5E /* CheckBookViewController.m in Sources */,
 				D7DBDEDB1D72ED9B00CFAE5E /* main.m in Sources */,

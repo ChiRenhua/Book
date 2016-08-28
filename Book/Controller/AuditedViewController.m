@@ -9,7 +9,6 @@
 #import "AuditedViewController.h"
 #import "TableScrollViewCell.h"
 #import "AppDelegate.h"
-#import "GetBookInfo.h"
 #import "BookDetialViewController.h"
 #import "CheckBookViewController.h"
 
@@ -22,7 +21,6 @@
 UITableView *AuditedTableView;
 TableScrollViewCell *scrollViewCell;
 AppDelegate *AuditedAppdelegate;
-GetBookInfo *bookinfo;
 @implementation AuditedViewController
 
 - (id)init:(BOOL)isFirstReview {
@@ -54,7 +52,6 @@ GetBookInfo *bookinfo;
 }
 #pragma mark 设置单元格样式和内容
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    bookinfo = [[GetBookInfo alloc]init];
     // 第一组显示已通过的图书列表
     if (indexPath.section == 0) {
         scrollViewCell = [[TableScrollViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:nil booksResult:@"已通过" isFirstReview:_isFirstreview];
@@ -68,19 +65,19 @@ GetBookInfo *bookinfo;
         // 判断用户点击的第几个图片
         NSMutableArray *bookInfo = [[NSMutableArray alloc]init];
         Book *book = [[Book alloc]init];
-        if (_isFirstreview) {
-            if (bookstate == 0) {
-                bookInfo = [bookinfo getPassBooks];
-            }else if (bookstate == 1) {
-                bookInfo = [bookinfo getUnpassBooks];
-            }
-        }else {
-            if (bookstate == 0) {
-                bookInfo = [bookinfo getRePassBooks];
-            }else if (bookstate == 1) {
-                bookInfo = [bookinfo getReUnpassBooks];
-            }
-        }
+//        if (_isFirstreview) {
+//            if (bookstate == 0) {
+//                bookInfo = [bookinfo getPassBooks];
+//            }else if (bookstate == 1) {
+//                bookInfo = [bookinfo getUnpassBooks];
+//            }
+//        }else {
+//            if (bookstate == 0) {
+//                bookInfo = [bookinfo getRePassBooks];
+//            }else if (bookstate == 1) {
+//                bookInfo = [bookinfo getReUnpassBooks];
+//            }
+//        }
         book = bookInfo[index];
         BookDetialViewController *bookDetialVC = [[BookDetialViewController alloc]init:book];
         [self.navigationController pushViewController:bookDetialVC animated:YES];

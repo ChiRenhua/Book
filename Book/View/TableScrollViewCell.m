@@ -9,7 +9,7 @@
 #import "TableScrollViewCell.h"
 #import "AppDelegate.h"
 #import "Book.h"
-#import "GetBookInfo.h"
+#import "AFNetworking/AFNetworking.h"
 #define SCREEN_BOUNDS self.contentView.frame.size
 
 @interface TableScrollViewCell()<UITableViewDataSource,UITableViewDelegate>
@@ -19,7 +19,6 @@ UILabel *title;                                                                 
 UILabel *checkAll;                                                                                                  // 显示全部按钮
 NSMutableArray *bookinfoArray;                                                                                      // 书籍信息数组
 AppDelegate *scrollerViewAppdelegate;                                                                               // 全局变量
-GetBookInfo *bookInfo;
 NSString *booksResult;                                                                                              // 图书审核结果
 
 @implementation TableScrollViewCell
@@ -30,7 +29,6 @@ NSString *booksResult;                                                          
         _isFirstReview = isfirstreview;
         bookinfoArray = [[NSMutableArray alloc]init];
         scrollerViewAppdelegate = [[UIApplication sharedApplication] delegate];                                     // 获取全局变量
-        bookInfo = [[GetBookInfo alloc]init];
         booksResult = result;
         [self initScrollCellView];
     }
@@ -84,25 +82,25 @@ NSString *booksResult;                                                          
         cell.selectionStyle = UITableViewCellSelectionStyleNone;                                                                                // 取消选中状态
     }
     // 根据不同的tag来加载不用的数据
-    if (tableView.tag == 0) {
-        if (_isFirstReview) {
-            bookinfoArray = [bookInfo getPassBooks];
-        }else {
-            bookinfoArray = [bookInfo getRePassBooks];
-        }
-    }else if(tableView.tag == 1){
-        if (_isFirstReview) {
-            bookinfoArray = [bookInfo getUnpassBooks];
-        }else {
-            bookinfoArray = [bookInfo getReUnpassBooks];
-        }
-    }
+//    if (tableView.tag == 0) {
+//        if (_isFirstReview) {
+//            bookinfoArray = [bookInfo getPassBooks];
+//        }else {
+//            bookinfoArray = [bookInfo getRePassBooks];
+//        }
+//    }else if(tableView.tag == 1){
+//        if (_isFirstReview) {
+//            bookinfoArray = [bookInfo getUnpassBooks];
+//        }else {
+//            bookinfoArray = [bookInfo getReUnpassBooks];
+//        }
+//    }
     Book *book = bookinfoArray[indexPath.row];
     [cell.contentView.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];                                                      // 每次初始化之前移除view上的所有布局
     
     // 在cell上添加imageView
     UIImageView *bookPicture = [[UIImageView alloc]initWithFrame:CGRectMake(10, 10, 90, 135)];
-    bookPicture.image = [UIImage imageNamed:book.bookPicture];
+    bookPicture.image = [UIImage imageNamed:book.coverPath];
     bookPicture.contentMode = UIViewContentModeScaleAspectFit;
     [cell.contentView addSubview:bookPicture];
     
@@ -120,7 +118,7 @@ NSString *booksResult;                                                          
     writerLable.font = [UIFont systemFontOfSize:13];
     writerLable.tag = 2;
     writerLable.textColor = [UIColor grayColor];
-    writerLable.text = book.bookWriter;
+    writerLable.text = book.authorName;
     [cell.contentView addSubview:writerLable];
     
     return cell;

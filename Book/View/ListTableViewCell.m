@@ -7,6 +7,8 @@
 //
 
 #import "ListTableViewCell.h"
+#import "AFNetworking/AFNetworking.h"
+#import "UIImageView+AFNetworking.h"
 #define SCREEN_BOUNDS [UIScreen mainScreen].bounds.size
 
 @interface ListTableViewCell()
@@ -16,7 +18,7 @@
 UIImageView *bookPictureImage;
 UILabel *bookNameLable;
 UILabel *bookWriterLable;
-UILabel *bookTimeLable;
+UILabel *bookISBN;
 UILabel *bookStateLable;
 
 @implementation ListTableViewCell
@@ -39,20 +41,20 @@ UILabel *bookStateLable;
     bookNameLable = [[UILabel alloc]init];
     bookNameLable.textColor = [UIColor blackColor];
     bookNameLable.font = [UIFont systemFontOfSize:18];
-    bookNameLable.frame = CGRectMake(90, 10, SCREEN_BOUNDS.width - 60, 25);
+    bookNameLable.frame = CGRectMake(90, 10, SCREEN_BOUNDS.width - 150, 25);
     [self.contentView addSubview:bookNameLable];
     // 作者
     bookWriterLable = [[UILabel alloc]init];
     bookWriterLable.textColor = [UIColor grayColor];
     bookWriterLable.font = [UIFont systemFontOfSize:15];
-    bookWriterLable.frame = CGRectMake(90, 45, SCREEN_BOUNDS.width - 60, 16);
+    bookWriterLable.frame = CGRectMake(90, 45, SCREEN_BOUNDS.width - 150, 16);
     [self.contentView addSubview:bookWriterLable];
     // 提交时间
-    bookTimeLable = [[UILabel alloc]init];
-    bookTimeLable.textColor = [UIColor grayColor];
-    bookTimeLable.font = [UIFont systemFontOfSize:15];
-    bookTimeLable.frame = CGRectMake(90, 75, SCREEN_BOUNDS.width - 60, 15);
-    [self.contentView addSubview:bookTimeLable];
+    bookISBN = [[UILabel alloc]init];
+    bookISBN.textColor = [UIColor grayColor];
+    bookISBN.font = [UIFont systemFontOfSize:15];
+    bookISBN.frame = CGRectMake(90, 75, SCREEN_BOUNDS.width - 60, 15);
+    [self.contentView addSubview:bookISBN];
     // 状态
     bookStateLable = [[UILabel alloc]init];
     bookStateLable.font = [UIFont systemFontOfSize:14];
@@ -62,12 +64,13 @@ UILabel *bookStateLable;
 }
 #pragma mark 为cell上的view布局添加文字或图片信息
 - (void) setBookInfo:(Book *)book{
-    bookPictureImage.image = [UIImage imageNamed:book.bookPicture];
+    NSString *book_image_url = [book.coverPath stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    [bookPictureImage setImageWithURL:[NSURL URLWithString:book_image_url] placeholderImage:[UIImage imageNamed:@"default_bookimage"]];
     bookNameLable.text = book.bookName;
-    bookWriterLable.text = book.bookWriter;
-    bookTimeLable.text = book.bookTime;
+    bookWriterLable.text = book.authorName;
+    bookISBN.text = [@"ISBN:"stringByAppendingString:book.isbn];
     // 判断图书的审核状态，如果通过文字颜色为绿色，如果没通过则为红色，待审核为蓝色
-    if ([book.bookState isEqualToString:@"通过"]) {
+    if ([book.bookState isEqualToString:@"已通过"]) {
         //设置文字颜色为绿色
         bookStateLable.textColor = [UIColor colorWithRed:0.0f/255.0f
                                                    green:200.0f/255.0f

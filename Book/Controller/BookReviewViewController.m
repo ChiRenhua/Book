@@ -27,32 +27,32 @@ static NSString * const CellIdentifier = @"cell";
     if (self = [super init]) {
         _detialBook = [[Book alloc]init];
         _detialBook = book;
-        NSString *bookPicture = [[NSString alloc]initWithFormat:@"%@",_detialBook.bookPicture];
-        NSString *bookWriter = [[NSString alloc]initWithFormat:@"%@%@",@"作    者：",_detialBook.bookWriter];
-        NSString *bookName = [[NSString alloc]initWithFormat:@"%@%@",@"书    名：",_detialBook.bookName];
-        NSString *bookPublishers = [[NSString alloc]initWithFormat:@"%@%@",@"出版商：",_detialBook.bookPublishers];
-        NSString *bookSize = [[NSString alloc]initWithFormat:@"%@%@",@"大    小：",_detialBook.bookSize];
-        NSString *bookPage = [[NSString alloc]initWithFormat:@"%@%@",@"页    数：",_detialBook.bookPages];
-        NSString *bookLanguage = [[NSString alloc]initWithFormat:@"%@%@",@"语    言：",_detialBook.bookLanguage];
-        NSString *bookCategory = [[NSString alloc]initWithFormat:@"%@%@",@"类    型：",_detialBook.bookCategory];
-        NSString *bookTime = [[NSString alloc]initWithFormat:@"%@%@",@"时    间：",_detialBook.bookTime];
-        NSString *bookSummary = [[NSString alloc]initWithFormat:@"%@%@",@"简    介：",_detialBook.bookSummary];
-        _reviewInfoList = [[NSMutableArray alloc]initWithObjects:bookPicture,bookName,bookWriter,bookSummary,bookPublishers,bookCategory,bookTime,bookSize,bookPage,bookLanguage, nil];
-        
-        _titleArray = [[NSMutableArray alloc]initWithObjects:@"封皮",@"书名",@"作者",@"简介",@"出版商",@"类型",@"时间",@"大小",@"页数",@"语言", nil];
-        
-        
-        NSString *bookDetialPicture = [[NSString alloc]initWithFormat:@"“%@”",_detialBook.bookPicture];
-        NSString *bookDetialWriter = [[NSString alloc]initWithFormat:@"“%@”",_detialBook.bookWriter];
-        NSString *bookDetialName = [[NSString alloc]initWithFormat:@"“%@”",_detialBook.bookName];
-        NSString *bookDetialPublishers = [[NSString alloc]initWithFormat:@"“%@”",_detialBook.bookPublishers];
-        NSString *bookDetialSize = [[NSString alloc]initWithFormat:@"“%@”",_detialBook.bookSize];
-        NSString *bookDetialPage = [[NSString alloc]initWithFormat:@"“%@”",_detialBook.bookPages];
-        NSString *bookDetialLanguage = [[NSString alloc]initWithFormat:@"“%@”",_detialBook.bookLanguage];
-        NSString *bookDetialCategory = [[NSString alloc]initWithFormat:@"“%@”",_detialBook.bookCategory];
-        NSString *bookDetialTime = [[NSString alloc]initWithFormat:@"“%@”",_detialBook.bookTime];
-        NSString *bookDetialSummary = [[NSString alloc]initWithFormat:@"“%@”",_detialBook.bookSummary];
-        _bookDetialArray = [[NSMutableArray alloc]initWithObjects:bookDetialPicture,bookDetialName,bookDetialWriter,bookDetialSummary,bookDetialPublishers,bookDetialCategory,bookDetialTime,bookDetialSize,bookDetialPage,bookDetialLanguage,nil];
+//        NSString *bookPicture = [[NSString alloc]initWithFormat:@"%@",_detialBook.bookPicture];
+//        NSString *bookWriter = [[NSString alloc]initWithFormat:@"%@%@",@"作    者：",_detialBook.bookWriter];
+//        NSString *bookName = [[NSString alloc]initWithFormat:@"%@%@",@"书    名：",_detialBook.bookName];
+//        NSString *bookPublishers = [[NSString alloc]initWithFormat:@"%@%@",@"出版商：",_detialBook.bookPublishers];
+//        NSString *bookSize = [[NSString alloc]initWithFormat:@"%@%@",@"大    小：",_detialBook.bookSize];
+//        NSString *bookPage = [[NSString alloc]initWithFormat:@"%@%@",@"页    数：",_detialBook.bookPages];
+//        NSString *bookLanguage = [[NSString alloc]initWithFormat:@"%@%@",@"语    言：",_detialBook.bookLanguage];
+//        NSString *bookCategory = [[NSString alloc]initWithFormat:@"%@%@",@"类    型：",_detialBook.bookCategory];
+//        NSString *bookTime = [[NSString alloc]initWithFormat:@"%@%@",@"时    间：",_detialBook.bookTime];
+//        NSString *bookSummary = [[NSString alloc]initWithFormat:@"%@%@",@"简    介：",_detialBook.bookSummary];
+//        _reviewInfoList = [[NSMutableArray alloc]initWithObjects:bookPicture,bookName,bookWriter,bookSummary,bookPublishers,bookCategory,bookTime,bookSize,bookPage,bookLanguage, nil];
+//        
+//        _titleArray = [[NSMutableArray alloc]initWithObjects:@"封皮",@"书名",@"作者",@"简介",@"出版商",@"类型",@"时间",@"大小",@"页数",@"语言", nil];
+//        
+//        
+//        NSString *bookDetialPicture = [[NSString alloc]initWithFormat:@"“%@”",_detialBook.bookPicture];
+//        NSString *bookDetialWriter = [[NSString alloc]initWithFormat:@"“%@”",_detialBook.bookWriter];
+//        NSString *bookDetialName = [[NSString alloc]initWithFormat:@"“%@”",_detialBook.bookName];
+//        NSString *bookDetialPublishers = [[NSString alloc]initWithFormat:@"“%@”",_detialBook.bookPublishers];
+//        NSString *bookDetialSize = [[NSString alloc]initWithFormat:@"“%@”",_detialBook.bookSize];
+//        NSString *bookDetialPage = [[NSString alloc]initWithFormat:@"“%@”",_detialBook.bookPages];
+//        NSString *bookDetialLanguage = [[NSString alloc]initWithFormat:@"“%@”",_detialBook.bookLanguage];
+//        NSString *bookDetialCategory = [[NSString alloc]initWithFormat:@"“%@”",_detialBook.bookCategory];
+//        NSString *bookDetialTime = [[NSString alloc]initWithFormat:@"“%@”",_detialBook.bookTime];
+//        NSString *bookDetialSummary = [[NSString alloc]initWithFormat:@"“%@”",_detialBook.bookSummary];
+//        _bookDetialArray = [[NSMutableArray alloc]initWithObjects:bookDetialPicture,bookDetialName,bookDetialWriter,bookDetialSummary,bookDetialPublishers,bookDetialCategory,bookDetialTime,bookDetialSize,bookDetialPage,bookDetialLanguage,nil];
     }
     return self;
 }
@@ -220,7 +220,7 @@ static NSString * const CellIdentifier = @"cell";
     // 获取书籍合格状态列表
     NSMutableDictionary *bookDictionary = [[NSMutableDictionary alloc]init];
     NSString *bookDetialisPass = [[NSString alloc]init];
-    bookDictionary = _detialBook.bookReviewInfo;
+//    bookDictionary = _detialBook.bookReviewInfo;
     
     switch (indexPath.row) {
         case 0:{
@@ -290,7 +290,7 @@ static NSString * const CellIdentifier = @"cell";
     [alertView setOnButtonTouchUpInside:^(CustomIOSAlertView *alertView, int buttonIndex) {
         // 获取书籍合格状态列表
         NSMutableDictionary *bookDictionary = [[NSMutableDictionary alloc]init];
-        bookDictionary = _detialBook.bookReviewInfo;
+//        bookDictionary = _detialBook.bookReviewInfo;
         switch (buttonIndex) {
             case 0:{
                 switch (indexPath.row) {
@@ -411,7 +411,7 @@ static NSString * const CellIdentifier = @"cell";
 - (void) reloadTextview {
     NSMutableDictionary *bookDictionary = [[NSMutableDictionary alloc]init];
     __block NSString *textviewText = [[NSString alloc]initWithFormat:@""];
-    bookDictionary = _detialBook.bookReviewInfo;
+//    bookDictionary = _detialBook.bookReviewInfo;
     [bookDictionary enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
         if ([obj isEqualToString:@"0"]) {
             if ([key isEqualToString:@"bookSummary"]) {
@@ -501,7 +501,7 @@ static NSString * const CellIdentifier = @"cell";
         [alertView addSubview:alertTitle];
         
         UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(35, 40, 197, 297)];
-        [imageView setImage:[UIImage imageNamed:_detialBook.bookPicture]];
+        [imageView setImage:[UIImage imageNamed:_detialBook.coverPath]];
         [alertView addSubview:imageView];
         
         return alertView;

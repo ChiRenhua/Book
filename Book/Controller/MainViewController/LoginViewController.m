@@ -106,6 +106,7 @@
                 case 2:
                     [_mbprogress hideAnimated:YES];
                     [self showProgressWithTitle:@"网络错误"andMode:MBProgressHUDModeText];
+                    [_mbprogress hideAnimated:YES afterDelay:1.5];                                                  // 1.5秒后销毁toast
                     break;
                 default:
                     break;

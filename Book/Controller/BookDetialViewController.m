@@ -10,6 +10,8 @@
 #import "BookReviewViewController.h"
 #import "Book.h"
 #import "AppDelegate.h"
+#import "AFNetworking/AFNetworking.h"
+#import "UIImageView+AFNetworking.h"
 
 #define SCREEN_BOUNDS [UIScreen mainScreen].bounds.size
 #define FIRST_CELL_HIGHT SCREEN_BOUNDS.height / 4
@@ -66,12 +68,13 @@
     switch (indexPath.row) {
         case 0: {
             // 书籍封面
-            UIImageView *bookImageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:_detialBook.bookPicture]];
+            UIImageView *bookImageView = [[UIImageView alloc]init];
             bookImageView.frame = CGRectMake(SCREEN_BOUNDS.width / 20, 15, (FIRST_CELL_HIGHT - 30 ) / 3 * 2, FIRST_CELL_HIGHT - 30);
-            bookImageView.contentMode = UIViewContentModeScaleAspectFill;
+            NSString *book_image_url = [_detialBook.coverPath stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+            [bookImageView setImageWithURL:[NSURL URLWithString:book_image_url] placeholderImage:[UIImage imageNamed:@"default_bookimage"]];
             [bookDetialViewCell.contentView addSubview:bookImageView];
             // 图书名字
-            UILabel *bookName = [[UILabel alloc]initWithFrame:CGRectMake(SCREEN_BOUNDS.width / 3, 20, SCREEN_BOUNDS.width - 90, 20)];
+            UILabel *bookName = [[UILabel alloc]initWithFrame:CGRectMake(SCREEN_BOUNDS.width / 3, 20, SCREEN_BOUNDS.width - 200, 60)];
             bookName.text = _detialBook.bookName;
             bookName.font = [UIFont systemFontOfSize:19];
             bookName.textColor = [UIColor blackColor];
@@ -79,23 +82,25 @@
             bookName.numberOfLines = 0;                                                                                                                 // 可以换行
             [bookDetialViewCell.contentView addSubview:bookName];
             // 作者名字
-            UILabel *writerName = [[UILabel alloc]initWithFrame:CGRectMake(SCREEN_BOUNDS.width / 3, FIRST_CELL_HIGHT / 2 - 7.5, SCREEN_BOUNDS.width - 90, 15)];
-            writerName.text = _detialBook.bookWriter;
+            UILabel *writerName = [[UILabel alloc]initWithFrame:CGRectMake(SCREEN_BOUNDS.width / 3, FIRST_CELL_HIGHT / 2 - 7.5, SCREEN_BOUNDS.width - 200, 50)];
+            writerName.text = _detialBook.authorName;
             writerName.font = [UIFont systemFontOfSize:14];
             writerName.textColor = [UIColor grayColor];
+            writerName.numberOfLines = 0;
+            writerName.lineBreakMode = NSLineBreakByWordWrapping;
             [bookDetialViewCell.contentView addSubview:writerName];
-            // 书籍完成时间
-            UILabel *bookTime = [[UILabel alloc]initWithFrame:CGRectMake(SCREEN_BOUNDS.width / 3, FIRST_CELL_HIGHT - 35, SCREEN_BOUNDS.width - 90, 15)];
-            bookTime.text = _detialBook.bookTime;
-            bookTime.font = [UIFont systemFontOfSize:14];
-            bookTime.textColor = [UIColor grayColor];
-            [bookDetialViewCell.contentView addSubview:bookTime];
+            // 书籍ISBN
+            UILabel *bookISBN = [[UILabel alloc]initWithFrame:CGRectMake(SCREEN_BOUNDS.width / 3, FIRST_CELL_HIGHT - 35, SCREEN_BOUNDS.width - 90, 15)];
+            bookISBN.text = _detialBook.isbn;
+            bookISBN.font = [UIFont systemFontOfSize:14];
+            bookISBN.textColor = [UIColor grayColor];
+            [bookDetialViewCell.contentView addSubview:bookISBN];
             // 书籍状态
             UILabel *bookState = [[UILabel alloc]initWithFrame:CGRectMake(SCREEN_BOUNDS.width - 50, FIRST_CELL_HIGHT / 2 - 8, 50, 16)];
             bookState.text = _detialBook.bookState;
             bookState.font = [UIFont systemFontOfSize:15];
             // 判断图书的审核状态，如果通过文字颜色为绿色，如果没通过则为红色，待审核为蓝色
-            if ([_detialBook.bookState isEqualToString:@"通过"]) {
+            if ([_detialBook.bookState isEqualToString:@"已通过"]) {
                 // 设置文字颜色为绿色
                 bookState.textColor = [UIColor colorWithRed:0.0f/255.0f
                                                       green:200.0f/255.0f
@@ -124,16 +129,16 @@
             bookIntroduceTitle.textColor = [UIColor blackColor];
             [bookDetialViewCell.contentView addSubview:bookIntroduceTitle];
             // 书籍简介内容
-            UILabel *bookIntroduce = [[UILabel alloc]init];
-            bookIntroduce.text = _detialBook.bookSummary;
-            bookIntroduce.lineBreakMode = NSLineBreakByWordWrapping;                                                                                         // 文字过长时显示全部
-            bookIntroduce.numberOfLines = 0;                                                                                                                 // 取消行数限制
-            bookIntroduce.font = [UIFont systemFontOfSize:13];
+//            UILabel *bookIntroduce = [[UILabel alloc]init];
+//            bookIntroduce.text = _detialBook.bookSummary;
+//            bookIntroduce.lineBreakMode = NSLineBreakByWordWrapping;                                                                                         // 文字过长时显示全部
+//            bookIntroduce.numberOfLines = 0;                                                                                                                 // 取消行数限制
+//            bookIntroduce.font = [UIFont systemFontOfSize:13];
             // 计算文本高度
-            CGSize bookIntroduceSize = [_detialBook.bookSummary sizeWithFont:[UIFont systemFontOfSize:13] constrainedToSize:CGSizeMake(300.0f,CGFLOAT_MAX) lineBreakMode:UILineBreakModeWordWrap];
-            bookIntroduce.frame = CGRectMake(SCREEN_BOUNDS.width / 20, 40, SCREEN_BOUNDS.width - 20, bookIntroduceSize.height);
-            bookIntroduce.textColor = [UIColor grayColor];
-            [bookDetialViewCell.contentView addSubview:bookIntroduce];
+//            CGSize bookIntroduceSize = [_detialBook.bookSummary sizeWithFont:[UIFont systemFontOfSize:13] constrainedToSize:CGSizeMake(300.0f,CGFLOAT_MAX) lineBreakMode:UILineBreakModeWordWrap];
+//            bookIntroduce.frame = CGRectMake(SCREEN_BOUNDS.width / 20, 40, SCREEN_BOUNDS.width - 20, bookIntroduceSize.height);
+//            bookIntroduce.textColor = [UIColor grayColor];
+//            [bookDetialViewCell.contentView addSubview:bookIntroduce];
         }
             break;
         case 2: {
@@ -144,16 +149,16 @@
             bookReviewInfoTitle.textColor = [UIColor blackColor];
             [bookDetialViewCell.contentView addSubview:bookReviewInfoTitle];
             // 审核信息内容
-            UILabel *bookReviewInfo = [[UILabel alloc]init];
-            bookReviewInfo.text = _detialBook.bookReviewInfoShow;
-            bookReviewInfo.lineBreakMode = NSLineBreakByWordWrapping;                                                                                         // 文字过长时显示全部
-            bookReviewInfo.numberOfLines = 0;                                                                                                                 // 取消行数限制
-            bookReviewInfo.font = [UIFont systemFontOfSize:13];
-            // 计算文本高度
-            CGSize bookIntroduceSize = [_detialBook.bookReviewInfoShow sizeWithFont:[UIFont systemFontOfSize:13] constrainedToSize:CGSizeMake(300.0f,CGFLOAT_MAX) lineBreakMode:UILineBreakModeWordWrap];
-            bookReviewInfo.frame = CGRectMake(SCREEN_BOUNDS.width / 20, 40, SCREEN_BOUNDS.width - 20, bookIntroduceSize.height);
-            bookReviewInfo.textColor = [UIColor grayColor];
-            [bookDetialViewCell.contentView addSubview:bookReviewInfo];
+//            UILabel *bookReviewInfo = [[UILabel alloc]init];
+//            bookReviewInfo.text = _detialBook.bookReviewInfoShow;
+//            bookReviewInfo.lineBreakMode = NSLineBreakByWordWrapping;                                                                                         // 文字过长时显示全部
+//            bookReviewInfo.numberOfLines = 0;                                                                                                                 // 取消行数限制
+//            bookReviewInfo.font = [UIFont systemFontOfSize:13];
+//            // 计算文本高度
+//            CGSize bookIntroduceSize = [_detialBook.bookReviewInfoShow sizeWithFont:[UIFont systemFontOfSize:13] constrainedToSize:CGSizeMake(300.0f,CGFLOAT_MAX) lineBreakMode:UILineBreakModeWordWrap];
+//            bookReviewInfo.frame = CGRectMake(SCREEN_BOUNDS.width / 20, 40, SCREEN_BOUNDS.width - 20, bookIntroduceSize.height);
+//            bookReviewInfo.textColor = [UIColor grayColor];
+//            [bookDetialViewCell.contentView addSubview:bookReviewInfo];
         }
             break;
         case 3: {
@@ -178,12 +183,12 @@
             bookCategoryTitle.textColor = [UIColor grayColor];
             [bookDetialViewCell.contentView addSubview:bookCategoryTitle];
             // 图书日期标题
-            UILabel *bookTimeTitle = [[UILabel alloc]initWithFrame:CGRectMake(SCREEN_BOUNDS.width / 20, 100, 70, 15)];
-            bookTimeTitle.text = @"日期";
-            bookTimeTitle.textAlignment = NSTextAlignmentRight;
-            bookTimeTitle.font = [UIFont systemFontOfSize:14];
-            bookTimeTitle.textColor = [UIColor grayColor];
-            [bookDetialViewCell.contentView addSubview:bookTimeTitle];
+            UILabel *bookISBNTitle = [[UILabel alloc]initWithFrame:CGRectMake(SCREEN_BOUNDS.width / 20, 100, 70, 15)];
+            bookISBNTitle.text = @"日期";
+            bookISBNTitle.textAlignment = NSTextAlignmentRight;
+            bookISBNTitle.font = [UIFont systemFontOfSize:14];
+            bookISBNTitle.textColor = [UIColor grayColor];
+            [bookDetialViewCell.contentView addSubview:bookISBNTitle];
             // 图书大小标题
             UILabel *bookSizeTitle = [[UILabel alloc]initWithFrame:CGRectMake(SCREEN_BOUNDS.width / 20, 125, 70, 15)];
             bookSizeTitle.text = @"大小";
@@ -207,41 +212,41 @@
             [bookDetialViewCell.contentView addSubview:bookLanguageTitle];
             
             // 出版商
-            UILabel *bookPublishers = [[UILabel alloc]initWithFrame:CGRectMake(110, 50, 200, 15)];
-            bookPublishers.text = _detialBook.bookPublishers;
-            bookPublishers.font = [UIFont systemFontOfSize:14];
-            bookPublishers.textColor = [UIColor blackColor];
-            [bookDetialViewCell.contentView addSubview:bookPublishers];
-            // 图书类别
-            UILabel *bookCategory = [[UILabel alloc]initWithFrame:CGRectMake(110, 75, 200, 15)];
-            bookCategory.text = _detialBook.bookCategory;
-            bookCategory.font = [UIFont systemFontOfSize:14];
-            bookCategory.textColor = [UIColor blackColor];
-            [bookDetialViewCell.contentView addSubview:bookCategory];
-            // 图书日期
-            UILabel *bookTime = [[UILabel alloc]initWithFrame:CGRectMake(110, 100, 200, 15)];
-            bookTime.text = _detialBook.bookTime;
-            bookTime.font = [UIFont systemFontOfSize:14];
-            bookTime.textColor = [UIColor blackColor];
-            [bookDetialViewCell.contentView addSubview:bookTime];
-            // 图书大小
-            UILabel *bookSize = [[UILabel alloc]initWithFrame:CGRectMake(110, 125, 200, 15)];
-            bookSize.text = _detialBook.bookSize;
-            bookSize.font = [UIFont systemFontOfSize:14];
-            bookSize.textColor = [UIColor blackColor];
-            [bookDetialViewCell.contentView addSubview:bookSize];
-            // 图书页数
-            UILabel *bookPage = [[UILabel alloc]initWithFrame:CGRectMake(110, 150, 200, 15)];
-            bookPage.text = _detialBook.bookPages;
-            bookPage.font = [UIFont systemFontOfSize:14];
-            bookPage.textColor = [UIColor blackColor];
-            [bookDetialViewCell.contentView addSubview:bookPage];
-            // 图书语言
-            UILabel *bookLanguage = [[UILabel alloc]initWithFrame:CGRectMake(110, 175, 200, 15)];
-            bookLanguage.text = _detialBook.bookLanguage;
-            bookLanguage.font = [UIFont systemFontOfSize:14];
-            bookLanguage.textColor = [UIColor blackColor];
-            [bookDetialViewCell.contentView addSubview:bookLanguage];
+//            UILabel *bookPublishers = [[UILabel alloc]initWithFrame:CGRectMake(110, 50, 200, 15)];
+//            bookPublishers.text = _detialBook.bookPublishers;
+//            bookPublishers.font = [UIFont systemFontOfSize:14];
+//            bookPublishers.textColor = [UIColor blackColor];
+//            [bookDetialViewCell.contentView addSubview:bookPublishers];
+//            // 图书类别
+//            UILabel *bookCategory = [[UILabel alloc]initWithFrame:CGRectMake(110, 75, 200, 15)];
+//            bookCategory.text = _detialBook.bookCategory;
+//            bookCategory.font = [UIFont systemFontOfSize:14];
+//            bookCategory.textColor = [UIColor blackColor];
+//            [bookDetialViewCell.contentView addSubview:bookCategory];
+//            // 图书日期
+//            UILabel *bookISBN = [[UILabel alloc]initWithFrame:CGRectMake(110, 100, 200, 15)];
+//            bookISBN.text = _detialBook.bookISBN;
+//            bookISBN.font = [UIFont systemFontOfSize:14];
+//            bookISBN.textColor = [UIColor blackColor];
+//            [bookDetialViewCell.contentView addSubview:bookISBN];
+//            // 图书大小
+//            UILabel *bookSize = [[UILabel alloc]initWithFrame:CGRectMake(110, 125, 200, 15)];
+//            bookSize.text = _detialBook.bookSize;
+//            bookSize.font = [UIFont systemFontOfSize:14];
+//            bookSize.textColor = [UIColor blackColor];
+//            [bookDetialViewCell.contentView addSubview:bookSize];
+//            // 图书页数
+//            UILabel *bookPage = [[UILabel alloc]initWithFrame:CGRectMake(110, 150, 200, 15)];
+//            bookPage.text = _detialBook.bookPages;
+//            bookPage.font = [UIFont systemFontOfSize:14];
+//            bookPage.textColor = [UIColor blackColor];
+//            [bookDetialViewCell.contentView addSubview:bookPage];
+//            // 图书语言
+//            UILabel *bookLanguage = [[UILabel alloc]initWithFrame:CGRectMake(110, 175, 200, 15)];
+//            bookLanguage.text = _detialBook.bookLanguage;
+//            bookLanguage.font = [UIFont systemFontOfSize:14];
+//            bookLanguage.textColor = [UIColor blackColor];
+//            [bookDetialViewCell.contentView addSubview:bookLanguage];
         }
             break;
         case 4: {
@@ -291,14 +296,16 @@
             break;
         case 1: {
             // 获得文字的高度
-            CGSize bookIntroduceSize = [_detialBook.bookSummary sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:CGSizeMake(300.0f,CGFLOAT_MAX) lineBreakMode:UILineBreakModeWordWrap];
-            return bookIntroduceSize.height + 55;
+            //CGSize bookIntroduceSize = [_detialBook.bookSummary sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:CGSizeMake(300.0f,CGFLOAT_MAX) lineBreakMode:UILineBreakModeWordWrap];
+            //return bookIntroduceSize.height + 55;
+            return 50;
             break;
         }
         case 2: {
             // 获得文字的高度
-            CGSize bookIntroduceSize = [_detialBook.bookReviewInfoShow sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:CGSizeMake(300.0f,CGFLOAT_MAX) lineBreakMode:UILineBreakModeWordWrap];
-            return bookIntroduceSize.height + 55;
+//            CGSize bookIntroduceSize = [_detialBook.bookReviewInfoShow sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:CGSizeMake(300.0f,CGFLOAT_MAX) lineBreakMode:UILineBreakModeWordWrap];
+//            return bookIntroduceSize.height + 55;
+            return 50;
             break;
         }
         case 3:
