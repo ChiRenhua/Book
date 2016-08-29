@@ -98,15 +98,18 @@
         [UserInfoModel sharedInstance].loginResult = ^(NSInteger code){
             switch (code) {
                 case 0:
-                    [_mbprogress hideAnimated:YES];
+                    //[_mbprogress hideAnimated:YES];
+                    [_mbprogress removeFromSuperview];
                     [self showLoginFailedDialg];
                     break;
                 case 1:
+                    
                     [_mbprogress hideAnimated:YES];
                     [self showSuccessProgress];
                     break;
                 case 2:
-                    [_mbprogress hideAnimated:YES];
+                    //[_mbprogress hideAnimated:YES];
+                    [_mbprogress removeFromSuperview];
                     [self showProgressWithTitle:@"网络错误"andMode:MBProgressHUDModeText];
                     [_mbprogress hideAnimated:YES afterDelay:1.5];                                                  // 1.5秒后销毁toast
                     break;

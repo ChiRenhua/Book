@@ -128,13 +128,17 @@ NSString *bookURL;
 }
 #pragma mark - 搜索框
 - (void)showSearchBar {
-    // 搜索框
-    self.searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
-    self.searchController.searchResultsUpdater = self;
-    self.searchController.dimsBackgroundDuringPresentation = false;
-    [self.searchController.searchBar sizeToFit];
+    _searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
+    //搜索结果处理函数代理
+    _searchController.searchResultsUpdater = self;
+    //是否显示背景
+    _searchController.dimsBackgroundDuringPresentation = false;
+    [_searchController.searchBar sizeToFit];
+    //修改searchBar的默认文字
     _searchController.searchBar.placeholder = @"搜索";
+    //修改“Cancle按钮的默认文字”
     [_searchController.searchBar setValue:@"取消" forKey:@"_cancelButtonText"];
+    //将搜索框添加到tableHeaderView中
     _CheckBookViewtableView.tableHeaderView = self.searchController.searchBar;
     [_CheckBookViewtableView.tableHeaderView setHidden:YES];
 }

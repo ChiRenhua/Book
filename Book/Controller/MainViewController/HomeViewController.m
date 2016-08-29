@@ -64,12 +64,15 @@ AppDelegate *homeViewDelegate;
 - (void)verificationLogin {
     NSString *userName = [[UserInfoModel sharedInstance]getUserName];
     NSString *userPassword = [[UserInfoModel sharedInstance]getUserPassword];
-
-    // 如果用户信息核对错误，则弹出登陆界面
-    [[UserInfoModel sharedInstance]getUserLoginStateWithName:userName andPassword:userPassword];
-    [UserInfoModel sharedInstance].showLoginView = ^(){
+    if (userName == nil || userPassword == nil) {
         [self presentViewController:homeViewDelegate.loginVC animated:YES completion:nil];
-    };
+    }else {
+        // 如果用户信息核对错误，则弹出登陆界面
+        [[UserInfoModel sharedInstance]getUserLoginStateWithName:userName andPassword:userPassword];
+        [UserInfoModel sharedInstance].showLoginView = ^(){
+            [self presentViewController:homeViewDelegate.loginVC animated:YES completion:nil];
+        };
+    }  
 }
 
 #pragma mark 设置每组标题名称
