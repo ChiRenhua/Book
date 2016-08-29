@@ -43,6 +43,8 @@
 		D7DBDF021D72EE4C00CFAE5E /* review.png in Resources */ = {isa = PBXBuildFile; fileRef = D7DBDEF11D72EE4C00CFAE5E /* review.png */; };
 		D7DBDF031D72EE4C00CFAE5E /* right_black.png in Resources */ = {isa = PBXBuildFile; fileRef = D7DBDEF21D72EE4C00CFAE5E /* right_black.png */; };
 		D7DBDF041D72EE4C00CFAE5E /* touxiang.png in Resources */ = {isa = PBXBuildFile; fileRef = D7DBDEF31D72EE4C00CFAE5E /* touxiang.png */; };
+		D7EE88B91D7450C60073BF9C /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D7EE88B81D7450C60073BF9C /* SystemConfiguration.framework */; };
+		D7EE88BC1D74653B0073BF9C /* BookReasonModel.m in Sources */ = {isa = PBXBuildFile; fileRef = D7EE88BB1D74653B0073BF9C /* BookReasonModel.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -119,6 +121,9 @@
 		D7DBDEF11D72EE4C00CFAE5E /* review.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = review.png; sourceTree = "<group>"; };
 		D7DBDEF21D72EE4C00CFAE5E /* right_black.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = right_black.png; sourceTree = "<group>"; };
 		D7DBDEF31D72EE4C00CFAE5E /* touxiang.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = touxiang.png; sourceTree = "<group>"; };
+		D7EE88B81D7450C60073BF9C /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		D7EE88BA1D74653B0073BF9C /* BookReasonModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BookReasonModel.h; sourceTree = "<group>"; };
+		D7EE88BB1D74653B0073BF9C /* BookReasonModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BookReasonModel.m; sourceTree = "<group>"; };
 		E49FFA91ECAC28015993FFF8 /* libPods-Book.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Book.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -127,6 +132,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D7EE88B91D7450C60073BF9C /* SystemConfiguration.framework in Frameworks */,
 				C1E2431F0ADD6D82ACE6C66B /* libPods-Book.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -213,6 +219,7 @@
 		8870DDC77E2637C13DAAD406 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D7EE88B81D7450C60073BF9C /* SystemConfiguration.framework */,
 				E49FFA91ECAC28015993FFF8 /* libPods-Book.a */,
 			);
 			name = Frameworks;
@@ -246,6 +253,8 @@
 				D7DBDEA91D72ECA600CFAE5E /* BookInfoModel.m */,
 				D7DBDEAC1D72ECA600CFAE5E /* UserInfoModel.h */,
 				D7DBDEAD1D72ECA600CFAE5E /* UserInfoModel.m */,
+				D7EE88BA1D74653B0073BF9C /* BookReasonModel.h */,
+				D7EE88BB1D74653B0073BF9C /* BookReasonModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -515,6 +524,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D7EE88BC1D74653B0073BF9C /* BookReasonModel.m in Sources */,
 				D7DBDEC81D72ED3400CFAE5E /* BookReviewViewController.m in Sources */,
 				D7DBDECC1D72ED3400CFAE5E /* SearchViewController.m in Sources */,
 				D7DBDEB11D72ECA600CFAE5E /* UserInfoModel.m in Sources */,

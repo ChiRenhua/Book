@@ -10,6 +10,6 @@
 #import "Book.h"
 
 @interface BookDetialViewController : UIViewController
-- (id)init:(Book *) book;
+- (id)init:(Book *) book step:(NSString *)step;
 
 @end

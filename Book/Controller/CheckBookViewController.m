@@ -230,7 +230,7 @@ NSString *bookURL;
     }else {
         book = bookArray[indexPath.row];
     }
-    BookDetialViewController *bookDetialVC = [[BookDetialViewController alloc]init:book];
+    BookDetialViewController *bookDetialVC = [[BookDetialViewController alloc]init:book step:step];
     [self.navigationController pushViewController:bookDetialVC animated:YES];
     [tableView deselectRowAtIndexPath:indexPath animated:YES];                                                                                  // 取消选中的状态
 }
