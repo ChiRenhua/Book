@@ -75,7 +75,6 @@ NSString *bookURL;
             [loginAlert addAction:loginAction];
             [loginAlert addAction:calcleAction];
             [self presentViewController:loginAlert animated:YES completion:nil];
-            
         };
 
     }
