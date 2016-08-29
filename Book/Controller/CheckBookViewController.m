@@ -60,7 +60,7 @@ NSString *bookURL;
             [self.view addSubview:_mbprogress];                                                             // 将toast添加到view中
             [self.view bringSubviewToFront:_mbprogress];                                                    // 让toast显示在view的最前端
             [_mbprogress showAnimated:YES];                                                                 // 显示toast
-            [_mbprogress hideAnimated:YES afterDelay:1.5];                                                  // 1.5秒后销毁toast
+            [_mbprogress hideAnimated:YES afterDelay:1.0];                                                  // 1.5秒后销毁toast
             
         };
         [BookInfoModel sharedInstance].showLoginAlert = ^(){
@@ -221,7 +221,11 @@ NSString *bookURL;
 #pragma mark 添加行点击事件
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     Book *book;
-    book = searchResult[indexPath.row];
+    if ([_searchController isActive]) {
+        book = searchResult[indexPath.row];
+    }else {
+        book = bookArray[indexPath.row];
+    }
     BookDetialViewController *bookDetialVC = [[BookDetialViewController alloc]init:book];
     [self.navigationController pushViewController:bookDetialVC animated:YES];
     [tableView deselectRowAtIndexPath:indexPath animated:YES];                                                                                  // 取消选中的状态
