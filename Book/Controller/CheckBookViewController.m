@@ -27,7 +27,7 @@
 @end
 
 ListTableViewCell *CheckBookViewcell;
-NSMutableArray *CheckBookViewSearchResult;                                                                                      // 搜索结果
+NSMutableArray *searchResult;                                                                                      // 搜索结果
 int viewcode;
 NSString *step;
 NSString *bookState;
@@ -38,9 +38,11 @@ NSString *bookURL;
 
 - (id)init:(int)viewCode {
     if (self = [super init]) {
-        CheckBookViewSearchResult = [[NSMutableArray alloc]init];
         viewcode = viewCode;
+        searchResult = [[NSMutableArray alloc]init];
         _CheckbookDelegate = [[UIApplication sharedApplication]delegate];
+        _mbprogress = [[MBProgressHUD alloc]initWithView:self.view];
+        _mbprogress.delegate = self;
         [BookInfoModel sharedInstance].updateTV = ^(NSString *state){
             bookArray = [[BookInfoModel sharedInstance]getBookArray];
             if ([bookArray count]) {
@@ -84,8 +86,7 @@ NSString *bookURL;
     [super viewDidLoad];
     [self.view setBackgroundColor:[UIColor whiteColor]];
     [bookArray removeAllObjects];
-    _mbprogress = [[MBProgressHUD alloc]initWithView:self.view];
-    _mbprogress.delegate = self;
+    [searchResult removeAllObjects];
     if (viewcode == firstUncheckedBook || viewcode == firstCheckingBook || viewcode == firstCheckedPassBook || viewcode == firstCheckedUnpassBook) {
         step = @"0";
     }else if(viewcode == reviewUncheckedBook || viewcode == reviewCheckingBook || viewcode == reviewCheckedPassBook || viewcode == reviewCheckedUnpassBook) {
@@ -109,33 +110,45 @@ NSString *bookURL;
         bookURL = [NSString stringWithFormat:@"getNotPassdList.serv?username=%@&sessionid=%@&step=%@",[[UserInfoModel sharedInstance]getUserName],[[UserInfoModel sharedInstance]getUserSessionid],step];
     }
 
-    _CheckBookViewtableView = [[UITableView alloc]initWithFrame:self.view.bounds style:UITableViewStyleGrouped];                                                                                          // 初始化tableview填充整个屏幕
+    _CheckBookViewtableView = [[UITableView alloc]initWithFrame:self.view.bounds style:UITableViewStyleGrouped];                 // 初始化tableview填充整个屏幕
     _CheckBookViewtableView.dataSource = self;                                                                                   // 设置tableview的数据代理
     _CheckBookViewtableView.delegate = self;                                                                                     // 设置tableview代理
-    // 下拉刷新
-    MJRefreshNormalHeader *refreshHeader = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadData)];
-    _CheckBookViewtableView.mj_header = refreshHeader;
-    refreshHeader.automaticallyChangeAlpha = YES;
-    [self.view addSubview:_CheckBookViewtableView];                                                                              // 将tableview添加到屏幕上
-    [_CheckBookViewtableView.mj_header beginRefreshing];
-    // 搜索框
-    self.searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
-    self.searchController.searchResultsUpdater = self;
-    self.searchController.dimsBackgroundDuringPresentation = false;
-    [self.searchController.searchBar sizeToFit];
-    self.searchController.searchBar.backgroundColor = [UIColor whiteColor];
-    _CheckBookViewtableView.tableHeaderView = self.searchController.searchBar;
-    [_CheckBookViewtableView.tableHeaderView setHidden:YES];
-    
+    [self showPullRefreshView];
+    [self showSearchBar];
+    [self showNoDataView];
+}
+#pragma mark - 无数据View
+- (void)showNoDataView {
     _noDataLable = [[UILabel alloc]initWithFrame:CGRectMake(SCREEN_BOUNDS.width/2 - 100, SCREEN_BOUNDS.height/2, 200, 50)];
     _noDataLable.textColor = [UIColor grayColor];
     _noDataLable.text = @"暂无数据!";
     _noDataLable.textAlignment = NSTextAlignmentCenter;
     _noDataLable.font = [UIFont systemFontOfSize:20];
     [self.view addSubview:_noDataLable];
-    
-
 }
+#pragma mark - 搜索框
+- (void)showSearchBar {
+    // 搜索框
+    self.searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
+    self.searchController.searchResultsUpdater = self;
+    self.searchController.dimsBackgroundDuringPresentation = false;
+    [self.searchController.searchBar sizeToFit];
+    _searchController.searchBar.placeholder = @"搜索";
+    [_searchController.searchBar setValue:@"取消" forKey:@"_cancelButtonText"];
+    _CheckBookViewtableView.tableHeaderView = self.searchController.searchBar;
+    [_CheckBookViewtableView.tableHeaderView setHidden:YES];
+}
+#pragma mark - 下拉刷新View
+- (void)showPullRefreshView {
+    // 下拉刷新
+    MJRefreshNormalHeader *refreshHeader = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadData)];
+    _CheckBookViewtableView.mj_header = refreshHeader;
+    refreshHeader.automaticallyChangeAlpha = YES;
+    [self.view addSubview:_CheckBookViewtableView];                                                                              // 将tableview添加到屏幕上
+    [_CheckBookViewtableView.mj_header beginRefreshing];
+}
+
+#pragma mark - 下拉刷新执行函数
 - (void)loadData {
     [[BookInfoModel sharedInstance]getBookDataWithURL:bookURL bookState:bookState];
 }
@@ -143,12 +156,15 @@ NSString *bookURL;
 #pragma mark - searchController delegate
 
 - (void)updateSearchResultsForSearchController:(UISearchController *)searchController {
-    [CheckBookViewSearchResult removeAllObjects];
-    NSPredicate *searchPredicate = [NSPredicate predicateWithFormat:@"SELF CONTAINS[c] %@", self.searchController.searchBar.text];
-    CheckBookViewSearchResult = [[bookArray filteredArrayUsingPredicate:searchPredicate] mutableCopy];
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [_CheckBookViewtableView reloadData];
-    });
+    [searchResult removeAllObjects];
+    NSString *keyWord = [searchController .searchBar text];
+    [bookArray enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        Book *book = obj;
+        if ([book.bookName.uppercaseString containsString:keyWord.uppercaseString] || [book.authorName.uppercaseString containsString:keyWord.uppercaseString]) {
+            [searchResult addObject:book];
+        }
+    }];
+    [_CheckBookViewtableView reloadData];
 }
 #pragma mark 设置每组标题名称
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
@@ -174,7 +190,7 @@ NSString *bookURL;
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     // 判断是否是搜索结果的tableView
     if ([self.searchController isActive]) {
-        return CheckBookViewSearchResult.count;
+        return searchResult.count;
     }
     return [bookArray count];
 }
@@ -190,7 +206,7 @@ NSString *bookURL;
     }
     // 判断是否是搜索结果的tableView
     if ([self.searchController isActive]) {
-        books = CheckBookViewSearchResult[indexPath.row];
+        books = searchResult[indexPath.row];
     }else {
         if (viewcode) {
             books = bookArray[indexPath.row];
@@ -205,7 +221,7 @@ NSString *bookURL;
 #pragma mark 添加行点击事件
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     Book *book;
-    book = bookArray[indexPath.row];
+    book = searchResult[indexPath.row];
     BookDetialViewController *bookDetialVC = [[BookDetialViewController alloc]init:book];
     [self.navigationController pushViewController:bookDetialVC animated:YES];
     [tableView deselectRowAtIndexPath:indexPath animated:YES];                                                                                  // 取消选中的状态
@@ -220,16 +236,12 @@ NSString *bookURL;
     return UIStatusBarStyleLightContent;
 }
 
-#pragma mark 搜索形成新数据
--(void)searchDataWithKeyWord:(NSString *)keyWord{
-    CheckBookViewSearchResult = [[NSMutableArray alloc]init];
-    [bookArray enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        Book *book = obj;
-        if ([book.bookName.uppercaseString containsString:keyWord.uppercaseString] || [book.authorName.uppercaseString containsString:keyWord.uppercaseString]) {
-            [CheckBookViewSearchResult addObject:book];
-        }
-    }];
-    
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    if (self.searchController.active) {
+        self.searchController.active = NO;
+        [self.searchController.searchBar removeFromSuperview];
+    }
 }
 
 - (void)didReceiveMemoryWarning {
