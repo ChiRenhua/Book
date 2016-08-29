@@ -7,15 +7,17 @@
 //
 
 #import <Foundation/Foundation.h>
-typedef void (^updateTableView)();
+typedef void (^updateTableView)(NSString *state);
+typedef void (^ShowLoginAlert)();
 
 @interface BookInfoModel : NSObject
 
 @property(nonatomic,copy)updateTableView updateTV;
+@property(nonatomic,copy)ShowLoginAlert showLoginAlert;
 
 + (BookInfoModel *)sharedInstance;
 
-- (void)getBookDataWithUsername:(NSString *)userName Sessionid:(NSString *)sessionid step:(NSString *)step bookState:(NSString *)bookState;
+- (void)getBookDataWithURL:(NSString *)bookurl bookState:(NSString *)bookState;
 
 - (NSMutableArray *)getBookArray;
 

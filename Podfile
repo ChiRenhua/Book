@@ -3,6 +3,6 @@ target 'Book' do
   pod 'AFNetworking', '~> 3.1'
   pod 'CustomIOSAlertView', '~> 0.9.4'
   pod 'MBProgressHUD', '~> 1.0.0'
-  pod 'MJRefresh'
+  pod 'MJRefresh', '~> 3.1.12'
   pod 'SDWebImage', '~> 3.8'
 end

@@ -12,11 +12,9 @@
 		C1E2431F0ADD6D82ACE6C66B /* libPods-Book.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E49FFA91ECAC28015993FFF8 /* libPods-Book.a */; };
 		D7DBDE921D72EB3900CFAE5E /* RDRGrowingTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = D7DBDE8B1D72EB3900CFAE5E /* RDRGrowingTextView.m */; };
 		D7DBDE9D1D72EB6B00CFAE5E /* ListTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D7DBDE9A1D72EB6B00CFAE5E /* ListTableViewCell.m */; };
-		D7DBDE9E1D72EB6B00CFAE5E /* TableScrollViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D7DBDE9C1D72EB6B00CFAE5E /* TableScrollViewCell.m */; };
 		D7DBDEAE1D72ECA600CFAE5E /* Book.m in Sources */ = {isa = PBXBuildFile; fileRef = D7DBDEA71D72ECA600CFAE5E /* Book.m */; };
 		D7DBDEAF1D72ECA600CFAE5E /* BookInfoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = D7DBDEA91D72ECA600CFAE5E /* BookInfoModel.m */; };
 		D7DBDEB11D72ECA600CFAE5E /* UserInfoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = D7DBDEAD1D72ECA600CFAE5E /* UserInfoModel.m */; };
-		D7DBDEC61D72ED3400CFAE5E /* AuditedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D7DBDEB41D72ED3400CFAE5E /* AuditedViewController.m */; };
 		D7DBDEC71D72ED3400CFAE5E /* BookDetialViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D7DBDEB61D72ED3400CFAE5E /* BookDetialViewController.m */; };
 		D7DBDEC81D72ED3400CFAE5E /* BookReviewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D7DBDEB81D72ED3400CFAE5E /* BookReviewViewController.m */; };
 		D7DBDEC91D72ED3400CFAE5E /* CheckBookViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D7DBDEBA1D72ED3400CFAE5E /* CheckBookViewController.m */; };
@@ -78,16 +76,12 @@
 		D7DBDE8B1D72EB3900CFAE5E /* RDRGrowingTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RDRGrowingTextView.m; sourceTree = "<group>"; };
 		D7DBDE991D72EB6B00CFAE5E /* ListTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ListTableViewCell.h; path = View/ListTableViewCell.h; sourceTree = "<group>"; };
 		D7DBDE9A1D72EB6B00CFAE5E /* ListTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ListTableViewCell.m; path = View/ListTableViewCell.m; sourceTree = "<group>"; };
-		D7DBDE9B1D72EB6B00CFAE5E /* TableScrollViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TableScrollViewCell.h; path = View/TableScrollViewCell.h; sourceTree = "<group>"; };
-		D7DBDE9C1D72EB6B00CFAE5E /* TableScrollViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TableScrollViewCell.m; path = View/TableScrollViewCell.m; sourceTree = "<group>"; };
 		D7DBDEA61D72ECA600CFAE5E /* Book.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Book.h; sourceTree = "<group>"; };
 		D7DBDEA71D72ECA600CFAE5E /* Book.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Book.m; sourceTree = "<group>"; };
 		D7DBDEA81D72ECA600CFAE5E /* BookInfoModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BookInfoModel.h; sourceTree = "<group>"; };
 		D7DBDEA91D72ECA600CFAE5E /* BookInfoModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BookInfoModel.m; sourceTree = "<group>"; };
 		D7DBDEAC1D72ECA600CFAE5E /* UserInfoModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserInfoModel.h; sourceTree = "<group>"; };
 		D7DBDEAD1D72ECA600CFAE5E /* UserInfoModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserInfoModel.m; sourceTree = "<group>"; };
-		D7DBDEB31D72ED3400CFAE5E /* AuditedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AuditedViewController.h; sourceTree = "<group>"; };
-		D7DBDEB41D72ED3400CFAE5E /* AuditedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AuditedViewController.m; sourceTree = "<group>"; };
 		D7DBDEB51D72ED3400CFAE5E /* BookDetialViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BookDetialViewController.h; sourceTree = "<group>"; };
 		D7DBDEB61D72ED3400CFAE5E /* BookDetialViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BookDetialViewController.m; sourceTree = "<group>"; };
 		D7DBDEB71D72ED3400CFAE5E /* BookReviewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BookReviewViewController.h; sourceTree = "<group>"; };
@@ -212,8 +206,6 @@
 				D7DBDE891D72EB3900CFAE5E /* KeyboardView */,
 				D7DBDE991D72EB6B00CFAE5E /* ListTableViewCell.h */,
 				D7DBDE9A1D72EB6B00CFAE5E /* ListTableViewCell.m */,
-				D7DBDE9B1D72EB6B00CFAE5E /* TableScrollViewCell.h */,
-				D7DBDE9C1D72EB6B00CFAE5E /* TableScrollViewCell.m */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -262,8 +254,6 @@
 			isa = PBXGroup;
 			children = (
 				D7DBDEBB1D72ED3400CFAE5E /* MainViewController */,
-				D7DBDEB31D72ED3400CFAE5E /* AuditedViewController.h */,
-				D7DBDEB41D72ED3400CFAE5E /* AuditedViewController.m */,
 				D7DBDEB51D72ED3400CFAE5E /* BookDetialViewController.h */,
 				D7DBDEB61D72ED3400CFAE5E /* BookDetialViewController.m */,
 				D7DBDEB71D72ED3400CFAE5E /* BookReviewViewController.h */,
@@ -527,7 +517,6 @@
 			files = (
 				D7DBDEC81D72ED3400CFAE5E /* BookReviewViewController.m in Sources */,
 				D7DBDECC1D72ED3400CFAE5E /* SearchViewController.m in Sources */,
-				D7DBDE9E1D72EB6B00CFAE5E /* TableScrollViewCell.m in Sources */,
 				D7DBDEB11D72ECA600CFAE5E /* UserInfoModel.m in Sources */,
 				D7DBDECA1D72ED3400CFAE5E /* HomeViewController.m in Sources */,
 				D7DBDECE1D72ED3400CFAE5E /* UserViewController.m in Sources */,
@@ -538,7 +527,6 @@
 				D7DBDEAF1D72ECA600CFAE5E /* BookInfoModel.m in Sources */,
 				D7DBDECD1D72ED3400CFAE5E /* TabBarViewController.m in Sources */,
 				D7DBDECB1D72ED3400CFAE5E /* LoginViewController.m in Sources */,
-				D7DBDEC61D72ED3400CFAE5E /* AuditedViewController.m in Sources */,
 				D7DBDEC91D72ED3400CFAE5E /* CheckBookViewController.m in Sources */,
 				D7DBDEDB1D72ED9B00CFAE5E /* main.m in Sources */,
 				D7DBDED71D72ED9B00CFAE5E /* AppDelegate.m in Sources */,

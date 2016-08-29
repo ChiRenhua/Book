@@ -25,7 +25,7 @@ DEPENDENCIES:
   - AFNetworking (~> 3.1)
   - CustomIOSAlertView (~> 0.9.4)
   - MBProgressHUD (~> 1.0.0)
-  - MJRefresh
+  - MJRefresh (~> 3.1.12)
   - SDWebImage (~> 3.8)
 
 SPEC CHECKSUMS:
@@ -35,6 +35,6 @@ SPEC CHECKSUMS:
   MJRefresh: b96cdb21c4aa75a7b07654311ab2f315c497e806
   SDWebImage: 35f9627a3e44b4f292a8a8ce6a531fa488239b91
 
-PODFILE CHECKSUM: c11542f9bfa13859edce72a05f6269d7c18eed48
+PODFILE CHECKSUM: 4d45946b2ea5cd331d7a9cf83e68f77ce0b3f356
 
 COCOAPODS: 1.0.1

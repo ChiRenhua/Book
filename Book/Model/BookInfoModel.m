@@ -27,20 +27,26 @@
     return instance;
 }
 
-- (void)getBookDataWithUsername:(NSString *)userName Sessionid:(NSString *)sessionid step:(NSString *)step bookState:(NSString *)bookState{
+- (void)getBookDataWithURL:(NSString *)bookurl bookState:(NSString *)bookState {
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     //manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
-    NSString *str = [NSString stringWithFormat:@"getUnExamineList.serv?username=%@&sessionid=%@&step=%@",userName,sessionid,step];
-    NSString *url = [BASEURL stringByAppendingString:str];
+    NSString *url = [BASEURL stringByAppendingString:bookurl];
     [manager POST:url parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
         
     } progress:^(NSProgress * _Nonnull uploadProgress) {
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id responseObject) {
-        NSArray *ar = responseObject[@"message"];
-        NSLog(@"success%@",[ar objectAtIndex:0]);
-        [self buildBookWithData:ar bookState:bookState];
+        int status = [responseObject[@"status"] intValue];
+        if (status == 1000) {
+            NSArray *ar = responseObject[@"message"];
+            NSLog(@"success%@",[ar objectAtIndex:0]);
+            [self buildBookWithData:ar bookState:bookState];
+        }else if(status == 1001) {
+            _showLoginAlert();
+        }else if(status == 1002) {
+            _updateTV(@"请求列表为空!");
+        }
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         NSLog(@"error:%@",error);
     }];
@@ -53,7 +59,7 @@
         book.bookState = bookstate;
         [_bookArray addObject:book];
     }
-    _updateTV();
+    _updateTV(@"数据加载成功！");
 }
 
 - (NSMutableArray *)getBookArray {

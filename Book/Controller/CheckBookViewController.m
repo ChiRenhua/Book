@@ -7,39 +7,75 @@
 //
 
 #import "CheckBookViewController.h"
-#import "AppDelegate.h"
 #import "ListTableViewCell.h"
 #import "BookDetialViewController.h"
 #import "BookInfoModel.h"
 #import "UserInfoModel.h"
-#import "MJRefreshStateHeader.h"
+#import "MJRefresh.h"
+#import "MBProgressHUD.h"
+#import "LoginViewController.h"
+#import "AppDelegate.h"
 
 #define SCREEN_BOUNDS [UIScreen mainScreen].bounds.size
 
-@interface CheckBookViewController ()<UITableViewDataSource,UITableViewDelegate,UISearchDisplayDelegate,UISearchBarDelegate>
+@interface CheckBookViewController ()<UITableViewDataSource,UITableViewDelegate,UISearchResultsUpdating>
 @property (retain,strong) UITableView *CheckBookViewtableView;
+@property(strong, nonatomic) UISearchController *searchController;
+@property(retain,nonatomic) MBProgressHUD *mbprogress;
+@property(retain,nonatomic) AppDelegate *CheckbookDelegate;
+@property(retain,nonatomic) UILabel *noDataLable;
 @end
 
 ListTableViewCell *CheckBookViewcell;
-AppDelegate *CheckBookViewappdelegate;
-UISearchBar *CheckBookViewSearchBar;                                                                                            // 搜索框
-UISearchDisplayController *CheckBookViewSearchDC;                                                                               // 搜索框界面控制器
 NSMutableArray *CheckBookViewSearchResult;                                                                                      // 搜索结果
 int viewcode;
 NSString *step;
 NSString *bookState;
 NSMutableArray *bookArray;
+NSString *bookURL;
 
 @implementation CheckBookViewController
 
 - (id)init:(int)viewCode {
     if (self = [super init]) {
+        CheckBookViewSearchResult = [[NSMutableArray alloc]init];
         viewcode = viewCode;
-        [BookInfoModel sharedInstance].updateTV = ^(){
+        _CheckbookDelegate = [[UIApplication sharedApplication]delegate];
+        [BookInfoModel sharedInstance].updateTV = ^(NSString *state){
             bookArray = [[BookInfoModel sharedInstance]getBookArray];
+            if ([bookArray count]) {
+                [_noDataLable setHidden:YES];
+                [_CheckBookViewtableView.tableHeaderView setHidden:NO];
+            }else {
+                [_noDataLable setHidden:NO];
+                [_CheckBookViewtableView.tableHeaderView setHidden:YES];
+            }
             [self.CheckBookViewtableView reloadData];
             [_CheckBookViewtableView.mj_header endRefreshing];
+            
+            _mbprogress.mode = MBProgressHUDModeText;                                                       // 设置toast的样式为文字
+            _mbprogress.label.text = NSLocalizedString(state, @"HUD message title");                        // 设置toast上的文字
+            [self.view addSubview:_mbprogress];                                                             // 将toast添加到view中
+            [self.view bringSubviewToFront:_mbprogress];                                                    // 让toast显示在view的最前端
+            [_mbprogress showAnimated:YES];                                                                 // 显示toast
+            [_mbprogress hideAnimated:YES afterDelay:1.5];                                                  // 1.5秒后销毁toast
+            
         };
+        [BookInfoModel sharedInstance].showLoginAlert = ^(){
+            [_CheckBookViewtableView.mj_header endRefreshing];
+            UIAlertController *loginAlert = [UIAlertController alertControllerWithTitle:@"错误！" message:@"登录态失效，请重新登陆！" preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertAction *loginAction = [UIAlertAction actionWithTitle:@"登录" style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action){
+                [self presentViewController:_CheckbookDelegate.loginVC animated:YES completion:nil];
+            }];
+            UIAlertAction *calcleAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action){
+                
+            }];
+            [loginAlert addAction:loginAction];
+            [loginAlert addAction:calcleAction];
+            [self presentViewController:loginAlert animated:YES completion:nil];
+            
+        };
+
     }
     return self;
 }
@@ -47,53 +83,83 @@ NSMutableArray *bookArray;
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self.view setBackgroundColor:[UIColor whiteColor]];
+    [bookArray removeAllObjects];
+    _mbprogress = [[MBProgressHUD alloc]initWithView:self.view];
+    _mbprogress.delegate = self;
+    if (viewcode == firstUncheckedBook || viewcode == firstCheckingBook || viewcode == firstCheckedPassBook || viewcode == firstCheckedUnpassBook) {
+        step = @"0";
+    }else if(viewcode == reviewUncheckedBook || viewcode == reviewCheckingBook || viewcode == reviewCheckedPassBook || viewcode == reviewCheckedUnpassBook) {
+        step = @"1";
+    }
     if (viewcode == firstUncheckedBook || viewcode == reviewUncheckedBook) {
         self.navigationItem.title = @"待审核";
         bookState = @"待审核";
+        bookURL = [NSString stringWithFormat:@"getUnExamineList.serv?username=%@&sessionid=%@&step=%@",[[UserInfoModel sharedInstance]getUserName],[[UserInfoModel sharedInstance]getUserSessionid],step];
     }else if(viewcode == firstCheckingBook || viewcode == reviewCheckingBook) {
         self.navigationItem.title = @"审核中";
         bookState = @"审核中";
+        bookURL = [NSString stringWithFormat:@"getExaminingList.serv?username=%@&sessionid=%@&step=%@",[[UserInfoModel sharedInstance]getUserName],[[UserInfoModel sharedInstance]getUserSessionid],step];
     }else if(viewcode == firstCheckedPassBook || viewcode == reviewCheckedPassBook) {
         self.navigationItem.title = @"已通过";
         bookState = @"已通过";
+        bookURL = [NSString stringWithFormat:@"getPassdList.serv?username=%@&sessionid=%@&step=%@",[[UserInfoModel sharedInstance]getUserName],[[UserInfoModel sharedInstance]getUserSessionid],step];
     }else if(viewcode == firstCheckedUnpassBook || viewcode == reviewCheckedUnpassBook) {
         self.navigationItem.title = @"未通过";
         bookState = @"未通过";
+        bookURL = [NSString stringWithFormat:@"getNotPassdList.serv?username=%@&sessionid=%@&step=%@",[[UserInfoModel sharedInstance]getUserName],[[UserInfoModel sharedInstance]getUserSessionid],step];
     }
-    
-     //添加此方法后，页面布局不会自动适应，而是需要手动调节
-        if ([self respondsToSelector:@selector(automaticallyAdjustsScrollViewInsets)])
-        {
-            self.automaticallyAdjustsScrollViewInsets = NO;
-        }
-    _CheckBookViewtableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 64, self.view.frame.size.width, [UIScreen mainScreen].bounds.size.height - 75) style:UITableViewStyleGrouped];                                                                                          // 初始化tableview填充整个屏幕
+
+    _CheckBookViewtableView = [[UITableView alloc]initWithFrame:self.view.bounds style:UITableViewStyleGrouped];                                                                                          // 初始化tableview填充整个屏幕
     _CheckBookViewtableView.dataSource = self;                                                                                   // 设置tableview的数据代理
     _CheckBookViewtableView.delegate = self;                                                                                     // 设置tableview代理
-    [self.view addSubview:_CheckBookViewtableView];                                                                              // 将tableview添加到屏幕上
-    CheckBookViewappdelegate = [[UIApplication sharedApplication]delegate];
-    [self addSearchBar];                                                                                                       // 添加搜索框
-    
-    if (viewcode == firstUncheckedBook) {
-        step = @"0";
-    }else if(viewcode == reviewUncheckedBook) {
-        step = @"1";
-    }
-    MJRefreshStateHeader *refreshHeader = [MJRefreshStateHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadData)];
-    // 设置自动切换透明度(在导航栏下面自动隐藏)
-    refreshHeader.automaticallyChangeAlpha = YES;
+    // 下拉刷新
+    MJRefreshNormalHeader *refreshHeader = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadData)];
     _CheckBookViewtableView.mj_header = refreshHeader;
-    [[BookInfoModel sharedInstance]getBookDataWithUsername:[[UserInfoModel sharedInstance]getUserName] Sessionid:[[UserInfoModel sharedInstance]getUserSessionid] step:step bookState:bookState];
+    refreshHeader.automaticallyChangeAlpha = YES;
+    [self.view addSubview:_CheckBookViewtableView];                                                                              // 将tableview添加到屏幕上
+    [_CheckBookViewtableView.mj_header beginRefreshing];
+    // 搜索框
+    self.searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
+    self.searchController.searchResultsUpdater = self;
+    self.searchController.dimsBackgroundDuringPresentation = false;
+    [self.searchController.searchBar sizeToFit];
+    self.searchController.searchBar.backgroundColor = [UIColor whiteColor];
+    _CheckBookViewtableView.tableHeaderView = self.searchController.searchBar;
+    [_CheckBookViewtableView.tableHeaderView setHidden:YES];
+    
+    _noDataLable = [[UILabel alloc]initWithFrame:CGRectMake(SCREEN_BOUNDS.width/2 - 100, SCREEN_BOUNDS.height/2, 200, 50)];
+    _noDataLable.textColor = [UIColor grayColor];
+    _noDataLable.text = @"暂无数据!";
+    _noDataLable.textAlignment = NSTextAlignmentCenter;
+    _noDataLable.font = [UIFont systemFontOfSize:20];
+    [self.view addSubview:_noDataLable];
+    
+
 }
 - (void)loadData {
-    [[BookInfoModel sharedInstance]getBookDataWithUsername:[[UserInfoModel sharedInstance]getUserName] Sessionid:[[UserInfoModel sharedInstance]getUserSessionid] step:step bookState:bookState];
+    [[BookInfoModel sharedInstance]getBookDataWithURL:bookURL bookState:bookState];
+}
+
+#pragma mark - searchController delegate
+
+- (void)updateSearchResultsForSearchController:(UISearchController *)searchController {
+    [CheckBookViewSearchResult removeAllObjects];
+    NSPredicate *searchPredicate = [NSPredicate predicateWithFormat:@"SELF CONTAINS[c] %@", self.searchController.searchBar.text];
+    CheckBookViewSearchResult = [[bookArray filteredArrayUsingPredicate:searchPredicate] mutableCopy];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [_CheckBookViewtableView reloadData];
+    });
 }
 #pragma mark 设置每组标题名称
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     // 判断是否是搜索结果的tableView
-    if (tableView == CheckBookViewSearchDC.searchResultsTableView) {
+    if ([self.searchController isActive]) {
         return @"搜索结果";
     }
-    return @"书籍信息";
+    if ([bookArray count]) {
+        return @"书籍信息";
+    }
+    return nil;
 }
 #pragma mark 设置分组数
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -107,7 +173,7 @@ NSMutableArray *bookArray;
 #pragma mark 设置行数
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     // 判断是否是搜索结果的tableView
-    if (tableView==CheckBookViewSearchDC.searchResultsTableView) {
+    if ([self.searchController isActive]) {
         return CheckBookViewSearchResult.count;
     }
     return [bookArray count];
@@ -123,7 +189,7 @@ NSMutableArray *bookArray;
         [CheckBookViewcell initCellView];                                                                                                            // 重新初始化cell上的view
     }
     // 判断是否是搜索结果的tableView
-    if (tableView == CheckBookViewSearchDC.searchResultsTableView) {
+    if ([self.searchController isActive]) {
         books = CheckBookViewSearchResult[indexPath.row];
     }else {
         if (viewcode) {
@@ -148,16 +214,6 @@ NSMutableArray *bookArray;
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return 100;
 }
-#pragma mark 选中之前
-- (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    [CheckBookViewSearchBar resignFirstResponder];                                                                                                  // 退出键盘
-    return indexPath;
-}
-#pragma mark - UISearchDisplayController代理方法
--(BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString{
-    [self searchDataWithKeyWord:searchString];
-    return YES;
-}
 
 #pragma mark 重写状态样式方法
 -(UIStatusBarStyle)preferredStatusBarStyle{
@@ -173,26 +229,6 @@ NSMutableArray *bookArray;
             [CheckBookViewSearchResult addObject:book];
         }
     }];
-    
-}
-
-
-
-#pragma mark 添加搜索栏
-- (void)addSearchBar {
-    CheckBookViewSearchBar = [[UISearchBar alloc]init];
-    [CheckBookViewSearchBar sizeToFit];                                                                                                             // 大小自适应
-    CheckBookViewSearchBar.placeholder = @"搜索";
-    CheckBookViewSearchBar.autocapitalizationType = UITextAutocapitalizationTypeNone;
-    // 添加搜索框到页眉位置
-    CheckBookViewSearchBar.delegate = self;
-    _CheckBookViewtableView.tableHeaderView = CheckBookViewSearchBar;
-    
-    CheckBookViewSearchDC = [[UISearchDisplayController alloc]initWithSearchBar:CheckBookViewSearchBar contentsController:self];
-    CheckBookViewSearchDC.delegate = self;
-    CheckBookViewSearchDC.searchResultsDataSource=self;
-    CheckBookViewSearchDC.searchResultsDelegate=self;
-    
     
 }
 

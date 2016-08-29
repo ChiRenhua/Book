@@ -80,10 +80,8 @@
      }];
 }
 
-- (BOOL)getUserLoginStateWithName:(NSString *)name andPassword:(NSString *)password {
-    __block BOOL result;
+- (void)getUserLoginStateWithName:(NSString *)name andPassword:(NSString *)password {
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    //manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
     NSString *str = [NSString stringWithFormat:@"UserAction.serv?username=%@&password=%@",name,password];
     NSString *url = [BASEURL stringByAppendingString:str];
@@ -94,15 +92,14 @@
     } success:^(NSURLSessionDataTask * _Nonnull task, id responseObject) {
         NSLog(@"success%@",responseObject);
         int status = [responseObject[@"status"] intValue];
-        if (status == 1000) {
-            result = YES;
-        }else if(status == 1001) {
-            result = NO;
+        if(status == 1001) {
+            _showLoginView();
+        }else if (status == 1000) {
+            [self saveUserLoginDataWithName:name andPassword:password andID:responseObject[@"message"][@"id"] andCompetence:responseObject[@"message"][@"competence"] andRealName:responseObject[@"message"][@"realName"] andSessionid:responseObject[@"message"][@"sessionid"]];
         }
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         NSLog(@"error:%@",error);
     }];
-    return result;
 }
 
 

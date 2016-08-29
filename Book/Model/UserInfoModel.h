@@ -12,15 +12,17 @@
 #define LOGIN_NETWRONG 2
 
 typedef void (^LoginResult)(NSInteger code);
+typedef void (^ShowLoginView)();
 @interface UserInfoModel : NSObject
 
 @property(nonatomic,copy) LoginResult loginResult;
+@property(nonatomic,copy) ShowLoginView showLoginView;
 
 + (UserInfoModel *)sharedInstance;
 
 - (void)getUserDataWithName:(NSString *)name andPassword:(NSString *)password;
 
-- (BOOL)getUserLoginStateWithName:(NSString *)name andPassword:(NSString *)password;
+- (void)getUserLoginStateWithName:(NSString *)name andPassword:(NSString *)password;
 
 - (NSString *)getUserName;
 - (NSString *)getUserPassword;
