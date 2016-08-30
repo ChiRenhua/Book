@@ -12,7 +12,7 @@
 #import "UserInfoModel.h"
 
 #define SCREEN_BOUNDS [UIScreen mainScreen].bounds.size
-#define ROW_HIGHT SCREEN_BOUNDS.height / 9
+#define ROW_HIGHT SCREEN_BOUNDS.height / 11
 
 @interface HomeViewController ()<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic,strong) UITableView *HomeViewtableView;
@@ -78,15 +78,13 @@ AppDelegate *homeViewDelegate;
 #pragma mark 设置每组标题名称
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     int competence = [[[UserInfoModel sharedInstance]getUserCompetence]intValue];
-    if (competence == 0) {
+    if (competence == 2) {
         if (section == 0) {
             return @"初审";
         }else if (section == 1) {
             return @"复审";
         }
-    }else if (competence == 2) {
-        return @"复审";
-    }else if (competence == 1) {
+    }else if (competence == 0) {
         return @"初审";
     }
     return nil;
@@ -94,7 +92,7 @@ AppDelegate *homeViewDelegate;
 #pragma mark 设置分组数
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     int competence = [[[UserInfoModel sharedInstance]getUserCompetence]intValue];
-    if (competence == 0) {
+    if (competence == 2) {
         return 2;
     }else {
         return 1;
@@ -123,7 +121,7 @@ AppDelegate *homeViewDelegate;
     [HomeViewcell.contentView addSubview:homeImageView];
     
     UIImageView *rightImageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"right_black.png"]];
-    rightImageView.frame = CGRectMake(SCREEN_BOUNDS.width / 10 * 9, 23, ROW_HIGHT - 46, ROW_HIGHT - 46);
+    rightImageView.frame = CGRectMake(SCREEN_BOUNDS.width / 10 * 9, ROW_HIGHT/2 - (ROW_HIGHT - 30)/2, ROW_HIGHT - 30, ROW_HIGHT - 30);
     rightImageView.contentMode = UIViewContentModeScaleAspectFit;
     [HomeViewcell.contentView addSubview:rightImageView];
     // 图书名字
@@ -156,18 +154,34 @@ AppDelegate *homeViewDelegate;
 
             break;
         case 2:
-            if (indexPath.row == 0) {
-                CheckBookViewController *CheckBookVC = [[CheckBookViewController alloc]init:reviewUncheckedBook];
-                [self.navigationController pushViewController:CheckBookVC animated:YES];
-            }else if (indexPath.row == 1) {
-                CheckBookViewController *CheckBookVC = [[CheckBookViewController alloc]init:reviewCheckingBook];
-                [self.navigationController pushViewController:CheckBookVC animated:YES];
-            }else if (indexPath.row == 2) {
-                CheckBookViewController *CheckBookVC = [[CheckBookViewController alloc]init:reviewCheckedPassBook];
-                [self.navigationController pushViewController:CheckBookVC animated:YES];
-            }else if (indexPath.row == 3) {
-                CheckBookViewController *CheckBookVC = [[CheckBookViewController alloc]init:reviewCheckedUnpassBook];
-                [self.navigationController pushViewController:CheckBookVC animated:YES];
+            if (indexPath.section == 0) {
+                if (indexPath.row == 0) {
+                    CheckBookViewController *CheckBookVC = [[CheckBookViewController alloc]init:firstUncheckedBook];
+                    [self.navigationController pushViewController:CheckBookVC animated:YES];
+                }else if (indexPath.row == 1) {
+                    CheckBookViewController *CheckBookVC = [[CheckBookViewController alloc]init:firstCheckingBook];
+                    [self.navigationController pushViewController:CheckBookVC animated:YES];
+                }else if (indexPath.row == 2) {
+                    CheckBookViewController *CheckBookVC = [[CheckBookViewController alloc]init:firstCheckedPassBook];
+                    [self.navigationController pushViewController:CheckBookVC animated:YES];
+                }else if (indexPath.row == 3) {
+                    CheckBookViewController *CheckBookVC = [[CheckBookViewController alloc]init:firstCheckedUnpassBook];
+                    [self.navigationController pushViewController:CheckBookVC animated:YES];
+                }
+            }else if (indexPath.section == 1) {
+                if (indexPath.row == 0) {
+                    CheckBookViewController *CheckBookVC = [[CheckBookViewController alloc]init:reviewUncheckedBook];
+                    [self.navigationController pushViewController:CheckBookVC animated:YES];
+                }else if (indexPath.row == 1) {
+                    CheckBookViewController *CheckBookVC = [[CheckBookViewController alloc]init:reviewCheckingBook];
+                    [self.navigationController pushViewController:CheckBookVC animated:YES];
+                }else if (indexPath.row == 2) {
+                    CheckBookViewController *CheckBookVC = [[CheckBookViewController alloc]init:reviewCheckedPassBook];
+                    [self.navigationController pushViewController:CheckBookVC animated:YES];
+                }else if (indexPath.row == 3) {
+                    CheckBookViewController *CheckBookVC = [[CheckBookViewController alloc]init:reviewCheckedUnpassBook];
+                    [self.navigationController pushViewController:CheckBookVC animated:YES];
+                }
             }
             break;
         default:

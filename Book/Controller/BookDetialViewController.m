@@ -11,9 +11,10 @@
 #import "Book.h"
 #import "AppDelegate.h"
 #import "AFNetworking/AFNetworking.h"
-#import "UIImageView+AFNetworking.h"
 #import "UserInfoModel.h"
 #import "BookDetialModel.h"
+#import <SDWebImage/UIImageView+WebCache.h>
+#import "MBProgressHUD.h"
 
 #define SCREEN_BOUNDS [UIScreen mainScreen].bounds.size
 #define FIRST_CELL_HIGHT SCREEN_BOUNDS.height / 4
@@ -25,6 +26,7 @@
 @property (copy,nonatomic) NSString *step;
 @property (copy,nonatomic) UILabel *bookReviewInfo;
 @property(retain,nonatomic) AppDelegate *bookDetialAppDelegate;
+@property(strong,retain)  MBProgressHUD *mbprogress;
 
 @end
 int reviewTextHeight;
@@ -34,28 +36,21 @@ int reviewTextHeight;
 - (id)init:(Book *) book step:(NSString *)step{
     if (self = [super init]) {
         _step = step;
+        _mbprogress = [[MBProgressHUD alloc]initWithView:self.view];
+        _mbprogress.delegate = self;
         _detialBook = [[Book alloc]init];
         _bookDetialAppDelegate = [[UIApplication sharedApplication]delegate];
         _detialBook = book;
         _appdelegate = [[UIApplication sharedApplication]delegate];
         [BookDetialModel sharedInstance].updateReason = ^(NSString * reason){
             // 计算文本高度
-            CGSize bookIntroduceSize = [reason sizeWithFont:[UIFont systemFontOfSize:13] constrainedToSize:CGSizeMake(300.0f,CGFLOAT_MAX) lineBreakMode:UILineBreakModeWordWrap];
-            _bookReviewInfo.frame = CGRectMake(SCREEN_BOUNDS.width / 20 + 70, 50, SCREEN_BOUNDS.width - 20, bookIntroduceSize.height);
+            CGSize bookIntroduceSize = [reason sizeWithFont:[UIFont systemFontOfSize:15] constrainedToSize:CGSizeMake(300.0f,CGFLOAT_MAX) lineBreakMode:UILineBreakModeWordWrap];
+            _bookReviewInfo.frame = CGRectMake(SCREEN_BOUNDS.width / 20 + 70, 50, SCREEN_BOUNDS.width - SCREEN_BOUNDS.width / 20 - 90, bookIntroduceSize.height);
             reviewTextHeight = bookIntroduceSize.height;
             _bookReviewInfo.text = reason;
         };
         [BookDetialModel sharedInstance].bookDetialShowLoginView = ^(){
-            UIAlertController *loginAlert = [UIAlertController alertControllerWithTitle:@"错误！" message:@"登录态失效，请重新登陆！" preferredStyle:UIAlertControllerStyleAlert];
-            UIAlertAction *loginAction = [UIAlertAction actionWithTitle:@"登录" style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action){
-                [self presentViewController:_bookDetialAppDelegate.loginVC animated:YES completion:nil];
-            }];
-            UIAlertAction *calcleAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action){
-                
-            }];
-            [loginAlert addAction:loginAction];
-            [loginAlert addAction:calcleAction];
-            [self presentViewController:loginAlert animated:YES completion:nil];
+            [self showLoginView];
         };
     }
     return self;
@@ -71,7 +66,7 @@ int reviewTextHeight;
     _bookDetialTableView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:_bookDetialTableView];
     
-    NSString *url = [NSString stringWithFormat:@"getNotPassReason.serv?username=%@&sessionid=%@&step=%@&bookid=%@",[[UserInfoModel sharedInstance]getUserName],[[UserInfoModel sharedInstance]getUserSessionid],_detialBook.bookID,_step];
+    NSString *url = [NSString stringWithFormat:@"getNotPassReason.serv?username=%@&sessionid=%@&step=%@&bookid=%@",[[UserInfoModel sharedInstance]getUserName],[[UserInfoModel sharedInstance]getUserSessionid],_step,_detialBook.bookID];
     [[BookDetialModel sharedInstance] getBookreasonWithURL:url by:bookReasonModule];
     
 }
@@ -101,7 +96,8 @@ int reviewTextHeight;
             UIImageView *bookImageView = [[UIImageView alloc]init];
             bookImageView.frame = CGRectMake(SCREEN_BOUNDS.width / 20, 15, (FIRST_CELL_HIGHT - 30 ) / 3 * 2, FIRST_CELL_HIGHT - 30);
             NSString *book_image_url = [_detialBook.coverPath stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-            [bookImageView setImageWithURL:[NSURL URLWithString:book_image_url] placeholderImage:[UIImage imageNamed:@"default_bookimage"]];
+            //[bookImageView setImageWithURL:[NSURL URLWithString:book_image_url] placeholderImage:[UIImage imageNamed:@"default_bookimage"]];
+            [bookImageView sd_setImageWithURL:[NSURL URLWithString:book_image_url] placeholderImage:[UIImage imageNamed:@"default_bookimage"]];
             [bookDetialViewCell.contentView addSubview:bookImageView];
             // 图书名字
             UILabel *bookName = [[UILabel alloc]initWithFrame:CGRectMake(SCREEN_BOUNDS.width / 3, 20, SCREEN_BOUNDS.width - 200, 60)];
@@ -199,13 +195,35 @@ int reviewTextHeight;
 #pragma mark 添加行点击事件
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.row == 2) {
-        BookReviewViewController *bookReviewViewController;
-            bookReviewViewController = [[BookReviewViewController alloc]init:_detialBook];
-            _appdelegate.bookReviewVC = bookReviewViewController;
+        _mbprogress.mode = MBProgressHUDModeIndeterminate;                                                                          // 设置toast的样式为文字
+        _mbprogress.label.text = NSLocalizedString(@"加审中", @"HUD message title");                                                 // 设置toast上的文字
+        [self.view addSubview:_mbprogress];                                                                                         // 将toast添加到view中
+        [self.view bringSubviewToFront:_mbprogress];                                                                                // 让toast显示在view的最前端
+        [_mbprogress showAnimated:YES];                                                                                             // 显示toast
         
-        [self presentViewController:bookReviewViewController animated:YES completion:nil];
+        NSString *addReviewURL = [NSString stringWithFormat:@"addAudit.serv?username=%@&sessionid=%@&bookid=%@&step=%@",[[UserInfoModel sharedInstance]getUserName],[[UserInfoModel sharedInstance]getUserSessionid],_detialBook.bookID,_step];
+        [[BookDetialModel sharedInstance] getBookreasonWithURL:addReviewURL by:addReviewButtonModule];
+        [BookDetialModel sharedInstance].showToast = ^(NSString *message){
+            //[_mbprogress hideAnimated:YES];
+            _mbprogress.mode = MBProgressHUDModeText;
+            _mbprogress.label.text = NSLocalizedString(message, @"HUD completed title");
+            //[_mbprogress showAnimated:YES];                                                                                         // 显示toast
+            [_mbprogress hideAnimated:YES afterDelay:1.5];                                                                          // 1.5秒后销毁toast
+        };
+        [BookDetialModel sharedInstance].showReviewView = ^(){
+            [_mbprogress hideAnimated:YES];
+            UIImage *image = [[UIImage imageNamed:@"Checkmark"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+            UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
+            _mbprogress.customView = imageView;
+            _mbprogress.mode = MBProgressHUDModeCustomView;
+            _mbprogress.label.text = NSLocalizedString(@"加审成功", @"HUD completed title");
+            [_mbprogress showAnimated:YES];                                                                                         // 显示toast
+            [self performSelector:@selector(showReviewView) withObject:nil afterDelay:1.0f];
+            _detialBook.bookState = @"审核中";
+            [_bookDetialTableView reloadData];
+        };
     }
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];                                                                                  // 取消选中的状态
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];                                                                      // 取消选中的状态
 }
 #pragma mark 设置行高
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -234,6 +252,27 @@ int reviewTextHeight;
             break;
     }
     return 0;
+}
+
+- (void)showLoginView {
+    UIAlertController *loginAlert = [UIAlertController alertControllerWithTitle:@"错误!" message:@"登录态失效，请重新登陆!" preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *loginAction = [UIAlertAction actionWithTitle:@"登录" style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action){
+        [self presentViewController:_bookDetialAppDelegate.loginVC animated:YES completion:nil];
+    }];
+    UIAlertAction *calcleAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action){
+        
+    }];
+    [loginAlert addAction:loginAction];
+    [loginAlert addAction:calcleAction];
+    [self presentViewController:loginAlert animated:YES completion:nil];
+}
+
+- (void)showReviewView {
+    [_mbprogress removeFromSuperview];
+    BookReviewViewController *bookReviewViewController;
+    bookReviewViewController = [[BookReviewViewController alloc]init:_detialBook];
+    _appdelegate.bookReviewVC = bookReviewViewController;
+    [self presentViewController:bookReviewViewController animated:YES completion:nil];
 }
 
 - (void)didReceiveMemoryWarning {

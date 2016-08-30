@@ -65,7 +65,7 @@ NSString *bookURL;
         };
         [BookInfoModel sharedInstance].showLoginAlert = ^(){
             [_CheckBookViewtableView.mj_header endRefreshing];
-            UIAlertController *loginAlert = [UIAlertController alertControllerWithTitle:@"错误！" message:@"登录态失效，请重新登陆！" preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertController *loginAlert = [UIAlertController alertControllerWithTitle:@"错误!" message:@"登录态失效，请重新登陆!" preferredStyle:UIAlertControllerStyleAlert];
             UIAlertAction *loginAction = [UIAlertAction actionWithTitle:@"登录" style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action){
                 [self presentViewController:_CheckbookDelegate.loginVC animated:YES completion:nil];
             }];
@@ -86,11 +86,27 @@ NSString *bookURL;
     [self.view setBackgroundColor:[UIColor whiteColor]];
     [bookArray removeAllObjects];
     [searchResult removeAllObjects];
+
+    [self getStep];
+    [self getBookURL];
+
+    _CheckBookViewtableView = [[UITableView alloc]initWithFrame:self.view.bounds style:UITableViewStyleGrouped];                 // 初始化tableview填充整个屏幕
+    _CheckBookViewtableView.dataSource = self;                                                                                   // 设置tableview的数据代理
+    _CheckBookViewtableView.delegate = self;                                                                                     // 设置tableview代理
+    [self showPullRefreshView];
+    [self showSearchBar];
+    [self showNoDataView];
+}
+
+- (void)getStep {
     if (viewcode == firstUncheckedBook || viewcode == firstCheckingBook || viewcode == firstCheckedPassBook || viewcode == firstCheckedUnpassBook) {
         step = @"0";
     }else if(viewcode == reviewUncheckedBook || viewcode == reviewCheckingBook || viewcode == reviewCheckedPassBook || viewcode == reviewCheckedUnpassBook) {
         step = @"1";
     }
+}
+
+- (void)getBookURL {
     if (viewcode == firstUncheckedBook || viewcode == reviewUncheckedBook) {
         self.navigationItem.title = @"待审核";
         bookState = @"待审核";
@@ -108,13 +124,6 @@ NSString *bookURL;
         bookState = @"未通过";
         bookURL = [NSString stringWithFormat:@"getNotPassdList.serv?username=%@&sessionid=%@&step=%@",[[UserInfoModel sharedInstance]getUserName],[[UserInfoModel sharedInstance]getUserSessionid],step];
     }
-
-    _CheckBookViewtableView = [[UITableView alloc]initWithFrame:self.view.bounds style:UITableViewStyleGrouped];                 // 初始化tableview填充整个屏幕
-    _CheckBookViewtableView.dataSource = self;                                                                                   // 设置tableview的数据代理
-    _CheckBookViewtableView.delegate = self;                                                                                     // 设置tableview代理
-    [self showPullRefreshView];
-    [self showSearchBar];
-    [self showNoDataView];
 }
 #pragma mark - 无数据View
 - (void)showNoDataView {
@@ -153,6 +162,8 @@ NSString *bookURL;
 
 #pragma mark - 下拉刷新执行函数
 - (void)loadData {
+    [self getStep];
+    [self getBookURL];
     [[BookInfoModel sharedInstance]getBookDataWithURL:bookURL bookState:bookState];
 }
 

@@ -8,13 +8,20 @@
 
 #import <Foundation/Foundation.h>
 
-
+//更新审核未通过原因
 typedef void (^UpdateReason)(NSString * reason);
+//登录验证失败弹窗
 typedef void (^BookDetialShowLoginView)();
+//展示提审结果
+typedef void (^ShowToast)(NSString *message);
+//拉起审核页面
+typedef void (^ShowReviewView)();
 @interface BookDetialModel : NSObject
 
 @property(nonatomic,copy) UpdateReason updateReason;
+@property(nonatomic,copy) ShowToast showToast;
 @property(nonatomic,copy) BookDetialShowLoginView bookDetialShowLoginView;
+@property(nonatomic,copy) ShowReviewView showReviewView;
 
 typedef NS_ENUM(NSInteger, Module)
 {

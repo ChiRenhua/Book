@@ -46,19 +46,22 @@
             }
         }else if (Module == addReviewButtonModule) {
             if (status == 1000) {
-                //加审失败
+                //加审成功
+                _showReviewView();
             }else if(status == 1001) {
                 _bookDetialShowLoginView();
             }else if(status == 1002) {
                 //书籍不存在
+                _showToast(@"书籍不存在，请验证后重试!");
             }
         }
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         if (Module == bookReasonModule) {
-            _updateReason(@"审核信息加载失败！");
+            _updateReason(@"审核信息加载失败!");
         }else if (Module == addReviewButtonModule) {
             //加审失败逻辑
+            _showToast(@"加审失败，请重试!");
         }
         
 

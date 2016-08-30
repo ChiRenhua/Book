@@ -124,7 +124,7 @@ static NSString * const CellIdentifier = @"cell";
     _isKeyboardShow = NO;
     NSString *pendingResultText = [[NSString alloc]init];
     if ([_textView.text isEqualToString:@""]) {
-        pendingResultText = @"审核通过！";
+        pendingResultText = @"审核通过!";
     }else {
         pendingResultText = _textView.text;
     }

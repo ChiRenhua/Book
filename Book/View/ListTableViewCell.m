@@ -7,8 +7,9 @@
 //
 
 #import "ListTableViewCell.h"
-#import "AFNetworking/AFNetworking.h"
 #import "UIImageView+AFNetworking.h"
+#import <SDWebImage/UIImageView+WebCache.h>
+
 #define SCREEN_BOUNDS [UIScreen mainScreen].bounds.size
 
 @interface ListTableViewCell()
@@ -65,7 +66,8 @@ UILabel *bookStateLable;
 #pragma mark 为cell上的view布局添加文字或图片信息
 - (void) setBookInfo:(Book *)book{
     NSString *book_image_url = [book.coverPath stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    [bookPictureImage setImageWithURL:[NSURL URLWithString:book_image_url] placeholderImage:[UIImage imageNamed:@"default_bookimage"]];
+    //[bookPictureImage setImageWithURL:[NSURL URLWithString:book_image_url] placeholderImage:[UIImage imageNamed:@"default_bookimage"]];
+    [bookPictureImage sd_setImageWithURL:[NSURL URLWithString:book_image_url] placeholderImage:[UIImage imageNamed:@"default_bookimage"]];
     bookNameLable.text = book.bookName;
     bookWriterLable.text = book.authorName;
     bookISBN.text = [@"ISBN:"stringByAppendingString:book.isbn];
