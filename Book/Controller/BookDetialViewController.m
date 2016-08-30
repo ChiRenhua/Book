@@ -22,7 +22,6 @@
 @interface BookDetialViewController ()<UITableViewDelegate,UITableViewDataSource>
 @property (retain,nonatomic) UITableView *bookDetialTableView;
 @property (retain,nonatomic) Book *detialBook;
-@property (retain,nonatomic) AppDelegate *appdelegate;
 @property (copy,nonatomic) NSString *step;
 @property (copy,nonatomic) UILabel *bookReviewInfo;
 @property(retain,nonatomic) AppDelegate *bookDetialAppDelegate;
@@ -41,7 +40,6 @@ int reviewTextHeight;
         _detialBook = [[Book alloc]init];
         _bookDetialAppDelegate = [[UIApplication sharedApplication]delegate];
         _detialBook = book;
-        _appdelegate = [[UIApplication sharedApplication]delegate];
         [BookDetialModel sharedInstance].updateReason = ^(NSString * reason){
             // 计算文本高度
             CGSize bookIntroduceSize = [reason sizeWithFont:[UIFont systemFontOfSize:15] constrainedToSize:CGSizeMake(300.0f,CGFLOAT_MAX) lineBreakMode:UILineBreakModeWordWrap];
@@ -195,33 +193,38 @@ int reviewTextHeight;
 #pragma mark 添加行点击事件
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.row == 2) {
-        _mbprogress.mode = MBProgressHUDModeIndeterminate;                                                                          // 设置toast的样式为文字
-        _mbprogress.label.text = NSLocalizedString(@"加审中", @"HUD message title");                                                 // 设置toast上的文字
-        [self.view addSubview:_mbprogress];                                                                                         // 将toast添加到view中
-        [self.view bringSubviewToFront:_mbprogress];                                                                                // 让toast显示在view的最前端
-        [_mbprogress showAnimated:YES];                                                                                             // 显示toast
-        
-        NSString *addReviewURL = [NSString stringWithFormat:@"addAudit.serv?username=%@&sessionid=%@&bookid=%@&step=%@",[[UserInfoModel sharedInstance]getUserName],[[UserInfoModel sharedInstance]getUserSessionid],_detialBook.bookID,_step];
-        [[BookDetialModel sharedInstance] getBookreasonWithURL:addReviewURL by:addReviewButtonModule];
-        [BookDetialModel sharedInstance].showToast = ^(NSString *message){
-            //[_mbprogress hideAnimated:YES];
-            _mbprogress.mode = MBProgressHUDModeText;
-            _mbprogress.label.text = NSLocalizedString(message, @"HUD completed title");
-            //[_mbprogress showAnimated:YES];                                                                                         // 显示toast
-            [_mbprogress hideAnimated:YES afterDelay:1.5];                                                                          // 1.5秒后销毁toast
-        };
-        [BookDetialModel sharedInstance].showReviewView = ^(){
-            [_mbprogress hideAnimated:YES];
-            UIImage *image = [[UIImage imageNamed:@"Checkmark"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-            UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
-            _mbprogress.customView = imageView;
-            _mbprogress.mode = MBProgressHUDModeCustomView;
-            _mbprogress.label.text = NSLocalizedString(@"加审成功", @"HUD completed title");
-            [_mbprogress showAnimated:YES];                                                                                         // 显示toast
-            [self performSelector:@selector(showReviewView) withObject:nil afterDelay:1.0f];
-            _detialBook.bookState = @"审核中";
-            [_bookDetialTableView reloadData];
-        };
+        if ([_detialBook.bookState isEqualToString:@"待审核"]) {
+            _mbprogress.mode = MBProgressHUDModeIndeterminate;                                                                          // 设置toast的样式为文字
+            _mbprogress.label.text = NSLocalizedString(@"加审中", @"HUD message title");                                                 // 设置toast上的文字
+            [self.view addSubview:_mbprogress];                                                                                         // 将toast添加到view中
+            [self.view bringSubviewToFront:_mbprogress];                                                                                // 让toast显示在view的最前端
+            [_mbprogress showAnimated:YES];                                                                                             // 显示toast
+            
+            NSString *addReviewURL = [NSString stringWithFormat:@"addAudit.serv?username=%@&sessionid=%@&bookid=%@&step=%@",[[UserInfoModel sharedInstance]getUserName],[[UserInfoModel sharedInstance]getUserSessionid],_detialBook.bookID,_step];
+            [[BookDetialModel sharedInstance] getBookreasonWithURL:addReviewURL by:addReviewButtonModule];
+            [BookDetialModel sharedInstance].showToast = ^(NSString *message){
+                //[_mbprogress hideAnimated:YES];
+                _mbprogress.mode = MBProgressHUDModeText;
+                _mbprogress.label.text = NSLocalizedString(message, @"HUD completed title");
+                //[_mbprogress showAnimated:YES];                                                                                         // 显示toast
+                [_mbprogress hideAnimated:YES afterDelay:1.5];                                                                          // 1.5秒后销毁toast
+            };
+            [BookDetialModel sharedInstance].showReviewView = ^(){
+                [_mbprogress hideAnimated:YES];
+                UIImage *image = [[UIImage imageNamed:@"Checkmark"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+                UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
+                _mbprogress.customView = imageView;
+                _mbprogress.mode = MBProgressHUDModeCustomView;
+                _mbprogress.label.text = NSLocalizedString(@"加审成功", @"HUD completed title");
+                [_mbprogress showAnimated:YES];                                                                                         // 显示toast
+                [self performSelector:@selector(showReviewView) withObject:nil afterDelay:1.0f];
+                _detialBook.bookState = @"审核中";
+                [_bookDetialTableView reloadData];
+            };
+        }else if ([_detialBook.bookState isEqualToString:@"审核中"]) {
+            //继续审核
+            [self showReviewView];
+        }
     }
     [tableView deselectRowAtIndexPath:indexPath animated:YES];                                                                      // 取消选中的状态
 }
@@ -268,10 +271,11 @@ int reviewTextHeight;
 }
 
 - (void)showReviewView {
-    [_mbprogress removeFromSuperview];
+    if (_mbprogress) {
+        [_mbprogress removeFromSuperview];
+    }
     BookReviewViewController *bookReviewViewController;
     bookReviewViewController = [[BookReviewViewController alloc]init:_detialBook];
-    _appdelegate.bookReviewVC = bookReviewViewController;
     [self presentViewController:bookReviewViewController animated:YES completion:nil];
 }
 

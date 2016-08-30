@@ -19,6 +19,8 @@ static NSString * const CellIdentifier = @"cell";
 @property (nonatomic, strong) UIToolbar *toolbar;
 @property (nonatomic, strong) RDRGrowingTextView *textView;
 @property (nonatomic, assign) BOOL isKeyboardShow;
+@property (nonatomic, retain) UIActivityIndicatorView *IndicatorView;
+@property (nonatomic, retain) UILabel *errorLable;
 @end
 
 @implementation BookReviewViewController
@@ -44,7 +46,35 @@ static NSString * const CellIdentifier = @"cell";
     [self.view addSubview:_tableView];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
-    
+    [self addIndicatorView];
+    [self addErrorLable];
+    [_errorLable setHidden:YES];
+//    [_IndicatorView removeFromSuperview];
+}
+
+- (void)addErrorLable {
+    _errorLable = [[UILabel alloc]initWithFrame:CGRectMake(0, SCREEN_BOUNDS.height/2 - 25, SCREEN_BOUNDS.width, 50)];
+    _errorLable.textColor = [UIColor grayColor];
+    _errorLable.text = @"数据加载失败\n点击重新加载!";
+    _errorLable.numberOfLines = 0;
+    _errorLable.textAlignment = NSTextAlignmentCenter;
+    _errorLable.font = [UIFont systemFontOfSize:15];
+    _errorLable.userInteractionEnabled = YES;
+    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(onClickErrorLable)];
+    [_errorLable addGestureRecognizer:tapGesture];
+    [self.view addSubview:_errorLable];
+}
+
+- (void)onClickErrorLable {
+    NSLog(@"我被点了！！！！！！");
+}
+
+- (void)addIndicatorView {
+    _IndicatorView = [[UIActivityIndicatorView alloc]init];
+    _IndicatorView.center = CGPointMake(SCREEN_BOUNDS.width/2, SCREEN_BOUNDS.height/2);
+    _IndicatorView.activityIndicatorViewStyle = UIActivityIndicatorViewStyleGray;
+    [self.view addSubview:_IndicatorView];
+    [_IndicatorView startAnimating];
 }
 #pragma mark Handle keyboard show/hide changes
 - (void)keyboardWillShow: (NSNotification *)notification
@@ -147,13 +177,13 @@ static NSString * const CellIdentifier = @"cell";
     UINavigationItem * navigationBarTitle = [[UINavigationItem alloc] initWithTitle:@"审核"];
     [self.view addSubview: navigationBar];
     //创建UIBarButton 可根据需要选择适合自己的样式
-    UIBarButtonItem *leftBarItem = [[UIBarButtonItem alloc]initWithTitle:@"取消" style:UIBarButtonItemStylePlain target:self action:@selector(cancle)];
+    UIBarButtonItem *rightBarItem = [[UIBarButtonItem alloc]initWithTitle:@"保存" style:UIBarButtonItemStylePlain target:self action:@selector(save)];
     //设置barbutton
-    navigationBarTitle.leftBarButtonItem = leftBarItem;
+    navigationBarTitle.rightBarButtonItem = rightBarItem;
     [navigationBar setItems:[NSArray arrayWithObject: navigationBarTitle]];
 }
-- (void)cancle {
-    [self dismissViewControllerAnimated:YES completion:nil];                                                                                   // 登录成功后撤下登录界面
+- (void)save {
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 #pragma mark 设置每组标题名称
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {

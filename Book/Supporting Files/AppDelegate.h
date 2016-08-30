@@ -12,7 +12,6 @@
 #import "UserViewController.h"
 #import "HomeViewController.h"
 #import "SearchViewController.h"
-#import "BookReviewViewController.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
@@ -22,7 +21,6 @@
 @property (strong, nonatomic) UserViewController *UserVC;
 @property (strong, nonatomic) HomeViewController *homeVC;
 @property (strong, nonatomic) SearchViewController *searchVC;
-@property (strong, nonatomic) BookReviewViewController *bookReviewVC;
 
 @end
 
