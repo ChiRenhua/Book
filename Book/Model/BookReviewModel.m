@@ -48,15 +48,22 @@
     } success:^(NSURLSessionDataTask * _Nonnull task, id responseObject) {
         int status = [responseObject[@"status"] intValue];
         if (status == 1000) {
-
+            NSArray *dic = responseObject[@"message"];
+            NSMutableArray *key = [[NSMutableArray alloc]init];
+            NSMutableArray *value = [[NSMutableArray alloc]init];
+            for (int i = 0; i < [dic count]; i++) {
+                [key addObject:dic[i][@"key"]];
+                [value addObject:dic[i][@"value"]];
+            }
+            _updataReviewView(key,value);
         }else if(status == 1001) {
-
+            _showLoginView();
         }else if(status == 1002) {
-
+            _noBookInfo(responseObject[@"message"]);
         }
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         NSLog(@"error:%@",error);
-
+        _failedLoadData(@"数据获取失败，请重试!");
     }];
     return dic;
 }

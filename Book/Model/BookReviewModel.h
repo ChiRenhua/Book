@@ -8,7 +8,17 @@
 
 #import <Foundation/Foundation.h>
 
+typedef void (^UpdataReviewView)(NSMutableArray *key,NSMutableArray *value);
+typedef void (^ShowLoginView)();
+typedef void (^NoBookInfo)(NSString *error);
+typedef void (^FailedLoadData)(NSString *error);
+
 @interface BookReviewModel : NSObject
+
+@property(nonatomic,copy) UpdataReviewView updataReviewView;
+@property(nonatomic,copy) ShowLoginView showLoginView;
+@property(nonatomic,copy) NoBookInfo noBookInfo;
+@property(nonatomic,copy) FailedLoadData failedLoadData;
 
 + (BookReviewModel *)sharedInstance;
 

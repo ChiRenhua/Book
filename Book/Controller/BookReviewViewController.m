@@ -8,27 +8,64 @@
 
 #import "BookReviewViewController.h"
 #import "RDRGrowingTextView.h"
+#import "UserInfoModel.h"
+#import "BookReviewModel.h"
+#import "AppDelegate.h"
+
 #define SCREEN_BOUNDS [UIScreen mainScreen].bounds.size
 static NSString * const CellIdentifier = @"cell";
 @interface BookReviewViewController ()<UITableViewDelegate,UITableViewDataSource>
 @property (retain,nonatomic) Book *detialBook;
 @property (retain,strong) UITableView *tableView;
-@property (nonatomic, strong) NSMutableArray *reviewInfoList;
-@property (nonatomic, strong) NSMutableArray *titleArray;
-@property (nonatomic, strong) NSMutableArray *bookDetialArray;
 @property (nonatomic, strong) UIToolbar *toolbar;
 @property (nonatomic, strong) RDRGrowingTextView *textView;
 @property (nonatomic, assign) BOOL isKeyboardShow;
 @property (nonatomic, retain) UIActivityIndicatorView *IndicatorView;
 @property (nonatomic, retain) UILabel *errorLable;
+@property (nonatomic, copy) NSMutableArray *reviewkey;
+@property (nonatomic, copy) NSMutableArray *reviewvalue;
+@property (nonatomic, strong) AppDelegate *reviewDelegate;
 @end
 
 @implementation BookReviewViewController
 
 - (id)init:(Book *) book{
     if (self = [super init]) {
+        _reviewDelegate = [[UIApplication sharedApplication]delegate];
         _detialBook = [[Book alloc]init];
         _detialBook = book;
+        [BookReviewModel sharedInstance].updataReviewView = ^(NSMutableArray *key,NSMutableArray *value){
+            _reviewkey = key;
+            _reviewvalue = value;
+            [_IndicatorView removeFromSuperview];
+            [_tableView reloadData];
+        };
+        [BookReviewModel sharedInstance].showLoginView = ^(){
+            UIAlertController *loginAlert = [UIAlertController alertControllerWithTitle:@"错误!" message:@"登录态失效，请重新登陆!" preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertAction *loginAction = [UIAlertAction actionWithTitle:@"登录" style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action){
+                [self presentViewController:_reviewDelegate.loginVC animated:YES completion:nil];
+            }];
+            UIAlertAction *calcleAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action){
+                
+            }];
+            [loginAlert addAction:loginAction];
+            [loginAlert addAction:calcleAction];
+            [self presentViewController:loginAlert animated:YES completion:nil];
+            [_IndicatorView removeFromSuperview];
+            [_errorLable setHidden:NO];
+        };
+        [BookReviewModel sharedInstance].noBookInfo = ^(NSString *error){
+            UIAlertController *loginAlert = [UIAlertController alertControllerWithTitle:@"错误!" message:error preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertAction *calcleAction = [UIAlertAction actionWithTitle:@"退出" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action){
+                [self dismissViewControllerAnimated:YES completion:nil];
+            }];
+            [loginAlert addAction:calcleAction];
+            [self presentViewController:loginAlert animated:YES completion:nil];
+        };
+        [BookReviewModel sharedInstance].failedLoadData = ^(NSString *error){
+            [_IndicatorView removeFromSuperview];
+            [_errorLable setHidden:NO];
+        };
     }
     return self;
 }
@@ -38,7 +75,7 @@ static NSString * const CellIdentifier = @"cell";
     // Do any additional setup after loading the view, typically from a nib.
     [self.view setBackgroundColor:[UIColor whiteColor]];
     // 添加NavigationBar
-    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 65, self.view.bounds.size.width, self.view.bounds.size.height - 65) style:UITableViewStyleGrouped];
+    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 65, self.view.bounds.size.width, self.view.bounds.size.height - 100) style:UITableViewStyleGrouped];
     _tableView.delegate = self;
     _tableView.dataSource = self;
     [self setNavigationBar];
@@ -48,8 +85,7 @@ static NSString * const CellIdentifier = @"cell";
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
     [self addIndicatorView];
     [self addErrorLable];
-    [_errorLable setHidden:YES];
-//    [_IndicatorView removeFromSuperview];
+    [self getData];
 }
 
 - (void)addErrorLable {
@@ -63,10 +99,18 @@ static NSString * const CellIdentifier = @"cell";
     UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(onClickErrorLable)];
     [_errorLable addGestureRecognizer:tapGesture];
     [self.view addSubview:_errorLable];
+    [_errorLable setHidden:YES];
 }
 
 - (void)onClickErrorLable {
-    NSLog(@"我被点了！！！！！！");
+    [_errorLable setHidden:YES];
+    [self addIndicatorView];
+    [self getData];
+}
+
+- (void)getData {
+    NSString *url = [NSString stringWithFormat:@"getBookAllInfo.serv?username=%@&sessionid=%@&bookid=%@",[[UserInfoModel sharedInstance]getUserName],[[UserInfoModel sharedInstance]getUserSessionid],_detialBook.bookID];
+    [[BookReviewModel sharedInstance]getBookReviewDataToLocalWithURL:url];
 }
 
 - (void)addIndicatorView {
@@ -187,7 +231,10 @@ static NSString * const CellIdentifier = @"cell";
 }
 #pragma mark 设置每组标题名称
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-    return @"审核意见";
+    if ([_reviewkey count]) {
+        return @"审核意见";
+    }
+    return nil;
 }
 #pragma mark 设置分组标题内容高度
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
@@ -195,24 +242,22 @@ static NSString * const CellIdentifier = @"cell";
 }
 #pragma mark 设置行数
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return _reviewInfoList.count;
+    if (_reviewkey.count == 0) {
+        return 0;
+    }
+    return _reviewkey.count + 1;
 }
 #pragma mark 设置单元格样式和内容
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
     if (indexPath.row == 0) {
         UILabel *bookPictureTitle = [[UILabel alloc]initWithFrame:CGRectMake(SCREEN_BOUNDS.width / 20, 15, 100, 20)];
-        bookPictureTitle.text = @"封    皮：";
+        bookPictureTitle.text = @"封皮";
         bookPictureTitle.font = [UIFont systemFontOfSize:17];
         [cell.contentView addSubview:bookPictureTitle];
-        
-        UIImageView *bookPictureImage = [[UIImageView alloc]initWithFrame:CGRectMake(SCREEN_BOUNDS.width / 4 - 5 , 5, 27, 40)];
-        bookPictureImage.image = [UIImage imageNamed:_reviewInfoList[indexPath.row]];
-        bookPictureImage.contentMode = UIViewContentModeScaleAspectFit;
-        [cell.contentView addSubview:bookPictureImage];
     }else {
         UILabel *bookPictureTitle = [[UILabel alloc]initWithFrame:CGRectMake(SCREEN_BOUNDS.width / 20, 15, tableView.bounds.size.width - 100, 20)];
-        bookPictureTitle.text = _reviewInfoList[indexPath.row];
+        bookPictureTitle.text = _reviewkey[indexPath.row - 1];
         bookPictureTitle.font = [UIFont systemFontOfSize:17];
         [cell.contentView addSubview:bookPictureTitle];
     }
@@ -220,61 +265,6 @@ static NSString * const CellIdentifier = @"cell";
     UIImageView *isPassImage = [[UIImageView alloc]initWithFrame:CGRectMake(tableView.bounds.size.width - 40, 10, 30, 30)];
     isPassImage.contentMode = UIViewContentModeScaleAspectFit;
     [cell.contentView addSubview:isPassImage];
-    
-    // 获取书籍合格状态列表
-    NSMutableDictionary *bookDictionary = [[NSMutableDictionary alloc]init];
-    NSString *bookDetialisPass = [[NSString alloc]init];
-//    bookDictionary = _detialBook.bookReviewInfo;
-    
-    switch (indexPath.row) {
-        case 0:{
-            bookDetialisPass = [bookDictionary objectForKey:@"bookPicture"];
-        }
-            break;
-        case 1:{
-            bookDetialisPass = [bookDictionary objectForKey:@"bookName"];
-        }
-            break;
-        case 2:{
-            bookDetialisPass = [bookDictionary objectForKey:@"bookWriter"];
-        }
-            break;
-        case 3:{
-            bookDetialisPass = [bookDictionary objectForKey:@"bookSummary"];
-        }
-            break;
-        case 4:{
-            bookDetialisPass = [bookDictionary objectForKey:@"bookPublishers"];
-        }
-            break;
-        case 5:{
-            bookDetialisPass = [bookDictionary objectForKey:@"bookCategory"];
-        }
-            break;
-        case 6:{
-            bookDetialisPass = [bookDictionary objectForKey:@"bookTime"];
-        }
-            break;
-        case 7:{
-            bookDetialisPass = [bookDictionary objectForKey:@"bookSize"];
-        }
-            break;
-        case 8:{
-            bookDetialisPass = [bookDictionary objectForKey:@"bookPages"];
-        }
-            break;
-        case 9:{
-            bookDetialisPass = [bookDictionary objectForKey:@"bookLanguage"];
-        }
-            break;
-        default:
-            break;
-    }
-    if ([bookDetialisPass isEqualToString:@"1"]) {
-        isPassImage.image = [UIImage imageNamed:@"pass"];
-    }else if ([bookDetialisPass isEqualToString:@"0"]) {
-        isPassImage.image = [UIImage imageNamed:@"unpass"];
-    }
     return cell;
 }
 #pragma mark 添加行点击事件
@@ -398,8 +388,6 @@ static NSString * const CellIdentifier = @"cell";
         // 重新加载tableview数据
         [_tableView reloadData];
         [alertView close];
-        // 重新加载输入框默认文本
-        [self reloadTextview];
     }];
     
     [alertView setUseMotionEffects:true];
@@ -412,95 +400,14 @@ static NSString * const CellIdentifier = @"cell";
     _isKeyboardShow = NO;
 }
 
-- (void) reloadTextview {
-    NSMutableDictionary *bookDictionary = [[NSMutableDictionary alloc]init];
-    __block NSString *textviewText = [[NSString alloc]initWithFormat:@""];
-//    bookDictionary = _detialBook.bookReviewInfo;
-    [bookDictionary enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
-        if ([obj isEqualToString:@"0"]) {
-            if ([key isEqualToString:@"bookSummary"]) {
-                if ([textviewText isEqualToString:@""]) {
-                    textviewText = [textviewText stringByAppendingString:@"简介：不合格"];
-                }else {
-                    textviewText = [textviewText stringByAppendingString:@"，简介：不合格"];
-                }
-            }
-            if ([key isEqualToString:@"bookTime"]) {
-                if ([textviewText isEqualToString:@""]) {
-                    textviewText = [textviewText stringByAppendingString:@"时间：不合格"];
-                }else {
-                    textviewText = [textviewText stringByAppendingString:@"，时间：不合格"];
-                }
-            }
-            if ([key isEqualToString:@"bookName"]) {
-                if ([textviewText isEqualToString:@""]) {
-                    textviewText = [textviewText stringByAppendingString:@"书名：不合格"];
-                }else {
-                    textviewText = [textviewText stringByAppendingString:@"，书名：不合格"];
-                }
-            }
-            if ([key isEqualToString:@"bookPicture"]) {
-                if ([textviewText isEqualToString:@""]) {
-                    textviewText = [textviewText stringByAppendingString:@"封皮：不合格"];
-                }else {
-                    textviewText = [textviewText stringByAppendingString:@"，封皮：不合格"];
-                }
-            }
-            if ([key isEqualToString:@"bookWriter"]) {
-                if ([textviewText isEqualToString:@""]) {
-                    textviewText = [textviewText stringByAppendingString:@"作者：不合格"];
-                }else {
-                    textviewText = [textviewText stringByAppendingString:@"，作者：不合格"];
-                }
-            }
-            if ([key isEqualToString:@"bookPages"]) {
-                if ([textviewText isEqualToString:@""]) {
-                    textviewText = [textviewText stringByAppendingString:@"页数：不合格"];
-                }else {
-                    textviewText = [textviewText stringByAppendingString:@"，页数：不合格"];
-                }
-            }
-            if ([key isEqualToString:@"bookPublishers"]) {
-                if ([textviewText isEqualToString:@""]) {
-                    textviewText = [textviewText stringByAppendingString:@"出版商：不合格"];
-                }else {
-                    textviewText = [textviewText stringByAppendingString:@"，出版商：不合格"];
-                }
-            }
-            if ([key isEqualToString:@"bookCategory"]) {
-                if ([textviewText isEqualToString:@""]) {
-                    textviewText = [textviewText stringByAppendingString:@"类别：不合格"];
-                }else {
-                    textviewText = [textviewText stringByAppendingString:@"，类别：不合格"];
-                }
-            }
-            if ([key isEqualToString:@"bookLanguage"]) {
-                if ([textviewText isEqualToString:@""]) {
-                    textviewText = [textviewText stringByAppendingString:@"语言：不合格"];
-                }else {
-                    textviewText = [textviewText stringByAppendingString:@"，语言：不合格"];
-                }
-            }
-            if ([key isEqualToString:@"bookSize"]) {
-                if ([textviewText isEqualToString:@""]) {
-                    textviewText = [textviewText stringByAppendingString:@"大小：不合格"];
-                }else {
-                    textviewText = [textviewText stringByAppendingString:@"，大小：不合格"];
-                }
-            }
-        }
-    }];
-    _textView.text = textviewText;
- }
-
 - (UIView *)createAlertViewWithIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.row == 0) {
         UIView *alertView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 267, 357)];
         
-        UILabel *alertTitle = [[UILabel alloc]initWithFrame:CGRectMake(alertView.bounds.size.width / 2 - 50, 10, 100, 20)];
+        UILabel *alertTitle = [[UILabel alloc]initWithFrame:CGRectMake(0, 10, alertView.bounds.size.width, 20)];
         alertTitle.textAlignment = NSTextAlignmentCenter;
-        alertTitle.text = _titleArray[indexPath.row];
+        alertTitle.text = @"封皮";
         alertTitle.font = [UIFont fontWithName:@"Helvetica-Bold" size:20];
         [alertView addSubview:alertTitle];
         
@@ -510,19 +417,19 @@ static NSString * const CellIdentifier = @"cell";
         
         return alertView;
     }else {
-        CGSize bookIntroduceSize = [_bookDetialArray[indexPath.row] sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:CGSizeMake(300.0f,CGFLOAT_MAX) lineBreakMode:UILineBreakModeWordWrap];
+        CGSize bookIntroduceSize = [_reviewvalue[indexPath.row - 1] sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:CGSizeMake(300.0f,CGFLOAT_MAX) lineBreakMode:UILineBreakModeWordWrap];
         // 计算文本高度
         UIView *alertView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 267, bookIntroduceSize.height + 60)];
         
-        UILabel *alertTitle = [[UILabel alloc]initWithFrame:CGRectMake(alertView.bounds.size.width / 2 - 50, 10, 100, 20)];
+        UILabel *alertTitle = [[UILabel alloc]initWithFrame:CGRectMake(0, 10, alertView.bounds.size.width, 20)];
         alertTitle.textAlignment = NSTextAlignmentCenter;
-        alertTitle.text = _titleArray[indexPath.row];
+        alertTitle.text = _reviewkey[indexPath.row - 1];
         alertTitle.font = [UIFont fontWithName:@"Helvetica-Bold" size:20];
         [alertView addSubview:alertTitle];
         
         UILabel *alertDetial = [[UILabel alloc]initWithFrame:CGRectMake(10, 40, alertView.bounds.size.width - 20, bookIntroduceSize.height + 20)];
         alertDetial.textAlignment = NSTextAlignmentCenter;
-        alertDetial.text = _bookDetialArray[indexPath.row];
+        alertDetial.text = _reviewvalue[indexPath.row - 1];
         alertDetial.lineBreakMode = NSLineBreakByWordWrapping;                                                                                         // 文字过长时显示全部
         alertDetial.numberOfLines = 0;
         alertDetial.font = [UIFont systemFontOfSize:14];
@@ -533,6 +440,8 @@ static NSString * const CellIdentifier = @"cell";
     }
     return nil;
 }
+
+
 
 #pragma mark 设置行高
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
