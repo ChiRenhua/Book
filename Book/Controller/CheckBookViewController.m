@@ -53,6 +53,7 @@ NSString *bookURL;
                 [_noDataLable setHidden:NO];
                 [_CheckBookViewtableView.tableHeaderView setHidden:YES];
             }
+            [[BookReviewModel sharedInstance]synReviewbookDataWitharray:bookArray];
             [self.CheckBookViewtableView reloadData];
             [_CheckBookViewtableView.mj_header endRefreshing];
             
@@ -284,6 +285,7 @@ NSString *bookURL;
     }
     [_CheckBookViewtableView reloadData];
 }
+
 // 离开页面销毁搜索框
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];

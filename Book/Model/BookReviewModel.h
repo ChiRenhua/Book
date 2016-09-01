@@ -28,5 +28,6 @@ typedef void (^FailedLoadData)(NSString *error);
 - (void)getBookReviewDataToLocalWithURL:(NSString *)reviewurl;
 - (void)addReviewBookDataToLoaclWithBook:(Book *)book;
 - (NSMutableArray *)getReviewBookFromLocal;
+- (void)synReviewbookDataWitharray:(NSMutableArray *)array;
 
 @end
