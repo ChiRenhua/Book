@@ -43,6 +43,30 @@
     return array;
 }
 
+- (void)submitReviewDataWithURL:(NSString *)submitURL {
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    //manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
+    NSString *url = [BASEURL stringByAppendingString:submitURL];
+    [manager POST:url parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
+        
+    } progress:^(NSProgress * _Nonnull uploadProgress) {
+        
+    } success:^(NSURLSessionDataTask * _Nonnull task, id responseObject) {
+        int status = [responseObject[@"status"] intValue];
+        if (status == 1000) {
+            _submitSuccess();
+        }else if(status == 1001) {
+            _showLoginView();
+        }else if(status == 1002) {
+            _submitFailed();
+        }
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        NSLog(@"error:%@",error);
+        _failedLoadData(@"未知错误!请稍后重试!");
+    }];
+}
+
 - (void)getBookReviewDataToLocalWithURL:(NSString *)reviewurl {
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     //manager.responseSerializer = [AFHTTPResponseSerializer serializer];
@@ -122,6 +146,7 @@
         [dic setValue:book.bookID forKey:@"bookID"];
         [dic setValue:book.isbn forKey:@"isbn"];
         [dic setValue:book.bookState forKey:@"bookState"];
+        [dic setValue:book.step forKey:@"step"];
         [bookarray addObject:dic];
         [bookarray writeToFile:plistPath atomically:YES];
         
@@ -150,6 +175,7 @@
             [dic setValue:book.bookID forKey:@"bookID"];
             [dic setValue:book.isbn forKey:@"isbn"];
             [dic setValue:book.bookState forKey:@"bookState"];
+            [dic setValue:book.step forKey:@"step"];
             [bookarray addObject:dic];
             [bookarray writeToFile:plistPath atomically:YES];
             

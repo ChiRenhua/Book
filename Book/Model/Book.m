@@ -20,6 +20,7 @@
         _bookID = [dic objectForKey:@"id"];
         _isbn = [dic objectForKey:@"isbn"];
         _bookState = @"";
+        _step = @"";
     }
     return self;
 }

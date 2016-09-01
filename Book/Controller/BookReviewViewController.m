@@ -12,6 +12,7 @@
 #import "BookReviewModel.h"
 #import "AppDelegate.h"
 #import <SDWebImage/UIImageView+WebCache.h>
+#import "MBProgressHUD.h"
 
 #define SCREEN_BOUNDS [UIScreen mainScreen].bounds.size
 static NSString * const CellIdentifier = @"cell";
@@ -28,7 +29,9 @@ static NSString * const CellIdentifier = @"cell";
 @property (nonatomic, copy) NSMutableArray *reviewkey_SD;
 @property (nonatomic, copy) NSMutableArray *reviewvalue_SD;
 @property (nonatomic, copy) NSMutableArray *reviewResult_SD;
+@property(retain,nonatomic) MBProgressHUD *mbprogress;
 @property (nonatomic, strong) AppDelegate *reviewDelegate;
+
 @end
 
 @implementation BookReviewViewController
@@ -41,6 +44,8 @@ static NSString * const CellIdentifier = @"cell";
         _reviewResult_SD = [[NSMutableArray alloc]init];
         _detialBook = [[Book alloc]init];
         _detialBook = book;
+        _mbprogress = [[MBProgressHUD alloc]initWithView:self.view];
+        _mbprogress.delegate = self;
         [BookReviewModel sharedInstance].updataReviewView = ^(NSMutableArray *key,NSMutableArray *value){
             _reviewkey = key;
             _reviewvalue = value;
@@ -74,6 +79,13 @@ static NSString * const CellIdentifier = @"cell";
         [BookReviewModel sharedInstance].failedLoadData = ^(NSString *error){
             [_IndicatorView removeFromSuperview];
             [_errorLable setHidden:NO];
+        };
+        [BookReviewModel sharedInstance].submitSuccess = ^(){
+            [self showToastWithMessage:@"提交成功"];
+            [self performSelector:@selector(cancle) withObject:nil afterDelay:1.0f];
+        };
+        [BookReviewModel sharedInstance].submitFailed = ^(){
+            [self showToastWithMessage:@"提交失败!请稍后重试!"];
         };
     }
     return self;
@@ -244,15 +256,17 @@ static NSString * const CellIdentifier = @"cell";
 - (void)commitButtonAction {
     // 键盘收回判断
     _isKeyboardShow = NO;
-    NSString *pendingResultText = [[NSString alloc]init];
-    if ([_textView.text isEqualToString:@""]) {
-        pendingResultText = @"审核通过!";
-    }else {
-        pendingResultText = _textView.text;
-    }
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"审核信息" message:pendingResultText preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"审核信息" message:_textView.text preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
-        
+        NSString *pendingResultText = [[NSString alloc]init];
+        if ([_textView.text isEqualToString:@""]) {
+            NSString *url = [NSString stringWithFormat:@"postResult.serv?username=%@&sessionid=%@&step=%@&pass=%@&reason=%@&bookid=%@",[[UserInfoModel sharedInstance]getUserName],[[UserInfoModel sharedInstance]getUserSessionid],_detialBook.step,@"0",@"",_detialBook.bookID];
+            [[BookReviewModel sharedInstance]submitReviewDataWithURL:url];
+        }else {
+            NSString *url = [NSString stringWithFormat:@"postResult.serv?username=%@&sessionid=%@&step=%@&pass=%@&reason=%@&bookid=%@",[[UserInfoModel sharedInstance]getUserName],[[UserInfoModel sharedInstance]getUserSessionid],_detialBook.step,@"1",_textView.text,_detialBook.bookID];
+            NSString *book_submit_url = [url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+            [[BookReviewModel sharedInstance]submitReviewDataWithURL:book_submit_url];
+        }
     }];
     UIAlertAction *cancleAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action){
         
@@ -448,7 +462,14 @@ static NSString * const CellIdentifier = @"cell";
     return nil;
 }
 
-
+- (void)showToastWithMessage:(NSString *)message {
+    _mbprogress.mode = MBProgressHUDModeText;                                                       // 设置toast的样式为文字
+    _mbprogress.label.text = NSLocalizedString(message, @"HUD message title");                        // 设置toast上的文字
+    [self.view addSubview:_mbprogress];                                                             // 将toast添加到view中
+    [self.view bringSubviewToFront:_mbprogress];                                                    // 让toast显示在view的最前端
+    [_mbprogress showAnimated:YES];                                                                 // 显示toast
+    [_mbprogress hideAnimated:YES afterDelay:1.0];                                                  // 1.5秒后销毁toast
+}
 
 #pragma mark 设置行高
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {

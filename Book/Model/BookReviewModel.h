@@ -13,6 +13,8 @@ typedef void (^UpdataReviewView)(NSMutableArray *key,NSMutableArray *value);
 typedef void (^ShowLoginView)();
 typedef void (^NoBookInfo)(NSString *error);
 typedef void (^FailedLoadData)(NSString *error);
+typedef void (^SubmitSuccess)();
+typedef void (^SubmitFailed)();
 
 @interface BookReviewModel : NSObject
 
@@ -20,6 +22,8 @@ typedef void (^FailedLoadData)(NSString *error);
 @property(nonatomic,copy) ShowLoginView showLoginView;
 @property(nonatomic,copy) NoBookInfo noBookInfo;
 @property(nonatomic,copy) FailedLoadData failedLoadData;
+@property(nonatomic,copy) SubmitSuccess submitSuccess;
+@property(nonatomic,copy) SubmitFailed submitFailed;
 
 + (BookReviewModel *)sharedInstance;
 
@@ -29,5 +33,6 @@ typedef void (^FailedLoadData)(NSString *error);
 - (void)addReviewBookDataToLoaclWithBook:(Book *)book;
 - (NSMutableArray *)getReviewBookFromLocal;
 - (void)synReviewbookDataWitharray:(NSMutableArray *)array;
+- (void)submitReviewDataWithURL:(NSString *)submitURL;
 
 @end

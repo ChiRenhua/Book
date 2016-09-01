@@ -319,6 +319,7 @@ int reviewTextHeight;
         [_mbprogress removeFromSuperview];
     }
     BookReviewViewController *bookReviewViewController;
+    _detialBook.step = _step;
     bookReviewViewController = [[BookReviewViewController alloc]init:_detialBook];
     [self presentViewController:bookReviewViewController animated:YES completion:nil];
 }

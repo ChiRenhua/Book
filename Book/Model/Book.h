@@ -16,6 +16,7 @@
 @property (nonatomic,copy) NSString *bookID;
 @property (nonatomic,copy) NSString *isbn;
 @property (nonatomic,copy) NSString *bookState;
+@property (nonatomic,copy) NSString *step;
 
 #pragma mark 初始化函数
 - (Book *)initWithDictionary:(NSMutableDictionary *)dic;
