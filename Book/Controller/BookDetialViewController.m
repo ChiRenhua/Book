@@ -25,7 +25,9 @@
 @property (copy,nonatomic) NSString *step;
 @property (copy,nonatomic) UILabel *bookReviewInfo;
 @property(retain,nonatomic) AppDelegate *bookDetialAppDelegate;
-@property(strong,retain)  MBProgressHUD *mbprogress;
+@property(nonatomic,retain)  MBProgressHUD *mbprogress;
+@property (nonatomic, retain) UILabel *errorLable;
+@property (nonatomic, retain) UIActivityIndicatorView *IndicatorView;
 
 @end
 int reviewTextHeight;
@@ -45,10 +47,18 @@ int reviewTextHeight;
             CGSize bookIntroduceSize = [reason sizeWithFont:[UIFont systemFontOfSize:15] constrainedToSize:CGSizeMake(300.0f,CGFLOAT_MAX) lineBreakMode:UILineBreakModeWordWrap];
             _bookReviewInfo.frame = CGRectMake(SCREEN_BOUNDS.width / 20 + 70, 50, SCREEN_BOUNDS.width - SCREEN_BOUNDS.width / 20 - 90, bookIntroduceSize.height);
             reviewTextHeight = bookIntroduceSize.height;
+            [_errorLable setHidden:YES];
+            [_IndicatorView removeFromSuperview];
             _bookReviewInfo.text = reason;
         };
         [BookDetialModel sharedInstance].bookDetialShowLoginView = ^(){
             [self showLoginView];
+            [_IndicatorView removeFromSuperview];
+            [_errorLable setHidden:NO];
+        };
+        [BookDetialModel sharedInstance].failedUpdateReason = ^(){
+            [_IndicatorView removeFromSuperview];
+            [_errorLable setHidden:NO];
         };
     }
     return self;
@@ -64,9 +74,42 @@ int reviewTextHeight;
     _bookDetialTableView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:_bookDetialTableView];
     
+    [self addIndicatorView];
+    [self addErrorLable];
+    [self getData];
+}
+
+- (void)addErrorLable {
+    _errorLable = [[UILabel alloc]initWithFrame:CGRectMake(0, SCREEN_BOUNDS.height/2 - 25 + FIRST_CELL_HIGHT/2, SCREEN_BOUNDS.width, 50)];
+    _errorLable.textColor = [UIColor grayColor];
+    _errorLable.text = @"数据加载失败\n点击重新加载!";
+    _errorLable.numberOfLines = 0;
+    _errorLable.textAlignment = NSTextAlignmentCenter;
+    _errorLable.font = [UIFont systemFontOfSize:15];
+    _errorLable.userInteractionEnabled = YES;
+    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(onClickErrorLable)];
+    [_errorLable addGestureRecognizer:tapGesture];
+    [self.view addSubview:_errorLable];
+    [_errorLable setHidden:YES];
+}
+
+- (void)onClickErrorLable {
+    [_errorLable setHidden:YES];
+    [self addIndicatorView];
+    [self getData];
+}
+
+- (void)getData {
     NSString *url = [NSString stringWithFormat:@"getNotPassReason.serv?username=%@&sessionid=%@&step=%@&bookid=%@",[[UserInfoModel sharedInstance]getUserName],[[UserInfoModel sharedInstance]getUserSessionid],_step,_detialBook.bookID];
     [[BookDetialModel sharedInstance] getBookreasonWithURL:url by:bookReasonModule];
-    
+}
+
+- (void)addIndicatorView {
+    _IndicatorView = [[UIActivityIndicatorView alloc]init];
+    _IndicatorView.center = CGPointMake(SCREEN_BOUNDS.width/2, SCREEN_BOUNDS.height/2 + FIRST_CELL_HIGHT/2);
+    _IndicatorView.activityIndicatorViewStyle = UIActivityIndicatorViewStyleGray;
+    [self.view addSubview:_IndicatorView];
+    [_IndicatorView startAnimating];
 }
 
 #pragma mark 设置分组数

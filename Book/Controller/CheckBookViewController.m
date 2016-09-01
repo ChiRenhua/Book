@@ -127,7 +127,7 @@ NSString *bookURL;
 }
 #pragma mark - 无数据View
 - (void)showNoDataView {
-    _noDataLable = [[UILabel alloc]initWithFrame:CGRectMake(SCREEN_BOUNDS.width/2 - 100, SCREEN_BOUNDS.height/2, 200, 50)];
+    _noDataLable = [[UILabel alloc]initWithFrame:CGRectMake(SCREEN_BOUNDS.width/2 - 100, SCREEN_BOUNDS.height/2 - 25, 200, 50)];
     _noDataLable.textColor = [UIColor grayColor];
     _noDataLable.text = @"暂无数据!";
     _noDataLable.textAlignment = NSTextAlignmentCenter;

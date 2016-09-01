@@ -39,6 +39,7 @@ static NSString * const CellIdentifier = @"cell";
             _reviewvalue = value;
             [_IndicatorView removeFromSuperview];
             [_tableView reloadData];
+            [_errorLable setHidden:YES];
         };
         [BookReviewModel sharedInstance].showLoginView = ^(){
             UIAlertController *loginAlert = [UIAlertController alertControllerWithTitle:@"错误!" message:@"登录态失效，请重新登陆!" preferredStyle:UIAlertControllerStyleAlert];
@@ -85,7 +86,12 @@ static NSString * const CellIdentifier = @"cell";
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
     [self addIndicatorView];
     [self addErrorLable];
-    [self getData];
+    if ([_detialBook.bookState isEqualToString:@"审核中"]) {
+        
+    }else if ([_detialBook.bookState isEqualToString:@"待审核"]) {
+        [self getData];
+    }
+    
 }
 
 - (void)addErrorLable {

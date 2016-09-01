@@ -58,7 +58,7 @@
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         if (Module == bookReasonModule) {
-            _updateReason(@"审核信息加载失败!");
+            _failedUpdateReason();
         }else if (Module == addReviewButtonModule) {
             //加审失败逻辑
             _showToast(@"加审失败，请重试!");
