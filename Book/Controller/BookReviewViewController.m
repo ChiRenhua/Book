@@ -110,9 +110,8 @@ static NSString * const CellIdentifier = @"cell";
     }else if ([_detialBook.bookState isEqualToString:@"待审核"]) {
         [self getData];
     }
-    
 }
-
+// 数据加载失败lable
 - (void)addErrorLable {
     _errorLable = [[UILabel alloc]initWithFrame:CGRectMake(0, SCREEN_BOUNDS.height/2 - 25, SCREEN_BOUNDS.width, 50)];
     _errorLable.textColor = [UIColor grayColor];
@@ -126,13 +125,13 @@ static NSString * const CellIdentifier = @"cell";
     [self.view addSubview:_errorLable];
     [_errorLable setHidden:YES];
 }
-
+// lable点击事件
 - (void)onClickErrorLable {
     [_errorLable setHidden:YES];
     [self addIndicatorView];
     [self getData];
 }
-
+// 添加菊花
 - (void)addIndicatorView {
     _IndicatorView = [[UIActivityIndicatorView alloc]init];
     _IndicatorView.center = CGPointMake(SCREEN_BOUNDS.width/2, SCREEN_BOUNDS.height/2);
@@ -140,12 +139,12 @@ static NSString * const CellIdentifier = @"cell";
     [self.view addSubview:_IndicatorView];
     [_IndicatorView startAnimating];
 }
-
+// 服务器拉取数据
 - (void)getData {
     NSString *url = [NSString stringWithFormat:@"getBookAllInfo.serv?username=%@&sessionid=%@&bookid=%@",[[UserInfoModel sharedInstance]getUserName],[[UserInfoModel sharedInstance]getUserSessionid],_detialBook.bookID];
     [[BookReviewModel sharedInstance]getBookReviewDataToLocalWithURL:url];
 }
-
+// 首次加载保存
 - (void)saveDictoinary {
     NSMutableArray *array = [[NSMutableArray alloc]init];
     NSMutableDictionary *dic = [[NSMutableDictionary alloc]init];
@@ -237,8 +236,8 @@ static NSString * const CellIdentifier = @"cell";
     [commitButton setContentCompressionResistancePriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisVertical];
     [_toolbar setContentCompressionResistancePriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisVertical];
     
-    [_toolbar addConstraint:[NSLayoutConstraint constraintWithItem:_toolbar attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationLessThanOrEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0f constant:150.0f]];
-    
+    [_toolbar addConstraint:[NSLayoutConstraint constraintWithItem:_toolbar attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationLessThanOrEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0f constant:90.0f]];
+    [self resetTextfied];
     return _toolbar;
 }
 #pragma mark 提交按钮点击事件
@@ -311,11 +310,18 @@ static NSString * const CellIdentifier = @"cell";
     }else {
         [cell.contentView.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
     }
-
-    UILabel *bookReviewTitle = [[UILabel alloc]initWithFrame:CGRectMake(SCREEN_BOUNDS.width / 20, 15, tableView.bounds.size.width - 100, 20)];
+    // 审核标题
+    UILabel *bookReviewTitle = [[UILabel alloc]initWithFrame:CGRectMake(SCREEN_BOUNDS.width / 20, 15, (tableView.bounds.size.width - 60)/2, 20)];
     bookReviewTitle.text = _reviewkey_SD[indexPath.row];
     bookReviewTitle.font = [UIFont systemFontOfSize:17];
     [cell.contentView addSubview:bookReviewTitle];
+    // 审核内容
+    UILabel *bookReviewSubtitle = [[UILabel alloc]initWithFrame:CGRectMake(SCREEN_BOUNDS.width / 20 + (tableView.bounds.size.width - 60)/2, 15, (tableView.bounds.size.width - 60)/2, 20)];
+    bookReviewSubtitle.text = _reviewvalue_SD[indexPath.row];
+    bookReviewSubtitle.font = [UIFont systemFontOfSize:17];
+    bookReviewSubtitle.textColor = [UIColor grayColor];
+    bookReviewSubtitle.textAlignment = NSTextAlignmentRight;
+    [cell.contentView addSubview:bookReviewSubtitle];
     // 是否合格
     UIImageView *isPassImage = [[UIImageView alloc]initWithFrame:CGRectMake(tableView.bounds.size.width - 40, 10, 30, 30)];
     isPassImage.contentMode = UIViewContentModeScaleAspectFit;
@@ -342,109 +348,26 @@ static NSString * const CellIdentifier = @"cell";
     
     // You may use a Block, rather than a delegate.
     [alertView setOnButtonTouchUpInside:^(CustomIOSAlertView *alertView, int buttonIndex) {
-        // 获取书籍合格状态列表
-        NSMutableDictionary *bookDictionary = [[NSMutableDictionary alloc]init];
-//        bookDictionary = _detialBook.bookReviewInfo;
         switch (buttonIndex) {
             case 0:{
-                switch (indexPath.row) {
-                    case 0:{
-                        [bookDictionary setObject:@"0" forKey:@"bookPicture"];
-                    }
-                        break;
-                    case 1:{
-                        [bookDictionary setObject:@"0" forKey:@"bookName"];
-                    }
-                        break;
-                    case 2:{
-                        [bookDictionary setObject:@"0" forKey:@"bookWriter"];
-                    }
-                        break;
-                    case 3:{
-                        [bookDictionary setObject:@"0" forKey:@"bookSummary"];
-                    }
-                        break;
-                    case 4:{
-                        [bookDictionary setObject:@"0" forKey:@"bookPublishers"];
-                    }
-                        break;
-                    case 5:{
-                        [bookDictionary setObject:@"0" forKey:@"bookCategory"];
-                    }
-                        break;
-                    case 6:{
-                        [bookDictionary setObject:@"0" forKey:@"bookTime"];
-                    }
-                        break;
-                    case 7:{
-                        [bookDictionary setObject:@"0" forKey:@"bookSize"];
-                    }
-                        break;
-                    case 8:{
-                        [bookDictionary setObject:@"0" forKey:@"bookPages"];
-                    }
-                        break;
-                    case 9:{
-                        [bookDictionary setObject:@"0" forKey:@"bookLanguage"];
-                    }
-                        break;
-                    default:
-                        break;
+                int state = [_reviewResult_SD[indexPath.row]intValue];
+                if (state == 1) {
+                    _reviewResult_SD[indexPath.row] = @"0";
                 }
-
             }
                 break;
             case 1:{
-                switch (indexPath.row) {
-                    case 0:{
-                        [bookDictionary setObject:@"1" forKey:@"bookPicture"];
-                    }
-                        break;
-                    case 1:{
-                        [bookDictionary setObject:@"1" forKey:@"bookName"];
-                    }
-                        break;
-                    case 2:{
-                        [bookDictionary setObject:@"1" forKey:@"bookWriter"];
-                    }
-                        break;
-                    case 3:{
-                        [bookDictionary setObject:@"1" forKey:@"bookSummary"];
-                    }
-                        break;
-                    case 4:{
-                        [bookDictionary setObject:@"1" forKey:@"bookPublishers"];
-                    }
-                        break;
-                    case 5:{
-                        [bookDictionary setObject:@"1" forKey:@"bookCategory"];
-                    }
-                        break;
-                    case 6:{
-                        [bookDictionary setObject:@"1" forKey:@"bookTime"];
-                    }
-                        break;
-                    case 7:{
-                        [bookDictionary setObject:@"1" forKey:@"bookSize"];
-                    }
-                        break;
-                    case 8:{
-                        [bookDictionary setObject:@"1" forKey:@"bookPages"];
-                    }
-                        break;
-                    case 9:{
-                        [bookDictionary setObject:@"1" forKey:@"bookLanguage"];
-                    }
-                        break;
-                    default:
-                        break;
+                int state = [_reviewResult_SD[indexPath.row]intValue];
+                if (state == 0) {
+                    _reviewResult_SD[indexPath.row] = @"1";
                 }
-
             }
                 break;
             default:
                 break;
         }
+        [self resetTextfied];
+        [self changeAndSave];
         // 重新加载tableview数据
         [_tableView reloadData];
         [alertView close];
@@ -458,6 +381,30 @@ static NSString * const CellIdentifier = @"cell";
     [_textView resignFirstResponder];
     // 键盘收回判断
     _isKeyboardShow = NO;
+}
+
+- (void)resetTextfied {
+    NSString *str = [[NSString alloc]init];
+    for (int i = 0; i < [_reviewkey_SD count]; i++) {
+        if ([_reviewResult_SD[i]intValue] == 0) {
+            str = [str stringByAppendingString:_reviewkey_SD[i]];
+            str = [str stringByAppendingString:@"：不合格；"];
+        }
+    }
+    [_textView setText:str];
+}
+
+// 进行审核时，每次操作都要去保存
+- (void)changeAndSave {
+    NSMutableArray *array = [[NSMutableArray alloc]init];
+    for (int i = 0; i < [_reviewkey_SD count]; i++) {
+        NSMutableDictionary *dic = [[NSMutableDictionary alloc]init];
+        [dic setObject:_reviewkey_SD[i] forKey:@"key"];
+        [dic setObject:_reviewvalue_SD[i] forKey:@"value"];
+        [dic setObject:_reviewResult_SD[i] forKey:@"result"];
+        [array addObject:dic];
+    }
+    [[BookReviewModel sharedInstance]addBookReviewDataToLocalWithBookISBN:_detialBook.isbn Array:array];
 }
 
 - (UIView *)createAlertViewWithIndexPath:(NSIndexPath *)indexPath
