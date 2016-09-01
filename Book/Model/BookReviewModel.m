@@ -25,17 +25,24 @@
     return instance;
 }
 
-- (void)addBookReviewDataToLocalWithBookISBN:(NSString *)ISBN Dictionary:(NSMutableDictionary *)dic {
-    
+- (void)addBookReviewDataToLocalWithBookISBN:(NSString *)ISBN Array:(NSMutableArray *)array {
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSArray *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *filePath = [path objectAtIndex:0];
+    NSString *plistPath = [filePath stringByAppendingPathComponent:ISBN];
+    [fileManager createFileAtPath:plistPath contents:nil attributes:nil];
+    [array writeToFile:plistPath atomically:YES];
 }
 
-- (NSMutableDictionary *)getBookReviewDataToLocalWithBookISBN:(NSString *)ISBN {
-    NSMutableDictionary *dic = [[NSMutableDictionary alloc]init];
-    
-    return dic;
+- (NSMutableArray *)getBookReviewDataToLocalWithBookISBN:(NSString *)ISBN {
+    NSArray *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *filePath = [path objectAtIndex:0];
+    NSString *plistPath = [filePath stringByAppendingPathComponent:ISBN];
+    NSMutableArray *array = [[NSMutableArray alloc]initWithContentsOfFile:plistPath];
+    return array;
 }
 
-- (NSDictionary *)getBookReviewDataToLocalWithURL:(NSString *)reviewurl {
+- (void)getBookReviewDataToLocalWithURL:(NSString *)reviewurl {
     NSDictionary *dic = [[NSDictionary alloc]init];
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     //manager.responseSerializer = [AFHTTPResponseSerializer serializer];
@@ -65,7 +72,6 @@
         NSLog(@"error:%@",error);
         _failedLoadData(@"数据获取失败，请重试!");
     }];
-    return dic;
 }
 
 @end

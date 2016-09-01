@@ -11,6 +11,7 @@
 #import "UserInfoModel.h"
 #import "BookReviewModel.h"
 #import "AppDelegate.h"
+#import <SDWebImage/UIImageView+WebCache.h>
 
 #define SCREEN_BOUNDS [UIScreen mainScreen].bounds.size
 static NSString * const CellIdentifier = @"cell";
@@ -24,6 +25,9 @@ static NSString * const CellIdentifier = @"cell";
 @property (nonatomic, retain) UILabel *errorLable;
 @property (nonatomic, copy) NSMutableArray *reviewkey;
 @property (nonatomic, copy) NSMutableArray *reviewvalue;
+@property (nonatomic, copy) NSMutableArray *reviewkey_SD;
+@property (nonatomic, copy) NSMutableArray *reviewvalue_SD;
+@property (nonatomic, copy) NSMutableArray *reviewResult_SD;
 @property (nonatomic, strong) AppDelegate *reviewDelegate;
 @end
 
@@ -32,14 +36,18 @@ static NSString * const CellIdentifier = @"cell";
 - (id)init:(Book *) book{
     if (self = [super init]) {
         _reviewDelegate = [[UIApplication sharedApplication]delegate];
+        _reviewkey_SD = [[NSMutableArray alloc]init];
+        _reviewvalue_SD = [[NSMutableArray alloc]init];
+        _reviewResult_SD = [[NSMutableArray alloc]init];
         _detialBook = [[Book alloc]init];
         _detialBook = book;
         [BookReviewModel sharedInstance].updataReviewView = ^(NSMutableArray *key,NSMutableArray *value){
             _reviewkey = key;
             _reviewvalue = value;
             [_IndicatorView removeFromSuperview];
-            [_tableView reloadData];
             [_errorLable setHidden:YES];
+            [self saveDictoinary];
+            [_tableView reloadData];
         };
         [BookReviewModel sharedInstance].showLoginView = ^(){
             UIAlertController *loginAlert = [UIAlertController alertControllerWithTitle:@"错误!" message:@"登录态失效，请重新登陆!" preferredStyle:UIAlertControllerStyleAlert];
@@ -87,7 +95,18 @@ static NSString * const CellIdentifier = @"cell";
     [self addIndicatorView];
     [self addErrorLable];
     if ([_detialBook.bookState isEqualToString:@"审核中"]) {
-        
+        NSMutableArray *array = [[BookReviewModel sharedInstance]getBookReviewDataToLocalWithBookISBN:_detialBook.isbn];
+        if (array == nil) {
+            [self getData];
+        }else {
+            for (int i = 0; i < [array count]; i++) {
+                [_reviewkey_SD addObject:array[i][@"key"]];
+                [_reviewvalue_SD addObject:array[i][@"value"]];
+                [_reviewResult_SD addObject:array[i][@"result"]];
+            }
+            [_IndicatorView removeFromSuperview];
+            [_tableView reloadData];
+        }
     }else if ([_detialBook.bookState isEqualToString:@"待审核"]) {
         [self getData];
     }
@@ -114,17 +133,41 @@ static NSString * const CellIdentifier = @"cell";
     [self getData];
 }
 
-- (void)getData {
-    NSString *url = [NSString stringWithFormat:@"getBookAllInfo.serv?username=%@&sessionid=%@&bookid=%@",[[UserInfoModel sharedInstance]getUserName],[[UserInfoModel sharedInstance]getUserSessionid],_detialBook.bookID];
-    [[BookReviewModel sharedInstance]getBookReviewDataToLocalWithURL:url];
-}
-
 - (void)addIndicatorView {
     _IndicatorView = [[UIActivityIndicatorView alloc]init];
     _IndicatorView.center = CGPointMake(SCREEN_BOUNDS.width/2, SCREEN_BOUNDS.height/2);
     _IndicatorView.activityIndicatorViewStyle = UIActivityIndicatorViewStyleGray;
     [self.view addSubview:_IndicatorView];
     [_IndicatorView startAnimating];
+}
+
+- (void)getData {
+    NSString *url = [NSString stringWithFormat:@"getBookAllInfo.serv?username=%@&sessionid=%@&bookid=%@",[[UserInfoModel sharedInstance]getUserName],[[UserInfoModel sharedInstance]getUserSessionid],_detialBook.bookID];
+    [[BookReviewModel sharedInstance]getBookReviewDataToLocalWithURL:url];
+}
+
+- (void)saveDictoinary {
+    NSMutableArray *array = [[NSMutableArray alloc]init];
+    NSMutableDictionary *dic = [[NSMutableDictionary alloc]init];
+    NSString *book_image_url = [_detialBook.coverPath stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    [dic setObject:@"封皮" forKey:@"key"];
+    [dic setObject:book_image_url forKey:@"value"];
+    [dic setObject:@"1" forKey:@"result"];
+    [_reviewkey_SD addObject:@"封皮"];
+    [_reviewvalue_SD addObject:book_image_url];
+    [_reviewResult_SD addObject:@"1"];
+    [array addObject:dic];
+    for (int i = 0; i < [_reviewkey count]; i++) {
+        NSMutableDictionary *dic = [[NSMutableDictionary alloc]init];
+        [dic setObject:_reviewkey[i] forKey:@"key"];
+        [dic setObject:_reviewvalue[i] forKey:@"value"];
+        [dic setObject:@"1" forKey:@"result"];
+        [_reviewkey_SD addObject:_reviewkey[i]];
+        [_reviewvalue_SD addObject:_reviewvalue[i]];
+        [_reviewResult_SD addObject:@"1"];
+        [array addObject:dic];
+    }
+    [[BookReviewModel sharedInstance]addBookReviewDataToLocalWithBookISBN:_detialBook.isbn Array:array];
 }
 #pragma mark Handle keyboard show/hide changes
 - (void)keyboardWillShow: (NSNotification *)notification
@@ -228,16 +271,23 @@ static NSString * const CellIdentifier = @"cell";
     [self.view addSubview: navigationBar];
     //创建UIBarButton 可根据需要选择适合自己的样式
     UIBarButtonItem *rightBarItem = [[UIBarButtonItem alloc]initWithTitle:@"保存" style:UIBarButtonItemStylePlain target:self action:@selector(save)];
-    //设置barbutton
     navigationBarTitle.rightBarButtonItem = rightBarItem;
+    [navigationBar setItems:[NSArray arrayWithObject: navigationBarTitle]];
+    
+    UIBarButtonItem *leftBarItem = [[UIBarButtonItem alloc]initWithTitle:@"取消" style:UIBarButtonItemStylePlain target:self action:@selector(cancle)];
+    navigationBarTitle.leftBarButtonItem = leftBarItem;
     [navigationBar setItems:[NSArray arrayWithObject: navigationBarTitle]];
 }
 - (void)save {
     [self dismissViewControllerAnimated:YES completion:nil];
 }
+
+- (void)cancle {
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
 #pragma mark 设置每组标题名称
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-    if ([_reviewkey count]) {
+    if ([_reviewkey_SD count]) {
         return @"审核意见";
     }
     return nil;
@@ -248,29 +298,33 @@ static NSString * const CellIdentifier = @"cell";
 }
 #pragma mark 设置行数
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if (_reviewkey.count == 0) {
+    if (_reviewkey_SD.count == 0) {
         return 0;
     }
-    return _reviewkey.count + 1;
+    return _reviewkey_SD.count;
 }
 #pragma mark 设置单元格样式和内容
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
-    if (indexPath.row == 0) {
-        UILabel *bookPictureTitle = [[UILabel alloc]initWithFrame:CGRectMake(SCREEN_BOUNDS.width / 20, 15, 100, 20)];
-        bookPictureTitle.text = @"封皮";
-        bookPictureTitle.font = [UIFont systemFontOfSize:17];
-        [cell.contentView addSubview:bookPictureTitle];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"reviewcell"];
+    if (!cell) {
+        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"reviewcell"];
     }else {
-        UILabel *bookPictureTitle = [[UILabel alloc]initWithFrame:CGRectMake(SCREEN_BOUNDS.width / 20, 15, tableView.bounds.size.width - 100, 20)];
-        bookPictureTitle.text = _reviewkey[indexPath.row - 1];
-        bookPictureTitle.font = [UIFont systemFontOfSize:17];
-        [cell.contentView addSubview:bookPictureTitle];
+        [cell.contentView.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
     }
+
+    UILabel *bookReviewTitle = [[UILabel alloc]initWithFrame:CGRectMake(SCREEN_BOUNDS.width / 20, 15, tableView.bounds.size.width - 100, 20)];
+    bookReviewTitle.text = _reviewkey_SD[indexPath.row];
+    bookReviewTitle.font = [UIFont systemFontOfSize:17];
+    [cell.contentView addSubview:bookReviewTitle];
     // 是否合格
     UIImageView *isPassImage = [[UIImageView alloc]initWithFrame:CGRectMake(tableView.bounds.size.width - 40, 10, 30, 30)];
     isPassImage.contentMode = UIViewContentModeScaleAspectFit;
     [cell.contentView addSubview:isPassImage];
+    if ([_reviewResult_SD[indexPath.row] isEqualToString:@"1"]) {
+        [isPassImage setImage:[UIImage imageNamed:@"pass"]];
+    }else if([_reviewResult_SD[indexPath.row] isEqualToString:@"0"]) {
+        [isPassImage setImage:[UIImage imageNamed:@"unpass"]];
+    }
     return cell;
 }
 #pragma mark 添加行点击事件
@@ -418,7 +472,7 @@ static NSString * const CellIdentifier = @"cell";
         [alertView addSubview:alertTitle];
         
         UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(35, 40, 197, 297)];
-        [imageView setImage:[UIImage imageNamed:_detialBook.coverPath]];
+        [imageView sd_setImageWithURL:[NSURL URLWithString:_reviewvalue_SD[indexPath.row]] placeholderImage:[UIImage imageNamed:@"default_bookimage"]];
         [alertView addSubview:imageView];
         
         return alertView;
@@ -429,13 +483,13 @@ static NSString * const CellIdentifier = @"cell";
         
         UILabel *alertTitle = [[UILabel alloc]initWithFrame:CGRectMake(0, 10, alertView.bounds.size.width, 20)];
         alertTitle.textAlignment = NSTextAlignmentCenter;
-        alertTitle.text = _reviewkey[indexPath.row - 1];
+        alertTitle.text = _reviewkey_SD[indexPath.row];
         alertTitle.font = [UIFont fontWithName:@"Helvetica-Bold" size:20];
         [alertView addSubview:alertTitle];
         
         UILabel *alertDetial = [[UILabel alloc]initWithFrame:CGRectMake(10, 40, alertView.bounds.size.width - 20, bookIntroduceSize.height + 20)];
         alertDetial.textAlignment = NSTextAlignmentCenter;
-        alertDetial.text = _reviewvalue[indexPath.row - 1];
+        alertDetial.text = _reviewvalue_SD[indexPath.row];
         alertDetial.lineBreakMode = NSLineBreakByWordWrapping;                                                                                         // 文字过长时显示全部
         alertDetial.numberOfLines = 0;
         alertDetial.font = [UIFont systemFontOfSize:14];

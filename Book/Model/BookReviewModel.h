@@ -22,8 +22,8 @@ typedef void (^FailedLoadData)(NSString *error);
 
 + (BookReviewModel *)sharedInstance;
 
-- (void)addBookReviewDataToLocalWithBookISBN:(NSString *)ISBN Dictionary:(NSMutableDictionary *)dic;
-- (NSMutableDictionary *)getBookReviewDataToLocalWithBookISBN:(NSString *)ISBN;
-- (NSDictionary *)getBookReviewDataToLocalWithURL:(NSString *)reviewurl;
+- (void)addBookReviewDataToLocalWithBookISBN:(NSString *)ISBN Array:(NSMutableArray *)array;
+- (NSMutableArray *)getBookReviewDataToLocalWithBookISBN:(NSString *)ISBN;
+- (void)getBookReviewDataToLocalWithURL:(NSString *)reviewurl;
 
 @end
