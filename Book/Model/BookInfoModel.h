@@ -9,11 +9,13 @@
 #import <Foundation/Foundation.h>
 typedef void (^updateTableView)(NSString *state);
 typedef void (^ShowLoginAlert)();
+typedef void (^OfflineMode)();
 
 @interface BookInfoModel : NSObject
 
 @property(nonatomic,copy)updateTableView updateTV;
 @property(nonatomic,copy)ShowLoginAlert showLoginAlert;
+@property(nonatomic,copy)OfflineMode offlineMode;
 
 + (BookInfoModel *)sharedInstance;
 

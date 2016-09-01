@@ -43,7 +43,6 @@
 }
 
 - (void)getBookReviewDataToLocalWithURL:(NSString *)reviewurl {
-    NSDictionary *dic = [[NSDictionary alloc]init];
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     //manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
@@ -72,6 +71,63 @@
         NSLog(@"error:%@",error);
         _failedLoadData(@"数据获取失败，请重试!");
     }];
+}
+
+- (void)addReviewBookDataToLoaclWithBook:(Book *)book {
+    NSMutableArray *bookarray = [[NSMutableArray alloc]init];
+    bookarray = [self getReviewBookFromLocal];
+    if (bookarray == nil) {
+        bookarray = [[NSMutableArray alloc]init];
+        NSFileManager *fileManager = [NSFileManager defaultManager];
+        NSArray *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+        NSString *filePath = [path objectAtIndex:0];
+        NSString *plistPath = [filePath stringByAppendingPathComponent:@"localbookinfo"];
+        [fileManager createFileAtPath:plistPath contents:nil attributes:nil];
+        NSMutableDictionary *dic = [[NSMutableDictionary alloc]init];
+        [dic setValue:book.authorName forKey:@"authorName"];
+        [dic setValue:book.bookName forKey:@"bookName"];
+        [dic setValue:book.coverPath forKey:@"coverPath"];
+        [dic setValue:book.bookID forKey:@"bookID"];
+        [dic setValue:book.isbn forKey:@"isbn"];
+        [dic setValue:book.bookState forKey:@"bookState"];
+        [bookarray addObject:dic];
+        [bookarray writeToFile:plistPath atomically:YES];
+        
+        bookarray = [self getReviewBookFromLocal];
+    }else {
+        BOOL canAddtoLoacl = YES;
+        for (int i = 0; i < bookarray.count; i++) {
+            if ([bookarray[i][@"isbn"] isEqualToString:book.isbn]) {
+                canAddtoLoacl = NO;
+                break;
+            }
+        }
+        if (canAddtoLoacl) {
+            NSFileManager *fileManager = [NSFileManager defaultManager];
+            NSArray *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+            NSString *filePath = [path objectAtIndex:0];
+            NSString *plistPath = [filePath stringByAppendingPathComponent:@"localbookinfo"];
+            [fileManager createFileAtPath:plistPath contents:nil attributes:nil];
+            NSMutableDictionary *dic = [[NSMutableDictionary alloc]init];
+            [dic setValue:book.authorName forKey:@"authorName"];
+            [dic setValue:book.bookName forKey:@"bookName"];
+            [dic setValue:book.coverPath forKey:@"coverPath"];
+            [dic setValue:book.bookID forKey:@"bookID"];
+            [dic setValue:book.isbn forKey:@"isbn"];
+            [dic setValue:book.bookState forKey:@"bookState"];
+            [bookarray addObject:dic];
+            [bookarray writeToFile:plistPath atomically:YES];
+        }
+
+    }
+}
+
+- (NSMutableArray *)getReviewBookFromLocal {
+    NSArray *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *filePath = [path objectAtIndex:0];
+    NSString *plistPath = [filePath stringByAppendingPathComponent:@"localbookinfo"];
+    NSMutableArray *array = [[NSMutableArray alloc]initWithContentsOfFile:plistPath];
+    return array;
 }
 
 @end

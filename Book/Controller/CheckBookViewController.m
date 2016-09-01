@@ -15,6 +15,7 @@
 #import "MBProgressHUD.h"
 #import "LoginViewController.h"
 #import "AppDelegate.h"
+#import "BookReviewModel.h"
 
 #define SCREEN_BOUNDS [UIScreen mainScreen].bounds.size
 
@@ -61,7 +62,6 @@ NSString *bookURL;
             [self.view bringSubviewToFront:_mbprogress];                                                    // 让toast显示在view的最前端
             [_mbprogress showAnimated:YES];                                                                 // 显示toast
             [_mbprogress hideAnimated:YES afterDelay:1.0];                                                  // 1.5秒后销毁toast
-            
         };
         [BookInfoModel sharedInstance].showLoginAlert = ^(){
             [_CheckBookViewtableView.mj_header endRefreshing];
@@ -76,7 +76,17 @@ NSString *bookURL;
             [loginAlert addAction:calcleAction];
             [self presentViewController:loginAlert animated:YES completion:nil];
         };
-
+        [BookInfoModel sharedInstance].offlineMode = ^() {
+            [_CheckBookViewtableView.mj_header endRefreshing];
+            
+            _mbprogress.mode = MBProgressHUDModeText;                                                       // 设置toast的样式为文字
+            _mbprogress.label.text = NSLocalizedString(@"离线模式，加载本地数据!", @"HUD message title");       // 设置toast上的文字
+            [self.view addSubview:_mbprogress];                                                             // 将toast添加到view中
+            [self.view bringSubviewToFront:_mbprogress];                                                    // 让toast显示在view的最前端
+            [_mbprogress showAnimated:YES];                                                                 // 显示toast
+            [_mbprogress hideAnimated:YES afterDelay:1.0];                                                  // 1.5秒后销毁toast
+            [self loadLocalData];
+        };
     }
     return self;
 }
@@ -93,6 +103,7 @@ NSString *bookURL;
     _CheckBookViewtableView = [[UITableView alloc]initWithFrame:self.view.bounds style:UITableViewStyleGrouped];                 // 初始化tableview填充整个屏幕
     _CheckBookViewtableView.dataSource = self;                                                                                   // 设置tableview的数据代理
     _CheckBookViewtableView.delegate = self;                                                                                     // 设置tableview代理
+    
     [self showPullRefreshView];
     [self showSearchBar];
     [self showNoDataView];
@@ -253,7 +264,27 @@ NSString *bookURL;
 -(UIStatusBarStyle)preferredStatusBarStyle{
     return UIStatusBarStyleLightContent;
 }
-
+// 加载本地数据
+- (void)loadLocalData {
+    NSMutableArray *array = [[NSMutableArray alloc]init];
+    NSMutableArray *barray = [[NSMutableArray alloc]init];
+    array = [[BookReviewModel sharedInstance]getReviewBookFromLocal];
+    for (int i = 0; i < array.count; i++) {
+        Book *book = [[Book alloc]initWithDictionary:array[i]];
+        book.bookState = array[i][@"bookState"];
+        [barray addObject:book];
+    }
+    bookArray = barray;
+    if ([bookArray count]) {
+        [_noDataLable setHidden:YES];
+        [_CheckBookViewtableView.tableHeaderView setHidden:NO];
+    }else {
+        [_noDataLable setHidden:NO];
+        [_CheckBookViewtableView.tableHeaderView setHidden:YES];
+    }
+    [_CheckBookViewtableView reloadData];
+}
+// 离开页面销毁搜索框
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     if (self.searchController.active) {

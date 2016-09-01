@@ -15,6 +15,7 @@
 #import "BookDetialModel.h"
 #import <SDWebImage/UIImageView+WebCache.h>
 #import "MBProgressHUD.h"
+#import "BookReviewModel.h"
 
 #define SCREEN_BOUNDS [UIScreen mainScreen].bounds.size
 #define FIRST_CELL_HIGHT SCREEN_BOUNDS.height / 4
@@ -261,6 +262,7 @@ int reviewTextHeight;
                 [_mbprogress showAnimated:YES];                                                                                         // 显示toast
                 [self performSelector:@selector(showReviewView) withObject:nil afterDelay:1.0f];
                 _detialBook.bookState = @"审核中";
+                [[BookReviewModel sharedInstance]addReviewBookDataToLoaclWithBook:_detialBook];
                 [_bookDetialTableView reloadData];
             };
         }else if ([_detialBook.bookState isEqualToString:@"审核中"]) {

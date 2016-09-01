@@ -19,6 +19,7 @@
         _coverPath = [BOOK_IMAGEBASEURL stringByAppendingString:[dic objectForKey:@"coverPath"]];
         _bookID = [dic objectForKey:@"id"];
         _isbn = [dic objectForKey:@"isbn"];
+        _bookState = @"";
     }
     return self;
 }

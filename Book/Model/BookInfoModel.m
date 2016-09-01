@@ -49,7 +49,11 @@
         }
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         NSLog(@"error:%@",error);
-        _updateTV(@"数据请求失败，请稍后重试！");
+        if ([bookState isEqualToString:@"审核中"]) {
+            _offlineMode();
+        }else {
+            _updateTV(@"数据请求失败，请稍后重试!");
+        }
     }];
 }
 

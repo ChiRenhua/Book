@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "Book.h"
 
 typedef void (^UpdataReviewView)(NSMutableArray *key,NSMutableArray *value);
 typedef void (^ShowLoginView)();
@@ -25,5 +26,7 @@ typedef void (^FailedLoadData)(NSString *error);
 - (void)addBookReviewDataToLocalWithBookISBN:(NSString *)ISBN Array:(NSMutableArray *)array;
 - (NSMutableArray *)getBookReviewDataToLocalWithBookISBN:(NSString *)ISBN;
 - (void)getBookReviewDataToLocalWithURL:(NSString *)reviewurl;
+- (void)addReviewBookDataToLoaclWithBook:(Book *)book;
+- (NSMutableArray *)getReviewBookFromLocal;
 
 @end
