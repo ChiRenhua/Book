@@ -42,8 +42,6 @@ NSString *bookURL;
         viewcode = viewCode;
         searchResult = [[NSMutableArray alloc]init];
         _CheckbookDelegate = [[UIApplication sharedApplication]delegate];
-        _mbprogress = [[MBProgressHUD alloc]initWithView:self.view];
-        _mbprogress.delegate = self;
         [BookInfoModel sharedInstance].updateTV = ^(NSString *state){
             bookArray = [[BookInfoModel sharedInstance]getBookArray];
             if ([bookArray count]) {
@@ -88,6 +86,8 @@ NSString *bookURL;
             [_mbprogress hideAnimated:YES afterDelay:1.0];                                                  // 1.5秒后销毁toast
             [self loadLocalData];
         };
+        _mbprogress = [[MBProgressHUD alloc]initWithView:self.view];
+        _mbprogress.delegate = self;
     }
     return self;
 }

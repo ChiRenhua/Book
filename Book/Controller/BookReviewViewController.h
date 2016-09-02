@@ -10,7 +10,11 @@
 #import "Book.h"
 #import "CustomIOSAlertView.h"
 
+typedef void (^SbSuccess)(NSString *bookstate);
+
 @interface BookReviewViewController : UIViewController
+
+@property (nonatomic,copy)SbSuccess submitsuccess;
 
 - (id)init:(Book *) book;
 

@@ -44,8 +44,6 @@ static NSString * const CellIdentifier = @"cell";
         _reviewResult_SD = [[NSMutableArray alloc]init];
         _detialBook = [[Book alloc]init];
         _detialBook = book;
-        _mbprogress = [[MBProgressHUD alloc]initWithView:self.view];
-        _mbprogress.delegate = self;
         [BookReviewModel sharedInstance].updataReviewView = ^(NSMutableArray *key,NSMutableArray *value){
             _reviewkey = key;
             _reviewvalue = value;
@@ -67,6 +65,7 @@ static NSString * const CellIdentifier = @"cell";
             [self presentViewController:loginAlert animated:YES completion:nil];
             [_IndicatorView removeFromSuperview];
             [_errorLable setHidden:NO];
+            _detialBook.bookState = @"审核中";
         };
         [BookReviewModel sharedInstance].noBookInfo = ^(NSString *error){
             UIAlertController *loginAlert = [UIAlertController alertControllerWithTitle:@"错误!" message:error preferredStyle:UIAlertControllerStyleAlert];
@@ -75,6 +74,7 @@ static NSString * const CellIdentifier = @"cell";
             }];
             [loginAlert addAction:calcleAction];
             [self presentViewController:loginAlert animated:YES completion:nil];
+            _detialBook.bookState = @"审核中";
         };
         [BookReviewModel sharedInstance].failedLoadData = ^(NSString *error){
             [_IndicatorView removeFromSuperview];
@@ -83,10 +83,14 @@ static NSString * const CellIdentifier = @"cell";
         [BookReviewModel sharedInstance].submitSuccess = ^(){
             [self showToastWithMessage:@"提交成功"];
             [self performSelector:@selector(cancle) withObject:nil afterDelay:1.0f];
+            _submitsuccess(_detialBook.bookState);
         };
         [BookReviewModel sharedInstance].submitFailed = ^(){
             [self showToastWithMessage:@"提交失败!请稍后重试!"];
+            _detialBook.bookState = @"审核中";
         };
+        _mbprogress = [[MBProgressHUD alloc]initWithView:self.view];
+        _mbprogress.delegate = self;
     }
     return self;
 }
@@ -258,11 +262,12 @@ static NSString * const CellIdentifier = @"cell";
     _isKeyboardShow = NO;
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"审核信息" message:_textView.text preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
-        NSString *pendingResultText = [[NSString alloc]init];
         if ([_textView.text isEqualToString:@""]) {
+            _detialBook.bookState = @"已通过";
             NSString *url = [NSString stringWithFormat:@"postResult.serv?username=%@&sessionid=%@&step=%@&pass=%@&reason=%@&bookid=%@",[[UserInfoModel sharedInstance]getUserName],[[UserInfoModel sharedInstance]getUserSessionid],_detialBook.step,@"0",@"",_detialBook.bookID];
             [[BookReviewModel sharedInstance]submitReviewDataWithURL:url];
         }else {
+            _detialBook.bookState = @"未通过";
             NSString *url = [NSString stringWithFormat:@"postResult.serv?username=%@&sessionid=%@&step=%@&pass=%@&reason=%@&bookid=%@",[[UserInfoModel sharedInstance]getUserName],[[UserInfoModel sharedInstance]getUserSessionid],_detialBook.step,@"1",_textView.text,_detialBook.bookID];
             NSString *book_submit_url = [url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
             [[BookReviewModel sharedInstance]submitReviewDataWithURL:book_submit_url];

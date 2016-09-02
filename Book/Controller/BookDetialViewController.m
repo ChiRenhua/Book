@@ -263,6 +263,7 @@ int reviewTextHeight;
                 [self performSelector:@selector(showReviewView) withObject:nil afterDelay:1.0f];
                 _detialBook.bookState = @"审核中";
                 [[BookReviewModel sharedInstance]addReviewBookDataToLoaclWithBook:_detialBook];
+                [self getData];
                 [_bookDetialTableView reloadData];
             };
         }else if ([_detialBook.bookState isEqualToString:@"审核中"]) {
@@ -322,6 +323,11 @@ int reviewTextHeight;
     _detialBook.step = _step;
     bookReviewViewController = [[BookReviewViewController alloc]init:_detialBook];
     [self presentViewController:bookReviewViewController animated:YES completion:nil];
+    bookReviewViewController.submitsuccess = ^(NSString *bookstate){
+        [self getData];
+        _detialBook.bookState = bookstate;
+        [_bookDetialTableView reloadData];
+    };
 }
 
 - (void)didReceiveMemoryWarning {
