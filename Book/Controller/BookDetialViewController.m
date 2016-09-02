@@ -38,8 +38,6 @@ int reviewTextHeight;
 - (id)init:(Book *) book step:(NSString *)step{
     if (self = [super init]) {
         _step = step;
-        _mbprogress = [[MBProgressHUD alloc]initWithView:self.view];
-        _mbprogress.delegate = self;
         _detialBook = [[Book alloc]init];
         _bookDetialAppDelegate = [[UIApplication sharedApplication]delegate];
         _detialBook = book;
@@ -61,6 +59,8 @@ int reviewTextHeight;
             [_IndicatorView removeFromSuperview];
             [_errorLable setHidden:NO];
         };
+        _mbprogress = [[MBProgressHUD alloc]initWithView:self.view];
+        _mbprogress.delegate = self;
     }
     return self;
 }

@@ -42,7 +42,9 @@
             }else if(status == 1001) {
                 _bookDetialShowLoginView();
             }else if(status == 1002) {
-                _updateReason(@"暂无审核信息");
+                _updateReason(@"暂无审核记录");
+            }else if(status == 1003) {
+                _updateReason(@"无");
             }
         }else if (Module == addReviewButtonModule) {
             if (status == 1000) {

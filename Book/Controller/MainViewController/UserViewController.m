@@ -76,14 +76,11 @@ AppDelegate *UserVCdelegate;
         // 添加职位信息
         _professionLable = [[UILabel alloc]initWithFrame:CGRectMake(110, 60, SCREEN_BOUNDS.width - 110, 20)];
         NSString *professiontext = [[UserInfoModel sharedInstance]getUserCompetence];
-        if ([professiontext isEqualToString:@"0"]) {
-            _professionLable.text = @"图书管理员";
-        }else if ([professiontext isEqualToString:@"1"]) {
-            _professionLable.text = @"图书复审审核员";
-        }else if ([professiontext isEqualToString:@"2"]) {
+        if ([professiontext isEqualToString:@"1"]) {
             _professionLable.text = @"图书初审审核员";
+        }else if ([professiontext isEqualToString:@"2"]) {
+            _professionLable.text = @"图书复审审核员";
         }
-        
         _professionLable.font = [UIFont systemFontOfSize:15];
         _professionLable.textColor = [UIColor grayColor];
         [UserViewCell.contentView addSubview:_professionLable];

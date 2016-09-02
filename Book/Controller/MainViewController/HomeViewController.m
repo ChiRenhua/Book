@@ -84,7 +84,7 @@ AppDelegate *homeViewDelegate;
         }else if (section == 1) {
             return @"复审";
         }
-    }else if (competence == 0) {
+    }else if (competence == 1) {
         return @"初审";
     }
     return nil;
