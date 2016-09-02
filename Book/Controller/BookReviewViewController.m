@@ -47,7 +47,7 @@ static NSString * const CellIdentifier = @"cell";
         [BookReviewModel sharedInstance].updataReviewView = ^(NSMutableArray *key,NSMutableArray *value){
             _reviewkey = key;
             _reviewvalue = value;
-            [_IndicatorView removeFromSuperview];
+            [_IndicatorView stopAnimating];
             [_errorLable setHidden:YES];
             [self saveDictoinary];
             [_tableView reloadData];
@@ -63,7 +63,7 @@ static NSString * const CellIdentifier = @"cell";
             [loginAlert addAction:loginAction];
             [loginAlert addAction:calcleAction];
             [self presentViewController:loginAlert animated:YES completion:nil];
-            [_IndicatorView removeFromSuperview];
+            [_IndicatorView stopAnimating];
             [_errorLable setHidden:NO];
             _detialBook.bookState = @"审核中";
         };
@@ -77,7 +77,7 @@ static NSString * const CellIdentifier = @"cell";
             _detialBook.bookState = @"审核中";
         };
         [BookReviewModel sharedInstance].failedLoadData = ^(NSString *error){
-            [_IndicatorView removeFromSuperview];
+            [_IndicatorView stopAnimating];
             [_errorLable setHidden:NO];
         };
         [BookReviewModel sharedInstance].submitSuccess = ^(){
@@ -120,7 +120,7 @@ static NSString * const CellIdentifier = @"cell";
                 [_reviewvalue_SD addObject:array[i][@"value"]];
                 [_reviewResult_SD addObject:array[i][@"result"]];
             }
-            [_IndicatorView removeFromSuperview];
+            [_IndicatorView stopAnimating];
             [_tableView reloadData];
         }
     }else if ([_detialBook.bookState isEqualToString:@"待审核"]) {
@@ -144,7 +144,7 @@ static NSString * const CellIdentifier = @"cell";
 // lable点击事件
 - (void)onClickErrorLable {
     [_errorLable setHidden:YES];
-    [self addIndicatorView];
+    [_IndicatorView startAnimating];
     [self getData];
 }
 // 添加菊花
@@ -334,13 +334,20 @@ static NSString * const CellIdentifier = @"cell";
     bookReviewTitle.text = _reviewkey_SD[indexPath.row];
     bookReviewTitle.font = [UIFont systemFontOfSize:17];
     [cell.contentView addSubview:bookReviewTitle];
-    // 审核内容
-    UILabel *bookReviewSubtitle = [[UILabel alloc]initWithFrame:CGRectMake(SCREEN_BOUNDS.width / 20 + (tableView.bounds.size.width - 60)/2, 15, (tableView.bounds.size.width - 60)/2, 20)];
-    bookReviewSubtitle.text = _reviewvalue_SD[indexPath.row];
-    bookReviewSubtitle.font = [UIFont systemFontOfSize:17];
-    bookReviewSubtitle.textColor = [UIColor grayColor];
-    bookReviewSubtitle.textAlignment = NSTextAlignmentRight;
-    [cell.contentView addSubview:bookReviewSubtitle];
+    if (indexPath.row == 0) {
+        UIImageView *bookImage = [[UIImageView alloc]initWithFrame:CGRectMake(tableView.bounds.size.width - 77, 5, 27, 40)];
+        [bookImage sd_setImageWithURL:[NSURL URLWithString:_reviewvalue_SD[indexPath.row]] placeholderImage:[UIImage imageNamed:@"default_bookimage"]];
+        [cell.contentView addSubview:bookImage];
+    }else {
+        // 审核内容
+        UILabel *bookReviewSubtitle = [[UILabel alloc]initWithFrame:CGRectMake(SCREEN_BOUNDS.width / 20 + (tableView.bounds.size.width - 60)/2, 15, (tableView.bounds.size.width - 60)/2, 20)];
+        bookReviewSubtitle.text = _reviewvalue_SD[indexPath.row];
+        bookReviewSubtitle.font = [UIFont systemFontOfSize:17];
+        bookReviewSubtitle.textColor = [UIColor grayColor];
+        bookReviewSubtitle.textAlignment = NSTextAlignmentRight;
+        [cell.contentView addSubview:bookReviewSubtitle];
+    }
+    
     // 是否合格
     UIImageView *isPassImage = [[UIImageView alloc]initWithFrame:CGRectMake(tableView.bounds.size.width - 40, 10, 30, 30)];
     isPassImage.contentMode = UIViewContentModeScaleAspectFit;

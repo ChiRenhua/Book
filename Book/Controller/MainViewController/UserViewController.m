@@ -31,8 +31,6 @@ AppDelegate *UserVCdelegate;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // 添加右侧注销按钮
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"注销" style:UIBarButtonItemStyleDone target:self action:@selector(logout)];
     UserVCTableView = [[UITableView alloc]initWithFrame:self.view.bounds style:UITableViewStyleGrouped];
     UserVCTableView.delegate = self;
     UserVCTableView.dataSource = self;

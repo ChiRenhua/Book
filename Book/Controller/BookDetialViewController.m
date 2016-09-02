@@ -47,16 +47,16 @@ int reviewTextHeight;
             _bookReviewInfo.frame = CGRectMake(SCREEN_BOUNDS.width / 20 + 70, 50, SCREEN_BOUNDS.width - SCREEN_BOUNDS.width / 20 - 90, bookIntroduceSize.height);
             reviewTextHeight = bookIntroduceSize.height;
             [_errorLable setHidden:YES];
-            [_IndicatorView removeFromSuperview];
+            [_IndicatorView stopAnimating];
             _bookReviewInfo.text = reason;
         };
         [BookDetialModel sharedInstance].bookDetialShowLoginView = ^(){
             [self showLoginView];
-            [_IndicatorView removeFromSuperview];
+            [_IndicatorView stopAnimating];
             [_errorLable setHidden:NO];
         };
         [BookDetialModel sharedInstance].failedUpdateReason = ^(){
-            [_IndicatorView removeFromSuperview];
+            [_IndicatorView stopAnimating];
             [_errorLable setHidden:NO];
         };
         _mbprogress = [[MBProgressHUD alloc]initWithView:self.view];
@@ -96,7 +96,7 @@ int reviewTextHeight;
 
 - (void)onClickErrorLable {
     [_errorLable setHidden:YES];
-    [self addIndicatorView];
+    [_IndicatorView startAnimating];
     [self getData];
 }
 

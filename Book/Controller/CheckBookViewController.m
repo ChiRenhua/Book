@@ -28,7 +28,7 @@
 @end
 
 ListTableViewCell *CheckBookViewcell;
-NSMutableArray *searchResult;                                                                                      // 搜索结果
+NSMutableArray *searchResult;
 int viewcode;
 NSString *step;
 NSString *bookState;
