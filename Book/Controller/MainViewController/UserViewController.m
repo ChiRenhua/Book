@@ -54,6 +54,9 @@ AppDelegate *UserVCdelegate;
 
 #pragma mark 设置行数
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    if (section == 1) {
+        return 2;
+    }
     return 1;
 }
 #pragma mark 设置单元格样式和内容
@@ -87,16 +90,19 @@ AppDelegate *UserVCdelegate;
     }else if (indexPath.section == 1) {
         UITableViewCell *UserViewCell;
         UserViewCell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:nil];
-        int competence = [[[UserInfoModel sharedInstance]getUserCompetence] intValue];
-        UserViewCell.textLabel.text = @"权限";
-        if (competence == 1) {
-            UserViewCell.detailTextLabel.text = @"初审";
-        }else if(competence == 2) {
-            UserViewCell.detailTextLabel.text = @"初审；复审";
+        if (indexPath.row == 0) {
+            UserViewCell.textLabel.text = @"真实姓名";
+            UserViewCell.detailTextLabel.text = [[UserInfoModel sharedInstance]getUserRealName];
+        }else if (indexPath.row == 1){
+            int competence = [[[UserInfoModel sharedInstance]getUserCompetence] intValue];
+            UserViewCell.textLabel.text = @"权限";
+            if (competence == 1) {
+                UserViewCell.detailTextLabel.text = @"初审";
+            }else if(competence == 2) {
+                UserViewCell.detailTextLabel.text = @"初审；复审";
+            }
         }
-        
         return UserViewCell;
-
     }
     return nil;
 }
