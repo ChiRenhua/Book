@@ -131,16 +131,7 @@
 - (void)showUserView {
     // 加载个人页面数据
     AppDelegate *appdelegate = [[UIApplication sharedApplication]delegate];
-    NSString *userName = [[UserInfoModel sharedInstance]getUserName];
-    appdelegate.UserVC.nameLable.text = [[NSString alloc]initWithFormat:@"欢迎用户：%@",userName];
-    int userCompetence = [[[UserInfoModel sharedInstance]getUserCompetence]intValue];
-    if (userCompetence == 0) {
-        appdelegate.UserVC.professionLable.text = @"图书管理员";
-    }else if (userCompetence == 2) {
-        appdelegate.UserVC.professionLable.text = @"图书复审审核员";
-    }else if (userCompetence == 1) {
-        appdelegate.UserVC.professionLable.text = @"图书初审审核员";
-    }
+    [appdelegate.UserVC.UserVCTableView reloadData];
 }
 
 - (void)showSuccessProgress {

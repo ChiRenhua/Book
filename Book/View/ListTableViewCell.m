@@ -59,7 +59,7 @@ UILabel *bookStateLable;
     // 状态
     bookStateLable = [[UILabel alloc]init];
     bookStateLable.font = [UIFont systemFontOfSize:14];
-    bookStateLable.frame = CGRectMake(SCREEN_BOUNDS.width - 50, 45, 50, 10);
+    bookStateLable.frame = CGRectMake(SCREEN_BOUNDS.width - 50, 45, 50, 15);
     [self.contentView addSubview:bookStateLable];
     
 }

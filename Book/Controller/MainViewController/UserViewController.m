@@ -13,9 +13,10 @@
 #define SCREEN_BOUNDS [UIScreen mainScreen].bounds.size
 
 @interface UserViewController ()<UITableViewDataSource,UITableViewDelegate>
+@property (nonatomic,retain)UILabel *nameLable;
+@property (nonatomic,retain)UILabel *professionLable;
 @end
 
-UITableView *UserVCTableView;
 AppDelegate *UserVCdelegate;
 
 @implementation UserViewController
@@ -31,10 +32,10 @@ AppDelegate *UserVCdelegate;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    UserVCTableView = [[UITableView alloc]initWithFrame:self.view.bounds style:UITableViewStyleGrouped];
-    UserVCTableView.delegate = self;
-    UserVCTableView.dataSource = self;
-    [self.view addSubview:UserVCTableView];
+    _UserVCTableView = [[UITableView alloc]initWithFrame:self.view.bounds style:UITableViewStyleGrouped];
+    _UserVCTableView.delegate = self;
+    _UserVCTableView.dataSource = self;
+    [self.view addSubview:_UserVCTableView];
 }
 
 #pragma mark 设置分组数
@@ -68,7 +69,7 @@ AppDelegate *UserVCdelegate;
         // 添加用户名
         _nameLable = [[UILabel alloc]initWithFrame:CGRectMake(110, 20, SCREEN_BOUNDS.width - 110, 20)];
          NSString *userName = [[UserInfoModel sharedInstance] getUserName];
-        _nameLable.text = [[NSString alloc]initWithFormat:@"用户：%@",userName];
+        _nameLable.text = [[NSString alloc]initWithFormat:@"欢迎用户：%@",userName];
         _nameLable.font = [UIFont systemFontOfSize:20];
         [UserViewCell.contentView addSubview:_nameLable];
         // 添加职位信息
@@ -85,8 +86,15 @@ AppDelegate *UserVCdelegate;
         return UserViewCell;
     }else if (indexPath.section == 1) {
         UITableViewCell *UserViewCell;
-        UserViewCell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:nil];
+        UserViewCell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:nil];
+        int competence = [[[UserInfoModel sharedInstance]getUserCompetence] intValue];
         UserViewCell.textLabel.text = @"权限";
+        if (competence == 1) {
+            UserViewCell.detailTextLabel.text = @"初审";
+        }else if(competence == 2) {
+            UserViewCell.detailTextLabel.text = @"初审；复审";
+        }
+        
         return UserViewCell;
 
     }

@@ -19,7 +19,7 @@
 
 #define SCREEN_BOUNDS [UIScreen mainScreen].bounds.size
 
-@interface CheckBookViewController ()<UITableViewDataSource,UITableViewDelegate,UISearchResultsUpdating>
+@interface CheckBookViewController ()<UITableViewDataSource,UITableViewDelegate,UISearchResultsUpdating,UITextFieldDelegate>
 @property (retain,strong) UITableView *CheckBookViewtableView;
 @property(strong, nonatomic) UISearchController *searchController;
 @property(retain,nonatomic) MBProgressHUD *mbprogress;
@@ -27,6 +27,7 @@
 @property(retain,nonatomic) UILabel *noDataLable;
 @property(nonatomic,copy) NSString *navigationTitle;
 @property(nonatomic,copy) NSString *searchID;
+@property(retain,nonatomic) UITextField *searchTextField;
 @end
 
 ListTableViewCell *CheckBookViewcell;
@@ -54,8 +55,11 @@ NSString *bookURL;
                 [_noDataLable setHidden:YES];
                 [_CheckBookViewtableView.tableHeaderView setHidden:NO];
             }else {
+                _noDataLable.text = @"暂无数据!";
                 [_noDataLable setHidden:NO];
-                [_CheckBookViewtableView.tableHeaderView setHidden:YES];
+                if (viewcode != keyWorlSearchBook) {
+                    [_CheckBookViewtableView.tableHeaderView setHidden:YES];
+                } 
             }
             [[BookReviewModel sharedInstance]synReviewbookDataWitharray:bookArray];
             [self.CheckBookViewtableView reloadData];
@@ -112,9 +116,12 @@ NSString *bookURL;
     _CheckBookViewtableView = [[UITableView alloc]initWithFrame:self.view.bounds style:UITableViewStyleGrouped];                 // 初始化tableview填充整个屏幕
     _CheckBookViewtableView.dataSource = self;                                                                                   // 设置tableview的数据代理
     _CheckBookViewtableView.delegate = self;                                                                                     // 设置tableview代理
-    
-    [self showPullRefreshView];
-    
+    //关键词搜索页不支持下拉刷新
+    if (viewcode != keyWorlSearchBook) {
+        [self showPullRefreshView];
+    }else {
+        [self.view addSubview:_CheckBookViewtableView];
+    }
     //搜索结果页面不展示搜索框
     if (viewcode != searchResultBook) {
         [self showSearchBar];
@@ -148,9 +155,10 @@ NSString *bookURL;
         bookState = @"未通过";
         bookURL = [NSString stringWithFormat:@"getNotPassdList.serv?username=%@&sessionid=%@&step=%@",[[UserInfoModel sharedInstance]getUserName],[[UserInfoModel sharedInstance]getUserSessionid],step];
     }else if(viewcode == searchResultBook) {
-        _searchController.searchBar.placeholder = @"关键字搜索";
         self.navigationItem.title = _navigationTitle;
         bookURL = [NSString stringWithFormat:@"getSearchBook.serv?username=%@&sessionid=%@&categorySecondId=%@",[[UserInfoModel sharedInstance]getUserName],[[UserInfoModel sharedInstance]getUserSessionid],_searchID];
+    }else if (viewcode == keyWorlSearchBook) {
+        self.navigationItem.title = _navigationTitle;
     }
 }
 #pragma mark - 无数据View
@@ -164,19 +172,44 @@ NSString *bookURL;
 }
 #pragma mark - 搜索框
 - (void)showSearchBar {
-    _searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
-    //搜索结果处理函数代理
-    _searchController.searchResultsUpdater = self;
-    //是否显示背景
-    _searchController.dimsBackgroundDuringPresentation = false;
-    [_searchController.searchBar sizeToFit];
-    //修改searchBar的默认文字
-    _searchController.searchBar.placeholder = @"搜索";
-    //修改“Cancle按钮的默认文字”
-    [_searchController.searchBar setValue:@"取消" forKey:@"_cancelButtonText"];
-    //将搜索框添加到tableHeaderView中
-    _CheckBookViewtableView.tableHeaderView = self.searchController.searchBar;
-    [_CheckBookViewtableView.tableHeaderView setHidden:YES];
+    //关键词搜索页默认展示搜索框
+    if (viewcode == keyWorlSearchBook) {
+        _searchTextField = [[UITextField alloc]init];
+        _searchTextField.frame = CGRectMake(0, -35, SCREEN_BOUNDS.width, 35);
+        _searchTextField.backgroundColor = [UIColor whiteColor];
+        _searchTextField.font = [UIFont systemFontOfSize:15];                                          // 设置文字大小
+        _searchTextField.clearButtonMode = UITextFieldViewModeWhileEditing;                            // 设置删除按钮出现时间
+        _searchTextField.borderStyle = UITextBorderStyleRoundedRect;                                   // 设置边框样式
+        _searchTextField.placeholder = @"请输入搜索内容";                                                // 添加默认文字，点击消失
+        _searchTextField.returnKeyType = UIReturnKeySearch;                                            // return键样式更改
+        _searchTextField.textAlignment = NSTextAlignmentCenter;                                        //文字居中
+        _searchTextField.delegate = self;
+        _CheckBookViewtableView.tableHeaderView = _searchTextField;
+    }else{
+        _searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
+        //搜索结果处理函数代理
+        _searchController.searchResultsUpdater = self;
+        //是否显示背景
+        _searchController.dimsBackgroundDuringPresentation = false;
+        [_searchController.searchBar sizeToFit];
+        //修改searchBar的默认文字
+        _searchController.searchBar.placeholder = @"搜索";
+        //修改“Cancle按钮的默认文字”
+        [_searchController.searchBar setValue:@"取消" forKey:@"_cancelButtonText"];
+        //将搜索框添加到tableHeaderView中
+        _CheckBookViewtableView.tableHeaderView = self.searchController.searchBar;
+        
+        [_CheckBookViewtableView.tableHeaderView setHidden:YES];
+    }
+    
+}
+#pragma mark 重置键盘return按钮事件
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    _noDataLable.text = @"正在搜索... ...";
+    NSString *bookURL = [NSString stringWithFormat:@"getKeySrarch.serv?username=%@&sessionid=%@&key=%@&value=%@",[[UserInfoModel sharedInstance]getUserName],[[UserInfoModel sharedInstance]getUserSessionid],_searchID,_searchTextField.text];
+    [[BookInfoModel sharedInstance]getSearchResultWithURL:bookURL];
+    [_searchTextField resignFirstResponder];
+    return YES;
 }
 #pragma mark - 下拉刷新View
 - (void)showPullRefreshView {
@@ -184,7 +217,7 @@ NSString *bookURL;
     MJRefreshNormalHeader *refreshHeader = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadData)];
     _CheckBookViewtableView.mj_header = refreshHeader;
     refreshHeader.automaticallyChangeAlpha = YES;
-    [self.view addSubview:_CheckBookViewtableView];                                                                              // 将tableview添加到屏幕上
+    [self.view addSubview:_CheckBookViewtableView];
     [_CheckBookViewtableView.mj_header beginRefreshing];
 }
 
@@ -204,20 +237,12 @@ NSString *bookURL;
 - (void)updateSearchResultsForSearchController:(UISearchController *)searchController {
     [searchResult removeAllObjects];
     NSString *keyWord = [searchController .searchBar text];
-//    if (viewcode == searchResultBook) {
-//        bookURL = [NSString stringWithFormat:@"getKeySrarch.serv?username=%@&sessionid=%@&key=%@&value=%@",[[UserInfoModel sharedInstance]getUserName],[[UserInfoModel sharedInstance]getUserSessionid],@"0",keyWord];
-//        [[BookInfoModel sharedInstance]getSearchResultWithURL:bookURL];
-//        bookURL = [NSString stringWithFormat:@"getKeySrarch.serv?username=%@&sessionid=%@&key=%@&value=%@",[[UserInfoModel sharedInstance]getUserName],[[UserInfoModel sharedInstance]getUserSessionid],@"1",keyWord];
-//        [[BookInfoModel sharedInstance]getSearchResultWithURL:bookURL];
-//        bookURL = [NSString stringWithFormat:@"getKeySrarch.serv?username=%@&sessionid=%@&key=%@&value=%@",[[UserInfoModel sharedInstance]getUserName],[[UserInfoModel sharedInstance]getUserSessionid],@"2",keyWord];
-//        [[BookInfoModel sharedInstance]getSearchResultWithURL:bookURL];
-//    }else {
-        [bookArray enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            Book *book = obj;
-            if ([book.bookName.uppercaseString containsString:keyWord.uppercaseString] || [book.authorName.uppercaseString containsString:keyWord.uppercaseString]) {
-                [searchResult addObject:book];
-            }
-        }];
+    [bookArray enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        Book *book = obj;
+        if ([book.bookName.uppercaseString containsString:keyWord.uppercaseString] || [book.authorName.uppercaseString containsString:keyWord.uppercaseString]) {
+            [searchResult addObject:book];
+        }
+    }];
     [_CheckBookViewtableView reloadData];
 }
 #pragma mark 设置每组标题名称

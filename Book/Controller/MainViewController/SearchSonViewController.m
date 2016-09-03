@@ -119,15 +119,21 @@ NSInteger searchtype;
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (searchtype == searchKeyword) {
         switch (indexPath.row) {
-            case 0:
-                
+            case 0:{
+                CheckBookViewController *resultVC = [[CheckBookViewController alloc]init:keyWorlSearchBook :@"按书名搜索":@"0"];
+                [self.navigationController pushViewController:resultVC animated:YES];
                 break;
-            case 1:
-                
+            }
+            case 1:{
+                CheckBookViewController *resultVC = [[CheckBookViewController alloc]init:keyWorlSearchBook :@"按作者搜索":@"1"];
+                [self.navigationController pushViewController:resultVC animated:YES];
                 break;
-            case 2:
-                
+            }
+            case 2:{
+                CheckBookViewController *resultVC = [[CheckBookViewController alloc]init:keyWorlSearchBook :@"按ISBN号搜索":@"2"];
+                [self.navigationController pushViewController:resultVC animated:YES];
                 break;
+            }
             default:
                 break;
         }

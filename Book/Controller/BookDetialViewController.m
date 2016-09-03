@@ -44,7 +44,7 @@ int reviewTextHeight;
         [BookDetialModel sharedInstance].updateReason = ^(NSString * reason){
             // 计算文本高度
             CGSize bookIntroduceSize = [reason sizeWithFont:[UIFont systemFontOfSize:15] constrainedToSize:CGSizeMake(300.0f,CGFLOAT_MAX) lineBreakMode:UILineBreakModeWordWrap];
-            _bookReviewInfo.frame = CGRectMake(SCREEN_BOUNDS.width / 20 + 70, 50, SCREEN_BOUNDS.width - SCREEN_BOUNDS.width / 20 - 90, bookIntroduceSize.height);
+            _bookReviewInfo.frame = CGRectMake(SCREEN_BOUNDS.width / 20 + 70, 50, SCREEN_BOUNDS.width - SCREEN_BOUNDS.width / 20 - 90, bookIntroduceSize.height + 20);
             reviewTextHeight = bookIntroduceSize.height;
             [_errorLable setHidden:YES];
             [_IndicatorView stopAnimating];
@@ -282,12 +282,12 @@ int reviewTextHeight;
         case 1: {
             int height;
             if ([_detialBook.bookState isEqualToString:@"已通过"] || [_detialBook.bookState isEqualToString:@"未通过"] || _detialBook.bookState == nil) {
-                height = SCREEN_BOUNDS.height - FIRST_CELL_HIGHT - 93 - 20;
+                height = SCREEN_BOUNDS.height - FIRST_CELL_HIGHT - 113;
             }else {
-                height = SCREEN_BOUNDS.height - FIRST_CELL_HIGHT - 50 - 93 - 20;
+                height = SCREEN_BOUNDS.height - FIRST_CELL_HIGHT - 163;
             }
             if (reviewTextHeight > height) {
-                height = reviewTextHeight;
+                height = reviewTextHeight + 20;
             }
             return height;
             break;

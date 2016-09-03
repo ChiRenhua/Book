@@ -10,7 +10,6 @@
 #import "LoginViewController.h"
 
 @interface UserViewController : UIViewController
-@property (retain,strong) UILabel *nameLable;
-@property (retain,strong) UILabel *professionLable;
+@property (nonatomic,retain)UITableView *UserVCTableView;
 
 @end
