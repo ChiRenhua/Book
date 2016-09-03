@@ -53,7 +53,6 @@
     _userNameTextField.borderStyle = UITextBorderStyleRoundedRect;                                   // 设置边框样式
     _userNameTextField.placeholder = @"用户名";                                                       // 添加默认文字，点击消失
     _userNameTextField.returnKeyType = UIReturnKeyNext;                                              // return键样式更改
-    _userNameTextField.text = @"maqianli2";
     [self.view addSubview:_userNameTextField];
     
     _userPassWordTextField = [[UITextField alloc]initWithFrame:CGRectMake(0, SCREEN_BOUNDS.height/3 + 50, SCREEN_BOUNDS.width, 50)];
@@ -67,7 +66,6 @@
     _userPassWordTextField.clearsOnBeginEditing = YES;                                                // 再次编辑清空
     _userPassWordTextField.returnKeyType = UIReturnKeyJoin;                                           // return键样式更改
     _userPassWordTextField.delegate = self;
-    _userPassWordTextField.text = @"123";
     [self.view addSubview:_userPassWordTextField];
     
     // 添加登陆按钮
