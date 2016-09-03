@@ -34,10 +34,11 @@
     } progress:^(NSProgress * _Nonnull uploadProgress) {
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id responseObject) {
-        NSLog(@"success%@",responseObject);
+        //NSLog(@"success%@",responseObject);
         int status = [responseObject[@"status"] intValue];
         if (status == 1000) {
-            _successLoadSearchData();
+            NSMutableArray *array = responseObject[@"message"];
+            _successLoadSearchData(array);
         }else if(status == 1001) {
             
         }

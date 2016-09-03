@@ -27,6 +27,53 @@
     return instance;
 }
 
+- (void)getBookSearchResultWithURL:(NSString *)searchURL {
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
+    NSString *url = [BASEURL stringByAppendingString:searchURL];
+    [manager POST:url parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
+        
+    } progress:^(NSProgress * _Nonnull uploadProgress) {
+        
+    } success:^(NSURLSessionDataTask * _Nonnull task, id responseObject) {
+        int status = [responseObject[@"status"] intValue];
+        if (status == 1000) {
+            NSArray *ar = responseObject[@"message"];
+            [self buildBookWithData:ar bookState:nil];
+        }else if(status == 1001) {
+            _showLoginAlert();
+        }else if(status == 1002) {
+        }
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+    }];
+
+}
+
+- (void)getSearchResultWithURL:(NSString*)searchURL {
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
+    NSString *url = [BASEURL stringByAppendingString:searchURL];
+    NSString *search_result_url = [url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    [manager POST:search_result_url parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
+        
+    } progress:^(NSProgress * _Nonnull uploadProgress) {
+        
+    } success:^(NSURLSessionDataTask * _Nonnull task, id responseObject) {
+        int status = [responseObject[@"status"] intValue];
+        if (status == 1000) {
+            NSArray *ar = responseObject[@"message"];
+            [self buildBookWithData:ar bookState:nil];
+        }else if(status == 1001) {
+            _showLoginAlert();
+        }else if(status == 1002) {
+            _updateTV(@"不存在此书的相关信息!");
+        }
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        NSLog(@"error:%@",error);
+        _updateTV(@"数据请求失败，请稍后重试!");
+    }];
+}
+
 - (void)getBookDataWithURL:(NSString *)bookurl bookState:(NSString *)bookState {
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     //manager.responseSerializer = [AFHTTPResponseSerializer serializer];

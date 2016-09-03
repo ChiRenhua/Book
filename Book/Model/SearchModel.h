@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 
 typedef void (^FailedLoadSearchData)();
-typedef void (^SuccessLoadSearchData)();
+typedef void (^SuccessLoadSearchData)(NSMutableArray *array);
 @interface SearchModel : NSObject
 
 @property(nonatomic,copy) FailedLoadSearchData failedLoadSearchData;

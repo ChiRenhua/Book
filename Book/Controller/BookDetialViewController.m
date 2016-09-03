@@ -119,7 +119,7 @@ int reviewTextHeight;
 }
 #pragma mark 设置行数
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if ([_detialBook.bookState isEqualToString:@"已通过"] || [_detialBook.bookState isEqualToString:@"未通过"] ) {
+    if ([_detialBook.bookState isEqualToString:@"已通过"] || [_detialBook.bookState isEqualToString:@"未通过"] || _detialBook.bookState == nil) {
         return 2;
     }else {
         return 3;
@@ -141,7 +141,7 @@ int reviewTextHeight;
             [bookImageView sd_setImageWithURL:[NSURL URLWithString:book_image_url] placeholderImage:[UIImage imageNamed:@"default_bookimage"]];
             [bookDetialViewCell.contentView addSubview:bookImageView];
             // 图书名字
-            UILabel *bookName = [[UILabel alloc]initWithFrame:CGRectMake(SCREEN_BOUNDS.width / 3, 20, SCREEN_BOUNDS.width - 200, 60)];
+            UILabel *bookName = [[UILabel alloc]initWithFrame:CGRectMake(SCREEN_BOUNDS.width / 3, 10, SCREEN_BOUNDS.width - 200, 50)];
             bookName.text = _detialBook.bookName;
             bookName.font = [UIFont systemFontOfSize:19];
             bookName.textColor = [UIColor blackColor];
@@ -149,7 +149,7 @@ int reviewTextHeight;
             bookName.numberOfLines = 0;                                                                                                                 // 可以换行
             [bookDetialViewCell.contentView addSubview:bookName];
             // 作者名字
-            UILabel *writerName = [[UILabel alloc]initWithFrame:CGRectMake(SCREEN_BOUNDS.width / 3, FIRST_CELL_HIGHT / 2 - 7.5, SCREEN_BOUNDS.width - 200, 50)];
+            UILabel *writerName = [[UILabel alloc]initWithFrame:CGRectMake(SCREEN_BOUNDS.width / 3, FIRST_CELL_HIGHT / 2 - 10, SCREEN_BOUNDS.width - 200, 50)];
             writerName.text = _detialBook.authorName;
             writerName.font = [UIFont systemFontOfSize:14];
             writerName.textColor = [UIColor grayColor];
@@ -281,7 +281,7 @@ int reviewTextHeight;
             break;
         case 1: {
             int height;
-            if ([_detialBook.bookState isEqualToString:@"已通过"] || [_detialBook.bookState isEqualToString:@"未通过"] ) {
+            if ([_detialBook.bookState isEqualToString:@"已通过"] || [_detialBook.bookState isEqualToString:@"未通过"] || _detialBook.bookState == nil) {
                 height = SCREEN_BOUNDS.height - FIRST_CELL_HIGHT - 93 - 20;
             }else {
                 height = SCREEN_BOUNDS.height - FIRST_CELL_HIGHT - 50 - 93 - 20;

@@ -10,6 +10,7 @@
 		4B75BFB21C9BE76E00212268 /* BookTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B75BFB11C9BE76E00212268 /* BookTests.m */; };
 		4B75BFBD1C9BE76E00212268 /* BookUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B75BFBC1C9BE76E00212268 /* BookUITests.m */; };
 		C1E2431F0ADD6D82ACE6C66B /* libPods-Book.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E49FFA91ECAC28015993FFF8 /* libPods-Book.a */; };
+		D75E276F1D7A8B4500E34720 /* SearchSonViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D75E276E1D7A8B4500E34720 /* SearchSonViewController.m */; };
 		D7DA83331D793F48000A7941 /* SearchModel.m in Sources */ = {isa = PBXBuildFile; fileRef = D7DA83321D793F48000A7941 /* SearchModel.m */; };
 		D7DBDE921D72EB3900CFAE5E /* RDRGrowingTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = D7DBDE8B1D72EB3900CFAE5E /* RDRGrowingTextView.m */; };
 		D7DBDE9D1D72EB6B00CFAE5E /* ListTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D7DBDE9A1D72EB6B00CFAE5E /* ListTableViewCell.m */; };
@@ -76,6 +77,8 @@
 		4B75BFBC1C9BE76E00212268 /* BookUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BookUITests.m; sourceTree = "<group>"; };
 		4B75BFBE1C9BE76E00212268 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		950D2E529ECF91C3F69B99B3 /* Pods-Book.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Book.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Book/Pods-Book.debug.xcconfig"; sourceTree = "<group>"; };
+		D75E276D1D7A8B4500E34720 /* SearchSonViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SearchSonViewController.h; path = MainViewController/SearchSonViewController.h; sourceTree = "<group>"; };
+		D75E276E1D7A8B4500E34720 /* SearchSonViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SearchSonViewController.m; path = MainViewController/SearchSonViewController.m; sourceTree = "<group>"; };
 		D7DA83311D793F48000A7941 /* SearchModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchModel.h; sourceTree = "<group>"; };
 		D7DA83321D793F48000A7941 /* SearchModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchModel.m; sourceTree = "<group>"; };
 		D7DBDE8A1D72EB3900CFAE5E /* RDRGrowingTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RDRGrowingTextView.h; sourceTree = "<group>"; };
@@ -273,6 +276,8 @@
 			isa = PBXGroup;
 			children = (
 				D7DBDEBB1D72ED3400CFAE5E /* MainViewController */,
+				D75E276D1D7A8B4500E34720 /* SearchSonViewController.h */,
+				D75E276E1D7A8B4500E34720 /* SearchSonViewController.m */,
 				D7DBDEB51D72ED3400CFAE5E /* BookDetialViewController.h */,
 				D7DBDEB61D72ED3400CFAE5E /* BookDetialViewController.m */,
 				D7DBDEB71D72ED3400CFAE5E /* BookReviewViewController.h */,
@@ -547,6 +552,7 @@
 				D7DBDE9D1D72EB6B00CFAE5E /* ListTableViewCell.m in Sources */,
 				D7DBDEC71D72ED3400CFAE5E /* BookDetialViewController.m in Sources */,
 				D7DBDEAF1D72ECA600CFAE5E /* BookInfoModel.m in Sources */,
+				D75E276F1D7A8B4500E34720 /* SearchSonViewController.m in Sources */,
 				D7DBDECD1D72ED3400CFAE5E /* TabBarViewController.m in Sources */,
 				D7DBDECB1D72ED3400CFAE5E /* LoginViewController.m in Sources */,
 				D7DBDEC91D72ED3400CFAE5E /* CheckBookViewController.m in Sources */,

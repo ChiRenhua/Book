@@ -139,16 +139,16 @@ AppDelegate *homeViewDelegate;
     switch (competence) {
         case 1:
             if (indexPath.row == 0) {
-                CheckBookViewController *CheckBookVC = [[CheckBookViewController alloc]init:firstUncheckedBook];
+                CheckBookViewController *CheckBookVC = [[CheckBookViewController alloc]init:firstUncheckedBook :nil :nil];
                 [self.navigationController pushViewController:CheckBookVC animated:YES];
             }else if (indexPath.row == 1) {
-                CheckBookViewController *CheckBookVC = [[CheckBookViewController alloc]init:firstCheckingBook];
+                CheckBookViewController *CheckBookVC = [[CheckBookViewController alloc]init:firstCheckingBook :nil :nil];
                 [self.navigationController pushViewController:CheckBookVC animated:YES];
             }else if (indexPath.row == 2) {
-                CheckBookViewController *CheckBookVC = [[CheckBookViewController alloc]init:firstCheckedPassBook];
+                CheckBookViewController *CheckBookVC = [[CheckBookViewController alloc]init:firstCheckedPassBook :nil :nil];
                 [self.navigationController pushViewController:CheckBookVC animated:YES];
             }else if (indexPath.row == 3) {
-                CheckBookViewController *CheckBookVC = [[CheckBookViewController alloc]init:firstCheckedUnpassBook];
+                CheckBookViewController *CheckBookVC = [[CheckBookViewController alloc]init:firstCheckedUnpassBook :nil :nil];
                 [self.navigationController pushViewController:CheckBookVC animated:YES];
             }
 
@@ -156,30 +156,30 @@ AppDelegate *homeViewDelegate;
         case 2:
             if (indexPath.section == 0) {
                 if (indexPath.row == 0) {
-                    CheckBookViewController *CheckBookVC = [[CheckBookViewController alloc]init:firstUncheckedBook];
+                    CheckBookViewController *CheckBookVC = [[CheckBookViewController alloc]init:firstUncheckedBook :nil :nil];
                     [self.navigationController pushViewController:CheckBookVC animated:YES];
                 }else if (indexPath.row == 1) {
-                    CheckBookViewController *CheckBookVC = [[CheckBookViewController alloc]init:firstCheckingBook];
+                    CheckBookViewController *CheckBookVC = [[CheckBookViewController alloc]init:firstCheckingBook :nil :nil];
                     [self.navigationController pushViewController:CheckBookVC animated:YES];
                 }else if (indexPath.row == 2) {
-                    CheckBookViewController *CheckBookVC = [[CheckBookViewController alloc]init:firstCheckedPassBook];
+                    CheckBookViewController *CheckBookVC = [[CheckBookViewController alloc]init:firstCheckedPassBook :nil :nil];
                     [self.navigationController pushViewController:CheckBookVC animated:YES];
                 }else if (indexPath.row == 3) {
-                    CheckBookViewController *CheckBookVC = [[CheckBookViewController alloc]init:firstCheckedUnpassBook];
+                    CheckBookViewController *CheckBookVC = [[CheckBookViewController alloc]init:firstCheckedUnpassBook :nil :nil];
                     [self.navigationController pushViewController:CheckBookVC animated:YES];
                 }
             }else if (indexPath.section == 1) {
                 if (indexPath.row == 0) {
-                    CheckBookViewController *CheckBookVC = [[CheckBookViewController alloc]init:reviewUncheckedBook];
+                    CheckBookViewController *CheckBookVC = [[CheckBookViewController alloc]init:reviewUncheckedBook :nil :nil];
                     [self.navigationController pushViewController:CheckBookVC animated:YES];
                 }else if (indexPath.row == 1) {
-                    CheckBookViewController *CheckBookVC = [[CheckBookViewController alloc]init:reviewCheckingBook];
+                    CheckBookViewController *CheckBookVC = [[CheckBookViewController alloc]init:reviewCheckingBook :nil :nil];
                     [self.navigationController pushViewController:CheckBookVC animated:YES];
                 }else if (indexPath.row == 2) {
-                    CheckBookViewController *CheckBookVC = [[CheckBookViewController alloc]init:reviewCheckedPassBook];
+                    CheckBookViewController *CheckBookVC = [[CheckBookViewController alloc]init:reviewCheckedPassBook :nil :nil];
                     [self.navigationController pushViewController:CheckBookVC animated:YES];
                 }else if (indexPath.row == 3) {
-                    CheckBookViewController *CheckBookVC = [[CheckBookViewController alloc]init:reviewCheckedUnpassBook];
+                    CheckBookViewController *CheckBookVC = [[CheckBookViewController alloc]init:reviewCheckedUnpassBook :nil :nil];
                     [self.navigationController pushViewController:CheckBookVC animated:YES];
                 }
             }

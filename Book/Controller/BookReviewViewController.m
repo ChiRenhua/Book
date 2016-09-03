@@ -89,8 +89,6 @@ static NSString * const CellIdentifier = @"cell";
             [self showToastWithMessage:@"提交失败!请稍后重试!"];
             _detialBook.bookState = @"审核中";
         };
-        _mbprogress = [[MBProgressHUD alloc]initWithView:self.view];
-        _mbprogress.delegate = self;
     }
     return self;
 }
@@ -126,6 +124,8 @@ static NSString * const CellIdentifier = @"cell";
     }else if ([_detialBook.bookState isEqualToString:@"待审核"]) {
         [self getData];
     }
+    _mbprogress = [[MBProgressHUD alloc]initWithView:self.view];
+    _mbprogress.delegate = self;
 }
 // 数据加载失败lable
 - (void)addErrorLable {

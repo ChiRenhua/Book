@@ -25,6 +25,8 @@
 @property(retain,nonatomic) MBProgressHUD *mbprogress;
 @property(retain,nonatomic) AppDelegate *CheckbookDelegate;
 @property(retain,nonatomic) UILabel *noDataLable;
+@property(nonatomic,copy) NSString *navigationTitle;
+@property(nonatomic,copy) NSString *searchID;
 @end
 
 ListTableViewCell *CheckBookViewcell;
@@ -37,11 +39,15 @@ NSString *bookURL;
 
 @implementation CheckBookViewController
 
-- (id)init:(int)viewCode {
+- (id)init:(int)viewCode :(NSString *)title :(NSString *)searchid{
     if (self = [super init]) {
         viewcode = viewCode;
         searchResult = [[NSMutableArray alloc]init];
+        _searchID = [[NSString alloc]init];
         _CheckbookDelegate = [[UIApplication sharedApplication]delegate];
+        _navigationTitle = [[NSString alloc]init];
+        _navigationTitle = title;
+        _searchID = searchid;
         [BookInfoModel sharedInstance].updateTV = ^(NSString *state){
             bookArray = [[BookInfoModel sharedInstance]getBookArray];
             if ([bookArray count]) {
@@ -64,6 +70,9 @@ NSString *bookURL;
         };
         [BookInfoModel sharedInstance].showLoginAlert = ^(){
             [_CheckBookViewtableView.mj_header endRefreshing];
+            if (viewcode == searchResultBook) {
+                [_CheckBookViewtableView.tableHeaderView setHidden:NO];
+            }
             UIAlertController *loginAlert = [UIAlertController alertControllerWithTitle:@"错误!" message:@"登录态失效，请重新登陆!" preferredStyle:UIAlertControllerStyleAlert];
             UIAlertAction *loginAction = [UIAlertAction actionWithTitle:@"登录" style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action){
                 [self presentViewController:_CheckbookDelegate.loginVC animated:YES completion:nil];
@@ -73,11 +82,10 @@ NSString *bookURL;
             }];
             [loginAlert addAction:loginAction];
             [loginAlert addAction:calcleAction];
-            [self presentViewController:loginAlert animated:YES completion:nil];
+            [self presentViewController:loginAlert animated:YES completion:nil];  
         };
         [BookInfoModel sharedInstance].offlineMode = ^() {
             [_CheckBookViewtableView.mj_header endRefreshing];
-            
             _mbprogress.mode = MBProgressHUDModeText;                                                       // 设置toast的样式为文字
             _mbprogress.label.text = NSLocalizedString(@"离线模式，加载本地数据!", @"HUD message title");       // 设置toast上的文字
             [self.view addSubview:_mbprogress];                                                             // 将toast添加到view中
@@ -106,7 +114,11 @@ NSString *bookURL;
     _CheckBookViewtableView.delegate = self;                                                                                     // 设置tableview代理
     
     [self showPullRefreshView];
-    [self showSearchBar];
+    
+    //搜索结果页面不展示搜索框
+    if (viewcode != searchResultBook) {
+        [self showSearchBar];
+    }
     [self showNoDataView];
 }
 
@@ -135,6 +147,10 @@ NSString *bookURL;
         self.navigationItem.title = @"未通过";
         bookState = @"未通过";
         bookURL = [NSString stringWithFormat:@"getNotPassdList.serv?username=%@&sessionid=%@&step=%@",[[UserInfoModel sharedInstance]getUserName],[[UserInfoModel sharedInstance]getUserSessionid],step];
+    }else if(viewcode == searchResultBook) {
+        _searchController.searchBar.placeholder = @"关键字搜索";
+        self.navigationItem.title = _navigationTitle;
+        bookURL = [NSString stringWithFormat:@"getSearchBook.serv?username=%@&sessionid=%@&categorySecondId=%@",[[UserInfoModel sharedInstance]getUserName],[[UserInfoModel sharedInstance]getUserSessionid],_searchID];
     }
 }
 #pragma mark - 无数据View
@@ -176,7 +192,11 @@ NSString *bookURL;
 - (void)loadData {
     [self getStep];
     [self getBookURL];
-    [[BookInfoModel sharedInstance]getBookDataWithURL:bookURL bookState:bookState];
+    if (viewcode == searchResultBook) {
+        [[BookInfoModel sharedInstance]getSearchResultWithURL:bookURL];
+    }else {
+        [[BookInfoModel sharedInstance]getBookDataWithURL:bookURL bookState:bookState];
+    }
 }
 
 #pragma mark - searchController delegate
@@ -184,12 +204,20 @@ NSString *bookURL;
 - (void)updateSearchResultsForSearchController:(UISearchController *)searchController {
     [searchResult removeAllObjects];
     NSString *keyWord = [searchController .searchBar text];
-    [bookArray enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        Book *book = obj;
-        if ([book.bookName.uppercaseString containsString:keyWord.uppercaseString] || [book.authorName.uppercaseString containsString:keyWord.uppercaseString]) {
-            [searchResult addObject:book];
-        }
-    }];
+//    if (viewcode == searchResultBook) {
+//        bookURL = [NSString stringWithFormat:@"getKeySrarch.serv?username=%@&sessionid=%@&key=%@&value=%@",[[UserInfoModel sharedInstance]getUserName],[[UserInfoModel sharedInstance]getUserSessionid],@"0",keyWord];
+//        [[BookInfoModel sharedInstance]getSearchResultWithURL:bookURL];
+//        bookURL = [NSString stringWithFormat:@"getKeySrarch.serv?username=%@&sessionid=%@&key=%@&value=%@",[[UserInfoModel sharedInstance]getUserName],[[UserInfoModel sharedInstance]getUserSessionid],@"1",keyWord];
+//        [[BookInfoModel sharedInstance]getSearchResultWithURL:bookURL];
+//        bookURL = [NSString stringWithFormat:@"getKeySrarch.serv?username=%@&sessionid=%@&key=%@&value=%@",[[UserInfoModel sharedInstance]getUserName],[[UserInfoModel sharedInstance]getUserSessionid],@"2",keyWord];
+//        [[BookInfoModel sharedInstance]getSearchResultWithURL:bookURL];
+//    }else {
+        [bookArray enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            Book *book = obj;
+            if ([book.bookName.uppercaseString containsString:keyWord.uppercaseString] || [book.authorName.uppercaseString containsString:keyWord.uppercaseString]) {
+                [searchResult addObject:book];
+            }
+        }];
     [_CheckBookViewtableView reloadData];
 }
 #pragma mark 设置每组标题名称
