@@ -65,12 +65,7 @@ NSString *bookURL;
             [self.CheckBookViewtableView reloadData];
             [_CheckBookViewtableView.mj_header endRefreshing];
             
-            _mbprogress.mode = MBProgressHUDModeText;                                                       // 设置toast的样式为文字
-            _mbprogress.label.text = NSLocalizedString(state, @"HUD message title");                        // 设置toast上的文字
-            [self.view addSubview:_mbprogress];                                                             // 将toast添加到view中
-            [self.view bringSubviewToFront:_mbprogress];                                                    // 让toast显示在view的最前端
-            [_mbprogress showAnimated:YES];                                                                 // 显示toast
-            [_mbprogress hideAnimated:YES afterDelay:1.0];                                                  // 1.5秒后销毁toast
+            [self showToastWithMessage:state];
         };
         [BookInfoModel sharedInstance].showLoginAlert = ^(){
             [_CheckBookViewtableView.mj_header endRefreshing];
@@ -90,12 +85,7 @@ NSString *bookURL;
         };
         [BookInfoModel sharedInstance].offlineMode = ^() {
             [_CheckBookViewtableView.mj_header endRefreshing];
-            _mbprogress.mode = MBProgressHUDModeText;                                                       // 设置toast的样式为文字
-            _mbprogress.label.text = NSLocalizedString(@"离线模式，加载本地数据!", @"HUD message title");       // 设置toast上的文字
-            [self.view addSubview:_mbprogress];                                                             // 将toast添加到view中
-            [self.view bringSubviewToFront:_mbprogress];                                                    // 让toast显示在view的最前端
-            [_mbprogress showAnimated:YES];                                                                 // 显示toast
-            [_mbprogress hideAnimated:YES afterDelay:1.0];                                                  // 1.5秒后销毁toast
+            [self showToastWithMessage:@"离线模式，加载本地数据!"];
             [self loadLocalData];
         };
         _mbprogress = [[MBProgressHUD alloc]initWithView:self.view];
@@ -205,12 +195,22 @@ NSString *bookURL;
 }
 #pragma mark 重置键盘return按钮事件
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
-    _noDataLable.text = @"正在搜索... ...";
-    NSString *bookURL = [NSString stringWithFormat:@"getKeySrarch.serv?username=%@&sessionid=%@&key=%@&value=%@",[[UserInfoModel sharedInstance]getUserName],[[UserInfoModel sharedInstance]getUserSessionid],_searchID,_searchTextField.text];
-    [[BookInfoModel sharedInstance]getSearchResultWithURL:bookURL];
-    [_searchTextField resignFirstResponder];
+    if (![_searchTextField.text isEqualToString:@""]) {
+        _noDataLable.text = @"正在搜索... ...";
+        NSString *bookURL = [NSString stringWithFormat:@"getKeySrarch.serv?username=%@&sessionid=%@&key=%@&value=%@",[[UserInfoModel sharedInstance]getUserName],[[UserInfoModel sharedInstance]getUserSessionid],_searchID,_searchTextField.text];
+        [[BookInfoModel sharedInstance]getSearchResultWithURL:bookURL];
+        [_searchTextField resignFirstResponder];
+    }else {
+        [self showToastWithMessage:@"请输入搜索内容!"];
+    }
     return YES;
 }
+
+#pragma mark 滑动隐藏键盘
+- (void)scrollViewWillBeginDragging:(UITableView *)scrollView {
+    [self.view endEditing:YES];
+}
+
 #pragma mark - 下拉刷新View
 - (void)showPullRefreshView {
     // 下拉刷新
@@ -337,6 +337,15 @@ NSString *bookURL;
         [_CheckBookViewtableView.tableHeaderView setHidden:YES];
     }
     [_CheckBookViewtableView reloadData];
+}
+//展示Toast
+- (void)showToastWithMessage:(NSString *)msg{
+    _mbprogress.mode = MBProgressHUDModeText;                                                       // 设置toast的样式为文字
+    _mbprogress.label.text = NSLocalizedString(msg, @"HUD message title");                          // 设置toast上的文字
+    [self.view addSubview:_mbprogress];                                                             // 将toast添加到view中
+    [self.view bringSubviewToFront:_mbprogress];                                                    // 让toast显示在view的最前端
+    [_mbprogress showAnimated:YES];                                                                 // 显示toast
+    [_mbprogress hideAnimated:YES afterDelay:1.0];                                                  // 1.0秒后销毁toast
 }
 
 // 离开页面销毁搜索框
