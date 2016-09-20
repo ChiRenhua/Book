@@ -113,7 +113,8 @@
             NSArray *dic = responseObject[@"message"];
             NSMutableArray *key = [[NSMutableArray alloc]init];
             NSMutableArray *value = [[NSMutableArray alloc]init];
-            for (int i = 0; i < [dic count]; i++) {
+            //被小马同学坑，传回的第一个数据是封皮，不用本地加，但是本地逻辑已经写完，改动太大，只能暂时将传回的数组第一个数据剔除掉，所以i ＝ 1。
+            for (int i = 1; i < [dic count]; i++) {
                 [key addObject:dic[i][@"key"]];
                 [value addObject:dic[i][@"value"]];
             }
