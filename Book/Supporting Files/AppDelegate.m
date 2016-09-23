@@ -65,7 +65,6 @@
     UserTab.navigationBar.translucent = NO;
     [UserTab.navigationBar setBackgroundImage:[[UIImage alloc]init] forBarMetrics:UIBarMetricsDefault];
     UserTab.navigationBar.shadowImage = [[UIImage alloc]init];
-
     
     self.window = [[UIWindow alloc]initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.rootViewController = _tabVC;

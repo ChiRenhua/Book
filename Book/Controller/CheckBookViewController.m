@@ -118,6 +118,7 @@ NSString *bookURL;
         [self showSearchBar];
     }
     [self showNoDataView];
+
 }
 
 - (void)getStep {
@@ -167,7 +168,7 @@ NSString *bookURL;
     //关键词搜索页默认展示搜索框
     if (viewcode == keyWorlSearchBook) {
         _searchTextField = [[UITextField alloc]init];
-        _searchTextField.frame = CGRectMake(0, -35, SCREEN_BOUNDS.width, 35);
+        _searchTextField.frame = CGRectMake(0, 0, 0, 35);                                               // X,Y,长度设置都没用
         _searchTextField.backgroundColor = [UIColor whiteColor];
         _searchTextField.font = [UIFont systemFontOfSize:15];                                          // 设置文字大小
         _searchTextField.clearButtonMode = UITextFieldViewModeWhileEditing;                            // 设置删除按钮出现时间
@@ -190,6 +191,8 @@ NSString *bookURL;
         _searchController.searchBar.tintColor = [UIColor bookLableColor];
         //修改“Cancle按钮的默认文字”
         [_searchController.searchBar setValue:@"取消" forKey:@"_cancelButtonText"];
+        //去掉搜索框边界线，背景图
+        [_searchController.searchBar setBackgroundImage:[[UIImage alloc] init]];
         //将搜索框添加到tableHeaderView中
         _CheckBookViewtableView.tableHeaderView = self.searchController.searchBar;
         
