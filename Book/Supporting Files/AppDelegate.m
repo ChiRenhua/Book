@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import "UIColor+AppConfig.h"
 
 @interface AppDelegate ()
 
@@ -40,6 +41,21 @@
     HomeTab.title = @"主页";
     SearchTab.title = @"搜索";
     UserTab.title = @"我";
+    
+    // 设置navigationBar的背景颜色
+    HomeTab.navigationBar.barTintColor = [UIColor bookAppColor];
+    SearchTab.navigationBar.barTintColor = [UIColor bookAppColor];
+    UserTab.navigationBar.barTintColor = [UIColor bookAppColor];
+    
+    // 设置navigationBar的文字颜色
+    [HomeTab.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}];
+    [SearchTab.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}];
+    [UserTab.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}];
+    
+    // 设置navigationBar返回按钮的颜色
+    HomeTab.navigationBar.tintColor = [UIColor whiteColor];
+    SearchTab.navigationBar.tintColor = [UIColor whiteColor];
+    UserTab.navigationBar.tintColor = [UIColor whiteColor];
     
     HomeTab.tabBarItem.image = [UIImage imageNamed:@"n_home"];
     SearchTab.tabBarItem.image = [UIImage imageNamed:@"n_search"];

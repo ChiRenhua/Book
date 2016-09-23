@@ -10,6 +10,7 @@
 #import "MBProgressHUD.h"
 #import "AppDelegate.h"
 #import "UserInfoModel.h"
+#import "UIColor+AppConfig.h"
 
 #define SCREEN_BOUNDS [UIScreen mainScreen].bounds.size
 
@@ -52,6 +53,7 @@
     _userNameTextField.clearButtonMode = UITextFieldViewModeWhileEditing;                            // 设置删除按钮出现时间
     _userNameTextField.borderStyle = UITextBorderStyleRoundedRect;                                   // 设置边框样式
     _userNameTextField.placeholder = @"用户名";                                                       // 添加默认文字，点击消失
+    _userNameTextField.textColor = [UIColor bookAppColor];
     _userNameTextField.returnKeyType = UIReturnKeyNext;                                              // return键样式更改
     [self.view addSubview:_userNameTextField];
     
@@ -61,6 +63,7 @@
     _userPassWordTextField.clearButtonMode = UITextFieldViewModeWhileEditing;                         // 设置删除按钮出现时间
     _userPassWordTextField.borderStyle = UITextBorderStyleRoundedRect;                                // 设置边框样式
     _userPassWordTextField.placeholder = @"密码";                                                      // 添加默认文字，点击消失
+    _userPassWordTextField.textColor = [UIColor bookAppColor];
     _userPassWordTextField.keyboardType = UIKeyboardTypeDefault;                                      // 设置键盘样式
     _userPassWordTextField.secureTextEntry = YES;                                                     // 密文输入
     _userPassWordTextField.clearsOnBeginEditing = YES;                                                // 再次编辑清空
@@ -73,6 +76,7 @@
     loginButton.frame = CGRectMake(SCREEN_BOUNDS.width/4, SCREEN_BOUNDS.height/3+110, (SCREEN_BOUNDS.width/4)*2, 50);
     [loginButton addTarget:self action:@selector(login) forControlEvents:UIControlEventTouchUpInside];// 为登录按钮添加点击事件
     [loginButton setTitle:@"登陆" forState:UIControlStateNormal];
+    [loginButton setTintColor:[UIColor bookAppColor]];
     loginButton.titleLabel.font = [UIFont systemFontOfSize:20];
     [self.view addSubview:loginButton];
     

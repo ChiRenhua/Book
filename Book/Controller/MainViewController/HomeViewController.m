@@ -10,6 +10,7 @@
 #import "AppDelegate.h"
 #import "CheckBookViewController.h"
 #import "UserInfoModel.h"
+#import "UIColor+AppConfig.h"
 
 #define SCREEN_BOUNDS [UIScreen mainScreen].bounds.size
 #define ROW_HIGHT SCREEN_BOUNDS.height / 11

@@ -7,6 +7,7 @@
 //
 
 #import "TabBarViewController.h"
+#import "UIColor+AppConfig.h"
 
 @interface TabBarViewController ()
 
@@ -17,7 +18,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
-    
+
+    self.tabBar.tintColor = [UIColor bookAppColor];
 }
 
 - (void)didReceiveMemoryWarning {

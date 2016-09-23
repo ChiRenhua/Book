@@ -13,6 +13,7 @@
 #import "AppDelegate.h"
 #import <SDWebImage/UIImageView+WebCache.h>
 #import "MBProgressHUD.h"
+#import "UIColor+AppConfig.h"
 
 #define SCREEN_BOUNDS [UIScreen mainScreen].bounds.size
 static NSString * const CellIdentifier = @"cell";
@@ -231,6 +232,7 @@ static NSString * const CellIdentifier = @"cell";
     commitButton.titleLabel.font = [UIFont systemFontOfSize:16.0f];
     [commitButton setTitle:NSLocalizedString(@"提交", nil)
                   forState:UIControlStateNormal];
+    commitButton.tintColor = [UIColor bookAppColor];
     [commitButton addTarget:self action:@selector(commitButtonAction) forControlEvents:UIControlEventTouchUpInside];
     [_toolbar addSubview:commitButton];
     NSDictionary *views = @{
@@ -283,17 +285,20 @@ static NSString * const CellIdentifier = @"cell";
 #pragma mark 添加NavigationBar
 - (void)setNavigationBar {
     UINavigationBar *navigationBar = [[UINavigationBar alloc] initWithFrame:CGRectMake(0, 0, SCREEN_BOUNDS.width, 65)];
-    navigationBar.backgroundColor = [UIColor whiteColor];
+    navigationBar.barTintColor = [UIColor bookAppColor];
     //创建UINavigationItem
     UINavigationItem * navigationBarTitle = [[UINavigationItem alloc] initWithTitle:@"审核"];
+    [navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}];
     [self.view addSubview: navigationBar];
     //创建UIBarButton 可根据需要选择适合自己的样式
     UIBarButtonItem *rightBarItem = [[UIBarButtonItem alloc]initWithTitle:@"保存" style:UIBarButtonItemStylePlain target:self action:@selector(save)];
     navigationBarTitle.rightBarButtonItem = rightBarItem;
+    rightBarItem.tintColor = [UIColor whiteColor];
     [navigationBar setItems:[NSArray arrayWithObject: navigationBarTitle]];
     
     UIBarButtonItem *leftBarItem = [[UIBarButtonItem alloc]initWithTitle:@"取消" style:UIBarButtonItemStylePlain target:self action:@selector(cancle)];
     navigationBarTitle.leftBarButtonItem = leftBarItem;
+    leftBarItem.tintColor = [UIColor whiteColor];
     [navigationBar setItems:[NSArray arrayWithObject: navigationBarTitle]];
 }
 - (void)save {

@@ -16,6 +16,7 @@
 #import <SDWebImage/UIImageView+WebCache.h>
 #import "MBProgressHUD.h"
 #import "BookReviewModel.h"
+#import "UIColor+AppConfig.h"
 
 #define SCREEN_BOUNDS [UIScreen mainScreen].bounds.size
 #define FIRST_CELL_HIGHT SCREEN_BOUNDS.height / 4
@@ -169,18 +170,12 @@ int reviewTextHeight;
             // 判断图书的审核状态，如果通过文字颜色为绿色，如果没通过则为红色，待审核为蓝色
             if ([_detialBook.bookState isEqualToString:@"已通过"]) {
                 // 设置文字颜色为绿色
-                bookState.textColor = [UIColor colorWithRed:0.0f/255.0f
-                                                      green:200.0f/255.0f
-                                                       blue:0.0f/255.0f
-                                                      alpha:1.0f];
+                bookState.textColor = [UIColor bookGreenColor];
             }else if ([_detialBook.bookState isEqualToString:@"未通过"]) {
-                bookState.textColor = [UIColor redColor];
+                bookState.textColor = [UIColor bookRedColor];
             }else if ([_detialBook.bookState isEqualToString:@"审核中"]) {
                 // 设置文字颜色为蓝色
-                bookState.textColor = [UIColor colorWithRed:28.0f/255.0f
-                                                      green:134.0f/255.0f
-                                                       blue:238.0f/255.0f
-                                                      alpha:1.0f];
+                bookState.textColor = [UIColor bookBlueColor];
             }else if ([_detialBook.bookState isEqualToString:@"待审核"]) {
                 bookState.textColor = [UIColor grayColor];
             }
@@ -210,18 +205,12 @@ int reviewTextHeight;
             if ([_detialBook.bookState isEqualToString:@"待审核"]) {
                 bookDetialViewCell.textLabel.text = @"开始审核";
                 // 设置文字颜色为蓝色
-                bookDetialViewCell.textLabel.textColor = [UIColor colorWithRed:28.0f/255.0f
-                                                                         green:134.0f/255.0f
-                                                                          blue:238.0f/255.0f
-                                                                         alpha:1.0f];
+                bookDetialViewCell.textLabel.textColor = [UIColor bookBlueColor];
                 bookDetialViewCell.textLabel.textAlignment = NSTextAlignmentCenter;
             }else if ([_detialBook.bookState isEqualToString:@"审核中"]) {
                 bookDetialViewCell.textLabel.text = @"继续审核";
                 // 设置文字颜色为蓝色
-                bookDetialViewCell.textLabel.textColor = [UIColor colorWithRed:28.0f/255.0f
-                                                                         green:134.0f/255.0f
-                                                                          blue:238.0f/255.0f
-                                                                         alpha:1.0f];
+                bookDetialViewCell.textLabel.textColor = [UIColor bookAppColor];
                 bookDetialViewCell.textLabel.textAlignment = NSTextAlignmentCenter;
             }
             break;
