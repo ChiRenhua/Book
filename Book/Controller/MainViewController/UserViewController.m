@@ -90,6 +90,7 @@ AppDelegate *UserVCdelegate;
     }else if (indexPath.section == 1) {
         UITableViewCell *UserViewCell;
         UserViewCell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:nil];
+        UserViewCell.selectionStyle = UITableViewCellSelectionStyleNone;                                                                                            //取消选中状态
         if (indexPath.row == 0) {
             UserViewCell.textLabel.text = @"真实姓名";
             UserViewCell.detailTextLabel.text = [[UserInfoModel sharedInstance]getUserRealName];
