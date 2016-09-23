@@ -16,6 +16,7 @@
 #import "LoginViewController.h"
 #import "AppDelegate.h"
 #import "BookReviewModel.h"
+#import "UIColor+AppConfig.h"
 
 #define SCREEN_BOUNDS [UIScreen mainScreen].bounds.size
 
@@ -156,6 +157,7 @@ NSString *bookURL;
     _noDataLable = [[UILabel alloc]initWithFrame:CGRectMake(SCREEN_BOUNDS.width/2 - 100, SCREEN_BOUNDS.height/2 - 25, 200, 50)];
     _noDataLable.textColor = [UIColor grayColor];
     _noDataLable.text = @"暂无数据!";
+    _noDataLable.textColor = [UIColor bookLableColor];
     _noDataLable.textAlignment = NSTextAlignmentCenter;
     _noDataLable.font = [UIFont systemFontOfSize:20];
     [self.view addSubview:_noDataLable];
@@ -184,6 +186,8 @@ NSString *bookURL;
         [_searchController.searchBar sizeToFit];
         //修改searchBar的默认文字
         _searchController.searchBar.placeholder = @"搜索";
+        //修改取消按钮的颜色
+        _searchController.searchBar.tintColor = [UIColor bookLableColor];
         //修改“Cancle按钮的默认文字”
         [_searchController.searchBar setValue:@"取消" forKey:@"_cancelButtonText"];
         //将搜索框添加到tableHeaderView中
@@ -197,6 +201,7 @@ NSString *bookURL;
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     if (![_searchTextField.text isEqualToString:@""]) {
         _noDataLable.text = @"正在搜索... ...";
+        _noDataLable.textColor = [UIColor bookLableColor];
         NSString *bookURL = [NSString stringWithFormat:@"getKeySrarch.serv?username=%@&sessionid=%@&key=%@&value=%@",[[UserInfoModel sharedInstance]getUserName],[[UserInfoModel sharedInstance]getUserSessionid],_searchID,_searchTextField.text];
         [[BookInfoModel sharedInstance]getSearchResultWithURL:bookURL];
         [_searchTextField resignFirstResponder];

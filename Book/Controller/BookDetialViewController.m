@@ -205,12 +205,12 @@ int reviewTextHeight;
             if ([_detialBook.bookState isEqualToString:@"待审核"]) {
                 bookDetialViewCell.textLabel.text = @"开始审核";
                 // 设置文字颜色为蓝色
-                bookDetialViewCell.textLabel.textColor = [UIColor bookBlueColor];
+                bookDetialViewCell.textLabel.textColor = [UIColor bookLableColor];
                 bookDetialViewCell.textLabel.textAlignment = NSTextAlignmentCenter;
             }else if ([_detialBook.bookState isEqualToString:@"审核中"]) {
                 bookDetialViewCell.textLabel.text = @"继续审核";
                 // 设置文字颜色为蓝色
-                bookDetialViewCell.textLabel.textColor = [UIColor bookAppColor];
+                bookDetialViewCell.textLabel.textColor = [UIColor bookLableColor];
                 bookDetialViewCell.textLabel.textAlignment = NSTextAlignmentCenter;
             }
             break;

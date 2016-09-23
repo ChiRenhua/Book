@@ -60,6 +60,11 @@
     HomeTab.tabBarItem.image = [UIImage imageNamed:@"n_home"];
     SearchTab.tabBarItem.image = [UIImage imageNamed:@"n_search"];
     UserTab.tabBarItem.image = [UIImage imageNamed:@"n_userinfo"];
+    
+    // 去掉navigationBar分割线
+    UserTab.navigationBar.translucent = NO;
+    [UserTab.navigationBar setBackgroundImage:[[UIImage alloc]init] forBarMetrics:UIBarMetricsDefault];
+    UserTab.navigationBar.shadowImage = [[UIImage alloc]init];
 
     
     self.window = [[UIWindow alloc]initWithFrame:[[UIScreen mainScreen] bounds]];

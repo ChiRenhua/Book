@@ -232,7 +232,7 @@ static NSString * const CellIdentifier = @"cell";
     commitButton.titleLabel.font = [UIFont systemFontOfSize:16.0f];
     [commitButton setTitle:NSLocalizedString(@"提交", nil)
                   forState:UIControlStateNormal];
-    commitButton.tintColor = [UIColor bookAppColor];
+    commitButton.tintColor = [UIColor bookLableColor];
     [commitButton addTarget:self action:@selector(commitButtonAction) forControlEvents:UIControlEventTouchUpInside];
     [_toolbar addSubview:commitButton];
     NSDictionary *views = @{

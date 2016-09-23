@@ -9,6 +9,7 @@
 #import "UserViewController.h"
 #import "AppDelegate.h"
 #import "UserInfoModel.h"
+#import "UIColor+AppConfig.h"
 
 #define SCREEN_BOUNDS [UIScreen mainScreen].bounds.size
 
@@ -36,6 +37,12 @@ AppDelegate *UserVCdelegate;
     _UserVCTableView.delegate = self;
     _UserVCTableView.dataSource = self;
     [self.view addSubview:_UserVCTableView];
+    UIView *viewAboveHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0, SCREEN_BOUNDS.height * (-1), SCREEN_BOUNDS.width, SCREEN_BOUNDS.height)];
+    viewAboveHeaderView.backgroundColor = [UIColor bookAppColor];
+    [_UserVCTableView addSubview:viewAboveHeaderView];
+    
+    _UserVCTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    
 }
 
 #pragma mark 设置分组数
@@ -45,7 +52,7 @@ AppDelegate *UserVCdelegate;
 #pragma mark 设置分组标题内容高度
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     if (section == 0) {
-        return 30;
+        return 0.0001f;
     }else if (section == 1) {
         return 0;
     }
@@ -64,6 +71,12 @@ AppDelegate *UserVCdelegate;
     if (indexPath.section == 0) {
         UITableViewCell *UserViewCell;
         UserViewCell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:nil];
+        UserViewCell.backgroundColor = [UIColor bookAppColor];
+        
+        UserViewCell.selectedBackgroundView = [[UIView alloc] initWithFrame:UserViewCell.frame];
+        UserViewCell.selectedBackgroundView.backgroundColor = [UIColor bookAppColor];
+
+        
         // 添加用户头像
         UIImageView *userImage = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 100, 100)];                                                                     // 设置头像图片大小
         userImage.contentMode = UIViewContentModeScaleAspectFit;                                                                                                    // 设置图片属性为合适填充
@@ -73,6 +86,7 @@ AppDelegate *UserVCdelegate;
         _nameLable = [[UILabel alloc]initWithFrame:CGRectMake(110, 20, SCREEN_BOUNDS.width - 110, 20)];
          NSString *userName = [[UserInfoModel sharedInstance] getUserName];
         _nameLable.text = [[NSString alloc]initWithFormat:@"欢迎用户：%@",userName];
+        _nameLable.textColor = [UIColor whiteColor];
         _nameLable.font = [UIFont systemFontOfSize:20];
         [UserViewCell.contentView addSubview:_nameLable];
         // 添加职位信息
@@ -84,7 +98,7 @@ AppDelegate *UserVCdelegate;
             _professionLable.text = @"图书复审审核员";
         }
         _professionLable.font = [UIFont systemFontOfSize:15];
-        _professionLable.textColor = [UIColor grayColor];
+        _professionLable.textColor = [UIColor whiteColor];
         [UserViewCell.contentView addSubview:_professionLable];
         return UserViewCell;
     }else if (indexPath.section == 1) {
