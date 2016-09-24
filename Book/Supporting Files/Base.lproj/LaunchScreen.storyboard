@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -15,14 +16,42 @@
                         <viewControllerLayoutGuide type="bottom" id="xb3-aO-Qok"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="Ze5-6b-2t3">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="黑龙江东北数字出版传媒有限公司" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="E8N-ld-z08">
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo.png" translatesAutoresizingMaskIntoConstraints="NO" id="vUw-QU-nPh"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="数字予我／无限可能" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="15H-Sq-GCE">
+                                <fontDescription key="fontDescription" type="system" pointSize="23"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" red="0.0" green="0.80392156862745101" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="15H-Sq-GCE" firstAttribute="top" secondItem="vUw-QU-nPh" secondAttribute="bottom" constant="59" id="8lI-kq-GkT"/>
+                            <constraint firstItem="vUw-QU-nPh" firstAttribute="top" secondItem="Llm-lL-Icb" secondAttribute="bottom" id="D2u-Zq-PEG"/>
+                            <constraint firstAttribute="trailing" secondItem="15H-Sq-GCE" secondAttribute="trailing" id="Kqm-k0-sM5"/>
+                            <constraint firstItem="15H-Sq-GCE" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="L34-KK-Sde"/>
+                            <constraint firstItem="xb3-aO-Qok" firstAttribute="top" secondItem="E8N-ld-z08" secondAttribute="bottom" constant="8" symbolic="YES" id="YJV-vp-tya"/>
+                            <constraint firstItem="15H-Sq-GCE" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" id="dR3-wY-wmU"/>
+                            <constraint firstItem="vUw-QU-nPh" firstAttribute="centerX" secondItem="15H-Sq-GCE" secondAttribute="centerX" id="fO1-VX-JeE"/>
+                            <constraint firstItem="15H-Sq-GCE" firstAttribute="leading" secondItem="E8N-ld-z08" secondAttribute="leading" id="qNb-6w-fDO"/>
+                            <constraint firstItem="vUw-QU-nPh" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leadingMargin" constant="51" id="toZ-rQ-8VG"/>
+                            <constraint firstItem="15H-Sq-GCE" firstAttribute="trailing" secondItem="E8N-ld-z08" secondAttribute="trailing" id="v24-Mc-N6H"/>
+                        </constraints>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="53" y="375"/>
+            <point key="canvasLocation" x="52" y="374.66266866566718"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="logo.png" width="1300" height="1300"/>
+    </resources>
 </document>

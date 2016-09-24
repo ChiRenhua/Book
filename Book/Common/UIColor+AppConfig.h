@@ -20,4 +20,6 @@
 
 + (UIColor *)bookLableColor;
 
++ (UIColor *)bookLoginBGColor;
+
 @end

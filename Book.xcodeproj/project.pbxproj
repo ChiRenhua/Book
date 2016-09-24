@@ -31,7 +31,6 @@
 		D7DBDED91D72ED9B00CFAE5E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D7DBDED31D72ED9B00CFAE5E /* LaunchScreen.storyboard */; };
 		D7DBDEDB1D72ED9B00CFAE5E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D7DBDED61D72ED9B00CFAE5E /* main.m */; };
 		D7DBDEDD1D72EDD800CFAE5E /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D7DBDEDC1D72EDD800CFAE5E /* Info.plist */; };
-		D7DBDEF41D72EE4C00CFAE5E /* audited.png in Resources */ = {isa = PBXBuildFile; fileRef = D7DBDEE31D72EE4C00CFAE5E /* audited.png */; };
 		D7DBDEF71D72EE4C00CFAE5E /* book_01.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D7DBDEE61D72EE4C00CFAE5E /* book_01.jpg */; };
 		D7DBDEF81D72EE4C00CFAE5E /* book_02.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D7DBDEE71D72EE4C00CFAE5E /* book_02.jpg */; };
 		D7DBDEF91D72EE4C00CFAE5E /* book_03.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D7DBDEE81D72EE4C00CFAE5E /* book_03.jpg */; };
@@ -48,6 +47,9 @@
 		D7DBDF041D72EE4C00CFAE5E /* touxiang.png in Resources */ = {isa = PBXBuildFile; fileRef = D7DBDEF31D72EE4C00CFAE5E /* touxiang.png */; };
 		D7EE88B91D7450C60073BF9C /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D7EE88B81D7450C60073BF9C /* SystemConfiguration.framework */; };
 		D7EE88BC1D74653B0073BF9C /* BookDetialModel.m in Sources */ = {isa = PBXBuildFile; fileRef = D7EE88BB1D74653B0073BF9C /* BookDetialModel.m */; };
+		D7EF19881D9655C8001E35B1 /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = D7EF19871D9655C8001E35B1 /* logo.png */; };
+		D7EF198D1D967356001E35B1 /* bookunpass.png in Resources */ = {isa = PBXBuildFile; fileRef = D7EF198B1D967356001E35B1 /* bookunpass.png */; };
+		D7EF198E1D967356001E35B1 /* bookpass.png in Resources */ = {isa = PBXBuildFile; fileRef = D7EF198C1D967356001E35B1 /* bookpass.png */; };
 		D7FE1CF01D75BCFA00FC3397 /* BookReviewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = D7FE1CEF1D75BCFA00FC3397 /* BookReviewModel.m */; };
 /* End PBXBuildFile section */
 
@@ -116,7 +118,6 @@
 		D7DBDED41D72ED9B00CFAE5E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D7DBDED61D72ED9B00CFAE5E /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		D7DBDEDC1D72EDD800CFAE5E /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = ../Info.plist; sourceTree = "<group>"; };
-		D7DBDEE31D72EE4C00CFAE5E /* audited.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = audited.png; sourceTree = "<group>"; };
 		D7DBDEE61D72EE4C00CFAE5E /* book_01.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = book_01.jpg; sourceTree = "<group>"; };
 		D7DBDEE71D72EE4C00CFAE5E /* book_02.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = book_02.jpg; sourceTree = "<group>"; };
 		D7DBDEE81D72EE4C00CFAE5E /* book_03.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = book_03.jpg; sourceTree = "<group>"; };
@@ -134,6 +135,9 @@
 		D7EE88B81D7450C60073BF9C /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		D7EE88BA1D74653B0073BF9C /* BookDetialModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BookDetialModel.h; sourceTree = "<group>"; };
 		D7EE88BB1D74653B0073BF9C /* BookDetialModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BookDetialModel.m; sourceTree = "<group>"; };
+		D7EF19871D9655C8001E35B1 /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo.png; sourceTree = "<group>"; };
+		D7EF198B1D967356001E35B1 /* bookunpass.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bookunpass.png; sourceTree = "<group>"; };
+		D7EF198C1D967356001E35B1 /* bookpass.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bookpass.png; sourceTree = "<group>"; };
 		D7FE1CEE1D75BCFA00FC3397 /* BookReviewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BookReviewModel.h; sourceTree = "<group>"; };
 		D7FE1CEF1D75BCFA00FC3397 /* BookReviewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BookReviewModel.m; sourceTree = "<group>"; };
 		E49FFA91ECAC28015993FFF8 /* libPods-Book.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Book.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -334,7 +338,9 @@
 		D7DBDEE21D72EE4C00CFAE5E /* ImageSource */ = {
 			isa = PBXGroup;
 			children = (
-				D7DBDEE31D72EE4C00CFAE5E /* audited.png */,
+				D7EF198B1D967356001E35B1 /* bookunpass.png */,
+				D7EF198C1D967356001E35B1 /* bookpass.png */,
+				D7EF19871D9655C8001E35B1 /* logo.png */,
 				D7DBDEE61D72EE4C00CFAE5E /* book_01.jpg */,
 				D7DBDEE71D72EE4C00CFAE5E /* book_02.jpg */,
 				D7DBDEE81D72EE4C00CFAE5E /* book_03.jpg */,
@@ -468,18 +474,20 @@
 				D7DBDF041D72EE4C00CFAE5E /* touxiang.png in Resources */,
 				D7DBDEFA1D72EE4C00CFAE5E /* book_04.jpg in Resources */,
 				D7DBDED81D72ED9B00CFAE5E /* Assets.xcassets in Resources */,
-				D7DBDEF41D72EE4C00CFAE5E /* audited.png in Resources */,
 				D7DBDEF91D72EE4C00CFAE5E /* book_03.jpg in Resources */,
 				D7DBDEFC1D72EE4C00CFAE5E /* book_06.jpg in Resources */,
 				D7DBDEFF1D72EE4C00CFAE5E /* book_09.jpg in Resources */,
 				D7DBDEF71D72EE4C00CFAE5E /* book_01.jpg in Resources */,
+				D7EF198D1D967356001E35B1 /* bookunpass.png in Resources */,
 				D7DBDF001D72EE4C00CFAE5E /* book_10.jpg in Resources */,
+				D7EF19881D9655C8001E35B1 /* logo.png in Resources */,
 				D7DBDEFE1D72EE4C00CFAE5E /* book_08.jpg in Resources */,
 				D7DBDEF81D72EE4C00CFAE5E /* book_02.jpg in Resources */,
 				D7DBDEFD1D72EE4C00CFAE5E /* book_07.jpg in Resources */,
 				D7DBDED91D72ED9B00CFAE5E /* LaunchScreen.storyboard in Resources */,
 				D7DBDF031D72EE4C00CFAE5E /* right_black.png in Resources */,
 				D7DBDF021D72EE4C00CFAE5E /* review.png in Resources */,
+				D7EF198E1D967356001E35B1 /* bookpass.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

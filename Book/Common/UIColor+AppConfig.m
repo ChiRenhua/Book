@@ -30,4 +30,8 @@
     return  [UIColor colorWithRed:0.0f/255.0f green:185.0f/255.0f blue:232.0f/255.0f alpha:1.0f];
 }
 
++ (UIColor *)bookLoginBGColor {
+    return  [UIColor colorWithRed:240.0f/255.0f green:240.0f/255.0f blue:240.0f/255.0f alpha:1.0f];
+}
+
 @end

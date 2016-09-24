@@ -70,6 +70,8 @@
     self.window.rootViewController = _tabVC;
     [self.window makeKeyAndVisible];
     
+    [NSThread sleepForTimeInterval:1.0];//设置启动页面时间
+    
     return YES;
 }
 
