@@ -43,7 +43,6 @@ AppDelegate *homeViewDelegate;
     UIImage *logoImage = [UIImage imageNamed:@"logo_white.png"];
     [logoView setImage:logoImage];
     self.navigationItem.titleView = logoView;
-//    self.navigationItem.title = @"主页";
     homeViewDelegate.loginVC.showHomeViewBlock = ^(){
         // 判断仅当tableview为空时，才会重新创建tableview
         if (_HomeViewtableView == nil) {
