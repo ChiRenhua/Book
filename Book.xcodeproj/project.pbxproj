@@ -51,6 +51,7 @@
 		D7EF198D1D967356001E35B1 /* bookunpass.png in Resources */ = {isa = PBXBuildFile; fileRef = D7EF198B1D967356001E35B1 /* bookunpass.png */; };
 		D7EF198E1D967356001E35B1 /* bookpass.png in Resources */ = {isa = PBXBuildFile; fileRef = D7EF198C1D967356001E35B1 /* bookpass.png */; };
 		D7EF19901D967C44001E35B1 /* logo_white.png in Resources */ = {isa = PBXBuildFile; fileRef = D7EF198F1D967C44001E35B1 /* logo_white.png */; };
+		D7EF19931D96842B001E35B1 /* BookListCache.m in Sources */ = {isa = PBXBuildFile; fileRef = D7EF19921D96842B001E35B1 /* BookListCache.m */; };
 		D7FE1CF01D75BCFA00FC3397 /* BookReviewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = D7FE1CEF1D75BCFA00FC3397 /* BookReviewModel.m */; };
 /* End PBXBuildFile section */
 
@@ -140,6 +141,8 @@
 		D7EF198B1D967356001E35B1 /* bookunpass.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bookunpass.png; sourceTree = "<group>"; };
 		D7EF198C1D967356001E35B1 /* bookpass.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bookpass.png; sourceTree = "<group>"; };
 		D7EF198F1D967C44001E35B1 /* logo_white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo_white.png; sourceTree = "<group>"; };
+		D7EF19911D96842B001E35B1 /* BookListCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BookListCache.h; sourceTree = "<group>"; };
+		D7EF19921D96842B001E35B1 /* BookListCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BookListCache.m; sourceTree = "<group>"; };
 		D7FE1CEE1D75BCFA00FC3397 /* BookReviewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BookReviewModel.h; sourceTree = "<group>"; };
 		D7FE1CEF1D75BCFA00FC3397 /* BookReviewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BookReviewModel.m; sourceTree = "<group>"; };
 		E49FFA91ECAC28015993FFF8 /* libPods-Book.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Book.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -287,6 +290,8 @@
 				D7FE1CEF1D75BCFA00FC3397 /* BookReviewModel.m */,
 				D7DA83311D793F48000A7941 /* SearchModel.h */,
 				D7DA83321D793F48000A7941 /* SearchModel.m */,
+				D7EF19911D96842B001E35B1 /* BookListCache.h */,
+				D7EF19921D96842B001E35B1 /* BookListCache.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -574,6 +579,7 @@
 				D7DBDECA1D72ED3400CFAE5E /* HomeViewController.m in Sources */,
 				D7DBDECE1D72ED3400CFAE5E /* UserViewController.m in Sources */,
 				D7DBDEAE1D72ECA600CFAE5E /* Book.m in Sources */,
+				D7EF19931D96842B001E35B1 /* BookListCache.m in Sources */,
 				D7DBDE921D72EB3900CFAE5E /* RDRGrowingTextView.m in Sources */,
 				D7DBDE9D1D72EB6B00CFAE5E /* ListTableViewCell.m in Sources */,
 				D7DBDEC71D72ED3400CFAE5E /* BookDetialViewController.m in Sources */,

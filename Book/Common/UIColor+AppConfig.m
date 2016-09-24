@@ -27,7 +27,7 @@
 }
 
 + (UIColor *)bookLableColor {
-    return  [UIColor colorWithRed:0.0f/255.0f green:185.0f/255.0f blue:232.0f/255.0f alpha:1.0f];
+    return  [UIColor colorWithRed:0.0f/255.0f green:185.0f/255.0f blue:255.0f/255.0f alpha:1.0f];
 }
 
 + (UIColor *)bookLoginBGColor {

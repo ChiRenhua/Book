@@ -17,10 +17,17 @@
 #import "AppDelegate.h"
 #import "BookReviewModel.h"
 #import "UIColor+AppConfig.h"
+#import "BookListCache.h"
 
 #define SCREEN_BOUNDS [UIScreen mainScreen].bounds.size
 #define FIRST_CHECKING_BOOK @"firstCheckingBook"
+#define FIRST_UNCHECKED_BOOK @"firstUncheckedBook"
+#define FIRST_CHECKED_PASS_BOOK @"firstCheckedPassBook"
+#define FIRST_CHECKED_UNPASS_BOOK @"firstCheckedUnpassBook"
+#define REVIEW_UNCHECKED_BOOK @"reviewUncheckedBook"
 #define REVIEW_CHECKING_BOOK @"reviewCheckingBook"
+#define REVIEW_CHECKED_PASS_BOOK @"reviewCheckedPassBook"
+#define REVIEW_CHECKED_UNPASS_BOOK @"reviewCheckedUnpassBook"
 
 @interface CheckBookViewController ()<UITableViewDataSource,UITableViewDelegate,UISearchResultsUpdating,UITextFieldDelegate>
 @property (retain,strong) UITableView *CheckBookViewtableView;
@@ -31,6 +38,7 @@
 @property(nonatomic,copy) NSString *navigationTitle;
 @property(nonatomic,copy) NSString *searchID;
 @property(retain,nonatomic) UITextField *searchTextField;
+@property(nonatomic,copy) NSString *ViewTypeKey;
 @end
 
 ListTableViewCell *CheckBookViewcell;
@@ -46,6 +54,7 @@ NSString *bookURL;
 - (id)init:(int)viewCode :(NSString *)title :(NSString *)searchid{
     if (self = [super init]) {
         viewcode = viewCode;
+        [self setViewTypeKey];
         searchResult = [[NSMutableArray alloc]init];
         _searchID = [[NSString alloc]init];
         _CheckbookDelegate = [[UIApplication sharedApplication]delegate];
@@ -60,16 +69,12 @@ NSString *bookURL;
             }else {
                 _noDataLable.text = @"暂无数据!";
                 [_noDataLable setHidden:NO];
-                if (viewcode != keyWorlSearchBook) {
+                if (viewcode != keyWordSearchBook) {
                     [_CheckBookViewtableView.tableHeaderView setHidden:YES];
                 } 
             }
             //如果是审核中页面，才会执行本地数据同步
-            if (viewCode == firstCheckingBook) {
-                [[BookReviewModel sharedInstance]synReviewbookDataWitharray:bookArray bookState:FIRST_CHECKING_BOOK];
-            }else if (viewCode == reviewCheckingBook) {
-                [[BookReviewModel sharedInstance]synReviewbookDataWitharray:bookArray bookState:REVIEW_CHECKING_BOOK];
-            }
+            [[BookReviewModel sharedInstance]synReviewbookDataWitharray:bookArray bookState:_ViewTypeKey];
             
             [self.CheckBookViewtableView reloadData];
             [_CheckBookViewtableView.mj_header endRefreshing];
@@ -115,8 +120,12 @@ NSString *bookURL;
     _CheckBookViewtableView = [[UITableView alloc]initWithFrame:self.view.bounds style:UITableViewStyleGrouped];                 // 初始化tableview填充整个屏幕
     _CheckBookViewtableView.dataSource = self;                                                                                   // 设置tableview的数据代理
     _CheckBookViewtableView.delegate = self;                                                                                     // 设置tableview代理
+    _CheckBookViewtableView.frame = CGRectMake(0, 65, SCREEN_BOUNDS.width, SCREEN_BOUNDS.height);
+    [self showNoDataView];
+
+    
     //关键词搜索页不支持下拉刷新
-    if (viewcode != keyWorlSearchBook) {
+    if (viewcode != keyWordSearchBook) {
         [self showPullRefreshView];
     }else {
         [self.view addSubview:_CheckBookViewtableView];
@@ -125,8 +134,40 @@ NSString *bookURL;
     if (viewcode != searchResultBook) {
         [self showSearchBar];
     }
-    [self showNoDataView];
 
+
+}
+
+
+- (void)setViewTypeKey {
+    switch (viewcode) {
+        case firstUncheckedBook:
+            _ViewTypeKey = FIRST_UNCHECKED_BOOK;
+            break;
+        case firstCheckingBook:
+            _ViewTypeKey = FIRST_CHECKING_BOOK;
+            break;
+        case firstCheckedPassBook:
+            _ViewTypeKey = FIRST_CHECKED_PASS_BOOK;
+            break;
+        case firstCheckedUnpassBook:
+            _ViewTypeKey = FIRST_CHECKED_UNPASS_BOOK;
+            break;
+        case reviewUncheckedBook:
+            _ViewTypeKey = REVIEW_UNCHECKED_BOOK;
+            break;
+        case reviewCheckingBook:
+            _ViewTypeKey = REVIEW_CHECKING_BOOK;
+            break;
+        case reviewCheckedPassBook:
+            _ViewTypeKey = REVIEW_CHECKED_PASS_BOOK;
+            break;
+        case reviewCheckedUnpassBook:
+            _ViewTypeKey = REVIEW_CHECKED_UNPASS_BOOK;
+            break;
+        default:
+            break;
+    }
 }
 
 - (void)getStep {
@@ -157,7 +198,7 @@ NSString *bookURL;
     }else if(viewcode == searchResultBook) {
         self.navigationItem.title = _navigationTitle;
         bookURL = [NSString stringWithFormat:@"getSearchBook.serv?username=%@&sessionid=%@&categorySecondId=%@",[[UserInfoModel sharedInstance]getUserName],[[UserInfoModel sharedInstance]getUserSessionid],_searchID];
-    }else if (viewcode == keyWorlSearchBook) {
+    }else if (viewcode == keyWordSearchBook) {
         self.navigationItem.title = _navigationTitle;
     }
 }
@@ -174,7 +215,7 @@ NSString *bookURL;
 #pragma mark - 搜索框
 - (void)showSearchBar {
     //关键词搜索页默认展示搜索框
-    if (viewcode == keyWorlSearchBook) {
+    if (viewcode == keyWordSearchBook) {
         _searchTextField = [[UITextField alloc]init];
         _searchTextField.frame = CGRectMake(0, 0, 0, 35);                                               // X,Y,长度设置都没用
         _searchTextField.backgroundColor = [UIColor whiteColor];
@@ -203,8 +244,12 @@ NSString *bookURL;
         [_searchController.searchBar setBackgroundImage:[[UIImage alloc] init]];
         //将搜索框添加到tableHeaderView中
         _CheckBookViewtableView.tableHeaderView = self.searchController.searchBar;
+        if (bookArray.count) {
+            [_CheckBookViewtableView.tableHeaderView setHidden:NO];
+        }else{
+            [_CheckBookViewtableView.tableHeaderView setHidden:YES];
+        }
         
-        [_CheckBookViewtableView.tableHeaderView setHidden:YES];
     }
     
 }
@@ -234,7 +279,18 @@ NSString *bookURL;
     _CheckBookViewtableView.mj_header = refreshHeader;
     refreshHeader.automaticallyChangeAlpha = YES;
     [self.view addSubview:_CheckBookViewtableView];
-    [_CheckBookViewtableView.mj_header beginRefreshing];
+    
+    // 检查是否有缓存，如果有读缓存数据，没有的话执行刷新操作
+    NSMutableArray *cacheArray = [[BookListCache sharedInstance] getBookListFromCache:_ViewTypeKey];
+    if (cacheArray.count) {
+        bookArray = cacheArray;
+        [_noDataLable setHidden:YES];
+        [_CheckBookViewtableView reloadData];
+    }else {
+        [_noDataLable setHidden:NO];
+        [_CheckBookViewtableView.mj_header beginRefreshing];
+    }
+    
 }
 
 #pragma mark - 下拉刷新执行函数

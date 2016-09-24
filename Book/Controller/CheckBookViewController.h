@@ -20,7 +20,7 @@ typedef NS_ENUM(NSInteger, ViewCode)
     reviewCheckedPassBook   = 1 << 6,
     reviewCheckedUnpassBook = 1 << 7,
     searchResultBook        = 1 << 8,
-    keyWorlSearchBook       = 1 << 9
+    keyWordSearchBook       = 1 << 9
 };
 
 #pragma msrk 判断是初审还是复审页面

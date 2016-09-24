@@ -16,7 +16,7 @@
 
 @implementation SearchModel
 
-+(SearchModel *)sharedInstance {
++ (SearchModel *)sharedInstance {
     static SearchModel *instance;
     static dispatch_once_t token;
     dispatch_once(&token,^{
