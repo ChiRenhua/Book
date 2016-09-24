@@ -47,7 +47,7 @@
 		D7DBDF041D72EE4C00CFAE5E /* touxiang.png in Resources */ = {isa = PBXBuildFile; fileRef = D7DBDEF31D72EE4C00CFAE5E /* touxiang.png */; };
 		D7EE88B91D7450C60073BF9C /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D7EE88B81D7450C60073BF9C /* SystemConfiguration.framework */; };
 		D7EE88BC1D74653B0073BF9C /* BookDetialModel.m in Sources */ = {isa = PBXBuildFile; fileRef = D7EE88BB1D74653B0073BF9C /* BookDetialModel.m */; };
-		D7EF19881D9655C8001E35B1 /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = D7EF19871D9655C8001E35B1 /* logo.png */; };
+		D7EF19881D9655C8001E35B1 /* logo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D7EF19871D9655C8001E35B1 /* logo.jpg */; };
 		D7EF198D1D967356001E35B1 /* bookunpass.png in Resources */ = {isa = PBXBuildFile; fileRef = D7EF198B1D967356001E35B1 /* bookunpass.png */; };
 		D7EF198E1D967356001E35B1 /* bookpass.png in Resources */ = {isa = PBXBuildFile; fileRef = D7EF198C1D967356001E35B1 /* bookpass.png */; };
 		D7EF19901D967C44001E35B1 /* logo_white.png in Resources */ = {isa = PBXBuildFile; fileRef = D7EF198F1D967C44001E35B1 /* logo_white.png */; };
@@ -137,7 +137,7 @@
 		D7EE88B81D7450C60073BF9C /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		D7EE88BA1D74653B0073BF9C /* BookDetialModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BookDetialModel.h; sourceTree = "<group>"; };
 		D7EE88BB1D74653B0073BF9C /* BookDetialModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BookDetialModel.m; sourceTree = "<group>"; };
-		D7EF19871D9655C8001E35B1 /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo.png; sourceTree = "<group>"; };
+		D7EF19871D9655C8001E35B1 /* logo.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = logo.jpg; sourceTree = "<group>"; };
 		D7EF198B1D967356001E35B1 /* bookunpass.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bookunpass.png; sourceTree = "<group>"; };
 		D7EF198C1D967356001E35B1 /* bookpass.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bookpass.png; sourceTree = "<group>"; };
 		D7EF198F1D967C44001E35B1 /* logo_white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo_white.png; sourceTree = "<group>"; };
@@ -348,7 +348,7 @@
 				D7EF198F1D967C44001E35B1 /* logo_white.png */,
 				D7EF198B1D967356001E35B1 /* bookunpass.png */,
 				D7EF198C1D967356001E35B1 /* bookpass.png */,
-				D7EF19871D9655C8001E35B1 /* logo.png */,
+				D7EF19871D9655C8001E35B1 /* logo.jpg */,
 				D7DBDEE61D72EE4C00CFAE5E /* book_01.jpg */,
 				D7DBDEE71D72EE4C00CFAE5E /* book_02.jpg */,
 				D7DBDEE81D72EE4C00CFAE5E /* book_03.jpg */,
@@ -489,7 +489,7 @@
 				D7DBDEF71D72EE4C00CFAE5E /* book_01.jpg in Resources */,
 				D7EF198D1D967356001E35B1 /* bookunpass.png in Resources */,
 				D7DBDF001D72EE4C00CFAE5E /* book_10.jpg in Resources */,
-				D7EF19881D9655C8001E35B1 /* logo.png in Resources */,
+				D7EF19881D9655C8001E35B1 /* logo.jpg in Resources */,
 				D7DBDEFE1D72EE4C00CFAE5E /* book_08.jpg in Resources */,
 				D7DBDEF81D72EE4C00CFAE5E /* book_02.jpg in Resources */,
 				D7DBDEFD1D72EE4C00CFAE5E /* book_07.jpg in Resources */,
