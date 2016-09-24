@@ -37,7 +37,13 @@ AppDelegate *homeViewDelegate;
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     [self.view setBackgroundColor:[UIColor whiteColor]];
-    self.navigationItem.title = @"主页";
+    // 导航栏添加logo
+    UIImageView *logoView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 100, 30)];
+    logoView.contentMode = UIViewContentModeScaleAspectFit;
+    UIImage *logoImage = [UIImage imageNamed:@"logo_white.png"];
+    [logoView setImage:logoImage];
+    self.navigationItem.titleView = logoView;
+//    self.navigationItem.title = @"主页";
     homeViewDelegate.loginVC.showHomeViewBlock = ^(){
         // 判断仅当tableview为空时，才会重新创建tableview
         if (_HomeViewtableView == nil) {

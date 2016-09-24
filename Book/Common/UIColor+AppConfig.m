@@ -23,7 +23,7 @@
 }
 
 + (UIColor *)bookAppColor {
-   return  [UIColor colorWithRed:0.0f/255.0f green:205.0f/255.0f blue:255.0f/255.0f alpha:1.0f];
+   return  [UIColor colorWithRed:0.0f/255.0f green:184.0f/255.0f blue:255.0f/255.0f alpha:1.0f];
 }
 
 + (UIColor *)bookLableColor {

@@ -13,7 +13,7 @@
 #import "CheckBookViewController.h"
 
 #define SCREEN_BOUNDS [UIScreen mainScreen].bounds.size
-#define ROW_HIGHT SCREEN_BOUNDS.height / 10
+#define ROW_HIGHT SCREEN_BOUNDS.height / 11
 
 @interface SearchViewController ()<UITableViewDelegate,UITableViewDataSource>
 @property (copy,nonatomic) NSMutableArray *searchArray;
