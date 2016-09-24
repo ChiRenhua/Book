@@ -30,9 +30,9 @@ typedef void (^SubmitFailed)();
 - (void)addBookReviewDataToLocalWithBookISBN:(NSString *)ISBN Array:(NSMutableArray *)array;
 - (NSMutableArray *)getBookReviewDataToLocalWithBookISBN:(NSString *)ISBN;
 - (void)getBookReviewDataToLocalWithURL:(NSString *)reviewurl;
-- (void)addReviewBookDataToLoaclWithBook:(Book *)book;
-- (NSMutableArray *)getReviewBookFromLocal;
-- (void)synReviewbookDataWitharray:(NSMutableArray *)array;
+- (void)addReviewBookDataToLoaclWithBook:(Book *)book bookState:(NSString *)bookState;
+- (NSMutableArray *)getReviewBookFromLocal:(NSString *)bookState;
+- (void)synReviewbookDataWitharray:(NSMutableArray *)array bookState:(NSString *)bookState;
 - (void)submitReviewDataWithURL:(NSString *)submitURL;
 
 @end

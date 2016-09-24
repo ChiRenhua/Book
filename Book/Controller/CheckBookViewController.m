@@ -19,6 +19,8 @@
 #import "UIColor+AppConfig.h"
 
 #define SCREEN_BOUNDS [UIScreen mainScreen].bounds.size
+#define FIRST_CHECKING_BOOK @"firstCheckingBook"
+#define REVIEW_CHECKING_BOOK @"reviewCheckingBook"
 
 @interface CheckBookViewController ()<UITableViewDataSource,UITableViewDelegate,UISearchResultsUpdating,UITextFieldDelegate>
 @property (retain,strong) UITableView *CheckBookViewtableView;
@@ -62,7 +64,13 @@ NSString *bookURL;
                     [_CheckBookViewtableView.tableHeaderView setHidden:YES];
                 } 
             }
-            [[BookReviewModel sharedInstance]synReviewbookDataWitharray:bookArray];
+            //如果是审核中页面，才会执行本地数据同步
+            if (viewCode == firstCheckingBook) {
+                [[BookReviewModel sharedInstance]synReviewbookDataWitharray:bookArray bookState:FIRST_CHECKING_BOOK];
+            }else if (viewCode == reviewCheckingBook) {
+                [[BookReviewModel sharedInstance]synReviewbookDataWitharray:bookArray bookState:REVIEW_CHECKING_BOOK];
+            }
+            
             [self.CheckBookViewtableView reloadData];
             [_CheckBookViewtableView.mj_header endRefreshing];
             
@@ -330,7 +338,14 @@ NSString *bookURL;
 - (void)loadLocalData {
     NSMutableArray *array = [[NSMutableArray alloc]init];
     NSMutableArray *barray = [[NSMutableArray alloc]init];
-    array = [[BookReviewModel sharedInstance]getReviewBookFromLocal];
+    
+    //判断是初审还是复审的审核中页面
+    if (viewcode == firstCheckingBook) {
+        array = [[BookReviewModel sharedInstance]getReviewBookFromLocal:FIRST_CHECKING_BOOK];
+    }else if (viewcode == reviewCheckingBook) {
+        array = [[BookReviewModel sharedInstance]getReviewBookFromLocal:REVIEW_CHECKING_BOOK];
+    }
+    
     for (int i = 0; i < array.count; i++) {
         Book *book = [[Book alloc]initWithDictionary:array[i]];
         book.bookState = array[i][@"bookState"];

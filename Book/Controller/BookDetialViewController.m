@@ -20,6 +20,8 @@
 
 #define SCREEN_BOUNDS [UIScreen mainScreen].bounds.size
 #define FIRST_CELL_HIGHT SCREEN_BOUNDS.height / 4
+#define FIRST_CHECKING_BOOK @"firstCheckingBook"
+#define REVIEW_CHECKING_BOOK @"reviewCheckingBook"
 
 @interface BookDetialViewController ()<UITableViewDelegate,UITableViewDataSource>
 @property (retain,nonatomic) UITableView *bookDetialTableView;
@@ -251,7 +253,13 @@ int reviewTextHeight;
                 [_mbprogress showAnimated:YES];                                                                                         // 显示toast
                 [self performSelector:@selector(showReviewView) withObject:nil afterDelay:1.0f];
                 _detialBook.bookState = @"审核中";
-                [[BookReviewModel sharedInstance]addReviewBookDataToLoaclWithBook:_detialBook];
+                
+                if ([_step integerValue]) {
+                    [[BookReviewModel sharedInstance]addReviewBookDataToLoaclWithBook:_detialBook bookState:REVIEW_CHECKING_BOOK];
+                }else {
+                    [[BookReviewModel sharedInstance]addReviewBookDataToLoaclWithBook:_detialBook bookState:FIRST_CHECKING_BOOK];
+                }
+                
                 [self getData];
                 [_bookDetialTableView reloadData];
             };

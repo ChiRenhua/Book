@@ -22,6 +22,7 @@ typedef NS_ENUM(NSInteger, ViewCode)
     searchResultBook        = 1 << 8,
     keyWorlSearchBook       = 1 << 9
 };
+
 #pragma msrk 判断是初审还是复审页面
 - (id)init:(int)viewcode :(NSString *)title :(NSString *)searchid;
 

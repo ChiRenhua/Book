@@ -130,15 +130,15 @@
     }];
 }
 
-- (void)addReviewBookDataToLoaclWithBook:(Book *)book {
+- (void)addReviewBookDataToLoaclWithBook:(Book *)book bookState:(NSString *)bookState{
     NSMutableArray *bookarray = [[NSMutableArray alloc]init];
-    bookarray = [self getReviewBookFromLocal];
+    bookarray = [self getReviewBookFromLocal:bookState];
     if (bookarray == nil) {
         bookarray = [[NSMutableArray alloc]init];
         NSFileManager *fileManager = [NSFileManager defaultManager];
         NSArray *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
         NSString *filePath = [path objectAtIndex:0];
-        NSString *plistPath = [filePath stringByAppendingPathComponent:@"localbookinfo"];
+        NSString *plistPath = [filePath stringByAppendingPathComponent:bookState];
         [fileManager createFileAtPath:plistPath contents:nil attributes:nil];
         NSMutableDictionary *dic = [[NSMutableDictionary alloc]init];
         [dic setValue:book.authorName forKey:@"authorName"];
@@ -167,7 +167,7 @@
             NSFileManager *fileManager = [NSFileManager defaultManager];
             NSArray *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
             NSString *filePath = [path objectAtIndex:0];
-            NSString *plistPath = [filePath stringByAppendingPathComponent:@"localbookinfo"];
+            NSString *plistPath = [filePath stringByAppendingPathComponent:bookState];
             [fileManager createFileAtPath:plistPath contents:nil attributes:nil];
             NSMutableDictionary *dic = [[NSMutableDictionary alloc]init];
             [dic setValue:book.authorName forKey:@"authorName"];
@@ -189,20 +189,20 @@
     }
 }
 
-- (NSMutableArray *)getReviewBookFromLocal {
+- (NSMutableArray *)getReviewBookFromLocal:(NSString *)bookState {
     NSArray *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *filePath = [path objectAtIndex:0];
-    NSString *plistPath = [filePath stringByAppendingPathComponent:@"localbookinfo"];
+    NSString *plistPath = [filePath stringByAppendingPathComponent:bookState];
     NSMutableArray *array = [[NSMutableArray alloc]initWithContentsOfFile:plistPath];
     return array;
 }
 // 同步数据
-- (void)synReviewbookDataWitharray:(NSMutableArray *)array {
+- (void)synReviewbookDataWitharray:(NSMutableArray *)array bookState:(NSString *)bookState{
     if (array.count == 0) {
         NSFileManager *fileManager = [NSFileManager defaultManager];
         NSArray *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
         NSString *filePath = [path objectAtIndex:0];
-        NSString *plistPath = [filePath stringByAppendingPathComponent:@"localbookinfo"];
+        NSString *plistPath = [filePath stringByAppendingPathComponent:bookState];
         [fileManager createFileAtPath:plistPath contents:nil attributes:nil];
         [array writeToFile:plistPath atomically:YES];
     }else {
@@ -210,12 +210,12 @@
         NSFileManager *fileManager = [NSFileManager defaultManager];
         NSArray *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
         NSString *filePath = [path objectAtIndex:0];
-        NSString *plistPath = [filePath stringByAppendingPathComponent:@"localbookinfo"];
+        NSString *plistPath = [filePath stringByAppendingPathComponent:bookState];
         [fileManager createFileAtPath:plistPath contents:nil attributes:nil];
         [nullarray writeToFile:plistPath atomically:YES];
         
         for (int i = 0; i < array.count; i++) {
-            [self addReviewBookDataToLoaclWithBook:array[i]];
+            [self addReviewBookDataToLoaclWithBook:array[i]bookState:bookState];
         }
     }
 }
