@@ -120,7 +120,7 @@ NSString *bookURL;
     _CheckBookViewtableView = [[UITableView alloc]initWithFrame:self.view.bounds style:UITableViewStyleGrouped];                 // 初始化tableview填充整个屏幕
     _CheckBookViewtableView.dataSource = self;                                                                                   // 设置tableview的数据代理
     _CheckBookViewtableView.delegate = self;                                                                                     // 设置tableview代理
-    _CheckBookViewtableView.frame = CGRectMake(0, 65, SCREEN_BOUNDS.width, SCREEN_BOUNDS.height);
+    _CheckBookViewtableView.frame = CGRectMake(0, 65, SCREEN_BOUNDS.width, SCREEN_BOUNDS.height - 75);
     [self showNoDataView];
 
     
