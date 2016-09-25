@@ -7,7 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
-typedef void (^updateTableView)(NSString *state);
+
+#define GET_BOOK_FROM_NET_SUCCESS 1
+#define GET_BOOK_FROM_NET_FAILED 0
+
+typedef void (^updateTableView)(NSString *state,NSInteger errorcode);
 typedef void (^ShowLoginAlert)();
 typedef void (^OfflineMode)();
 

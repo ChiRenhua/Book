@@ -61,7 +61,7 @@ NSString *bookURL;
         _navigationTitle = [[NSString alloc]init];
         _navigationTitle = title;
         _searchID = searchid;
-        [BookInfoModel sharedInstance].updateTV = ^(NSString *state){
+        [BookInfoModel sharedInstance].updateTV = ^(NSString *state,NSInteger errorcode){
             bookArray = [[BookInfoModel sharedInstance]getBookArray];
             if ([bookArray count]) {
                 [_noDataLable setHidden:YES];
@@ -73,8 +73,20 @@ NSString *bookURL;
                     [_CheckBookViewtableView.tableHeaderView setHidden:YES];
                 } 
             }
+            
             //如果是审核中页面，才会执行本地数据同步
-            [[BookReviewModel sharedInstance]synReviewbookDataWitharray:bookArray bookState:_ViewTypeKey];
+            if (errorcode == GET_BOOK_FROM_NET_SUCCESS) {
+                [[BookReviewModel sharedInstance]synReviewbookDataWitharray:bookArray bookState:_ViewTypeKey];
+            }
+            
+            //如果数据拉取失败，则展示缓存数据
+            if (errorcode == GET_BOOK_FROM_NET_FAILED) {
+                NSMutableArray *cacheArray = [[BookListCache sharedInstance] getBookListFromCache:_ViewTypeKey];
+                bookArray = cacheArray;
+                [_noDataLable setHidden:YES];
+                [_CheckBookViewtableView.tableHeaderView setHidden:NO];
+                [_CheckBookViewtableView reloadData];
+            }
             
             [self.CheckBookViewtableView reloadData];
             [_CheckBookViewtableView.mj_header endRefreshing];
@@ -120,9 +132,6 @@ NSString *bookURL;
     _CheckBookViewtableView = [[UITableView alloc]initWithFrame:self.view.bounds style:UITableViewStyleGrouped];                 // 初始化tableview填充整个屏幕
     _CheckBookViewtableView.dataSource = self;                                                                                   // 设置tableview的数据代理
     _CheckBookViewtableView.delegate = self;                                                                                     // 设置tableview代理
-    _CheckBookViewtableView.frame = CGRectMake(0, 65, SCREEN_BOUNDS.width, SCREEN_BOUNDS.height - 75);
-    [self showNoDataView];
-
     
     //关键词搜索页不支持下拉刷新
     if (viewcode != keyWordSearchBook) {
@@ -134,7 +143,8 @@ NSString *bookURL;
     if (viewcode != searchResultBook) {
         [self showSearchBar];
     }
-
+    
+    [self showNoDataView];
 
 }
 
@@ -211,6 +221,12 @@ NSString *bookURL;
     _noDataLable.textAlignment = NSTextAlignmentCenter;
     _noDataLable.font = [UIFont systemFontOfSize:20];
     [self.view addSubview:_noDataLable];
+    
+    if (bookArray.count) {
+        [_noDataLable setHidden:YES];
+    }else {
+        [_noDataLable setHidden:NO];
+    }
 }
 #pragma mark - 搜索框
 - (void)showSearchBar {
@@ -284,10 +300,8 @@ NSString *bookURL;
     NSMutableArray *cacheArray = [[BookListCache sharedInstance] getBookListFromCache:_ViewTypeKey];
     if (cacheArray.count) {
         bookArray = cacheArray;
-        [_noDataLable setHidden:YES];
         [_CheckBookViewtableView reloadData];
     }else {
-        [_noDataLable setHidden:NO];
         [_CheckBookViewtableView.mj_header beginRefreshing];
     }
     

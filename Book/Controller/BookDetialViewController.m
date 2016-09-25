@@ -22,6 +22,7 @@
 #define FIRST_CELL_HIGHT SCREEN_BOUNDS.height / 4
 #define FIRST_CHECKING_BOOK @"firstCheckingBook"
 #define REVIEW_CHECKING_BOOK @"reviewCheckingBook"
+#define BOOK_IMAGEBASEURL @"http://121.42.174.184:8080/bookmgyun/"
 
 @interface BookDetialViewController ()<UITableViewDelegate,UITableViewDataSource>
 @property (retain,nonatomic) UITableView *bookDetialTableView;
@@ -140,7 +141,8 @@ int reviewTextHeight;
             // 书籍封面
             UIImageView *bookImageView = [[UIImageView alloc]init];
             bookImageView.frame = CGRectMake(SCREEN_BOUNDS.width / 20, 15, (FIRST_CELL_HIGHT - 30 ) / 3 * 2, FIRST_CELL_HIGHT - 30);
-            NSString *book_image_url = [_detialBook.coverPath stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+            NSString *coverPath = [BOOK_IMAGEBASEURL stringByAppendingString:_detialBook.coverPath];
+            NSString *book_image_url = [coverPath stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
             [bookImageView sd_setImageWithURL:[NSURL URLWithString:book_image_url] placeholderImage:[UIImage imageNamed:@"default_bookimage"]];
             [bookDetialViewCell.contentView addSubview:bookImageView];
             // 图书名字

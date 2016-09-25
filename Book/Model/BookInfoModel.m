@@ -45,11 +45,11 @@
             _showLoginAlert();
         }else if(status == 1002) {
             [_bookArray removeAllObjects];
-            _updateTV(@"不存在此书的相关信息!");
+            _updateTV(@"不存在此书的相关信息!",GET_BOOK_FROM_NET_SUCCESS);
         }
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         NSLog(@"error:%@",error);
-        _updateTV(@"数据请求失败，请稍后重试!");
+        _updateTV(@"数据请求失败，请稍后重试!",GET_BOOK_FROM_NET_FAILED);
     }];
 }
 
@@ -71,14 +71,14 @@
         }else if(status == 1001) {
             _showLoginAlert();
         }else if(status == 1002) {
-            _updateTV(@"请求列表为空!");
+            _updateTV(@"请求列表为空!",GET_BOOK_FROM_NET_SUCCESS);
         }
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         NSLog(@"error:%@",error);
         if ([bookState isEqualToString:@"审核中"]) {
             _offlineMode();
         }else {
-            _updateTV(@"数据请求失败，请稍后重试!");
+            _updateTV(@"数据请求失败，请稍后重试!",GET_BOOK_FROM_NET_FAILED);
         }
     }];
 }
@@ -90,7 +90,7 @@
         book.bookState = bookstate;
         [_bookArray addObject:book];
     }
-    _updateTV(@"数据加载成功！");
+    _updateTV(@"数据加载成功!",GET_BOOK_FROM_NET_SUCCESS);
 }
 
 - (NSMutableArray *)getBookArray {

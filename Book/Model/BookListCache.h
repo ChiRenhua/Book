@@ -14,6 +14,4 @@
 
 - (NSMutableArray *)getBookListFromCache:(NSString *)key;
 
-- (void)setBookListToCache:(NSMutableArray *)bookList key:(NSString *)key;
-
 @end

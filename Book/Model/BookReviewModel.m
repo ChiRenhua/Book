@@ -141,10 +141,11 @@
         NSString *plistPath = [filePath stringByAppendingPathComponent:bookState];
         [fileManager createFileAtPath:plistPath contents:nil attributes:nil];
         NSMutableDictionary *dic = [[NSMutableDictionary alloc]init];
+        NSString *bookID = [NSString stringWithFormat:@"%@",book.bookID];
         [dic setValue:book.authorName forKey:@"authorName"];
         [dic setValue:book.bookName forKey:@"bookName"];
         [dic setValue:book.coverPath forKey:@"coverPath"];
-        [dic setValue:book.bookID forKey:@"bookID"];
+        [dic setValue:bookID forKey:@"id"];
         [dic setValue:book.isbn forKey:@"isbn"];
         [dic setValue:book.bookState forKey:@"bookState"];
         [dic setValue:book.step forKey:@"step"];
@@ -170,10 +171,11 @@
             NSString *plistPath = [filePath stringByAppendingPathComponent:bookState];
             [fileManager createFileAtPath:plistPath contents:nil attributes:nil];
             NSMutableDictionary *dic = [[NSMutableDictionary alloc]init];
+            NSString *bookID = [NSString stringWithFormat:@"%@",book.bookID];
             [dic setValue:book.authorName forKey:@"authorName"];
             [dic setValue:book.bookName forKey:@"bookName"];
             [dic setValue:book.coverPath forKey:@"coverPath"];
-            [dic setValue:book.bookID forKey:@"bookID"];
+            [dic setValue:bookID forKey:@"id"];
             [dic setValue:book.isbn forKey:@"isbn"];
             [dic setValue:book.bookState forKey:@"bookState"];
             [dic setValue:book.step forKey:@"step"];

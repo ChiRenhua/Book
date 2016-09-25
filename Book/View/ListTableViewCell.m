@@ -12,6 +12,7 @@
 #import "UIColor+AppConfig.h"
 
 #define SCREEN_BOUNDS [UIScreen mainScreen].bounds.size
+#define BOOK_IMAGEBASEURL @"http://121.42.174.184:8080/bookmgyun/"
 
 @interface ListTableViewCell()
 
@@ -66,7 +67,8 @@ UILabel *bookStateLable;
 }
 #pragma mark 为cell上的view布局添加文字或图片信息
 - (void) setBookInfo:(Book *)book{
-    NSString *book_image_url = [book.coverPath stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSString *coverPath = [BOOK_IMAGEBASEURL stringByAppendingString:book.coverPath];
+    NSString *book_image_url = [coverPath stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     [bookPictureImage sd_setImageWithURL:[NSURL URLWithString:book_image_url] placeholderImage:[UIImage imageNamed:@"default_bookimage"]];
     bookNameLable.text = book.bookName;
     bookWriterLable.text = book.authorName;

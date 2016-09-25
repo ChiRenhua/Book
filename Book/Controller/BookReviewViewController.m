@@ -16,6 +16,8 @@
 #import "UIColor+AppConfig.h"
 
 #define SCREEN_BOUNDS [UIScreen mainScreen].bounds.size
+#define BOOK_IMAGEBASEURL @"http://121.42.174.184:8080/bookmgyun/"
+
 static NSString * const CellIdentifier = @"cell";
 @interface BookReviewViewController ()<UITableViewDelegate,UITableViewDataSource>
 @property (retain,nonatomic) Book *detialBook;
@@ -341,7 +343,9 @@ static NSString * const CellIdentifier = @"cell";
     [cell.contentView addSubview:bookReviewTitle];
     if (indexPath.row == 0) {
         UIImageView *bookImage = [[UIImageView alloc]initWithFrame:CGRectMake(tableView.bounds.size.width - 77, 5, 27, 40)];
-        [bookImage sd_setImageWithURL:[NSURL URLWithString:_reviewvalue_SD[indexPath.row]] placeholderImage:[UIImage imageNamed:@"default_bookimage"]];
+        NSString *coverPath = [BOOK_IMAGEBASEURL stringByAppendingString:_reviewvalue_SD[indexPath.row]];
+        NSString *book_image_url = [coverPath stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+        [bookImage sd_setImageWithURL:[NSURL URLWithString:book_image_url] placeholderImage:[UIImage imageNamed:@"default_bookimage"]];
         [cell.contentView addSubview:bookImage];
     }else {
         // 审核内容
@@ -450,7 +454,9 @@ static NSString * const CellIdentifier = @"cell";
         [alertView addSubview:alertTitle];
         
         UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(35, 40, 197, 297)];
-        [imageView sd_setImageWithURL:[NSURL URLWithString:_reviewvalue_SD[indexPath.row]] placeholderImage:[UIImage imageNamed:@"default_bookimage"]];
+        NSString *coverPath = [BOOK_IMAGEBASEURL stringByAppendingString:_reviewvalue_SD[indexPath.row]];
+        NSString *book_image_url = [coverPath stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+        [imageView sd_setImageWithURL:[NSURL URLWithString:book_image_url] placeholderImage:[UIImage imageNamed:@"default_bookimage"]];
         [alertView addSubview:imageView];
         
         return alertView;
