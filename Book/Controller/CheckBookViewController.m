@@ -57,7 +57,7 @@ NSString *bookURL;
         [self setViewTypeKey];
         searchResult = [[NSMutableArray alloc]init];
         _searchID = [[NSString alloc]init];
-        _CheckbookDelegate = [[UIApplication sharedApplication]delegate];
+        _CheckbookDelegate = (AppDelegate *)[[UIApplication sharedApplication]delegate];
         _navigationTitle = [[NSString alloc]init];
         _navigationTitle = title;
         _searchID = searchid;

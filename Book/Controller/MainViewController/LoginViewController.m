@@ -132,7 +132,7 @@
 
 - (void)showUserView {
     // 加载个人页面数据
-    AppDelegate *appdelegate = [[UIApplication sharedApplication]delegate];
+    AppDelegate *appdelegate = (AppDelegate *)[[UIApplication sharedApplication]delegate];
     [appdelegate.UserVC.UserVCTableView reloadData];
 }
 

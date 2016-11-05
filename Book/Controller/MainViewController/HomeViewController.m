@@ -28,7 +28,7 @@ AppDelegate *homeViewDelegate;
     if (self = [super init]) {
         CheckBookArray = [[NSMutableArray alloc]initWithObjects:@"待审核",@"审核中",@"已通过",@"未通过", nil];
         imageArray = [[NSMutableArray alloc]initWithObjects:@"CheckBook.png",@"review.png",@"bookpass.png",@"bookunpass.png",nil];
-        homeViewDelegate = [[UIApplication sharedApplication]delegate];
+        homeViewDelegate = (AppDelegate *)[[UIApplication sharedApplication]delegate];
     }
     return self;
 }

@@ -26,7 +26,7 @@ AppDelegate *UserVCdelegate;
     if (self = [super init]) {
         [self.view setBackgroundColor:[UIColor whiteColor]];
         self.navigationItem.title = @"我";
-        UserVCdelegate = [[UIApplication sharedApplication]delegate];
+        UserVCdelegate = (AppDelegate *)[[UIApplication sharedApplication]delegate];
     }
     return  self;
 }
@@ -85,7 +85,7 @@ AppDelegate *UserVCdelegate;
         // 添加用户名
         _nameLable = [[UILabel alloc]initWithFrame:CGRectMake(110, 20, SCREEN_BOUNDS.width - 110, 20)];
          NSString *userName = [[UserInfoModel sharedInstance] getUserName];
-        _nameLable.text = [[NSString alloc]initWithFormat:@"欢迎用户：%@",userName];
+        _nameLable.text = userName;
         _nameLable.textColor = [UIColor whiteColor];
         _nameLable.font = [UIFont systemFontOfSize:20];
         [UserViewCell.contentView addSubview:_nameLable];

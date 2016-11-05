@@ -9,6 +9,8 @@
 #import "BookReviewModel.h"
 #import "AFNetworking/AFNetworking.h"
 #import "UserInfoModel.h"
+#import "Utils.h"
+
 #define BASEURL @"http://121.42.174.184:8080/bookmgyun/servlet/"
 
 @interface BookReviewModel()
@@ -217,7 +219,7 @@
 - (void)saveDictoinaryWithBook:(Book *)book key:(NSMutableArray *)key value:(NSMutableArray *)value {
     NSMutableArray *array = [[NSMutableArray alloc]init];
     NSMutableDictionary *dic = [[NSMutableDictionary alloc]init];
-    NSString *book_image_url = [book.coverPath stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSString *book_image_url = [Utils UTF8URL:book.coverPath];;
     [dic setObject:@"封皮" forKey:@"key"];
     [dic setObject:book_image_url forKey:@"value"];
     [dic setObject:@"1" forKey:@"result"];

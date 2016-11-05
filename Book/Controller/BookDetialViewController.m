@@ -17,22 +17,29 @@
 #import "MBProgressHUD.h"
 #import "BookReviewModel.h"
 #import "UIColor+AppConfig.h"
+#import "Utils.h"
+#import "BookDownloadModel.h"
+#import "BookFileBrowserViewController.h"
 
 #define SCREEN_BOUNDS [UIScreen mainScreen].bounds.size
 #define FIRST_CELL_HIGHT SCREEN_BOUNDS.height / 4
+#define PREVIEW_CELL_HEIGHT 150
 #define FIRST_CHECKING_BOOK @"firstCheckingBook"
 #define REVIEW_CHECKING_BOOK @"reviewCheckingBook"
 #define BOOK_IMAGEBASEURL @"http://121.42.174.184:8080/bookmgyun/"
 
 @interface BookDetialViewController ()<UITableViewDelegate,UITableViewDataSource>
-@property (retain,nonatomic) UITableView *bookDetialTableView;
-@property (retain,nonatomic) Book *detialBook;
-@property (copy,nonatomic) NSString *step;
-@property (copy,nonatomic) UILabel *bookReviewInfo;
-@property(retain,nonatomic) AppDelegate *bookDetialAppDelegate;
-@property(nonatomic,retain)  MBProgressHUD *mbprogress;
+@property (retain, nonatomic) UITableView *bookDetialTableView;
+@property (retain, nonatomic) Book *detialBook;
+@property (copy, nonatomic) NSString *step;
+@property (copy, nonatomic) UILabel *bookReviewInfo;
+@property (retain, nonatomic) AppDelegate *bookDetialAppDelegate;
+@property (nonatomic, retain)  MBProgressHUD *mbprogress;
 @property (nonatomic, retain) UILabel *errorLable;
 @property (nonatomic, retain) UIActivityIndicatorView *IndicatorView;
+
+@property (nonatomic, retain) UIProgressView *downLoadProgressView;
+@property (nonatomic, strong) UILabel *downloadStatusLable;
 
 @end
 int reviewTextHeight;
@@ -47,7 +54,7 @@ int reviewTextHeight;
         _detialBook = book;
         [BookDetialModel sharedInstance].updateReason = ^(NSString * reason){
             // 计算文本高度
-            CGSize bookIntroduceSize = [reason sizeWithFont:[UIFont systemFontOfSize:15] constrainedToSize:CGSizeMake(300.0f,CGFLOAT_MAX) lineBreakMode:UILineBreakModeWordWrap];
+            CGSize bookIntroduceSize = [Utils stringWedith:reason size:15];
             _bookReviewInfo.frame = CGRectMake(SCREEN_BOUNDS.width / 20 + 70, 50, SCREEN_BOUNDS.width - SCREEN_BOUNDS.width / 20 - 90, bookIntroduceSize.height + 20);
             reviewTextHeight = bookIntroduceSize.height;
             [_errorLable setHidden:YES];
@@ -124,15 +131,15 @@ int reviewTextHeight;
 #pragma mark 设置行数
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if ([_detialBook.bookState isEqualToString:@"已通过"] || [_detialBook.bookState isEqualToString:@"未通过"] || _detialBook.bookState == nil) {
-        return 2;
-    }else {
         return 3;
+    }else {
+        return 4;
     }
 }
 #pragma mark 设置单元格样式和内容
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *bookDetialViewCell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
-    if (indexPath.row != 2) {
+    if (indexPath.row != 3) {
         bookDetialViewCell.selectionStyle = UITableViewCellSelectionStyleNone;                                                                           //取消选中状态
     }
     [bookDetialViewCell.contentView.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];                                                 // 每次初始化之前移除view上的所有布局
@@ -188,13 +195,97 @@ int reviewTextHeight;
         }
             break;
         case 1: {
-            // 审核信息标题
+            // 书籍预览栏标题
+            UILabel *bookReviewInfoTitle = [[UILabel alloc]initWithFrame:CGRectMake(SCREEN_BOUNDS.width / 20, 15, SCREEN_BOUNDS.width - 10, 20)];
+            bookReviewInfoTitle.text = @"书籍内容";
+            bookReviewInfoTitle.font = [UIFont systemFontOfSize:17];
+            bookReviewInfoTitle.textColor = [UIColor blackColor];
+            [bookDetialViewCell.contentView addSubview:bookReviewInfoTitle];
+            
+            UIView *imageButton = [[UIButton alloc]initWithFrame:CGRectMake(SCREEN_BOUNDS.width / 20, 50, SCREEN_BOUNDS.width / 2 - SCREEN_BOUNDS.width / 10, 75)];
+            imageButton.backgroundColor = [UIColor bookLoginBGColor];
+            imageButton.layer.cornerRadius = 5.0;
+            imageButton.userInteractionEnabled = YES;
+            
+            // imageButton添加点击事件
+            UITapGestureRecognizer* imageButtonSingleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(imageButtonHandleSingleTap:)];
+            [imageButton addGestureRecognizer:imageButtonSingleTap];
+            
+            UIImageView *jpglogo = [[UIImageView alloc]initWithFrame:CGRectMake(15, 15, 34, imageButton.bounds.size.height - 30)];
+            jpglogo.image = [UIImage imageNamed:@"jpgLogo.png"];
+            [imageButton addSubview:jpglogo];
+            
+            UILabel *imageLable = [[UILabel alloc]initWithFrame:CGRectMake(jpglogo.bounds.size.width + 30, (imageButton.bounds.size.height - 15) / 2, imageButton.bounds.size.width - jpglogo.bounds.size.width - 45, 15)];
+            imageLable.text = @"查看图片";
+            imageLable.textColor = [UIColor blackColor];
+            imageLable.font = [UIFont systemFontOfSize:15];
+            [imageButton addSubview:imageLable];
+            
+            [bookDetialViewCell.contentView addSubview:imageButton];
+            
+            UIView *pdfButton = [[UIButton alloc]initWithFrame:CGRectMake(SCREEN_BOUNDS.width / 2 + SCREEN_BOUNDS.width / 20, 50, SCREEN_BOUNDS.width / 2 - SCREEN_BOUNDS.width / 10, 75)];
+            pdfButton.backgroundColor = [UIColor bookLoginBGColor];
+            pdfButton.layer.cornerRadius = 5.0;
+            pdfButton.userInteractionEnabled = YES;
+            
+            // imageButton添加点击事件
+            UITapGestureRecognizer* pdfButtonSingleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(pdfButtonHandleSingleTap:)];
+            [pdfButton addGestureRecognizer:pdfButtonSingleTap];
+            
+            UIImageView *pdflogo = [[UIImageView alloc]initWithFrame:CGRectMake(15, 15, 34, pdfButton.bounds.size.height - 30)];
+            pdflogo.image = [UIImage imageNamed:@"pdfLogo.png"];
+            [pdfButton addSubview:pdflogo];
+            
+            UILabel *pdfLable = [[UILabel alloc]initWithFrame:CGRectMake(pdflogo.bounds.size.width + 30, (pdfButton.bounds.size.height - 15) / 2, pdfButton.bounds.size.width - pdflogo.bounds.size.width - 45, 15)];
+            pdfLable.text = @"查看文件";
+            pdfLable.textColor = [UIColor blackColor];
+            pdfLable.font = [UIFont systemFontOfSize:15];
+            [pdfButton addSubview:pdfLable];
+            
+            [bookDetialViewCell.contentView addSubview:pdfButton];
+            
+            /*
+            UIView *bookInfoView = [[UIView alloc]initWithFrame:CGRectMake(SCREEN_BOUNDS.width / 20, 50, SCREEN_BOUNDS.width - SCREEN_BOUNDS.width / 20 - 15, 35)];
+            bookInfoView.backgroundColor = [UIColor bookLoginBGColor];
+            bookInfoView.layer.cornerRadius = 5.0;
+            bookInfoView.userInteractionEnabled = YES;
+            
+            // bookInfoView添加点击事件
+            UITapGestureRecognizer* singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleSingleTap:)];
+            [bookInfoView addGestureRecognizer:singleTap];
+            
+            
+            UIImageView *pdflogo = [[UIImageView alloc]initWithFrame:CGRectMake(5, 5, 19, 25)];
+            pdflogo.image = [UIImage imageNamed:@"pdfLogo.png"];
+            [bookInfoView addSubview:pdflogo];
+            
+            UILabel *bookNameLable = [[UILabel alloc]initWithFrame:CGRectMake(30, 10, bookInfoView.bounds.size.width / 2 - 30, 15)];
+            bookNameLable.text = _detialBook.bookName;
+            bookNameLable.font = [UIFont systemFontOfSize:15];
+            bookNameLable.textColor = [UIColor blackColor];
+            [bookInfoView addSubview:bookNameLable];
+            
+            _downloadStatusLable = [[UILabel alloc]initWithFrame:CGRectMake(bookInfoView.bounds.size.width - 35.6, 10, 30.6, 15)];
+            _downloadStatusLable.text = @"下载";
+            _downloadStatusLable.font = [UIFont systemFontOfSize:15];
+            _downloadStatusLable.textColor = [UIColor bookLableColor];
+            [bookInfoView addSubview:_downloadStatusLable];
+            
+            _downLoadProgressView = [[UIProgressView alloc]initWithFrame:CGRectMake(bookInfoView.bounds.size.width / 2, 17, bookInfoView.bounds.size.width / 2 - _downloadStatusLable.bounds.size.width - 10, 5)];
+            [bookInfoView addSubview:_downLoadProgressView];
+            
+            [bookDetialViewCell.contentView addSubview:bookInfoView];
+            */
+        }
+            break;
+        case 2: {
+            // 审核信息栏标题
             UILabel *bookReviewInfoTitle = [[UILabel alloc]initWithFrame:CGRectMake(SCREEN_BOUNDS.width / 20, 15, SCREEN_BOUNDS.width - 10, 20)];
             bookReviewInfoTitle.text = @"审核信息";
             bookReviewInfoTitle.font = [UIFont systemFontOfSize:17];
             bookReviewInfoTitle.textColor = [UIColor blackColor];
             [bookDetialViewCell.contentView addSubview:bookReviewInfoTitle];
-            // 审核信息内容
+            // 审核信息栏内容
             _bookReviewInfo = [[UILabel alloc]init];
             _bookReviewInfo.lineBreakMode = NSLineBreakByWordWrapping;                                                                                         // 文字过长时显示全部
             _bookReviewInfo.numberOfLines = 0;                                                                                                                 // 取消行数限制
@@ -204,7 +295,7 @@ int reviewTextHeight;
             [bookDetialViewCell.contentView addSubview:_bookReviewInfo];
         }
             break;
-        case 2: {
+        case 3: {
             // 审核按钮
             if ([_detialBook.bookState isEqualToString:@"待审核"]) {
                 bookDetialViewCell.textLabel.text = @"开始审核";
@@ -228,7 +319,7 @@ int reviewTextHeight;
 }
 #pragma mark 添加行点击事件
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.row == 2) {
+    if (indexPath.row == 3) {
         if ([_detialBook.bookState isEqualToString:@"待审核"]) {
             _mbprogress.mode = MBProgressHUDModeIndeterminate;                                                                          // 设置toast的样式为文字
             _mbprogress.label.text = NSLocalizedString(@"加审中", @"HUD message title");                                                 // 设置toast上的文字
@@ -239,10 +330,8 @@ int reviewTextHeight;
             NSString *addReviewURL = [NSString stringWithFormat:@"addAudit.serv?username=%@&sessionid=%@&bookid=%@&step=%@",[[UserInfoModel sharedInstance]getUserName],[[UserInfoModel sharedInstance]getUserSessionid],_detialBook.bookID,_step];
             [[BookDetialModel sharedInstance] getBookreasonWithURL:addReviewURL by:addReviewButtonModule];
             [BookDetialModel sharedInstance].showToast = ^(NSString *message){
-                //[_mbprogress hideAnimated:YES];
                 _mbprogress.mode = MBProgressHUDModeText;
                 _mbprogress.label.text = NSLocalizedString(message, @"HUD completed title");
-                //[_mbprogress showAnimated:YES];                                                                                         // 显示toast
                 [_mbprogress hideAnimated:YES afterDelay:1.5];                                                                          // 1.5秒后销毁toast
             };
             [BookDetialModel sharedInstance].showReviewView = ^(){
@@ -278,7 +367,10 @@ int reviewTextHeight;
         case 0:
             return FIRST_CELL_HIGHT;
             break;
-        case 1: {
+        case 1:
+            return PREVIEW_CELL_HEIGHT;
+            break;
+        case 2: {
             int height;
             if ([_detialBook.bookState isEqualToString:@"已通过"] || [_detialBook.bookState isEqualToString:@"未通过"] || _detialBook.bookState == nil) {
                 height = SCREEN_BOUNDS.height - FIRST_CELL_HIGHT - 113;
@@ -288,10 +380,10 @@ int reviewTextHeight;
             if (reviewTextHeight > height) {
                 height = reviewTextHeight + 20;
             }
-            return height;
+            return height - PREVIEW_CELL_HEIGHT;
             break;
         }
-        case 2: {
+        case 3: {
             return 50;
             break;
         }
@@ -332,6 +424,17 @@ int reviewTextHeight;
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+#pragma mark - bookInfoView点击事件
+- (void)imageButtonHandleSingleTap:(UITapGestureRecognizer *)sender{
+    BookFileBrowserViewController *bookFileBrowserVC = [[BookFileBrowserViewController alloc] initWithBookInfo:_detialBook bookFileBrowserType:BookFileBrowserType_Image];
+    [self presentViewController:bookFileBrowserVC animated:YES completion:nil];
+}
+
+- (void)pdfButtonHandleSingleTap:(UITapGestureRecognizer *)sender{
+    BookFileBrowserViewController *bookFileBrowserVC = [[BookFileBrowserViewController alloc] initWithBookInfo:_detialBook bookFileBrowserType:BookFileBrowserType_PDF];
+    [self presentViewController:bookFileBrowserVC animated:YES completion:nil];
 }
 
 @end

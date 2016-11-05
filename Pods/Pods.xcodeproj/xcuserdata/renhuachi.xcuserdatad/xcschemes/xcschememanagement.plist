@@ -34,20 +34,25 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>TCBlobDownload.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>2865C5C290804FB9F9A85CB2299E0815</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>6A3E7C3A4E39D33477AFD6798025CE5C</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
 		<key>70BC44266C6FFE30D2C57129458E070B</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>8A98F82AE4B67E0647BC9E46FCCBA132</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -62,7 +67,12 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>EF25B387CED288EDDEFF3A54BA8540E5</key>
+		<key>D7A8C28260BF38E8EDC6BC8CE8B7A81F</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>F8FECB4AC711231ED3A50C46A1972197</key>
 		<dict>
 			<key>primary</key>
 			<true/>

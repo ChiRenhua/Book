@@ -14,10 +14,10 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = '2865C5C290804FB9F9A85CB2299E0815'
-               BlueprintName = 'SDWebImage'
+               BlueprintIdentifier = 'F8FECB4AC711231ED3A50C46A1972197'
+               BlueprintName = 'TCBlobDownload'
                ReferencedContainer = 'container:Pods.xcodeproj'
-               BuildableName = 'libSDWebImage.a'>
+               BuildableName = 'libTCBlobDownload.a'>
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>

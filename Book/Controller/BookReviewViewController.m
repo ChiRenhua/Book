@@ -14,6 +14,7 @@
 #import <SDWebImage/UIImageView+WebCache.h>
 #import "MBProgressHUD.h"
 #import "UIColor+AppConfig.h"
+#import "Utils.h"
 
 #define SCREEN_BOUNDS [UIScreen mainScreen].bounds.size
 #define BOOK_IMAGEBASEURL @"http://121.42.174.184:8080/bookmgyun/"
@@ -41,7 +42,7 @@ static NSString * const CellIdentifier = @"cell";
 
 - (id)init:(Book *) book{
     if (self = [super init]) {
-        _reviewDelegate = [[UIApplication sharedApplication]delegate];
+        _reviewDelegate = (AppDelegate *)[[UIApplication sharedApplication]delegate];
         _reviewkey_SD = [[NSMutableArray alloc]init];
         _reviewvalue_SD = [[NSMutableArray alloc]init];
         _reviewResult_SD = [[NSMutableArray alloc]init];
@@ -167,7 +168,7 @@ static NSString * const CellIdentifier = @"cell";
 - (void)saveDictoinary {
     NSMutableArray *array = [[NSMutableArray alloc]init];
     NSMutableDictionary *dic = [[NSMutableDictionary alloc]init];
-    NSString *book_image_url = [_detialBook.coverPath stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSString *book_image_url = [Utils UTF8URL:_detialBook.coverPath];
     [dic setObject:@"封皮" forKey:@"key"];
     [dic setObject:book_image_url forKey:@"value"];
     [dic setObject:@"1" forKey:@"result"];
@@ -273,7 +274,7 @@ static NSString * const CellIdentifier = @"cell";
         }else {
             _detialBook.bookState = @"未通过";
             NSString *url = [NSString stringWithFormat:@"postResult.serv?username=%@&sessionid=%@&step=%@&pass=%@&reason=%@&bookid=%@",[[UserInfoModel sharedInstance]getUserName],[[UserInfoModel sharedInstance]getUserSessionid],_detialBook.step,@"1",_textView.text,_detialBook.bookID];
-            NSString *book_submit_url = [url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+            NSString *book_submit_url = [Utils UTF8URL:url];
             [[BookReviewModel sharedInstance]submitReviewDataWithURL:book_submit_url];
         }
     }];
@@ -449,7 +450,7 @@ static NSString * const CellIdentifier = @"cell";
         UILabel *alertTitle = [[UILabel alloc]initWithFrame:CGRectMake(0, 10, alertView.bounds.size.width, 20)];
         alertTitle.textAlignment = NSTextAlignmentCenter;
         alertTitle.text = @"封皮";
-        alertTitle.font = [UIFont fontWithName:@"Helvetica-Bold" size:20];
+        alertTitle.font = [UIFont systemFontOfSize:20];
         [alertView addSubview:alertTitle];
         
         UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(35, 40, 197, 297)];
@@ -459,19 +460,20 @@ static NSString * const CellIdentifier = @"cell";
         
         return alertView;
     }else {
-        CGSize bookIntroduceSize = [_reviewvalue[indexPath.row - 1] sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:CGSizeMake(300.0f,CGFLOAT_MAX) lineBreakMode:UILineBreakModeWordWrap];
+        CGSize bookIntroduceSize = [Utils stringWedith:_reviewvalue[indexPath.row - 1] size:14];
         // 计算文本高度
-        UIView *alertView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 267, bookIntroduceSize.height + 60)];
+        UIView *alertView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 267, bookIntroduceSize.height + 90)];
         
         UILabel *alertTitle = [[UILabel alloc]initWithFrame:CGRectMake(0, 10, alertView.bounds.size.width, 20)];
         alertTitle.textAlignment = NSTextAlignmentCenter;
         alertTitle.text = _reviewkey_SD[indexPath.row];
-        alertTitle.font = [UIFont fontWithName:@"Helvetica-Bold" size:20];
+        alertTitle.font = [UIFont systemFontOfSize:20];
         [alertView addSubview:alertTitle];
         
-        UILabel *alertDetial = [[UILabel alloc]initWithFrame:CGRectMake(10, 40, alertView.bounds.size.width - 20, bookIntroduceSize.height + 20)];
+        UILabel *alertDetial = [[UILabel alloc]initWithFrame:CGRectMake(10, 40, alertView.bounds.size.width - 20, bookIntroduceSize.height + 50)];
         alertDetial.textAlignment = NSTextAlignmentCenter;
         alertDetial.text = _reviewvalue_SD[indexPath.row];
+        alertDetial.textColor = [UIColor grayColor];
         alertDetial.lineBreakMode = NSLineBreakByWordWrapping;                                                                                         // 文字过长时显示全部
         alertDetial.numberOfLines = 0;
         alertDetial.font = [UIFont systemFontOfSize:14];

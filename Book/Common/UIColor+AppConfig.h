@@ -22,4 +22,6 @@
 
 + (UIColor *)bookLoginBGColor;
 
++ (UIColor *)bookCellColor;
+
 @end
