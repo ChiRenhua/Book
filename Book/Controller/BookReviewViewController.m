@@ -343,8 +343,7 @@ static NSString * const CellIdentifier = @"cell";
     [cell.contentView addSubview:bookReviewTitle];
     if (indexPath.row == 0) {
         UIImageView *bookImage = [[UIImageView alloc]initWithFrame:CGRectMake(tableView.bounds.size.width - 77, 5, 27, 40)];
-        NSString *coverPath = [BOOK_IMAGEBASEURL stringByAppendingString:_reviewvalue_SD[indexPath.row]];
-        NSString *book_image_url = [coverPath stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+        NSString *book_image_url = [BOOK_IMAGEBASEURL stringByAppendingString:_reviewvalue_SD[indexPath.row]];
         [bookImage sd_setImageWithURL:[NSURL URLWithString:book_image_url] placeholderImage:[UIImage imageNamed:@"default_bookimage"]];
         [cell.contentView addSubview:bookImage];
     }else {
@@ -454,8 +453,7 @@ static NSString * const CellIdentifier = @"cell";
         [alertView addSubview:alertTitle];
         
         UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(35, 40, 197, 297)];
-        NSString *coverPath = [BOOK_IMAGEBASEURL stringByAppendingString:_reviewvalue_SD[indexPath.row]];
-        NSString *book_image_url = [coverPath stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+        NSString *book_image_url = [BOOK_IMAGEBASEURL stringByAppendingString:_reviewvalue_SD[indexPath.row]];
         [imageView sd_setImageWithURL:[NSURL URLWithString:book_image_url] placeholderImage:[UIImage imageNamed:@"default_bookimage"]];
         [alertView addSubview:imageView];
         
