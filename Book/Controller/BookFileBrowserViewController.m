@@ -190,6 +190,7 @@
             IDMPhotoBrowser *browser = [[IDMPhotoBrowser alloc] initWithPhotos:photos];
             browser.displayArrowButton = YES;
             browser.displayCounterLabel = YES;
+            browser.displayToolbar = NO;
             [browser setInitialPageIndex:indexPath.row];
             [self presentViewController:browser animated:YES completion:nil];
             
