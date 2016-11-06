@@ -46,21 +46,23 @@
     [self getBookListWithURL:url];
 }
 
-- (void)downloadBookFileWithBookInfo:(Book *)bookInfo {
-    _downloader = [_sharedManager startDownloadWithURL:@"http://give.me/abigfile.avi"
-                                            customPath:nil
+- (void)downloadBookFileWithBookInfo:(Book *)bookInfo url:(NSURL *)url indexPath:(NSUInteger)index{
+    NSString *bookID = bookInfo.bookID;
+    NSString *customPath = [self getBookDownloadPathWithBookID:bookID];
+    _downloader = [_sharedManager startDownloadWithURL:url
+                                            customPath:customPath
                                          firstResponse:^(NSURLResponse *response) {
                                              
                                          }
                                               progress:^(uint64_t receivedLength, uint64_t totalLength, NSInteger remainingTime, float progress) {
-                                                  // downloader.remainingTime
-                                                  // downloader.speedRate
+                                                  NSLog(@"receivedLength:%llu/totalLength:%llu/remainingTime:%ld/progress:%f",receivedLength,totalLength,(long)remainingTime,progress);
+                                                  self.downloadingBookFileWithProgress(progress, index);
                                               }
                                                  error:^(NSError *error) {
-                                                     
+                                                     self.downloadBookFileFailed(error, index);
                                                  }
                                               complete:^(BOOL downloadFinished, NSString *pathToFile) {
-                                                  
+                                                  self.downloadBookFileComplete(index);
                                               }];
 }
 

@@ -12,12 +12,15 @@
 #import "AppDelegate.h"
 #import "Utils.h"
 #import "IDMPhotoBrowser.h"
+#import "ReaderViewController.h"
+#import "MBProgressHUD.h"
 
 #define SCREEN_BOUNDS [UIScreen mainScreen].bounds.size
 #define CELL_HEIGHT 50
 
-@interface BookFileBrowserViewController ()<UITableViewDelegate, UITableViewDataSource>
+@interface BookFileBrowserViewController ()<UITableViewDelegate, UITableViewDataSource, ReaderViewControllerDelegate>
 @property (nonatomic, assign) BookFileBrowserType type;
+@property (nonatomic, assign) BookDownloadStatue downloadStatus;
 @property (nonatomic, retain) Book *bookInfo;
 @property (nonatomic, retain) UILabel *noDataLable;
 @property (nonatomic, retain) UILabel *errorLable;
@@ -27,6 +30,9 @@
 @property (nonatomic, strong) NSArray *fileArray;
 @property (nonatomic, retain) UIProgressView *downLoadProgressView;
 @property (nonatomic, strong) UILabel *downloadStatusLable;
+@property (nonatomic, strong) NSMutableArray *downloadStatusArray;
+@property (nonatomic, strong) NSMutableArray *downloadProgressArray;
+@property (nonatomic, retain) MBProgressHUD *mbprogress;
 @end
 
 @implementation BookFileBrowserViewController
@@ -37,9 +43,13 @@
         self.type = type;
         self.bookInfo = bookInfo;
         self.noDataLable = [[UILabel alloc] init];
-        self.tableView = [[UITableView alloc]init];
-        self.fileArray = [[NSArray alloc]init];
+        self.tableView = [[UITableView alloc] init];
+        self.fileArray = [[NSArray alloc] init];
+        self.downloadStatusArray = [[NSMutableArray alloc] init];
+        self.downloadProgressArray = [[NSMutableArray alloc] init];
         self.appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+        _mbprogress = [[MBProgressHUD alloc]initWithView:self.view];                                // 初始化toast
+        _mbprogress.delegate = self;                                                                // 设置toast代理为当前类
         [BookDownloadModel sharedInstance].showLoginAlert = ^() {
             [self showLoginView];
         };
@@ -50,17 +60,35 @@
                 [_noDataLable setHidden:NO];
             }else {
                 self.fileArray = data;
+                for (int i = 0; i < data.count; i++) {
+                    [self.downloadProgressArray addObject:@(0)];
+                    [self.downloadStatusArray addObject:@(BookDownloadStatue_UnStart)];
+                }
+                [self CheckBookFileInLocalFolder];
                 [self.view addSubview:self.tableView];
                 [_noDataLable setHidden:YES];
                 [_IndicatorView stopAnimating];
                 [self.tableView reloadData];
             }
-            
         };
         [BookDownloadModel sharedInstance].getBookDataFailed = ^(NSError *error) {
             [_noDataLable setHidden:YES];
             [_IndicatorView stopAnimating];
             [_errorLable setHidden:NO];
+        };
+        [BookDownloadModel sharedInstance].downloadingBookFileWithProgress = ^(float progress, NSUInteger index) {
+            self.downloadStatus = BookDownloadStatue_Downloading;
+            [self.downloadProgressArray replaceObjectAtIndex:index withObject:@(progress)];
+            [self.tableView reloadData];
+        };
+        [BookDownloadModel sharedInstance].downloadBookFileComplete = ^(NSUInteger index) {
+            [self.downloadStatusArray replaceObjectAtIndex:index withObject:@(BookDownloadStatue_Done)];
+            [self.tableView reloadData];
+        };
+        [BookDownloadModel sharedInstance].downloadBookFileFailed = ^(NSError *error, NSUInteger index) {
+            self.downloadStatus = BookDownloadStatue_Failed;
+            [self.downloadStatusArray replaceObjectAtIndex:index withObject:@(BookDownloadStatue_Failed)];
+            [self.tableView reloadData];
         };
     }
     return self;
@@ -151,12 +179,36 @@
             
             CGSize textSize = [Utils stringWedith:@"下载" size:15];
              _downloadStatusLable = [[UILabel alloc]initWithFrame:CGRectMake(SCREEN_BOUNDS.width - textSize.width - 10, 0, textSize.width, CELL_HEIGHT)];
-            _downloadStatusLable.text = @"下载";
             _downloadStatusLable.font = [UIFont systemFontOfSize:15];
-            _downloadStatusLable.textColor = [UIColor bookLableColor];
+            switch ([self.downloadStatusArray[indexPath.row] longValue]) {
+                case BookDownloadStatue_UnStart:
+                    _downloadStatusLable.textColor = [UIColor bookLableColor];
+                    _downloadStatusLable.text = @"下载";
+                    break;
+                case BookDownloadStatue_Downloading:
+                    _downloadStatusLable.textColor = [UIColor bookLableColor];
+                    _downloadStatusLable.text = @"...";
+                    break;
+                case BookDownloadStatue_Failed:
+                    _downloadStatusLable.textColor = [UIColor bookRedColor];
+                    _downloadStatusLable.text = @"重试";
+                    break;
+                case BookDownloadStatue_Done:
+                    _downloadStatusLable.textColor = [UIColor bookGreenColor];
+                    _downloadStatusLable.text = @"查看";
+                    break;
+                default:
+                    break;
+            }
              [cell.contentView addSubview:_downloadStatusLable];
              
              _downLoadProgressView = [[UIProgressView alloc]initWithFrame:CGRectMake(SCREEN_BOUNDS.width / 2, CELL_HEIGHT / 2, SCREEN_BOUNDS.width / 2 - _downloadStatusLable.bounds.size.width - 20, 1)];
+            _downLoadProgressView.progress = [self.downloadProgressArray[indexPath.row] floatValue];
+            if ([self.downloadStatusArray[indexPath.row] longValue] == BookDownloadStatue_Downloading) {
+                [_downLoadProgressView setHidden:NO];
+            }else {
+                [_downLoadProgressView setHidden:YES];
+            }
              [cell.contentView addSubview:_downLoadProgressView];
         }
             break;
@@ -197,7 +249,26 @@
         }
             break;
         case BookFileBrowserType_PDF: {
-            
+            switch ([self.downloadStatusArray[indexPath.row] longValue]) {
+                case BookDownloadStatue_UnStart: {
+                    [self downLoadBookFile:indexPath];
+                }
+                    break;
+                case BookDownloadStatue_Downloading: {
+                    
+                }
+                    break;
+                case BookDownloadStatue_Done: {
+                    [self openPDFFileWithIndex:indexPath];
+                }
+                    break;
+                case BookDownloadStatue_Failed: {
+                    [self downLoadBookFile:indexPath];
+                }
+                    break;
+                default:
+                    break;
+            }
         }
             break;
         default:
@@ -205,6 +276,37 @@
     }
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
+
+#pragma mark -
+- (void)openPDFFileWithIndex:(NSIndexPath *)indexPath {
+    NSDictionary *dic = self.fileArray[indexPath.row];
+    NSString *bookFile = dic[@"key"];
+    NSString *filePath = [[BookDownloadModel sharedInstance] getBookDownloadPathWithBookID:self.bookInfo.bookID];
+    NSString * bookFilePath = [NSString stringWithFormat:@"%@/%@",filePath,bookFile];
+    
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    if (![fileManager fileExistsAtPath:bookFilePath]) {
+        [self.downloadStatusArray replaceObjectAtIndex:indexPath.row withObject:@(BookDownloadStatue_UnStart)];
+        [self.tableView reloadData];
+        [self showToastWithMessage:@"文件损坏，请重新下载"];
+    }else {
+        ReaderDocument *document = [ReaderDocument withDocumentFilePath:bookFilePath password:nil];
+        
+        ReaderViewController *readerViewController = [[ReaderViewController alloc] initWithReaderDocument:document];
+        readerViewController.delegate = self;
+        UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:readerViewController];
+        [self presentViewController:navigationController animated:YES completion:nil];
+    }
+}
+
+- (void)downLoadBookFile:(NSIndexPath *)indexPath {
+    [_downLoadProgressView setHidden:NO];
+    NSDictionary *dic = self.fileArray[indexPath.row];
+    NSString *url = [NSString stringWithFormat:@"http://121.42.174.184:8080/bookmgyun/%@",dic[@"value"]];
+    NSString *UTF8url = [Utils UTF8URL:url];
+    NSURL *bookFileUrl = [NSURL URLWithString:UTF8url];
+    [[BookDownloadModel sharedInstance] downloadBookFileWithBookInfo:self.bookInfo url:bookFileUrl indexPath:indexPath.row];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -279,11 +381,6 @@
     [_errorLable setHidden:YES];
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
 - (void)loadBookFileData {
     [_IndicatorView startAnimating];
     [_errorLable setHidden:YES];
@@ -310,6 +407,38 @@
     [loginAlert addAction:loginAction];
     [loginAlert addAction:calcleAction];
     [self presentViewController:loginAlert animated:YES completion:nil];
+}
+
+- (void)CheckBookFileInLocalFolder {
+    for (int i = 0; i < self.fileArray.count; i++) {
+        NSDictionary *dic = self.fileArray[i];
+        NSString *bookFile = dic[@"key"];
+        NSString *filePath = [[BookDownloadModel sharedInstance] getBookDownloadPathWithBookID:self.bookInfo.bookID];
+        NSString * bookFilePath = [NSString stringWithFormat:@"%@/%@",filePath,bookFile];
+        
+        NSFileManager *fileManager = [NSFileManager defaultManager];
+        
+        if ([fileManager fileExistsAtPath:bookFilePath]) {
+            [self.downloadProgressArray replaceObjectAtIndex:i withObject:@(1)];
+            [self.downloadStatusArray replaceObjectAtIndex:i withObject:@(BookDownloadStatue_Done)];
+        }
+    }
+    [self.tableView reloadData];
+}
+
+#pragma mark - PDFReader
+
+- (void)dismissReaderViewController:(ReaderViewController *)viewController {
+    [self dismissViewControllerAnimated:YES completion:NULL];
+}
+
+#pragma mark - Progress
+- (void)showToastWithMessage:(NSString *)msg{
+    _mbprogress.mode = MBProgressHUDModeText;                                                       // 设置toast的样式为文字
+    _mbprogress.label.text = NSLocalizedString(msg, @"HUD message title");                          // 设置toast上的文字
+    [self.view addSubview:_mbprogress];                                                             // 将toast添加到view中
+    [_mbprogress showAnimated:YES];                                                                 // 显示toast
+    [_mbprogress hideAnimated:YES afterDelay:1.0];                                                  // 1.0秒后销毁toast
 }
 
 @end

@@ -1,0 +1,1 @@
+../../../ReaderFramework/ReaderFramework/src/Supporting/ReaderThumbCache.h

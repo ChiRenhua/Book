@@ -7,4 +7,5 @@ target 'Book' do
   pod 'SDWebImage', '~> 3.8'
   pod 'TCBlobDownload', '~> 2.1.1'
   pod 'IDMPhotoBrowser', '~> 1.9.1'
+  pod 'ReaderFramework', '~> 1.1.4'
 end

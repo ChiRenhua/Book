@@ -14,6 +14,13 @@ typedef NS_ENUM(NSUInteger, BookFileBrowserType) {
     BookFileBrowserType_PDF,
 };
 
+typedef NS_ENUM(NSUInteger, BookDownloadStatue) {
+    BookDownloadStatue_UnStart,
+    BookDownloadStatue_Downloading,
+    BookDownloadStatue_Done,
+    BookDownloadStatue_Failed,
+};
+
 @interface BookFileBrowserViewController : UIViewController
 
 - (id)initWithBookInfo:(Book *)bookInfo bookFileBrowserType:(BookFileBrowserType) type;

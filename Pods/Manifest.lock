@@ -23,6 +23,7 @@ PODS:
   - MBProgressHUD (1.0.0)
   - MJRefresh (3.1.12)
   - pop (1.0.9)
+  - ReaderFramework (1.1.4)
   - SDWebImage (3.8.2):
     - SDWebImage/Core (= 3.8.2)
   - SDWebImage/Core (3.8.2)
@@ -34,6 +35,7 @@ DEPENDENCIES:
   - IDMPhotoBrowser (~> 1.9.1)
   - MBProgressHUD (~> 1.0.0)
   - MJRefresh (~> 3.1.12)
+  - ReaderFramework (~> 1.1.4)
   - SDWebImage (~> 3.8)
   - TCBlobDownload (~> 2.1.1)
 
@@ -45,9 +47,10 @@ SPEC CHECKSUMS:
   MBProgressHUD: 4890f671c94e8a0f3cf959aa731e9de2f036d71a
   MJRefresh: b96cdb21c4aa75a7b07654311ab2f315c497e806
   pop: f667631a5108a2e60d9e8797c9b32ddaf2080bce
+  ReaderFramework: 1eb25b96d0f42977c8239eeaddb878185d2f8a32
   SDWebImage: 098e97e6176540799c27e804c96653ee0833d13c
   TCBlobDownload: 8726f054cc00bb5f66a57bb0c99764842dfa5c9f
 
-PODFILE CHECKSUM: 89d04f0bbc55791984aca492d65a48ff05694692
+PODFILE CHECKSUM: c4473b3948d22bf219c8dc9d16aa8ad6f75b6961
 
 COCOAPODS: 1.1.1

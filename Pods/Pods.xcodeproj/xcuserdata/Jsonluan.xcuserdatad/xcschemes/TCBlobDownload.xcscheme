@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = 'BF36465500367912F4BB34214673EC84'
+               BlueprintIdentifier = '139E8D0485FFF83E75A7CF1A64316C7A'
                BlueprintName = 'TCBlobDownload'
                ReferencedContainer = 'container:Pods.xcodeproj'
                BuildableName = 'libTCBlobDownload.a'>

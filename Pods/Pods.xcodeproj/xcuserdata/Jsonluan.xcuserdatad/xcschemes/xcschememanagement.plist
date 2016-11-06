@@ -39,6 +39,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>ReaderFramework.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>SDWebImage.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -67,17 +72,22 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>139E8D0485FFF83E75A7CF1A64316C7A</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>586F2DFA9BDCC6675C2546793A69E5CC</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>9E033EDB5EC0819481B0546434FA577B</key>
+		<key>8B383737EF31F656B103C7B5AC7B15A8</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>BF36465500367912F4BB34214673EC84</key>
+		<key>9E033EDB5EC0819481B0546434FA577B</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -97,12 +107,12 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>F7C78804101802B8021F8F3A86E69C22</key>
+		<key>D20CB4F079D17464A718D22A1A7E7315</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>FF3E4D456682F77D7FC220F5539C05C6</key>
+		<key>F7C78804101802B8021F8F3A86E69C22</key>
 		<dict>
 			<key>primary</key>
 			<true/>
