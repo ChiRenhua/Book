@@ -6,4 +6,5 @@ target 'Book' do
   pod 'MJRefresh', '~> 3.1.12'
   pod 'SDWebImage', '~> 3.8'
   pod 'TCBlobDownload', '~> 2.1.1'
+  pod 'IDMPhotoBrowser', '~> 1.9.1'
 end

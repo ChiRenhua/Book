@@ -23,7 +23,7 @@
 
 #define SCREEN_BOUNDS [UIScreen mainScreen].bounds.size
 #define FIRST_CELL_HIGHT SCREEN_BOUNDS.height / 4
-#define PREVIEW_CELL_HEIGHT 150
+#define PREVIEW_CELL_HEIGHT SCREEN_BOUNDS.height / 5
 #define FIRST_CHECKING_BOOK @"firstCheckingBook"
 #define REVIEW_CHECKING_BOOK @"reviewCheckingBook"
 #define BOOK_IMAGEBASEURL @"http://121.42.174.184:8080/bookmgyun/"
@@ -37,10 +37,6 @@
 @property (nonatomic, retain)  MBProgressHUD *mbprogress;
 @property (nonatomic, retain) UILabel *errorLable;
 @property (nonatomic, retain) UIActivityIndicatorView *IndicatorView;
-
-@property (nonatomic, retain) UIProgressView *downLoadProgressView;
-@property (nonatomic, strong) UILabel *downloadStatusLable;
-
 @end
 int reviewTextHeight;
 
@@ -50,7 +46,7 @@ int reviewTextHeight;
     if (self = [super init]) {
         _step = step;
         _detialBook = [[Book alloc]init];
-        _bookDetialAppDelegate = [[UIApplication sharedApplication]delegate];
+        _bookDetialAppDelegate = (AppDelegate *)[[UIApplication sharedApplication]delegate];
         _detialBook = book;
         [BookDetialModel sharedInstance].updateReason = ^(NSString * reason){
             // 计算文本高度
@@ -85,24 +81,7 @@ int reviewTextHeight;
     _bookDetialTableView.dataSource = self;
     _bookDetialTableView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:_bookDetialTableView];
-    
-    [self addIndicatorView];
-    [self addErrorLable];
     [self getData];
-}
-
-- (void)addErrorLable {
-    _errorLable = [[UILabel alloc]initWithFrame:CGRectMake(0, SCREEN_BOUNDS.height/2 - 25 + FIRST_CELL_HIGHT/2, SCREEN_BOUNDS.width, 50)];
-    _errorLable.textColor = [UIColor grayColor];
-    _errorLable.text = @"数据加载失败\n点击重新加载!";
-    _errorLable.numberOfLines = 0;
-    _errorLable.textAlignment = NSTextAlignmentCenter;
-    _errorLable.font = [UIFont systemFontOfSize:15];
-    _errorLable.userInteractionEnabled = YES;
-    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(onClickErrorLable)];
-    [_errorLable addGestureRecognizer:tapGesture];
-    [self.view addSubview:_errorLable];
-    [_errorLable setHidden:YES];
 }
 
 - (void)onClickErrorLable {
@@ -114,14 +93,6 @@ int reviewTextHeight;
 - (void)getData {
     NSString *url = [NSString stringWithFormat:@"getNotPassReason.serv?username=%@&sessionid=%@&step=%@&bookid=%@",[[UserInfoModel sharedInstance]getUserName],[[UserInfoModel sharedInstance]getUserSessionid],_step,_detialBook.bookID];
     [[BookDetialModel sharedInstance] getBookreasonWithURL:url by:bookReasonModule];
-}
-
-- (void)addIndicatorView {
-    _IndicatorView = [[UIActivityIndicatorView alloc]init];
-    _IndicatorView.center = CGPointMake(SCREEN_BOUNDS.width/2, SCREEN_BOUNDS.height/2 + FIRST_CELL_HIGHT/2);
-    _IndicatorView.activityIndicatorViewStyle = UIActivityIndicatorViewStyleGray;
-    [self.view addSubview:_IndicatorView];
-    [_IndicatorView startAnimating];
 }
 
 #pragma mark 设置分组数
@@ -202,7 +173,7 @@ int reviewTextHeight;
             bookReviewInfoTitle.textColor = [UIColor blackColor];
             [bookDetialViewCell.contentView addSubview:bookReviewInfoTitle];
             
-            UIView *imageButton = [[UIButton alloc]initWithFrame:CGRectMake(SCREEN_BOUNDS.width / 20, 50, SCREEN_BOUNDS.width / 2 - SCREEN_BOUNDS.width / 10, 75)];
+            UIView *imageButton = [[UIButton alloc]initWithFrame:CGRectMake(SCREEN_BOUNDS.width / 20, 50, SCREEN_BOUNDS.width / 2 - SCREEN_BOUNDS.width / 10, PREVIEW_CELL_HEIGHT / 2)];
             imageButton.backgroundColor = [UIColor bookLoginBGColor];
             imageButton.layer.cornerRadius = 5.0;
             imageButton.userInteractionEnabled = YES;
@@ -211,71 +182,40 @@ int reviewTextHeight;
             UITapGestureRecognizer* imageButtonSingleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(imageButtonHandleSingleTap:)];
             [imageButton addGestureRecognizer:imageButtonSingleTap];
             
-            UIImageView *jpglogo = [[UIImageView alloc]initWithFrame:CGRectMake(15, 15, 34, imageButton.bounds.size.height - 30)];
+            UIImageView *jpglogo = [[UIImageView alloc]initWithFrame:CGRectMake(15, 15, (imageButton.bounds.size.height - 30) * 0.76, imageButton.bounds.size.height - 30)];
             jpglogo.image = [UIImage imageNamed:@"jpgLogo.png"];
             [imageButton addSubview:jpglogo];
             
-            UILabel *imageLable = [[UILabel alloc]initWithFrame:CGRectMake(jpglogo.bounds.size.width + 30, (imageButton.bounds.size.height - 15) / 2, imageButton.bounds.size.width - jpglogo.bounds.size.width - 45, 15)];
+            UILabel *imageLable = [[UILabel alloc]initWithFrame:CGRectMake(jpglogo.bounds.size.width + 15, (imageButton.bounds.size.height - 15) / 2, imageButton.bounds.size.width - jpglogo.bounds.size.width - 15, 15)];
             imageLable.text = @"查看图片";
             imageLable.textColor = [UIColor blackColor];
             imageLable.font = [UIFont systemFontOfSize:15];
+            imageLable.textAlignment = NSTextAlignmentCenter;
             [imageButton addSubview:imageLable];
             
             [bookDetialViewCell.contentView addSubview:imageButton];
             
-            UIView *pdfButton = [[UIButton alloc]initWithFrame:CGRectMake(SCREEN_BOUNDS.width / 2 + SCREEN_BOUNDS.width / 20, 50, SCREEN_BOUNDS.width / 2 - SCREEN_BOUNDS.width / 10, 75)];
+            UIView *pdfButton = [[UIButton alloc]initWithFrame:CGRectMake(SCREEN_BOUNDS.width / 2 + SCREEN_BOUNDS.width / 20, 50, SCREEN_BOUNDS.width / 2 - SCREEN_BOUNDS.width / 10, PREVIEW_CELL_HEIGHT / 2)];
             pdfButton.backgroundColor = [UIColor bookLoginBGColor];
             pdfButton.layer.cornerRadius = 5.0;
             pdfButton.userInteractionEnabled = YES;
             
-            // imageButton添加点击事件
+            // pdfButton添加点击事件
             UITapGestureRecognizer* pdfButtonSingleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(pdfButtonHandleSingleTap:)];
             [pdfButton addGestureRecognizer:pdfButtonSingleTap];
             
-            UIImageView *pdflogo = [[UIImageView alloc]initWithFrame:CGRectMake(15, 15, 34, pdfButton.bounds.size.height - 30)];
+            UIImageView *pdflogo = [[UIImageView alloc]initWithFrame:CGRectMake(15, 15, (imageButton.bounds.size.height - 30) * 0.76, pdfButton.bounds.size.height - 30)];
             pdflogo.image = [UIImage imageNamed:@"pdfLogo.png"];
             [pdfButton addSubview:pdflogo];
             
-            UILabel *pdfLable = [[UILabel alloc]initWithFrame:CGRectMake(pdflogo.bounds.size.width + 30, (pdfButton.bounds.size.height - 15) / 2, pdfButton.bounds.size.width - pdflogo.bounds.size.width - 45, 15)];
+            UILabel *pdfLable = [[UILabel alloc]initWithFrame:CGRectMake(pdflogo.bounds.size.width + 15, (pdfButton.bounds.size.height - 15) / 2, pdfButton.bounds.size.width - pdflogo.bounds.size.width - 15, 15)];
             pdfLable.text = @"查看文件";
             pdfLable.textColor = [UIColor blackColor];
             pdfLable.font = [UIFont systemFontOfSize:15];
+            pdfLable.textAlignment = NSTextAlignmentCenter;
             [pdfButton addSubview:pdfLable];
             
             [bookDetialViewCell.contentView addSubview:pdfButton];
-            
-            /*
-            UIView *bookInfoView = [[UIView alloc]initWithFrame:CGRectMake(SCREEN_BOUNDS.width / 20, 50, SCREEN_BOUNDS.width - SCREEN_BOUNDS.width / 20 - 15, 35)];
-            bookInfoView.backgroundColor = [UIColor bookLoginBGColor];
-            bookInfoView.layer.cornerRadius = 5.0;
-            bookInfoView.userInteractionEnabled = YES;
-            
-            // bookInfoView添加点击事件
-            UITapGestureRecognizer* singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleSingleTap:)];
-            [bookInfoView addGestureRecognizer:singleTap];
-            
-            
-            UIImageView *pdflogo = [[UIImageView alloc]initWithFrame:CGRectMake(5, 5, 19, 25)];
-            pdflogo.image = [UIImage imageNamed:@"pdfLogo.png"];
-            [bookInfoView addSubview:pdflogo];
-            
-            UILabel *bookNameLable = [[UILabel alloc]initWithFrame:CGRectMake(30, 10, bookInfoView.bounds.size.width / 2 - 30, 15)];
-            bookNameLable.text = _detialBook.bookName;
-            bookNameLable.font = [UIFont systemFontOfSize:15];
-            bookNameLable.textColor = [UIColor blackColor];
-            [bookInfoView addSubview:bookNameLable];
-            
-            _downloadStatusLable = [[UILabel alloc]initWithFrame:CGRectMake(bookInfoView.bounds.size.width - 35.6, 10, 30.6, 15)];
-            _downloadStatusLable.text = @"下载";
-            _downloadStatusLable.font = [UIFont systemFontOfSize:15];
-            _downloadStatusLable.textColor = [UIColor bookLableColor];
-            [bookInfoView addSubview:_downloadStatusLable];
-            
-            _downLoadProgressView = [[UIProgressView alloc]initWithFrame:CGRectMake(bookInfoView.bounds.size.width / 2, 17, bookInfoView.bounds.size.width / 2 - _downloadStatusLable.bounds.size.width - 10, 5)];
-            [bookInfoView addSubview:_downLoadProgressView];
-            
-            [bookDetialViewCell.contentView addSubview:bookInfoView];
-            */
         }
             break;
         case 2: {
@@ -293,6 +233,24 @@ int reviewTextHeight;
 
             _bookReviewInfo.textColor = [UIColor grayColor];
             [bookDetialViewCell.contentView addSubview:_bookReviewInfo];
+            
+            _errorLable = [[UILabel alloc]initWithFrame:CGRectMake(0, (SCREEN_BOUNDS.height - FIRST_CELL_HIGHT - PREVIEW_CELL_HEIGHT - 200) / 2, SCREEN_BOUNDS.width, 50)];
+            _errorLable.textColor = [UIColor grayColor];
+            _errorLable.text = @"数据加载失败\n点击重新加载!";
+            _errorLable.numberOfLines = 0;
+            _errorLable.textAlignment = NSTextAlignmentCenter;
+            _errorLable.font = [UIFont systemFontOfSize:15];
+            _errorLable.userInteractionEnabled = YES;
+            UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(onClickErrorLable)];
+            [_errorLable addGestureRecognizer:tapGesture];
+            [bookDetialViewCell.contentView addSubview:_errorLable];
+            [_errorLable setHidden:YES];
+            
+            _IndicatorView = [[UIActivityIndicatorView alloc]init];
+            _IndicatorView.center = CGPointMake(SCREEN_BOUNDS.width/2, (SCREEN_BOUNDS.height - FIRST_CELL_HIGHT - PREVIEW_CELL_HEIGHT - 165) / 2);
+            _IndicatorView.activityIndicatorViewStyle = UIActivityIndicatorViewStyleGray;
+            [bookDetialViewCell.contentView addSubview:_IndicatorView];
+            [_IndicatorView startAnimating];
         }
             break;
         case 3: {
@@ -373,14 +331,14 @@ int reviewTextHeight;
         case 2: {
             int height;
             if ([_detialBook.bookState isEqualToString:@"已通过"] || [_detialBook.bookState isEqualToString:@"未通过"] || _detialBook.bookState == nil) {
-                height = SCREEN_BOUNDS.height - FIRST_CELL_HIGHT - 113;
+                height = SCREEN_BOUNDS.height - FIRST_CELL_HIGHT - 113 - PREVIEW_CELL_HEIGHT;
             }else {
-                height = SCREEN_BOUNDS.height - FIRST_CELL_HIGHT - 163;
+                height = SCREEN_BOUNDS.height - FIRST_CELL_HIGHT - 163 - PREVIEW_CELL_HEIGHT;
             }
             if (reviewTextHeight > height) {
                 height = reviewTextHeight + 20;
             }
-            return height - PREVIEW_CELL_HEIGHT;
+            return height;
             break;
         }
         case 3: {

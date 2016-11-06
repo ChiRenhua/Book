@@ -14,17 +14,24 @@ PODS:
   - AFNetworking/Serialization (3.1.0)
   - AFNetworking/UIKit (3.1.0):
     - AFNetworking/NSURLSession
-  - CustomIOSAlertView (0.9.4)
+  - CustomIOSAlertView (0.9.5)
+  - DACircularProgress (2.3.1)
+  - IDMPhotoBrowser (1.9.1):
+    - DACircularProgress
+    - pop
+    - SDWebImage
   - MBProgressHUD (1.0.0)
   - MJRefresh (3.1.12)
-  - SDWebImage (3.8.1):
-    - SDWebImage/Core (= 3.8.1)
-  - SDWebImage/Core (3.8.1)
+  - pop (1.0.9)
+  - SDWebImage (3.8.2):
+    - SDWebImage/Core (= 3.8.2)
+  - SDWebImage/Core (3.8.2)
   - TCBlobDownload (2.1.1)
 
 DEPENDENCIES:
   - AFNetworking (~> 3.1)
   - CustomIOSAlertView (~> 0.9.4)
+  - IDMPhotoBrowser (~> 1.9.1)
   - MBProgressHUD (~> 1.0.0)
   - MJRefresh (~> 3.1.12)
   - SDWebImage (~> 3.8)
@@ -32,12 +39,15 @@ DEPENDENCIES:
 
 SPEC CHECKSUMS:
   AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
-  CustomIOSAlertView: 92ff1ec171c37e89c4b36027734133e54534916b
+  CustomIOSAlertView: cc4fa8e36219be3fd5ebcd40789f5b4aaae0f38e
+  DACircularProgress: 4dd437c0fc3da5161cb289e07ac449493d41db71
+  IDMPhotoBrowser: 35e8ba559a88f2a8be4ae04d7fd424665344ba06
   MBProgressHUD: 4890f671c94e8a0f3cf959aa731e9de2f036d71a
   MJRefresh: b96cdb21c4aa75a7b07654311ab2f315c497e806
-  SDWebImage: 35f9627a3e44b4f292a8a8ce6a531fa488239b91
+  pop: f667631a5108a2e60d9e8797c9b32ddaf2080bce
+  SDWebImage: 098e97e6176540799c27e804c96653ee0833d13c
   TCBlobDownload: 8726f054cc00bb5f66a57bb0c99764842dfa5c9f
 
-PODFILE CHECKSUM: 4f2b41720ee14a79d897b14c339914aef4e735f3
+PODFILE CHECKSUM: 89d04f0bbc55791984aca492d65a48ff05694692
 
-COCOAPODS: 1.0.1
+COCOAPODS: 1.1.1

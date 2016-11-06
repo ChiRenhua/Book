@@ -111,7 +111,7 @@
     UITableViewCell *SearchViewcell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
     
     UIImageView *searchImageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"search"]];
-    searchImageView.frame = CGRectMake(15, 20, ROW_HIGHT - 40, ROW_HIGHT - 40);
+    searchImageView.frame = CGRectMake(15, ROW_HIGHT / 3, ROW_HIGHT / 3, ROW_HIGHT / 3);
     searchImageView.contentMode = UIViewContentModeScaleAspectFit;
     [SearchViewcell.contentView addSubview:searchImageView];
     

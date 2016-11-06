@@ -10,8 +10,11 @@
 #import "UIColor+AppConfig.h"
 #import "BookDownloadModel.h"
 #import "AppDelegate.h"
+#import "Utils.h"
+#import "IDMPhotoBrowser.h"
 
 #define SCREEN_BOUNDS [UIScreen mainScreen].bounds.size
+#define CELL_HEIGHT 50
 
 @interface BookFileBrowserViewController ()<UITableViewDelegate, UITableViewDataSource>
 @property (nonatomic, assign) BookFileBrowserType type;
@@ -22,6 +25,8 @@
 @property (nonatomic, retain) UIActivityIndicatorView *IndicatorView;
 @property (nonatomic, strong) AppDelegate *appDelegate;
 @property (nonatomic, strong) NSArray *fileArray;
+@property (nonatomic, retain) UIProgressView *downLoadProgressView;
+@property (nonatomic, strong) UILabel *downloadStatusLable;
 @end
 
 @implementation BookFileBrowserViewController
@@ -117,15 +122,43 @@
     if (!cell) {
         cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"UIBookFileListCell"];
     }else {
-        
+        [cell.contentView.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
     }
     
     switch (self.type) {
-        case BookFileBrowserType_Image:
-            cell.textLabel.text = [dic objectForKey:@"key"];
+        case BookFileBrowserType_Image: {
+            UIImageView *imagelogo = [[UIImageView alloc]initWithFrame:CGRectMake(15, 10, 23, 30)];
+            imagelogo.image = [UIImage imageNamed:@"jpgLogo.png"];
+            [cell.contentView addSubview:imagelogo];
+            
+            UILabel *imageLable = [[UILabel alloc]initWithFrame:CGRectMake(imagelogo.bounds.size.width + 25, (CELL_HEIGHT - 15) / 2, cell.bounds.size.width / 2 - 20, 15)];
+            imageLable.text = [dic objectForKey:@"key"];
+            imageLable.font = [UIFont systemFontOfSize:15];
+            imageLable.textColor = [UIColor blackColor];
+            [cell.contentView addSubview:imageLable];
+        }
             break;
-        case BookFileBrowserType_PDF:
-            cell.textLabel.text = [dic objectForKey:@"key"];
+        case BookFileBrowserType_PDF: {
+             UIImageView *pdflogo = [[UIImageView alloc]initWithFrame:CGRectMake(15, 10, 23, 30)];
+             pdflogo.image = [UIImage imageNamed:@"pdfLogo.png"];
+             [cell.contentView addSubview:pdflogo];
+             
+             UILabel *bookNameLable = [[UILabel alloc]initWithFrame:CGRectMake(pdflogo.bounds.size.width + 25, (CELL_HEIGHT - 15) / 2, cell.bounds.size.width / 2 - 20, 15)];
+             bookNameLable.text = [dic objectForKey:@"key"];
+             bookNameLable.font = [UIFont systemFontOfSize:15];
+             bookNameLable.textColor = [UIColor blackColor];
+             [cell.contentView addSubview:bookNameLable];
+            
+            CGSize textSize = [Utils stringWedith:@"下载" size:15];
+             _downloadStatusLable = [[UILabel alloc]initWithFrame:CGRectMake(SCREEN_BOUNDS.width - textSize.width - 10, 0, textSize.width, CELL_HEIGHT)];
+            _downloadStatusLable.text = @"下载";
+            _downloadStatusLable.font = [UIFont systemFontOfSize:15];
+            _downloadStatusLable.textColor = [UIColor bookLableColor];
+             [cell.contentView addSubview:_downloadStatusLable];
+             
+             _downLoadProgressView = [[UIProgressView alloc]initWithFrame:CGRectMake(SCREEN_BOUNDS.width / 2, CELL_HEIGHT / 2, SCREEN_BOUNDS.width / 2 - _downloadStatusLable.bounds.size.width - 20, 1)];
+             [cell.contentView addSubview:_downLoadProgressView];
+        }
             break;
         default:
             break;
@@ -135,11 +168,46 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    switch (self.type) {
+        case BookFileBrowserType_Image: {
+            NSMutableArray *imageURLArray = [[NSMutableArray alloc]init];
+            [self.fileArray enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                NSDictionary *dic = (NSDictionary *)obj;
+                NSString *url = [NSString stringWithFormat:@"http://121.42.174.184:8080/bookmgyun/%@",dic[@"value"]];
+                NSString *UTF8url = [Utils UTF8URL:url];
+                NSURL *bookImageUrl = [NSURL URLWithString:UTF8url];
+                [imageURLArray addObject:bookImageUrl];
+            }];
+            
+            NSMutableArray *photos = [NSMutableArray new];
+            
+            for (int i = 0; i < imageURLArray.count; i++) {
+                IDMPhoto *photo = [IDMPhoto photoWithURL:imageURLArray[i]];
+                photo.caption = self.fileArray[i][@"key"];
+                [photos addObject:photo];
+            }
+            
+            IDMPhotoBrowser *browser = [[IDMPhotoBrowser alloc] initWithPhotos:photos];
+            browser.displayArrowButton = YES;
+            browser.displayCounterLabel = YES;
+            [browser setInitialPageIndex:indexPath.row];
+            [self presentViewController:browser animated:YES completion:nil];
+            
+        }
+            break;
+        case BookFileBrowserType_PDF: {
+            
+        }
+            break;
+        default:
+            break;
+    }
     
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 50;
+    return CELL_HEIGHT;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
