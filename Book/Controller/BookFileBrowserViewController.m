@@ -225,7 +225,7 @@
             NSMutableArray *imageURLArray = [[NSMutableArray alloc]init];
             [self.fileArray enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
                 NSDictionary *dic = (NSDictionary *)obj;
-                NSString *url = [NSString stringWithFormat:@"http://121.42.174.184:8080/bookmgyun/%@",dic[@"value"]];
+                NSString *url = [NSString stringWithFormat:@"http://218.7.18.46/bookmgyun/%@",dic[@"value"]];
                 NSString *UTF8url = [Utils UTF8URL:url];
                 NSURL *bookImageUrl = [NSURL URLWithString:UTF8url];
                 [imageURLArray addObject:bookImageUrl];
@@ -303,7 +303,7 @@
 - (void)downLoadBookFile:(NSIndexPath *)indexPath {
     [_downLoadProgressView setHidden:NO];
     NSDictionary *dic = self.fileArray[indexPath.row];
-    NSString *url = [NSString stringWithFormat:@"http://121.42.174.184:8080/bookmgyun/%@",dic[@"value"]];
+    NSString *url = [NSString stringWithFormat:@"http://218.7.18.46/bookmgyun/%@",dic[@"value"]];
     NSString *UTF8url = [Utils UTF8URL:url];
     NSURL *bookFileUrl = [NSURL URLWithString:UTF8url];
     [[BookDownloadModel sharedInstance] downloadBookFileWithBookInfo:self.bookInfo url:bookFileUrl indexPath:indexPath.row];

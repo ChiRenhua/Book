@@ -17,7 +17,7 @@
 #import "Utils.h"
 
 #define SCREEN_BOUNDS [UIScreen mainScreen].bounds.size
-#define BOOK_IMAGEBASEURL @"http://121.42.174.184:8080/bookmgyun/"
+#define BOOK_IMAGEBASEURL @"http://218.7.18.46/bookmgyun/"
 
 static NSString * const CellIdentifier = @"cell";
 @interface BookReviewViewController ()<UITableViewDelegate,UITableViewDataSource>

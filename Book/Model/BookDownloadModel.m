@@ -35,13 +35,13 @@
 }
 
 - (void)getBookFileListWithBookInfo:(Book *)bookInfo {
-    NSString *urlString = [NSString stringWithFormat:@"http://121.42.174.184:8080/bookmgyun/servlet/getPdfInfo.serv?username=%@&sessionid=%@&bookid=%@", [[UserInfoModel sharedInstance] getUserName], [[UserInfoModel sharedInstance] getUserSessionid], bookInfo.bookID];
+    NSString *urlString = [NSString stringWithFormat:@"http://218.7.18.46/bookmgyun/servlet/getPdfInfo.serv?username=%@&sessionid=%@&bookid=%@", [[UserInfoModel sharedInstance] getUserName], [[UserInfoModel sharedInstance] getUserSessionid], bookInfo.bookID];
     NSString *url = [Utils UTF8URL:urlString];
     [self getBookListWithURL:url];
 }
 
 - (void)getBookImageListWithBookInfo:(Book *)bookInfo {
-    NSString *urlString = [NSString stringWithFormat:@"http://121.42.174.184:8080/bookmgyun/servlet/getPicInfo.serv?username=%@&sessionid=%@&bookid=%@", [[UserInfoModel sharedInstance] getUserName], [[UserInfoModel sharedInstance] getUserSessionid], bookInfo.bookID];
+    NSString *urlString = [NSString stringWithFormat:@"http://218.7.18.46/bookmgyun/servlet/getPicInfo.serv?username=%@&sessionid=%@&bookid=%@", [[UserInfoModel sharedInstance] getUserName], [[UserInfoModel sharedInstance] getUserSessionid], bookInfo.bookID];
     NSString *url = [Utils UTF8URL:urlString];
     [self getBookListWithURL:url];
 }

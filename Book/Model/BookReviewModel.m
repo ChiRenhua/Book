@@ -11,7 +11,7 @@
 #import "UserInfoModel.h"
 #import "Utils.h"
 
-#define BASEURL @"http://121.42.174.184:8080/bookmgyun/servlet/"
+#define BASEURL @"http://218.7.18.46/bookmgyun/servlet/"
 
 @interface BookReviewModel()
 

@@ -26,7 +26,7 @@
 #define PREVIEW_CELL_HEIGHT SCREEN_BOUNDS.height / 5
 #define FIRST_CHECKING_BOOK @"firstCheckingBook"
 #define REVIEW_CHECKING_BOOK @"reviewCheckingBook"
-#define BOOK_IMAGEBASEURL @"http://121.42.174.184:8080/bookmgyun/"
+#define BOOK_IMAGEBASEURL @"http://218.7.18.46/bookmgyun/"
 
 @interface BookDetialViewController ()<UITableViewDelegate,UITableViewDataSource>
 @property (retain, nonatomic) UITableView *bookDetialTableView;
