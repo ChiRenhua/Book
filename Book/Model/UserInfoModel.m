@@ -8,7 +8,8 @@
 
 #import "UserInfoModel.h"
 #import "AFNetworking/AFNetworking.h"
-#define BASEURL @"http://218.7.18.46/bookmgyun/servlet/"
+#import "Utils.h"
+#define BASEURL [NSString stringWithFormat:@"%@/bookmgyun/servlet/", [Utils getServerAddress]]
 
 @interface UserInfoModel ()
 @property(nonatomic,copy)NSString *userName;
@@ -32,6 +33,7 @@
 }
 
 -(void)saveUserLoginDataWithName:(NSString *)userName andPassword:(NSString *)userPassword andID:(NSString *)userID andCompetence:(NSString *) userCompetence andRealName:(NSString *) userRealName andSessionid:(NSString *) userSessionid{
+    
     _userName = userName;
     _userPassword = userPassword;
     _userID = userID;

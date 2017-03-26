@@ -8,7 +8,8 @@
 
 #import "SearchModel.h"
 #import "AFNetworking/AFNetworking.h"
-#define BASEURL @"http://218.7.18.46/bookmgyun/servlet/"
+#import "Utils.h"
+#define BASEURL [NSString stringWithFormat:@"%@/bookmgyun/servlet/", [Utils getServerAddress]]
 
 @interface SearchModel()
 

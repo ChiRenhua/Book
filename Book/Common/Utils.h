@@ -16,4 +16,8 @@
 + (NSString *)getLibraryPath;
 
 + (NSString *)UTF8URL:(NSString *)url;
+
++ (NSString *)getServerAddress;
+
++ (void)setServerAddress:(NSString *)address;
 @end

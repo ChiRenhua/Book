@@ -10,6 +10,8 @@
 #import "AppDelegate.h"
 #import "UserInfoModel.h"
 #import "UIColor+AppConfig.h"
+#import "Utils.h"
+#import "CustomIOSAlertView.h"
 
 #define SCREEN_BOUNDS [UIScreen mainScreen].bounds.size
 
@@ -47,7 +49,7 @@ AppDelegate *UserVCdelegate;
 
 #pragma mark 设置分组数
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 2;
+    return 3;
 }
 #pragma mark 设置分组标题内容高度
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
@@ -118,6 +120,14 @@ AppDelegate *UserVCdelegate;
             }
         }
         return UserViewCell;
+    }else if (indexPath.section == 2) {
+        UITableViewCell *changeServerAddressCell;
+        changeServerAddressCell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:nil];
+        changeServerAddressCell.selectionStyle = UITableViewCellSelectionStyleNone;
+        
+        changeServerAddressCell.textLabel.text = @"服务器地址";
+        changeServerAddressCell.detailTextLabel.text = [Utils getServerAddress];
+        return changeServerAddressCell;
     }
     return nil;
 }
@@ -139,6 +149,44 @@ AppDelegate *UserVCdelegate;
         [tableView deselectRowAtIndexPath:indexPath animated:YES];                                                                                  // 取消选中的状态
     }else if (indexPath.section == 1) {
         [tableView deselectRowAtIndexPath:indexPath animated:YES];                                                                                  // 取消选中的状态
+    }else if (indexPath.section == 2) {
+        // 使用自定义的AlertView
+        CustomIOSAlertView *alertView = [[CustomIOSAlertView alloc] init];
+        
+        UIView *containerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 267, 80)];
+        
+        UILabel *lable = [[UILabel alloc] initWithFrame:CGRectMake(10, 10, 247, 20)];
+        lable.text = @"服务器地址";
+        lable.textAlignment = NSTextAlignmentCenter;
+        lable.font = [UIFont systemFontOfSize:17];
+        [containerView addSubview:lable];
+        // 服务器地址
+        UITextField *serverAddressTextField = [[UITextField alloc] initWithFrame:CGRectMake(10, 40, 247, 30)];
+        serverAddressTextField.backgroundColor = [UIColor whiteColor];
+        serverAddressTextField.font = [UIFont systemFontOfSize:20];
+        serverAddressTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
+        serverAddressTextField.borderStyle = UITextBorderStyleRoundedRect;
+        serverAddressTextField.text = [Utils getServerAddress];
+        serverAddressTextField.returnKeyType = UIReturnKeyNext;
+        [containerView addSubview:serverAddressTextField];
+        
+        [alertView setContainerView:containerView];
+        
+        [alertView setButtonTitles:[NSMutableArray arrayWithObjects:@"取消", @"修改", nil]];
+        
+        [alertView setOnButtonTouchUpInside:^(CustomIOSAlertView *alertView, int buttonIndex) {
+            
+            if (buttonIndex == 1) {
+                [Utils setServerAddress:serverAddressTextField.text];
+                [self.UserVCTableView reloadData];
+            }
+            [alertView close];
+        }];
+        
+        [alertView setUseMotionEffects:true];
+        
+        // And launch the dialog
+        [alertView show];
     }
     
 }

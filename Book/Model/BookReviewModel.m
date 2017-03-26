@@ -11,7 +11,7 @@
 #import "UserInfoModel.h"
 #import "Utils.h"
 
-#define BASEURL @"http://218.7.18.46/bookmgyun/servlet/"
+#define BASEURL [NSString stringWithFormat:@"%@/bookmgyun/servlet/", [Utils getServerAddress]]
 
 @interface BookReviewModel()
 

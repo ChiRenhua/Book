@@ -11,13 +11,15 @@
 #import "AppDelegate.h"
 #import "UserInfoModel.h"
 #import "UIColor+AppConfig.h"
+#import "Utils.h"
 
 #define SCREEN_BOUNDS [UIScreen mainScreen].bounds.size
 
 @interface LoginViewController ()<UITextFieldDelegate,MBProgressHUDDelegate>
 @property(strong,retain) UITextField *userNameTextField;
-@property(strong,retain)  UITextField *userPassWordTextField;
-@property(strong,retain)  MBProgressHUD *mbprogress;
+@property(strong,retain) UITextField *userPassWordTextField;
+@property(strong,retain) UITextField *serverAddressTextField;
+@property(strong,retain) MBProgressHUD *mbprogress;
 @end
 
 
@@ -46,8 +48,18 @@
     userImage.center = CGPointMake(SCREEN_BOUNDS.width/2, SCREEN_BOUNDS.height/5);                  // 设置图片位置
     [userImage setImage:[UIImage imageNamed:@"touxiang.png"]];
     [self.view addSubview:userImage];
+    // 服务器地址
+    _serverAddressTextField = [[UITextField alloc] initWithFrame:CGRectMake(0, SCREEN_BOUNDS.height / 3, SCREEN_BOUNDS.width, 50)];
+    _serverAddressTextField.backgroundColor = [UIColor whiteColor];
+    _serverAddressTextField.font = [UIFont systemFontOfSize:20];
+    _serverAddressTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
+    _serverAddressTextField.borderStyle = UITextBorderStyleRoundedRect;
+    _serverAddressTextField.text = [Utils getServerAddress];
+    _serverAddressTextField.returnKeyType = UIReturnKeyNext;
+    [self.view addSubview:_serverAddressTextField];
+    
     // 添加登陆表格
-    _userNameTextField = [[UITextField alloc]initWithFrame:CGRectMake(0, SCREEN_BOUNDS.height/3, SCREEN_BOUNDS.width, 50)];
+    _userNameTextField = [[UITextField alloc]initWithFrame:CGRectMake(0, SCREEN_BOUNDS.height / 3 + 50, SCREEN_BOUNDS.width, 50)];
     _userNameTextField.backgroundColor = [UIColor whiteColor];
     _userNameTextField.font = [UIFont systemFontOfSize:20];                                          // 设置文字大小
     _userNameTextField.clearButtonMode = UITextFieldViewModeWhileEditing;                            // 设置删除按钮出现时间
@@ -56,7 +68,7 @@
     _userNameTextField.returnKeyType = UIReturnKeyNext;                                              // return键样式更改
     [self.view addSubview:_userNameTextField];
     
-    _userPassWordTextField = [[UITextField alloc]initWithFrame:CGRectMake(0, SCREEN_BOUNDS.height/3 + 50, SCREEN_BOUNDS.width, 50)];
+    _userPassWordTextField = [[UITextField alloc]initWithFrame:CGRectMake(0, SCREEN_BOUNDS.height / 3 + 100, SCREEN_BOUNDS.width, 50)];
     _userPassWordTextField.backgroundColor = [UIColor whiteColor];
     _userPassWordTextField.font = [UIFont systemFontOfSize:20];                                       // 设置文字大小
     _userPassWordTextField.clearButtonMode = UITextFieldViewModeWhileEditing;                         // 设置删除按钮出现时间
@@ -72,7 +84,8 @@
     // 添加登陆按钮
     UIButton *loginButton = [UIButton buttonWithType:UIButtonTypeSystem];
     loginButton.frame = CGRectMake(0, 0, SCREEN_BOUNDS.width - 20, 43);
-    loginButton.center = CGPointMake(SCREEN_BOUNDS.width / 2, SCREEN_BOUNDS.height/3 + 130);
+    loginButton.layer.cornerRadius = 7.0f;
+    loginButton.center = CGPointMake(SCREEN_BOUNDS.width / 2, SCREEN_BOUNDS.height/3 + 180);
     [loginButton addTarget:self action:@selector(login) forControlEvents:UIControlEventTouchUpInside];// 为登录按钮添加点击事件
     [loginButton setTitle:@"登陆" forState:UIControlStateNormal];
     [loginButton setBackgroundColor:[UIColor bookAppColor]];
@@ -85,6 +98,7 @@
 }
 #pragma mark 登陆验证操作
 - (void)login {
+    [Utils setServerAddress:_serverAddressTextField.text];
     if ([_userNameTextField.text isEqualToString:@""] || [_userPassWordTextField.text isEqualToString:@""]) {
         // 对于没有输入用户名或密码的情况作处理
         _mbprogress.mode = MBProgressHUDModeText;                                                       // 设置toast的样式为文字

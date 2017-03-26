@@ -23,4 +23,17 @@
     return [url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
 }
 
++ (NSString *)getServerAddress {
+    NSString *serverAddress = [[NSUserDefaults standardUserDefaults] objectForKey:@"serverAddress"];
+    
+    if (!serverAddress || !serverAddress.length) {
+        [self setServerAddress:@"http://218.7.18.44"];
+    }
+    return serverAddress;
+}
+
++ (void)setServerAddress:(NSString *)address {
+    [[NSUserDefaults standardUserDefaults] setObject:address forKey:@"serverAddress"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
 @end

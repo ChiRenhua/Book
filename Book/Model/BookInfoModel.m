@@ -8,9 +8,10 @@
 
 #import "BookInfoModel.h"
 #import "AFNetworking/AFNetworking.h"
+#import "Utils.h"
 #import "Book.h"
 
-#define BASEURL @"http://218.7.18.46/bookmgyun/servlet/"
+#define BASEURL [NSString stringWithFormat:@"%@/bookmgyun/servlet/", [Utils getServerAddress]]
 
 @interface BookInfoModel()
 @property(nonatomic,retain)NSMutableArray *bookArray;
