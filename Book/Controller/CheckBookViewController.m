@@ -212,7 +212,7 @@ NSString *bookURL;
     }else if (viewcode == keyWordSearchBook) {
         self.navigationItem.title = _navigationTitle;
     }else if (viewcode == willExpiredBook) {
-        self.navigationItem.title = @"将要过期";
+        self.navigationItem.title = @"即将过期";
         bookURL = [NSString stringWithFormat:@"getMatureRemind.serv?username=%@&sessionid=%@&categorySecondId=%@",[[UserInfoModel sharedInstance]getUserName],[[UserInfoModel sharedInstance]getUserSessionid],_searchID];
     }
 }
