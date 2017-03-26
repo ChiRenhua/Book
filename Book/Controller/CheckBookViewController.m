@@ -39,6 +39,7 @@
 @property(nonatomic,copy) NSString *searchID;
 @property(retain,nonatomic) UITextField *searchTextField;
 @property(nonatomic,copy) NSString *ViewTypeKey;
+@property (nonatomic, strong) NSMutableArray *bookArray;
 @end
 
 ListTableViewCell *CheckBookViewcell;
@@ -46,7 +47,7 @@ NSMutableArray *searchResult;
 int viewcode;
 NSString *step;
 NSString *bookState;
-NSMutableArray *bookArray;
+
 NSString *bookURL;
 
 @implementation CheckBookViewController
@@ -62,8 +63,8 @@ NSString *bookURL;
         _navigationTitle = title;
         _searchID = searchid;
         [BookInfoModel sharedInstance].updateTV = ^(NSString *state,NSInteger errorcode){
-            bookArray = [[BookInfoModel sharedInstance]getBookArray];
-            if ([bookArray count]) {
+            self.bookArray = [[BookInfoModel sharedInstance]getBookArray];
+            if ([self.bookArray count]) {
                 [_noDataLable setHidden:YES];
                 [_CheckBookViewtableView.tableHeaderView setHidden:NO];
             }else {
@@ -76,13 +77,13 @@ NSString *bookURL;
             
             //如果是审核中页面，才会执行本地数据同步
             if (errorcode == GET_BOOK_FROM_NET_SUCCESS) {
-                [[BookReviewModel sharedInstance]synReviewbookDataWitharray:bookArray bookState:_ViewTypeKey];
+                [[BookReviewModel sharedInstance]synReviewbookDataWitharray:self.bookArray bookState:_ViewTypeKey];
             }
             
             //如果数据拉取失败，则展示缓存数据
             if (errorcode == GET_BOOK_FROM_NET_FAILED) {
                 NSMutableArray *cacheArray = [[BookListCache sharedInstance] getBookListFromCache:_ViewTypeKey];
-                bookArray = cacheArray;
+                self.bookArray = cacheArray;
                 [_noDataLable setHidden:YES];
                 [_CheckBookViewtableView.tableHeaderView setHidden:NO];
                 [_CheckBookViewtableView reloadData];
@@ -123,7 +124,7 @@ NSString *bookURL;
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self.view setBackgroundColor:[UIColor whiteColor]];
-    [bookArray removeAllObjects];
+    [self.bookArray removeAllObjects];
     [searchResult removeAllObjects];
 
     [self getStep];
@@ -210,6 +211,9 @@ NSString *bookURL;
         bookURL = [NSString stringWithFormat:@"getSearchBook.serv?username=%@&sessionid=%@&categorySecondId=%@",[[UserInfoModel sharedInstance]getUserName],[[UserInfoModel sharedInstance]getUserSessionid],_searchID];
     }else if (viewcode == keyWordSearchBook) {
         self.navigationItem.title = _navigationTitle;
+    }else if (viewcode == willExpiredBook) {
+        self.navigationItem.title = @"将要过期";
+        bookURL = [NSString stringWithFormat:@"getMatureRemind.serv?username=%@&sessionid=%@&categorySecondId=%@",[[UserInfoModel sharedInstance]getUserName],[[UserInfoModel sharedInstance]getUserSessionid],_searchID];
     }
 }
 #pragma mark - 无数据View
@@ -222,7 +226,7 @@ NSString *bookURL;
     _noDataLable.font = [UIFont systemFontOfSize:20];
     [self.view addSubview:_noDataLable];
     
-    if (bookArray.count) {
+    if (self.bookArray.count) {
         [_noDataLable setHidden:YES];
     }else {
         [_noDataLable setHidden:NO];
@@ -260,7 +264,7 @@ NSString *bookURL;
         [_searchController.searchBar setBackgroundImage:[[UIImage alloc] init]];
         //将搜索框添加到tableHeaderView中
         _CheckBookViewtableView.tableHeaderView = self.searchController.searchBar;
-        if (bookArray.count) {
+        if (self.bookArray.count) {
             [_CheckBookViewtableView.tableHeaderView setHidden:NO];
         }else{
             [_CheckBookViewtableView.tableHeaderView setHidden:YES];
@@ -299,7 +303,7 @@ NSString *bookURL;
     // 检查是否有缓存，如果有读缓存数据，没有的话执行刷新操作
     NSMutableArray *cacheArray = [[BookListCache sharedInstance] getBookListFromCache:_ViewTypeKey];
     if (cacheArray.count) {
-        bookArray = cacheArray;
+        self.bookArray = cacheArray;
         [_CheckBookViewtableView reloadData];
     }else {
         [_CheckBookViewtableView.mj_header beginRefreshing];
@@ -313,6 +317,8 @@ NSString *bookURL;
     [self getBookURL];
     if (viewcode == searchResultBook) {
         [[BookInfoModel sharedInstance]getSearchResultWithURL:bookURL];
+    }else if (viewcode == willExpiredBook) {
+        [[BookInfoModel sharedInstance]getwillExpiredBookDataWithURL:bookURL];
     }else {
         [[BookInfoModel sharedInstance]getBookDataWithURL:bookURL bookState:bookState];
     }
@@ -323,7 +329,7 @@ NSString *bookURL;
 - (void)updateSearchResultsForSearchController:(UISearchController *)searchController {
     [searchResult removeAllObjects];
     NSString *keyWord = [searchController .searchBar text];
-    [bookArray enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+    [self.bookArray enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         Book *book = obj;
         if ([book.bookName.uppercaseString containsString:keyWord.uppercaseString] || [book.authorName.uppercaseString containsString:keyWord.uppercaseString]) {
             [searchResult addObject:book];
@@ -337,7 +343,7 @@ NSString *bookURL;
     if ([self.searchController isActive]) {
         return @"搜索结果";
     }
-    if ([bookArray count]) {
+    if ([self.bookArray count]) {
         return @"书籍信息";
     }
     return nil;
@@ -357,7 +363,7 @@ NSString *bookURL;
     if ([self.searchController isActive]) {
         return searchResult.count;
     }
-    return [bookArray count];
+    return [self.bookArray count];
 }
 #pragma mark 设置单元格样式和内容
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -374,9 +380,9 @@ NSString *bookURL;
         books = searchResult[indexPath.row];
     }else {
         if (viewcode) {
-            books = bookArray[indexPath.row];
+            books = self.bookArray[indexPath.row];
         }else {
-            books = bookArray[indexPath.row];
+            books = self.bookArray[indexPath.row];
         }
     }
     
@@ -389,7 +395,7 @@ NSString *bookURL;
     if ([_searchController isActive]) {
         book = searchResult[indexPath.row];
     }else {
-        book = bookArray[indexPath.row];
+        book = self.bookArray[indexPath.row];
     }
     BookDetialViewController *bookDetialVC = [[BookDetialViewController alloc]init:book step:step];
     [self.navigationController pushViewController:bookDetialVC animated:YES];
@@ -421,8 +427,8 @@ NSString *bookURL;
         book.bookState = array[i][@"bookState"];
         [barray addObject:book];
     }
-    bookArray = barray;
-    if ([bookArray count]) {
+    self.bookArray = barray;
+    if ([self.bookArray count]) {
         [_noDataLable setHidden:YES];
         [_CheckBookViewtableView.tableHeaderView setHidden:NO];
     }else {

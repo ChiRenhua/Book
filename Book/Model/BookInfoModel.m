@@ -56,7 +56,6 @@
 
 - (void)getBookDataWithURL:(NSString *)bookurl bookState:(NSString *)bookState {
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    //manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
     NSString *url = [BASEURL stringByAppendingString:bookurl];
     [manager POST:url parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
@@ -84,11 +83,46 @@
     }];
 }
 
+- (void)getwillExpiredBookDataWithURL:(NSString *)bookurl {
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
+    NSString *url = [BASEURL stringByAppendingString:bookurl];
+    [manager POST:url parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
+        
+    } progress:^(NSProgress * _Nonnull uploadProgress) {
+        
+    } success:^(NSURLSessionDataTask * _Nonnull task, id responseObject) {
+        int status = [responseObject[@"status"] intValue];
+        if (status == 1000) {
+            NSArray *ar = responseObject[@"message"];
+            NSLog(@"success%@",[ar objectAtIndex:0]);
+            [self buildwillExpiredBookWithData:ar];
+        }else if(status == 1001) {
+            _showLoginAlert();
+        }else if(status == 1002) {
+            _updateTV(@"请求列表为空!",GET_BOOK_FROM_NET_SUCCESS);
+        }
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        NSLog(@"error:%@",error);
+        _updateTV(@"数据请求失败，请稍后重试!",GET_BOOK_FROM_NET_FAILED);
+    }];
+}
+
 - (void)buildBookWithData:(NSArray *)ar bookState:(NSString *)bookstate {
     _bookArray = [[NSMutableArray alloc]init];
     for (int i = 0; i < [ar count]; i++) {
         Book *book = [[Book alloc]initWithDictionary:ar[i]];
         book.bookState = bookstate;
+        [_bookArray addObject:book];
+    }
+    _updateTV(@"数据加载成功!",GET_BOOK_FROM_NET_SUCCESS);
+}
+
+- (void)buildwillExpiredBookWithData:(NSArray *)ar {
+    _bookArray = [[NSMutableArray alloc]init];
+    for (int i = 0; i < [ar count]; i++) {
+        Book *book = [[Book alloc]initWithWillExpiredDictionary:ar[i]];
+        book.bookState = @"";
         [_bookArray addObject:book];
     }
     _updateTV(@"数据加载成功!",GET_BOOK_FROM_NET_SUCCESS);

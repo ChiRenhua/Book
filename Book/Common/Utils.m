@@ -28,6 +28,7 @@
     
     if (!serverAddress || !serverAddress.length) {
         [self setServerAddress:@"http://218.7.18.44"];
+        serverAddress = [[NSUserDefaults standardUserDefaults] objectForKey:@"serverAddress"];
     }
     return serverAddress;
 }

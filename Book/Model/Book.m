@@ -24,10 +24,22 @@
     }
     return self;
 }
-#pragma mark 静态初始化函数
-+ (Book *)staticInitWithDictionary:(NSMutableDictionary *)dic {
-    Book *book = [[Book alloc]initWithDictionary:dic];
-    return book;
+
+- (Book *)initWithWillExpiredDictionary:(NSMutableDictionary *)dic {
+    if (self = [super init]) {
+        _authorName = [dic objectForKey:@"authors"];
+        _bookName = [dic objectForKey:@"book_name"];
+        _coverPath = @"";
+        _bookID = [dic objectForKey:@"book_id"];
+        _isbn = @"";
+        _bookState = @"";
+        _step = @"";
+        _copyright_end = [dic objectForKey:@"copyright_end"];
+        _copyright_owner = [dic objectForKey:@"copyright_owner"];
+        _copyright_signature = [dic objectForKey:@"copyright_signature"];
+        _copyright_contractid = [dic objectForKey:@"copyright_contractid"];
+    }
+    return self;
 }
 
 @end

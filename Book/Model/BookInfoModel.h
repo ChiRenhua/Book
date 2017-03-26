@@ -24,6 +24,7 @@ typedef void (^OfflineMode)();
 + (BookInfoModel *)sharedInstance;
 
 - (void)getSearchResultWithURL:(NSString*)searchURL;
+- (void)getwillExpiredBookDataWithURL:(NSString *)bookurl;
 - (void)getBookDataWithURL:(NSString *)bookurl bookState:(NSString *)bookState;
 
 - (NSMutableArray *)getBookArray;

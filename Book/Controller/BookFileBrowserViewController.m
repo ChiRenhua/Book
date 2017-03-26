@@ -156,7 +156,7 @@
     switch (self.type) {
         case BookFileBrowserType_Image: {
             UIImageView *imagelogo = [[UIImageView alloc]initWithFrame:CGRectMake(15, 10, 23, 30)];
-            imagelogo.image = [UIImage imageNamed:@"jpgLogo.png"];
+            imagelogo.image = [UIImage imageNamed:@"JPGLogo.png"];
             [cell.contentView addSubview:imagelogo];
             
             UILabel *imageLable = [[UILabel alloc]initWithFrame:CGRectMake(imagelogo.bounds.size.width + 25, (CELL_HEIGHT - 15) / 2, cell.bounds.size.width / 2 - 20, 15)];
@@ -168,7 +168,7 @@
             break;
         case BookFileBrowserType_PDF: {
              UIImageView *pdflogo = [[UIImageView alloc]initWithFrame:CGRectMake(15, 10, 23, 30)];
-             pdflogo.image = [UIImage imageNamed:@"pdfLogo.png"];
+             pdflogo.image = [UIImage imageNamed:@"PDFLogo.png"];
              [cell.contentView addSubview:pdflogo];
              
              UILabel *bookNameLable = [[UILabel alloc]initWithFrame:CGRectMake(pdflogo.bounds.size.width + 25, (CELL_HEIGHT - 15) / 2, cell.bounds.size.width / 2 - 20, 15)];

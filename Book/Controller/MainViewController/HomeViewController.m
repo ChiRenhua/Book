@@ -89,6 +89,8 @@ AppDelegate *homeViewDelegate;
             return @"初审";
         }else if (section == 1) {
             return @"复审";
+        }else if (section == 2) {
+            return @"过期";
         }
     }else if (competence == 1) {
         return @"初审";
@@ -99,14 +101,14 @@ AppDelegate *homeViewDelegate;
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     int competence = [[[UserInfoModel sharedInstance]getUserCompetence]intValue];
     if (competence == 2) {
-        return 2;
+        return 3;
     }else {
-        return 1;
+        return 2;
     }
 }
 #pragma mark 设置分组标题内容高度
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    CGFloat headerHight = SCREEN_BOUNDS.height/20;
+    CGFloat headerHight = SCREEN_BOUNDS.height / 20;
     if (section == 0) {
         return headerHight;
     }
@@ -115,10 +117,35 @@ AppDelegate *homeViewDelegate;
 
 #pragma mark 设置行数
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    if (section == 2) {
+        return 1;
+    }
     return [CheckBookArray count];
 }
 #pragma mark 设置单元格样式和内容
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.section == 2) {
+        UITableViewCell *HomeViewcell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
+        
+        UIImageView *homeImageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"bookunpass.png"]];
+        homeImageView.frame = CGRectMake(15, 10, ROW_HIGHT - 20, ROW_HIGHT - 20);
+        homeImageView.contentMode = UIViewContentModeScaleAspectFit;
+        [HomeViewcell.contentView addSubview:homeImageView];
+        
+        UIImageView *rightImageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"right_black.png"]];
+        rightImageView.frame = CGRectMake(SCREEN_BOUNDS.width / 10 * 9, ROW_HIGHT/2 - (ROW_HIGHT - 30)/2, ROW_HIGHT - 30, ROW_HIGHT - 30);
+        rightImageView.contentMode = UIViewContentModeScaleAspectFit;
+        [HomeViewcell.contentView addSubview:rightImageView];
+        // 图书名字
+        UILabel *homeName = [[UILabel alloc]initWithFrame:CGRectMake(SCREEN_BOUNDS.width / 4, ROW_HIGHT / 2 - 8.5, SCREEN_BOUNDS.width - 90, 20)];
+        homeName.text = @"即将过期";
+        homeName.font = [UIFont systemFontOfSize:17];
+        homeName.textColor = [UIColor blackColor];
+        [HomeViewcell.contentView addSubview:homeName];
+        
+        return HomeViewcell;
+    }
+    
     UITableViewCell *HomeViewcell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
     
     UIImageView *homeImageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:imageArray[indexPath.row]]];
@@ -192,6 +219,11 @@ AppDelegate *homeViewDelegate;
             break;
         default:
             break;
+    }
+    
+    if (indexPath.section == 2) {
+        CheckBookViewController *CheckBookVC = [[CheckBookViewController alloc]init:willExpiredBook :nil :nil];
+        [self.navigationController pushViewController:CheckBookVC animated:YES];
     }
     [tableView deselectRowAtIndexPath:indexPath animated:YES];                                                                                  // 取消选中的状态
 }

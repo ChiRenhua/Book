@@ -9,13 +9,13 @@
 /* Begin PBXBuildFile section */
 		4B75BFB21C9BE76E00212268 /* BookTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B75BFB11C9BE76E00212268 /* BookTests.m */; };
 		4B75BFBD1C9BE76E00212268 /* BookUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B75BFBC1C9BE76E00212268 /* BookUITests.m */; };
+		714286E81E87B61800FDA497 /* JPGLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 714286E61E87B61800FDA497 /* JPGLogo.png */; };
+		714286E91E87B61800FDA497 /* PDFLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 714286E71E87B61800FDA497 /* PDFLogo.png */; };
 		C1E2431F0ADD6D82ACE6C66B /* libPods-Book.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E49FFA91ECAC28015993FFF8 /* libPods-Book.a */; };
 		D71CD7AC1D9794440016273D /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = D71CD7AB1D9794440016273D /* logo.png */; };
 		D73683911D9506BD00B919E3 /* UIColor+AppConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = D73683901D9506BD00B919E3 /* UIColor+AppConfig.m */; };
 		D74CAC001DCDDC09004C8BA4 /* Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = D74CABFF1DCDDC09004C8BA4 /* Utils.m */; };
 		D74CAC031DCDE22B004C8BA4 /* BookDownloadModel.m in Sources */ = {isa = PBXBuildFile; fileRef = D74CAC021DCDE22B004C8BA4 /* BookDownloadModel.m */; };
-		D74CAC1B1DCDE850004C8BA4 /* pdfLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = D74CAC1A1DCDE850004C8BA4 /* pdfLogo.png */; };
-		D74CAC1D1DCDFD31004C8BA4 /* jpgLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = D74CAC1C1DCDFD31004C8BA4 /* jpgLogo.png */; };
 		D74CAC201DCE0471004C8BA4 /* BookFileBrowserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D74CAC1F1DCE0471004C8BA4 /* BookFileBrowserViewController.m */; };
 		D75E276F1D7A8B4500E34720 /* SearchSonViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D75E276E1D7A8B4500E34720 /* SearchSonViewController.m */; };
 		D7DA83331D793F48000A7941 /* SearchModel.m in Sources */ = {isa = PBXBuildFile; fileRef = D7DA83321D793F48000A7941 /* SearchModel.m */; };
@@ -86,6 +86,8 @@
 		4B75BFB81C9BE76E00212268 /* BookUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BookUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4B75BFBC1C9BE76E00212268 /* BookUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BookUITests.m; sourceTree = "<group>"; };
 		4B75BFBE1C9BE76E00212268 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		714286E61E87B61800FDA497 /* JPGLogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = JPGLogo.png; sourceTree = "<group>"; };
+		714286E71E87B61800FDA497 /* PDFLogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PDFLogo.png; sourceTree = "<group>"; };
 		950D2E529ECF91C3F69B99B3 /* Pods-Book.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Book.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Book/Pods-Book.debug.xcconfig"; sourceTree = "<group>"; };
 		D71CD7AB1D9794440016273D /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo.png; sourceTree = "<group>"; };
 		D736838F1D9506BD00B919E3 /* UIColor+AppConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+AppConfig.h"; sourceTree = "<group>"; };
@@ -94,8 +96,6 @@
 		D74CABFF1DCDDC09004C8BA4 /* Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Utils.m; sourceTree = "<group>"; };
 		D74CAC011DCDE22B004C8BA4 /* BookDownloadModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BookDownloadModel.h; sourceTree = "<group>"; };
 		D74CAC021DCDE22B004C8BA4 /* BookDownloadModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BookDownloadModel.m; sourceTree = "<group>"; };
-		D74CAC1A1DCDE850004C8BA4 /* pdfLogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pdfLogo.png; sourceTree = "<group>"; };
-		D74CAC1C1DCDFD31004C8BA4 /* jpgLogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = jpgLogo.png; sourceTree = "<group>"; };
 		D74CAC1E1DCE0471004C8BA4 /* BookFileBrowserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BookFileBrowserViewController.h; sourceTree = "<group>"; };
 		D74CAC1F1DCE0471004C8BA4 /* BookFileBrowserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BookFileBrowserViewController.m; sourceTree = "<group>"; };
 		D75E276D1D7A8B4500E34720 /* SearchSonViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SearchSonViewController.h; path = MainViewController/SearchSonViewController.h; sourceTree = "<group>"; };
@@ -364,8 +364,8 @@
 		D7DBDEE21D72EE4C00CFAE5E /* ImageSource */ = {
 			isa = PBXGroup;
 			children = (
-				D74CAC1C1DCDFD31004C8BA4 /* jpgLogo.png */,
-				D74CAC1A1DCDE850004C8BA4 /* pdfLogo.png */,
+				714286E61E87B61800FDA497 /* JPGLogo.png */,
+				714286E71E87B61800FDA497 /* PDFLogo.png */,
 				D71CD7AB1D9794440016273D /* logo.png */,
 				D7EF198F1D967C44001E35B1 /* logo_white.png */,
 				D7EF198B1D967356001E35B1 /* bookunpass.png */,
@@ -507,13 +507,13 @@
 				D7DBDEF91D72EE4C00CFAE5E /* book_03.jpg in Resources */,
 				D7DBDEFC1D72EE4C00CFAE5E /* book_06.jpg in Resources */,
 				D7DBDEFF1D72EE4C00CFAE5E /* book_09.jpg in Resources */,
-				D74CAC1D1DCDFD31004C8BA4 /* jpgLogo.png in Resources */,
 				D7DBDEF71D72EE4C00CFAE5E /* book_01.jpg in Resources */,
-				D74CAC1B1DCDE850004C8BA4 /* pdfLogo.png in Resources */,
 				D71CD7AC1D9794440016273D /* logo.png in Resources */,
 				D7EF198D1D967356001E35B1 /* bookunpass.png in Resources */,
 				D7DBDF001D72EE4C00CFAE5E /* book_10.jpg in Resources */,
+				714286E81E87B61800FDA497 /* JPGLogo.png in Resources */,
 				D7DBDEFE1D72EE4C00CFAE5E /* book_08.jpg in Resources */,
+				714286E91E87B61800FDA497 /* PDFLogo.png in Resources */,
 				D7DBDEF81D72EE4C00CFAE5E /* book_02.jpg in Resources */,
 				D7DBDEFD1D72EE4C00CFAE5E /* book_07.jpg in Resources */,
 				D7DBDED91D72ED9B00CFAE5E /* LaunchScreen.storyboard in Resources */,

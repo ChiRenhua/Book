@@ -183,7 +183,7 @@ int reviewTextHeight;
             [imageButton addGestureRecognizer:imageButtonSingleTap];
             
             UIImageView *jpglogo = [[UIImageView alloc]initWithFrame:CGRectMake(15, 15, (imageButton.bounds.size.height - 30) * 0.76, imageButton.bounds.size.height - 30)];
-            jpglogo.image = [UIImage imageNamed:@"jpgLogo.png"];
+            jpglogo.image = [UIImage imageNamed:@"JPGLogo.png"];
             [imageButton addSubview:jpglogo];
             
             UILabel *imageLable = [[UILabel alloc]initWithFrame:CGRectMake(jpglogo.bounds.size.width + 15, (imageButton.bounds.size.height - 15) / 2, imageButton.bounds.size.width - jpglogo.bounds.size.width - 15, 15)];
@@ -205,7 +205,7 @@ int reviewTextHeight;
             [pdfButton addGestureRecognizer:pdfButtonSingleTap];
             
             UIImageView *pdflogo = [[UIImageView alloc]initWithFrame:CGRectMake(15, 15, (imageButton.bounds.size.height - 30) * 0.76, pdfButton.bounds.size.height - 30)];
-            pdflogo.image = [UIImage imageNamed:@"pdfLogo.png"];
+            pdflogo.image = [UIImage imageNamed:@"PDFLogo.png"];
             [pdfButton addSubview:pdflogo];
             
             UILabel *pdfLable = [[UILabel alloc]initWithFrame:CGRectMake(pdflogo.bounds.size.width + 15, (pdfButton.bounds.size.height - 15) / 2, pdfButton.bounds.size.width - pdflogo.bounds.size.width - 15, 15)];

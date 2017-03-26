@@ -17,10 +17,13 @@
 @property (nonatomic,copy) NSString *isbn;
 @property (nonatomic,copy) NSString *bookState;
 @property (nonatomic,copy) NSString *step;
+@property (nonatomic,copy) NSString *copyright_end;
+@property (nonatomic,copy) NSString *copyright_owner;
+@property (nonatomic,copy) NSString *copyright_contractid;
+@property (nonatomic,copy) NSString *copyright_signature;
 
 #pragma mark 初始化函数
 - (Book *)initWithDictionary:(NSMutableDictionary *)dic;
-#pragma mark 静态初始化函数
-+ (Book *)staticInitWithDictionary:(NSMutableDictionary *)dic;
+- (Book *)initWithWillExpiredDictionary:(NSMutableDictionary *)dic;
 
 @end
