@@ -81,7 +81,7 @@ NSInteger searchtype;
     rightImageView.contentMode = UIViewContentModeScaleAspectFit;
     [SearchViewcell.contentView addSubview:rightImageView];
     // 搜索方法名字
-    UILabel *searchName = [[UILabel alloc]initWithFrame:CGRectMake(SCREEN_BOUNDS.width / 7, ROW_HIGHT / 2 - 8.5, SCREEN_BOUNDS.width - 2 * ROW_HIGHT + 35, 20)];
+    UILabel *searchName = [[UILabel alloc]initWithFrame:CGRectMake(SCREEN_BOUNDS.width / 7, ROW_HIGHT / 2 - 8.5, SCREEN_BOUNDS.width - 2 * ROW_HIGHT, 20)];
     if (searchtype == searchKeyword) {
         searchName.text = _keyworldArray[indexPath.row];
     }else {
@@ -90,6 +90,13 @@ NSInteger searchtype;
     searchName.font = [UIFont systemFontOfSize:17];
     searchName.textColor = [UIColor blackColor];
     [SearchViewcell.contentView addSubview:searchName];
+    
+    UILabel *countLabel = [[UILabel alloc] initWithFrame:CGRectMake(SCREEN_BOUNDS.width / 7 + searchName.bounds.size.width, 15, ROW_HIGHT - 25, ROW_HIGHT - 25)];
+    
+    NSNumber *count = self.searchArray[indexPath.row][@"countnumber"];
+    countLabel.text = [count stringValue];
+    countLabel.textAlignment = NSTextAlignmentRight;
+    [SearchViewcell.contentView addSubview:countLabel];
     
     return SearchViewcell;
 }
