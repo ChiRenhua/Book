@@ -12,6 +12,7 @@
 #import "UIColor+AppConfig.h"
 #import "Utils.h"
 #import "CustomIOSAlertView.h"
+#import "CompetenceViewController.h"
 
 #define SCREEN_BOUNDS [UIScreen mainScreen].bounds.size
 
@@ -42,9 +43,7 @@ AppDelegate *UserVCdelegate;
     UIView *viewAboveHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0, SCREEN_BOUNDS.height * (-1), SCREEN_BOUNDS.width, SCREEN_BOUNDS.height)];
     viewAboveHeaderView.backgroundColor = [UIColor bookAppColor];
     [_UserVCTableView addSubview:viewAboveHeaderView];
-    
     _UserVCTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    
 }
 
 #pragma mark 设置分组数
@@ -93,10 +92,9 @@ AppDelegate *UserVCdelegate;
         [UserViewCell.contentView addSubview:_nameLable];
         // 添加职位信息
         _professionLable = [[UILabel alloc]initWithFrame:CGRectMake(110, 60, SCREEN_BOUNDS.width - 110, 20)];
-        NSString *professiontext = [[UserInfoModel sharedInstance]getUserCompetence];
-        if ([professiontext isEqualToString:@"1"]) {
+        if ([[UserInfoModel sharedInstance] firstTrial] && ![[UserInfoModel sharedInstance] secondTrial]) {
             _professionLable.text = @"图书初审审核员";
-        }else if ([professiontext isEqualToString:@"2"]) {
+        }else if ([[UserInfoModel sharedInstance] firstTrial] && [[UserInfoModel sharedInstance] secondTrial]) {
             _professionLable.text = @"图书复审审核员";
         }
         _professionLable.font = [UIFont systemFontOfSize:15];
@@ -106,24 +104,17 @@ AppDelegate *UserVCdelegate;
     }else if (indexPath.section == 1) {
         UITableViewCell *UserViewCell;
         UserViewCell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:nil];
-        UserViewCell.selectionStyle = UITableViewCellSelectionStyleNone;                                                                                            //取消选中状态
+        
         if (indexPath.row == 0) {
             UserViewCell.textLabel.text = @"真实姓名";
             UserViewCell.detailTextLabel.text = [[UserInfoModel sharedInstance]getUserRealName];
         }else if (indexPath.row == 1){
-            int competence = [[[UserInfoModel sharedInstance]getUserCompetence] intValue];
             UserViewCell.textLabel.text = @"权限";
-            if (competence == 1) {
-                UserViewCell.detailTextLabel.text = @"初审";
-            }else if(competence == 2) {
-                UserViewCell.detailTextLabel.text = @"初审；复审";
-            }
         }
         return UserViewCell;
     }else if (indexPath.section == 2) {
         UITableViewCell *changeServerAddressCell;
         changeServerAddressCell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:nil];
-        changeServerAddressCell.selectionStyle = UITableViewCellSelectionStyleNone;
         
         changeServerAddressCell.textLabel.text = @"服务器地址";
         changeServerAddressCell.detailTextLabel.text = [Utils getServerAddress];
@@ -148,8 +139,14 @@ AppDelegate *UserVCdelegate;
         [self logout];
         [tableView deselectRowAtIndexPath:indexPath animated:YES];                                                                                  // 取消选中的状态
     }else if (indexPath.section == 1) {
+        
+        if (indexPath.row == 1) {
+            CompetenceViewController *competenceVC = [[CompetenceViewController alloc]init];
+            [self.navigationController pushViewController:competenceVC animated:YES];
+        }
         [tableView deselectRowAtIndexPath:indexPath animated:YES];                                                                                  // 取消选中的状态
     }else if (indexPath.section == 2) {
+        [tableView deselectRowAtIndexPath:indexPath animated:NO];
         // 使用自定义的AlertView
         CustomIOSAlertView *alertView = [[CustomIOSAlertView alloc] init];
         

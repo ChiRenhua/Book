@@ -11,6 +11,7 @@
 		4B75BFBD1C9BE76E00212268 /* BookUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B75BFBC1C9BE76E00212268 /* BookUITests.m */; };
 		714286E81E87B61800FDA497 /* JPGLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 714286E61E87B61800FDA497 /* JPGLogo.png */; };
 		714286E91E87B61800FDA497 /* PDFLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 714286E71E87B61800FDA497 /* PDFLogo.png */; };
+		716DCF461EE444C700F592EF /* CompetenceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 716DCF451EE444C700F592EF /* CompetenceViewController.m */; };
 		C1E2431F0ADD6D82ACE6C66B /* libPods-Book.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E49FFA91ECAC28015993FFF8 /* libPods-Book.a */; };
 		D71CD7AC1D9794440016273D /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = D71CD7AB1D9794440016273D /* logo.png */; };
 		D73683911D9506BD00B919E3 /* UIColor+AppConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = D73683901D9506BD00B919E3 /* UIColor+AppConfig.m */; };
@@ -88,6 +89,8 @@
 		4B75BFBE1C9BE76E00212268 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		714286E61E87B61800FDA497 /* JPGLogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = JPGLogo.png; sourceTree = "<group>"; };
 		714286E71E87B61800FDA497 /* PDFLogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PDFLogo.png; sourceTree = "<group>"; };
+		716DCF441EE444C700F592EF /* CompetenceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CompetenceViewController.h; path = MainViewController/CompetenceViewController.h; sourceTree = "<group>"; };
+		716DCF451EE444C700F592EF /* CompetenceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CompetenceViewController.m; path = MainViewController/CompetenceViewController.m; sourceTree = "<group>"; };
 		950D2E529ECF91C3F69B99B3 /* Pods-Book.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Book.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Book/Pods-Book.debug.xcconfig"; sourceTree = "<group>"; };
 		D71CD7AB1D9794440016273D /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo.png; sourceTree = "<group>"; };
 		D736838F1D9506BD00B919E3 /* UIColor+AppConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+AppConfig.h"; sourceTree = "<group>"; };
@@ -327,6 +330,8 @@
 				D7DBDEBA1D72ED3400CFAE5E /* CheckBookViewController.m */,
 				D74CAC1E1DCE0471004C8BA4 /* BookFileBrowserViewController.h */,
 				D74CAC1F1DCE0471004C8BA4 /* BookFileBrowserViewController.m */,
+				716DCF441EE444C700F592EF /* CompetenceViewController.h */,
+				716DCF451EE444C700F592EF /* CompetenceViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -602,6 +607,7 @@
 				D7DA83331D793F48000A7941 /* SearchModel.m in Sources */,
 				D7DBDECA1D72ED3400CFAE5E /* HomeViewController.m in Sources */,
 				D7DBDECE1D72ED3400CFAE5E /* UserViewController.m in Sources */,
+				716DCF461EE444C700F592EF /* CompetenceViewController.m in Sources */,
 				D7DBDEAE1D72ECA600CFAE5E /* Book.m in Sources */,
 				D7EF19931D96842B001E35B1 /* BookListCache.m in Sources */,
 				D7DBDE921D72EB3900CFAE5E /* RDRGrowingTextView.m in Sources */,

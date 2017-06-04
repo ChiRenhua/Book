@@ -344,7 +344,9 @@ NSString *bookURL;
         return @"搜索结果";
     }
     if ([self.bookArray count]) {
-        return @"书籍信息";
+        
+        NSString *str = [NSString stringWithFormat:@"书籍信息 / 共%lu本书籍", (unsigned long)[self.bookArray count]];
+        return str;
     }
     return nil;
 }

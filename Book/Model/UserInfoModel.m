@@ -12,12 +12,13 @@
 #define BASEURL [NSString stringWithFormat:@"%@/bookmgyun/servlet/", [Utils getServerAddress]]
 
 @interface UserInfoModel ()
-@property(nonatomic,copy)NSString *userName;
-@property(nonatomic,copy)NSString *userPassword;
-@property(nonatomic,copy)NSString *userID;
-@property(nonatomic,copy)NSString *userCompetence;
-@property(nonatomic,copy)NSString *userRealName;
-@property(nonatomic,copy)NSString *userSessionid;
+@property (nonatomic, copy)NSString *userName;
+@property (nonatomic, copy)NSString *userPassword;
+@property (nonatomic, copy)NSString *userID;
+@property (nonatomic, copy)NSArray *userCompetence;
+@property (nonatomic, copy)NSString *userRealName;
+@property (nonatomic, copy)NSString *userSessionid;
+@property (nonatomic, copy)NSMutableDictionary *competenceTotleDic;
 @end
 
 @implementation UserInfoModel
@@ -32,7 +33,7 @@
     return instance;
 }
 
--(void)saveUserLoginDataWithName:(NSString *)userName andPassword:(NSString *)userPassword andID:(NSString *)userID andCompetence:(NSString *) userCompetence andRealName:(NSString *) userRealName andSessionid:(NSString *) userSessionid{
+-(void)saveUserLoginDataWithName:(NSString *)userName andPassword:(NSString *)userPassword andID:(NSString *)userID andCompetence:(NSArray *) userCompetence andRealName:(NSString *) userRealName andSessionid:(NSString *) userSessionid{
     
     _userName = userName;
     _userPassword = userPassword;
@@ -143,7 +144,7 @@
     return _userID;
 }
 
-- (NSString *)getUserCompetence {
+- (NSArray *)getUserCompetence {
     // 从plist文件中读取用户数据
     if (!_userCompetence) {
         NSArray *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
@@ -177,5 +178,57 @@
         _userSessionid = [userInfo objectForKey:@"userSessionid"];
     }
     return _userSessionid;
+}
+
+- (BOOL)firstTrial {
+    NSArray *competenceArr = [self getUserCompetence];
+    
+    if (![competenceArr isKindOfClass:[NSArray class]]) {
+        return NO;
+    }
+    __block BOOL hasPermisson = NO;
+    
+    [competenceArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        NSNumber *competenceIndex = (NSNumber *)obj;
+        if ([competenceIndex intValue] == 5) {
+            hasPermisson = YES;
+        }
+    }];
+    
+    return hasPermisson;
+}
+
+- (BOOL)secondTrial {
+    NSArray *competenceArr = [self getUserCompetence];
+    
+    if (![competenceArr isKindOfClass:[NSArray class]]) {
+        return NO;
+    }
+    
+    __block BOOL hasPermisson = NO;
+    
+    [competenceArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        NSNumber *competenceIndex = (NSNumber *)obj;
+        if ([competenceIndex intValue] == 6) {
+            hasPermisson = YES;
+        }
+    }];
+    
+    return hasPermisson;
+}
+
+- (NSMutableDictionary *)getCompetenceDictionnary {
+    if (!self.competenceTotleDic) {
+        [self creatCompentenceDic];
+    }
+    
+    return self.competenceTotleDic;
+}
+
+- (void)creatCompentenceDic {
+    if (!self.competenceTotleDic) {
+        self.competenceTotleDic = [[NSMutableDictionary alloc] initWithObjectsAndKeys:@"图书信息录入",@(1),@"图书信息查询",@(2),@"批量导入图书",@(3),@"未完成图书",@(4),@"图书初审",@(5),@"图书复审",@(6),@"未通过图书",@(7),@"增加作者信息",@(8),@"查询作者信息",@(9),@"增加合作机构",@(10),@"查询合作机构",@(11),@"查询版权信息",@(12),@"版权到期提醒",@(13),@"增加边疆特色资源",@(14),@"查询边疆特色资源",@(15),@"增加科技文献资源",@(16),@"查询科技文献资源",@(17),@"增加黑土作家资源",@(18),@"查询黑土作家资源",@(19),@"用户管理",@(20),@"角色管理",@(21),@"操作日志",@(23),@"修改密码",@(24),@"附件名称查询",@(25),@"附件批量下载",@(26),@"图书信息查询中的修改",@(27),@"图书信息查询中的删除",@(28),@"档案古籍录入",@(29),@"论文录入",@(30),@"档案古籍查询",@(31),@"论文查询",@(32), nil];
+                
+    }
 }
 @end

@@ -57,7 +57,7 @@ AppDelegate *homeViewDelegate;
     };
     // 进行登录验证
     [self verificationLogin];
-    if ([[UserInfoModel sharedInstance]getUserName].length && [[UserInfoModel sharedInstance]getUserPassword].length && [[UserInfoModel sharedInstance]getUserCompetence].length) {
+    if ([[UserInfoModel sharedInstance]getUserName].length && [[UserInfoModel sharedInstance]getUserPassword].length) {
         _HomeViewtableView = [[UITableView alloc]initWithFrame:self.view.bounds style:UITableViewStyleGrouped];
         _HomeViewtableView.delegate = self;
         _HomeViewtableView.dataSource = self;
@@ -83,8 +83,7 @@ AppDelegate *homeViewDelegate;
 
 #pragma mark 设置每组标题名称
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-    int competence = [[[UserInfoModel sharedInstance]getUserCompetence]intValue];
-    if (competence == 2) {
+    if ([[UserInfoModel sharedInstance] firstTrial] && [[UserInfoModel sharedInstance] secondTrial]) {
         if (section == 0) {
             return @"初审";
         }else if (section == 1) {
@@ -92,15 +91,14 @@ AppDelegate *homeViewDelegate;
         }else if (section == 2) {
             return @"过期";
         }
-    }else if (competence == 1) {
+    }else if ([[UserInfoModel sharedInstance] firstTrial]) {
         return @"初审";
     }
     return nil;
 }
 #pragma mark 设置分组数
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    int competence = [[[UserInfoModel sharedInstance]getUserCompetence]intValue];
-    if (competence == 2) {
+    if ([[UserInfoModel sharedInstance] firstTrial] && [[UserInfoModel sharedInstance] secondTrial]) {
         return 3;
     }else {
         return 2;
@@ -168,9 +166,8 @@ AppDelegate *homeViewDelegate;
 }
 #pragma mark 添加行点击事件
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    int competence = [[[UserInfoModel sharedInstance]getUserCompetence]intValue];
-    switch (competence) {
-        case 1:
+    if ([[UserInfoModel sharedInstance] firstTrial] && [[UserInfoModel sharedInstance] secondTrial]) {
+        if (indexPath.section == 0) {
             if (indexPath.row == 0) {
                 CheckBookViewController *CheckBookVC = [[CheckBookViewController alloc]init:firstUncheckedBook :nil :nil];
                 [self.navigationController pushViewController:CheckBookVC animated:YES];
@@ -184,41 +181,35 @@ AppDelegate *homeViewDelegate;
                 CheckBookViewController *CheckBookVC = [[CheckBookViewController alloc]init:firstCheckedUnpassBook :nil :nil];
                 [self.navigationController pushViewController:CheckBookVC animated:YES];
             }
-
-            break;
-        case 2:
-            if (indexPath.section == 0) {
-                if (indexPath.row == 0) {
-                    CheckBookViewController *CheckBookVC = [[CheckBookViewController alloc]init:firstUncheckedBook :nil :nil];
-                    [self.navigationController pushViewController:CheckBookVC animated:YES];
-                }else if (indexPath.row == 1) {
-                    CheckBookViewController *CheckBookVC = [[CheckBookViewController alloc]init:firstCheckingBook :nil :nil];
-                    [self.navigationController pushViewController:CheckBookVC animated:YES];
-                }else if (indexPath.row == 2) {
-                    CheckBookViewController *CheckBookVC = [[CheckBookViewController alloc]init:firstCheckedPassBook :nil :nil];
-                    [self.navigationController pushViewController:CheckBookVC animated:YES];
-                }else if (indexPath.row == 3) {
-                    CheckBookViewController *CheckBookVC = [[CheckBookViewController alloc]init:firstCheckedUnpassBook :nil :nil];
-                    [self.navigationController pushViewController:CheckBookVC animated:YES];
-                }
-            }else if (indexPath.section == 1) {
-                if (indexPath.row == 0) {
-                    CheckBookViewController *CheckBookVC = [[CheckBookViewController alloc]init:reviewUncheckedBook :nil :nil];
-                    [self.navigationController pushViewController:CheckBookVC animated:YES];
-                }else if (indexPath.row == 1) {
-                    CheckBookViewController *CheckBookVC = [[CheckBookViewController alloc]init:reviewCheckingBook :nil :nil];
-                    [self.navigationController pushViewController:CheckBookVC animated:YES];
-                }else if (indexPath.row == 2) {
-                    CheckBookViewController *CheckBookVC = [[CheckBookViewController alloc]init:reviewCheckedPassBook :nil :nil];
-                    [self.navigationController pushViewController:CheckBookVC animated:YES];
-                }else if (indexPath.row == 3) {
-                    CheckBookViewController *CheckBookVC = [[CheckBookViewController alloc]init:reviewCheckedUnpassBook :nil :nil];
-                    [self.navigationController pushViewController:CheckBookVC animated:YES];
-                }
+        }else if (indexPath.section == 1) {
+            if (indexPath.row == 0) {
+                CheckBookViewController *CheckBookVC = [[CheckBookViewController alloc]init:reviewUncheckedBook :nil :nil];
+                [self.navigationController pushViewController:CheckBookVC animated:YES];
+            }else if (indexPath.row == 1) {
+                CheckBookViewController *CheckBookVC = [[CheckBookViewController alloc]init:reviewCheckingBook :nil :nil];
+                [self.navigationController pushViewController:CheckBookVC animated:YES];
+            }else if (indexPath.row == 2) {
+                CheckBookViewController *CheckBookVC = [[CheckBookViewController alloc]init:reviewCheckedPassBook :nil :nil];
+                [self.navigationController pushViewController:CheckBookVC animated:YES];
+            }else if (indexPath.row == 3) {
+                CheckBookViewController *CheckBookVC = [[CheckBookViewController alloc]init:reviewCheckedUnpassBook :nil :nil];
+                [self.navigationController pushViewController:CheckBookVC animated:YES];
             }
-            break;
-        default:
-            break;
+        }
+    }else if ([[UserInfoModel sharedInstance] firstTrial]){
+        if (indexPath.row == 0) {
+            CheckBookViewController *CheckBookVC = [[CheckBookViewController alloc]init:firstUncheckedBook :nil :nil];
+            [self.navigationController pushViewController:CheckBookVC animated:YES];
+        }else if (indexPath.row == 1) {
+            CheckBookViewController *CheckBookVC = [[CheckBookViewController alloc]init:firstCheckingBook :nil :nil];
+            [self.navigationController pushViewController:CheckBookVC animated:YES];
+        }else if (indexPath.row == 2) {
+            CheckBookViewController *CheckBookVC = [[CheckBookViewController alloc]init:firstCheckedPassBook :nil :nil];
+            [self.navigationController pushViewController:CheckBookVC animated:YES];
+        }else if (indexPath.row == 3) {
+            CheckBookViewController *CheckBookVC = [[CheckBookViewController alloc]init:firstCheckedUnpassBook :nil :nil];
+            [self.navigationController pushViewController:CheckBookVC animated:YES];
+        }
     }
     
     if (indexPath.section == 2) {

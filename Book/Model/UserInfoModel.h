@@ -27,8 +27,13 @@ typedef void (^ShowLoginView)();
 - (NSString *)getUserName;
 - (NSString *)getUserPassword;
 - (NSString *)getUserID;
-- (NSString *)getUserCompetence;
+- (NSArray *)getUserCompetence;
 - (NSString *)getUserRealName;
 - (NSString *)getUserSessionid;
+
+- (BOOL)firstTrial;
+- (BOOL)secondTrial;
+
+- (NSMutableDictionary *)getCompetenceDictionnary;
 
 @end
