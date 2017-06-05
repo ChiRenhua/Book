@@ -38,11 +38,30 @@ AppDelegate *homeViewDelegate;
     // Do any additional setup after loading the view, typically from a nib.
     [self.view setBackgroundColor:[UIColor whiteColor]];
     // 导航栏添加logo
-    UIImageView *logoView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 100, 30)];
+    UIImageView *logoView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 80, 30)];
     logoView.contentMode = UIViewContentModeScaleAspectFit;
-    UIImage *logoImage = [UIImage imageNamed:@"logo_white.png"];
+    UIImage *logoImage = [UIImage imageNamed:@"logo_new.png"];
     [logoView setImage:logoImage];
     self.navigationItem.titleView = logoView;
+    
+    UIImageView *leftButtonView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 50, 30)];
+    UIBarButtonItem *leftBarButton = [[UIBarButtonItem alloc] initWithCustomView:leftButtonView];
+    
+    self.navigationItem.leftBarButtonItem = leftBarButton;
+    
+    UIImageView *rightButtonView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 50, 30)];
+    rightButtonView.contentMode = UIViewContentModeScaleAspectFit;
+    UIImage *rightButtonImage = [UIImage imageNamed:@"Message.png"];
+    [rightButtonView setImage:rightButtonImage];
+    UIBarButtonItem *rightBarButton = [[UIBarButtonItem alloc] initWithCustomView:rightButtonView];
+    
+    self.navigationItem.rightBarButtonItem = rightBarButton;
+    
+    UITapGestureRecognizer *clickGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(enterExpiredBookPage)];
+    [rightButtonView addGestureRecognizer:clickGesture];
+    rightButtonView.userInteractionEnabled = YES;
+    
+    
     homeViewDelegate.loginVC.showHomeViewBlock = ^(){
         // 判断仅当tableview为空时，才会重新创建tableview
         if (_HomeViewtableView == nil) {
@@ -213,8 +232,7 @@ AppDelegate *homeViewDelegate;
     }
     
     if (indexPath.section == 2) {
-        CheckBookViewController *CheckBookVC = [[CheckBookViewController alloc]init:willExpiredBook :nil :nil];
-        [self.navigationController pushViewController:CheckBookVC animated:YES];
+        [self enterExpiredBookPage];
     }
     [tableView deselectRowAtIndexPath:indexPath animated:YES];                                                                                  // 取消选中的状态
 }
@@ -223,6 +241,10 @@ AppDelegate *homeViewDelegate;
     return ROW_HIGHT;
 }
 
+- (void)enterExpiredBookPage {
+    CheckBookViewController *CheckBookVC = [[CheckBookViewController alloc]init:willExpiredBook :nil :nil];
+    [self.navigationController pushViewController:CheckBookVC animated:YES];
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

@@ -184,6 +184,7 @@ int reviewTextHeight;
             
             UIImageView *jpglogo = [[UIImageView alloc]initWithFrame:CGRectMake(15, 15, (imageButton.bounds.size.height - 30) * 0.76, imageButton.bounds.size.height - 30)];
             jpglogo.image = [UIImage imageNamed:@"JPGLogo.png"];
+            jpglogo.contentMode = UIViewContentModeScaleAspectFit;
             [imageButton addSubview:jpglogo];
             
             UILabel *imageLable = [[UILabel alloc]initWithFrame:CGRectMake(jpglogo.bounds.size.width + 15, (imageButton.bounds.size.height - 15) / 2, imageButton.bounds.size.width - jpglogo.bounds.size.width - 15, 15)];
@@ -206,6 +207,7 @@ int reviewTextHeight;
             
             UIImageView *pdflogo = [[UIImageView alloc]initWithFrame:CGRectMake(15, 15, (imageButton.bounds.size.height - 30) * 0.76, pdfButton.bounds.size.height - 30)];
             pdflogo.image = [UIImage imageNamed:@"PDFLogo.png"];
+            pdflogo.contentMode = UIViewContentModeScaleAspectFit;
             [pdfButton addSubview:pdflogo];
             
             UILabel *pdfLable = [[UILabel alloc]initWithFrame:CGRectMake(pdflogo.bounds.size.width + 15, (pdfButton.bounds.size.height - 15) / 2, pdfButton.bounds.size.width - pdflogo.bounds.size.width - 15, 15)];
