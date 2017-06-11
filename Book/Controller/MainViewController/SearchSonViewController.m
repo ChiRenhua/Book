@@ -53,7 +53,7 @@ NSInteger searchtype;
 }
 
 - (void)buildSearchKeywordData {
-    _keyworldArray = [[NSArray alloc]initWithObjects:@"按书名搜索",@"按作者搜索",@"按ISBN号搜索", nil];
+    _keyworldArray = [[NSArray alloc]initWithObjects:@"按书名搜索", @"按作者搜索", @"按ISBN号搜索", @"按图书类别搜索", @"按中图分类搜索", @"按类型词搜索", @"按出版时间搜索", nil];
 }
 
 #pragma mark 设置分组数
@@ -63,7 +63,7 @@ NSInteger searchtype;
 #pragma mark 设置行数
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if (searchtype == searchKeyword) {
-        return 3;
+        return 7;
     }
     return _searchArray.count;
 }
@@ -138,6 +138,26 @@ NSInteger searchtype;
             }
             case 2:{
                 CheckBookViewController *resultVC = [[CheckBookViewController alloc]init:keyWordSearchBook :@"按ISBN号搜索":@"2"];
+                [self.navigationController pushViewController:resultVC animated:YES];
+                break;
+            }
+            case 3:{
+                CheckBookViewController *resultVC = [[CheckBookViewController alloc]init:keyWordSearchBook :@"按图书类别搜索":@"3"];
+                [self.navigationController pushViewController:resultVC animated:YES];
+                break;
+            }
+            case 4:{
+                CheckBookViewController *resultVC = [[CheckBookViewController alloc]init:keyWordSearchBook :@"按中图分类搜索":@"4"];
+                [self.navigationController pushViewController:resultVC animated:YES];
+                break;
+            }
+            case 5:{
+                CheckBookViewController *resultVC = [[CheckBookViewController alloc]init:keyWordSearchBook :@"按类型词搜索":@"5"];
+                [self.navigationController pushViewController:resultVC animated:YES];
+                break;
+            }
+            case 6:{
+                CheckBookViewController *resultVC = [[CheckBookViewController alloc]init:keyWordSearchBook :@"按出版时间搜索":@"6"];
                 [self.navigationController pushViewController:resultVC animated:YES];
                 break;
             }

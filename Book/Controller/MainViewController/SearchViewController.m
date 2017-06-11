@@ -32,7 +32,17 @@
         _searchArray = [[NSMutableArray alloc]init];
         _searchResult = [[NSMutableArray alloc]init];
         [SearchModel sharedInstance].successLoadSearchData = ^(NSMutableArray *array){
-            _searchArray = array;
+            
+            NSMutableArray *searchArr = [[NSMutableArray alloc] initWithArray:array];
+            
+            NSArray *userCompetence = [[UserInfoModel sharedInstance] getUserCompetence];
+            
+            if (![userCompetence containsObject:@(14)] && ![userCompetence containsObject:@(15)] && ![userCompetence containsObject:@(16)] && ![userCompetence containsObject:@(17)] && ![userCompetence containsObject:@(18)] && ![userCompetence containsObject:@(19)]) {
+                NSLog(@"yes");
+                [searchArr removeObjectAtIndex:1];
+            }
+            
+            _searchArray = searchArr;
             [_IndicatorView stopAnimating];
             [_errorLable setHidden:YES];
             [_tableView reloadData];
