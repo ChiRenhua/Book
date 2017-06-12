@@ -99,7 +99,7 @@ AppDelegate *UserVCdelegate;
         }
         _professionLable.font = [UIFont systemFontOfSize:15];
         _professionLable.textColor = [UIColor whiteColor];
-        [UserViewCell.contentView addSubview:_professionLable];
+//        [UserViewCell.contentView addSubview:_professionLable];
         return UserViewCell;
     }else if (indexPath.section == 1) {
         UITableViewCell *UserViewCell;

@@ -39,7 +39,22 @@
             
             if (![userCompetence containsObject:@(14)] && ![userCompetence containsObject:@(15)] && ![userCompetence containsObject:@(16)] && ![userCompetence containsObject:@(17)] && ![userCompetence containsObject:@(18)] && ![userCompetence containsObject:@(19)]) {
                 NSLog(@"yes");
-                [searchArr removeObjectAtIndex:1];
+                
+                __block NSInteger removeIndex = -1;
+                
+                [searchArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                    NSDictionary *searchDic = (NSDictionary *)obj;
+                    
+                    NSString *searchName = searchDic[@"name"];
+                    
+                    if ([searchName isEqualToString:@"于式分类方法"]) {
+                        removeIndex = idx;
+                    }
+                }];
+                
+                if (removeIndex >= 0) {
+                    [searchArr removeObjectAtIndex:removeIndex];
+                }
             }
             
             _searchArray = searchArr;
